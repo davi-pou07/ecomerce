@@ -1,12 +1,15 @@
 const express = require("express")
 const app = express()
 const session = require("express-session")
-
+const bodyParser = require("body-parser")
 const categoriaController = require("../ecomerce/Categorias/categoriasController")
 const Categoria = require("./DataBases/Categoria")
 
 const connection = require('./DataBases/database')
 //databases
+const path = require('path')
+const PORT = process.env.PORT || 8080
+
 connection
     .authenticate()
     .then(() => {
@@ -16,17 +19,21 @@ connection
         console.log(msgErro)
     })
 
-const bodyParser = require("body-parser")
+    const { Pool } = require('pg');
+    const pool = new Pool({
+        connectionString: process.env.DATABASE_URL,
+        ssl: {
+            rejectUnauthorized: false
+        }
+    });
 
-const path = require('path')
-const PORT = process.env.PORT || 8080
+
 
 app.use(session({
     secret: "sdfsdfsdfgdfgfgh",
     cookie: { maxAge: 1800000000 }
 }))
 
-app.use("/",categoriaController)
 //usar o EJS como view engine | renderizador de html
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
@@ -35,6 +42,9 @@ app.use(express.static(path.join(__dirname, 'public')))
 //Carregamento do bodyPerser
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+
+
+app.use("/",categoriaController)
 
 app.get("/", (req, res) => { res.render("index") })
 
