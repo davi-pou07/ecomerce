@@ -1,6 +1,8 @@
 const express = require("express")
 const app = express()
 const session = require("express-session")
+
+const categoriaController = require("../ecomerce/Categorias/categoriasController")
 const Categoria = require("./DataBases/Categoria")
 
 const connection = require('./DataBases/database')
@@ -24,6 +26,7 @@ app.use(session({
     cookie: { maxAge: 1800000000 }
 }))
 
+app.use("/",categoriaController)
 //usar o EJS como view engine | renderizador de html
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')

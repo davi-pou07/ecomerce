@@ -9,6 +9,14 @@ const Categoria = connection.define('categorias',{
     descricao:{
         type:sequelize.TEXT,
         allowNull:true
+    },
+    destaque:{
+        type:sequelize.BOOLEAN,
+        allowNull:false
+    },
+    status:{
+        type:sequelize.BOOLEAN,
+        allowNull:false
     }
 })
 

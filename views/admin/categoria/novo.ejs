@@ -1,0 +1,59 @@
+<%- include('../../partials/head.ejs')%>
+
+<%- include('../../partials/nav.ejs')%>
+<br>                                                        
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <h1>Cadastro de Categória</h1>
+                    <p>Cadastro de categoria é importante para organizar seu feed de produtos!</p>
+                </div>
+                <form action="/categoria/novo" method="POST" class="row g-3 needs-validation" novalidate>
+                    <div class="card-body">
+                        <div class="col-md-4">
+                            <label for="titulo" class="form-label">Titulo</label>
+                            <input type="text" class="form-control" name="titulo" id="titulo" placeholder="Informe aqui o titúlo da categoria" required>
+                            <div class="valid-feedback">
+                                Tudo ok!
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="descricao" class="form-label">Descrição da categoria</label>
+                            <textarea name="descricao" id="descricao" placeholder="Digite a descrição dessa categoria" id="descricao" class="form-control"></textarea>
+                            <div class="valid-feedback">
+                                Muito bom!
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-select" name="status" id="status" required>
+                                <option value="true">Ativo</option>
+                                <option value="false">Desativado</option>
+                            </select>
+                            <div class="invalid-feedback">
+                               Por favor, selecione!
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="Destaque" class="form-label">Destaque</label>
+                            <select class="form-select" name="destaque" id="Destaque" required>
+                                <option value="true">Sim</option>
+                                <option value="false">Não</option>
+                            </select>
+                            <div class="invalid-feedback">
+                               Por favor, selecione!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="col-12">
+                            <button class="btn btn-primary">Cadastrar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <%- include('../../partials/footer.ejs')%>
+
+
