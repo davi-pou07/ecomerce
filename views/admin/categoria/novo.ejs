@@ -13,7 +13,7 @@
                 <div class="card-body">
 
                     <form action="/categorias/salvar" method="POST" class="row g-3 needs-validation"
-                        onsubmit="submit(event,this)">
+                        onsubmit="sub(event,this)">
 
                         <label for="title" class="form-label">Titulo</label>
                         <input type="text" class="form-control" name="titulo" id="title"
@@ -57,17 +57,13 @@
                 </div>
             </div>
         </div>
-        <script type="text/javascript">
-            function submit(event, form) {
-                event.preventDefault()
-                var titulo = document.getElementById('titulo').value
-                if (titulo == undefined) {
-                    alert("Titulo não pode ficar vazio, preencha por favor!")
-                    return false
-                }
-                var buttom = document.getElementById('buttom').disable = true
-                form.submit()
-                return true
-            }
-        </script>
         <%- include('../../partials/footer.ejs')%>
+            <script src="/js/sub"></script>
+            <script>
+                function sub(event, form) {
+                    event.preventDefault()
+                    button = document.getElementById('buttom').setAttribute("disabled", "disabled");
+                    form.submit()
+                    return true 
+                }
+            </script>
