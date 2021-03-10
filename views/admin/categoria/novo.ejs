@@ -7,7 +7,7 @@
             <div class="card">
 
                 <div class="card-header">
-                    <h1>Cadastro de Categória</h1>
+                    <h1>Cadastro de Categoria</h1>
                     <p>Cadastro de categoria é importante para organizar seu feed de produtos!</p>
                 </div>
                 <div class="card-body">
@@ -58,12 +58,4 @@
             </div>
         </div>
         <%- include('../../partials/footer.ejs')%>
-            <script src="/js/sub"></script>
-            <script>
-                function sub(event, form) {
-                    event.preventDefault()
-                    button = document.getElementById('buttom').setAttribute("disabled", "disabled");
-                    form.submit()
-                    return true 
-                }
-            </script>
+            <script src="/js/sub.js"></script>

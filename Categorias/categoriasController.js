@@ -22,4 +22,20 @@ router.post("/categorias/salvar", (req, res) => {
     })
 })
 
+//Listar
+
+router.get("/admin/categorias",(req,res)=>{
+    Categoria.findAll({where:{status:true}}).then(categorias=>{
+        res.render('admin/categoria/index',{categorias:categorias})
+    })
+})
+
+
+//Teste
+router.get("/teste/valida",(req,res)=>{res.render("admin/categoria/teste")})
+router.post("/teste",(req,res)=>{
+    var val1 = req.body.teste1
+    console.log(val1)
+})
+
 module.exports = router

@@ -1,0 +1,39 @@
+<%- include('../../partials/head.ejs')%>
+
+    <%- include('../../partials/nav.ejs')%>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h1>Listagem de categorias</h1>
+                <p>Vizualize suas categorias e organize a ordem que irá aparecer para o cliente</p>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-horizontal">
+                    <button type="button" class="list-group-item list-group-item-action active"
+                        aria-current="true">
+                        Código:
+                    <button type="button" class="list-group-item list-group-item-action active"
+                        aria-current="true" >
+                        Titulo:
+                    <button type="button" class="list-group-item list-group-item-action active"
+                        aria-current="true">
+                        Destaque:
+                    <button type="button" class="list-group-item list-group-item-action active"
+                        aria-current="true">
+                        Status:
+
+            </ul>
+            <%categorias.forEach(categoria=>{%>
+            <ul class="list-group list-group-horizontal" onclick="window.location='/admin/categoria/novo'">
+             <button type="button" class="list-group-item list-group-item-action" > <%=categoria.id %> </button>
+             <button type="button" class="list-group-item list-group-item-action"><%=categoria.titulo %></button>
+             <button type="button" class="list-group-item list-group-item-action"><%=categoria.destaque %></button>
+             <button type="button" class="list-group-item list-group-item-action"><%=categoria.status %></button>
+            </ul>
+            <%})%>
+            </div>
+        </div>
+    </div>
+
+        <%- include('../../partials/footer.ejs')%>
+            <script src="/js/sub.js"></script>
