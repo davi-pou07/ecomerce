@@ -13,25 +13,28 @@
                 <div class="card-body">
 
                     <form action="/categorias/salvar" method="POST" class="row g-3 needs-validation"
-                        onsubmit="sub(event,this)">
+                        onsubmit="sub(event,this)" novalidate>
 
-                        <label for="title" class="form-label">Titulo</label>
-                        <input type="text" class="form-control" name="titulo" id="title"
+                        <label for="titulo" class="form-label">Titulo</label>
+                        <input type="text" class="form-control" name="titulo" id="titulo"
                             placeholder="Informe aqui o titúlo da categoria" required>
                         <div class="valid-feedback">
                             Tudo ok!
+                        </div>
+                        <div class="invalid-feedback">
+                            Esse campo é obrigatório
                         </div>
 
                         <label for="descricao" class="form-label">Descrição da categoria</label>
                         <textarea name="descricao" id="descricao" placeholder="Digite a descrição dessa categoria"
                             id="descricao" class="form-control"></textarea>
                         <div class="valid-feedback">
-                            Muito bom!
+                            Esse campo não é obrigatório
                         </div>
 
                         <div class="col-md-3">
-                            <label for="status" class="form-label">Status</label>
-                            <select class="form-select" name="status" id="status" required>
+                            <label for="validationCustom04" class="form-label">Status</label>
+                            <select class="form-select" name="status" id="validationCustom04" required>
                                 <option value="true">Ativo</option>
                                 <option value="false">Desativado</option>
                             </select>
@@ -41,8 +44,8 @@
                         </div>
                         <div class="col-md-3">
 
-                            <label for="Destaque" class="form-label">Destaque</label>
-                            <select class="form-select" name="destaque" id="Destaque" required>
+                            <label for="validationCustom05" class="form-label">Destaque</label>
+                            <select class="form-select" name="destaque" id="validationCustom05" required>
                                 <option value="true">Sim</option>
                                 <option value="false">Não</option>
                             </select>
