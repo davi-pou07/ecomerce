@@ -40,8 +40,8 @@ router.get("/admin/categorias", (req, res) => {
 //Buscar
 router.post("/categoria/find", (req, res) => {
     op = Sequelize.Op
-    busca = `%${req.body.busca}`
-    Categoria.findAll({ where: { titulo: { [op.substring]: busca } } }).then(categorias => {
+    buscar = `%${req.body.busca}`
+    Categoria.findAll({ where: { titulo: { [op.substring]: buscar } } }).then(categorias => {
         var busca = []
         categorias.forEach(categoria => {
             busca.push(categoria.id)
@@ -51,14 +51,14 @@ router.post("/categoria/find", (req, res) => {
             x = x+'-'+busca[i]
         }
         y = x.toString()
-        res.redirect("/admin/categoria/achados/"+y)
+        res.redirect("/admin/categoria/busca/"+y)
     })
 })
-router.get("/admin/categoria/achados/:busca",(req,res)=>{
+router.get("/admin/categoria/busca/:busca",(req,res)=>{
     busca = req.params.busca
     buscar = busca.split('-')
     Categoria.findAll({where:{id:buscar}}).then(categorias =>{
-        res.render("admin/categoria/achados",{categorias:categorias})
+        res.render("admin/categoria/busca",{categorias:categorias})
     })
 })
 //Editar
@@ -90,13 +90,6 @@ router.post("/categoria/editar", (req, res) => {
     } else {
         res.redirect("/erro")
     }
-})
-
-//Teste
-router.get("/teste/valida", (req, res) => { res.render("admin/categoria/teste") })
-router.post("/teste", (req, res) => {
-    var val1 = req.body.teste1
-    console.log(val1)
 })
 
 module.exports = router

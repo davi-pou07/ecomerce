@@ -13,14 +13,6 @@ const Grade = connection.define('grades',{
     coluna:{
         type:Sequelize.STRING,
         allowNull:false
-    },
-    n_linha:{
-        type:Sequelize.STRING,
-        allowNull:false
-    },
-    n_coluna:{
-        type:Sequelize.STRING,
-        allowNull:false  
     }
 })
 

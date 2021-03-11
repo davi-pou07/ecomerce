@@ -8,7 +8,7 @@
                 <p>Vizualize suas categorias e organize a ordem que irá aparecer para o cliente</p>
             </div>
             <form class="d-flex" method="POST" action="/categoria/find">
-                <input class="form-control me-2" type="search" placeholder="Search" name="busca" aria-label="Search">
+                <input class="form-control me-2" type="search" placeholder="Search" name="busca" aria-label="Search" >
                 <button class="btn btn-outline-success" type="submit">Pesquisa</button>
               </form>
             <div class="card-body">
@@ -27,13 +27,21 @@
                         Status:
 
             </ul>
-            <%categorias.forEach(categoria=>{%>
-            <ul class="list-group list-group-horizontal" onclick="window.location='/admin/categoria/editar/<%=categoria.id%>'">
-             <button type="button" class="list-group-item list-group-item-action" > <%=categoria.id %> </button>
-             <button type="button" class="list-group-item list-group-item-action"><%=categoria.titulo %></button>
-             <button type="button" class="list-group-item list-group-item-action"><%=categoria.destaque %></button>
-             <button type="button" class="list-group-item list-group-item-action"><%=categoria.status %></button>
-            </ul>
+                <%categorias.forEach(categoria=>{%>
+                    <ul class="list-group list-group-horizontal" onclick="window.location='/admin/categoria/editar/<%=categoria.id%>'">
+                    <button type="button" class="list-group-item list-group-item-action" > <%=categoria.id %> </button>
+                    <button type="button" class="list-group-item list-group-item-action"><%=categoria.titulo %></button>
+                    <%if(categoria.destaque == true){%>
+                        <button type="button" class="list-group-item list-group-item-action">Sim</button>
+                    <%}else{%>
+                        <button type="button" class="list-group-item list-group-item-action">Não</button>
+                    <%}%>
+                    <%if(categoria.status == true){%>
+                        <button type="button" class="list-group-item list-group-item-action">Ativo</button>
+                    <%}else{%>
+                        <button type="button" class="list-group-item list-group-item-action">Desativado</button>
+                    <%}%>
+                </ul>
             <%})%>
             </div>
         </div>

@@ -7,17 +7,17 @@
             <div class="card">
 
                 <div class="card-header">
-                    <h1>Cadastro de Categoria</h1>
-                    <p>Cadastro de categoria é importante para organizar seu feed de produtos!</p>
+                    <h1>Cadastro de Grade</h1>
+                    <p>Cadastro de grade é importante para organizar os tipos de produtos!</p>
                 </div>
                 <div class="card-body">
 
-                    <form action="/categorias/salvar" method="POST" class="row g-3 needs-validation"
+                    <form action="/grade/salvar" method="POST" class="row g-3 needs-validation"
                         onsubmit="sub(event,this)" novalidate>
 
-                        <label for="titulo" class="form-label">Titulo</label>
-                        <input type="text" class="form-control" name="titulo" id="titulo"
-                            placeholder="Informe aqui o titúlo da categoria"  autocomplete="off" required>
+                        <label for="titulo" class="form-label">Descrição</label>
+                        <input type="text" class="form-control" name="descricao" id="titulo"
+                            placeholder="Informe aqui a descrição de sua grade"  autocomplete="off" required>
                         <div class="valid-feedback">
                             Tudo ok!
                         </div>
