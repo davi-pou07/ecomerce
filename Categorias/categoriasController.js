@@ -38,6 +38,7 @@ router.get("/admin/categorias", (req, res) => {
 })
 
 //Buscar
+//Maiuscula minuscula
 router.post("/categoria/find", (req, res) => {
     op = Sequelize.Op
     buscar = `%${req.body.busca}`

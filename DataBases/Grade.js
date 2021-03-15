@@ -12,6 +12,10 @@ const Grade = connection.define('grades',{
     },
     coluna:{
         type:Sequelize.STRING,
+        allowNull:true
+    },
+    status:{
+        type:Sequelize.BOOLEAN,
         allowNull:false
     }
 })

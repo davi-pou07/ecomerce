@@ -4,6 +4,10 @@ const session = require("express-session")
 const bodyParser = require("body-parser")
 const categoriaController = require("../ecomerce/Categorias/categoriasController")
 const Categoria = require("./DataBases/Categoria")
+const Grade = require("./DataBases/Grade")
+const G_coluna = require("./DataBases/G_coluna")
+const G_linha = require("./DataBases/G_linha")
+
 
 const connection = require('./DataBases/database')
 //databases
