@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const Grade = require("../DataBases/Grade")
+const G_linha = require("../DataBases/G_linha")
+const G_coluna = require("../DataBases/G_coluna")
 const Sequelize = require('sequelize')
 
 //Novo
@@ -9,17 +11,17 @@ router.get("/admin/grade/novo", (req, res) => {
 })
 
 router.post("/grade/salvar", (req, res) => {
-    var titulo = req.body.titulo
     var descricao = req.body.descricao
+    var linha = req.body.linha
+    var coluna = req.body.coluna
     var status = req.body.status
-    var destaque = req.body.destaque
-    console.log(titulo)
-    Categoria.create({
-        titulo: titulo,
+    Grade.create({
         descricao: descricao,
         status: status,
-        destaque: destaque
+        linha:linha,
+        coluna:coluna
     }).then(() => {
+        
         res.redirect("/admin/categoria/novo")
     })
 })
