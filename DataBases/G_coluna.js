@@ -3,7 +3,43 @@ const connection = require('./database')
 const Grade = require('./Grade')
 
 const G_coluna = connection.define('g_colunas',{
-    linha:{
+    coluna1:{
+        type:Sequelize.STRING,
+        allowNull:true
+    },
+    coluna2:{
+        type:Sequelize.STRING,
+        allowNull:true
+    },
+    coluna3:{
+        type:Sequelize.STRING,
+        allowNull:true
+    },
+    coluna4:{
+        type:Sequelize.STRING,
+        allowNull:true
+    },
+    coluna5:{
+        type:Sequelize.STRING,
+        allowNull:true
+    },
+    coluna6:{
+        type:Sequelize.STRING,
+        allowNull:true
+    },
+    coluna7:{
+        type:Sequelize.STRING,
+        allowNull:true
+    },
+    coluna8:{
+        type:Sequelize.STRING,
+        allowNull:true
+    },
+    coluna9:{
+        type:Sequelize.STRING,
+        allowNull:true
+    },
+    coluna10:{
         type:Sequelize.STRING,
         allowNull:true
     }
