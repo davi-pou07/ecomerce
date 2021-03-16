@@ -118,39 +118,18 @@ router.get("/admin/grade/busca/:busca",(req,res)=>{
 router.get("/admin/grade/editar/:gradeId", (req, res) => {
     var gradeId = req.params.gradeId
     Grade.findByPk(gradeId).then(grade => {
-        G_coluna.findAll({where:{gradeId:grade.id}}).then(coluna =>{
-            G_linha.findAll({where:{gradeId:grade.id}}).then(linha =>{
+        G_coluna.findOne({where:{gradeId:grade.id}, raw:true}).then(coluna =>{
+            G_linha.findOne({where:{gradeId:grade.id},raw:true}).then(linha =>{
                 console.log("-------------------------------")
                 console.log(linha)
+                console.log("-------------------------------")
                 console.log(coluna)
                 console.log("-------------------------------")
-                res.render("admin/grade/editar", { grade: grade,coluna:coluna,linha:linha })
+                res.render("admin/grade/editar", { grade: grade, coluna:coluna, linha:linha })
             })
         })
     })
 })
-router.post("/categoria/editar", (req, res) => {
-    var categoriaId = req.body.categoriaId
-    var titulo = req.body.titulo
-    var descricao = req.body.descricao
-    var status = req.body.status
-    var destaque = req.body.destaque
-    if (categoriaId != undefined) {
-        if (!isNaN(categoriaId)) {
-            Categoria.update({
-                titulo: titulo,
-                descricao: descricao,
-                status: status,
-                destaque: destaque
-            }, { where: { id: categoriaId } }).then(() => {
-                res.redirect("/admin/categorias")
-            })
-        } else {
-            res.redirect("/erro")
-        }
-    } else {
-        res.redirect("/erro")
-    }
-})
+
 
 module.exports = router

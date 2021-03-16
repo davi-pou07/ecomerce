@@ -58,7 +58,7 @@
 
                                 <hr>
                                 <ul class="list-group">
-                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha1" value="<%=linha.linha1%>"
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha1" value=" <%= linha.linha1%> "
                                             class="form-control"></li>
                                     <li class="list-group-item list-group-item-primary"><input type="text" name="linha2"
                                             class="form-control" value="<%=linha.linha2%>"></li>
@@ -85,37 +85,40 @@
                                 <hr>
                                 <label for="coluna" class="form-label">Coluna</label>
                                 <input type="text" class="form-control" name="coluna" id="coluna"
-                                    placeholder="Informe aqui a descrição de sua grade" autocomplete="off" required>
+                                    placeholder="Informe aqui a descrição de sua grade" autocomplete="off" required
+                                    value="<%=grade.coluna%>">
                                 <div class="valid-feedback">
                                     Tudo ok!
                                 </div>
                                 <div class="invalid-feedback">
                                     Esse campo é obrigatório
                                 </div>
+
                                 <hr>
                                 <ul class="list-group">
-                                    <li class="list-group-item list-group-item-primary"><input type="text"
-                                            name="Coluna1" class="form-control"></li>
-                                    <li class="list-group-item list-group-item-primary"><input type="text"
-                                            name="Coluna2" class="form-control"></li>
-                                    <li class="list-group-item list-group-item-primary"><input type="text"
-                                            name="Coluna3" class="form-control"></li>
-                                    <li class="list-group-item list-group-item-primary"><input type="text"
-                                            name="Coluna4" class="form-control"></li>
-                                    <li class="list-group-item list-group-item-primary"><input type="text"
-                                            name="Coluna5" class="form-control"></li>
-                                    <li class="list-group-item list-group-item-primary"><input type="text"
-                                            name="Coluna6" class="form-control"></li>
-                                    <li class="list-group-item list-group-item-primary"><input type="text"
-                                            name="Coluna7" class="form-control"></li>
-                                    <li class="list-group-item list-group-item-primary"><input type="text"
-                                            name="Coluna8" class="form-control"></li>
-                                    <li class="list-group-item list-group-item-primary"><input type="text"
-                                            name="Coluna9" class="form-control"></li>
-                                    <li class="list-group-item list-group-item-primary"><input type="text"
-                                            name="Coluna10" class="form-control"></li>
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="coluna1" value=" <%= coluna.coluna1%> "
+                                            class="form-control"></li>
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="coluna2"
+                                            class="form-control" value="<%=coluna.coluna2%>"></li>
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="coluna3"
+                                            class="form-control" value="<%=coluna.coluna3%>"></li>
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="coluna4"
+                                            class="form-control" value="<%=coluna.coluna4%>"></li>
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="coluna5"
+                                            class="form-control" value="<%=coluna.coluna5%>"></li>
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="coluna6"
+                                            class="form-control" value="<%=coluna.coluna6%>"></li>
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="coluna7"
+                                            class="form-control" value="<%=coluna.coluna7%>"></li>
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="coluna8"
+                                            class="form-control" value="<%=coluna.coluna8%>"></li>
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="coluna9"
+                                            class="form-control" value="<%=coluna.coluna9%>"></li>
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="coluna10"
+                                            class="form-control" value="<%=coluna.coluna10%>"></li>
                                 </ul>
                             </div>
+
                         </div>
 
                         <div class="card-footer">
