@@ -26,7 +26,7 @@ router.post("/categorias/salvar", (req, res) => {
 })
 
 //Listar
-
+//ORDEM QUE VAI APARECER PARA CLIENTE
 router.get("/admin/categorias", (req, res) => {
     Categoria.findAll({
         order: [

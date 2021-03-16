@@ -20,8 +20,8 @@ const Grade = connection.define('grades',{
     }
 })
 
-Grade.sync({force:true}).then(()=>{
-    console.log("Tabela Grade criada")        
-})
+// Grade.sync({force:true}).then(()=>{
+//     console.log("Tabela Grade criada")        
+// })
 
 module.exports = Grade

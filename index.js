@@ -3,6 +3,7 @@ const app = express()
 const session = require("express-session")
 const bodyParser = require("body-parser")
 const categoriaController = require("../ecomerce/Categorias/categoriasController")
+const gradeController = require("../ecomerce/Grade/gradeController")
 const Categoria = require("./DataBases/Categoria")
 const Grade = require("./DataBases/Grade")
 const G_coluna = require("./DataBases/G_coluna")
@@ -49,6 +50,7 @@ app.use(bodyParser.json())
 
 
 app.use("/",categoriaController)
+app.use("/",gradeController)
 
 app.get("/", (req, res) => { res.render("index") })
 
