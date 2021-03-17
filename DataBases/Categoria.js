@@ -20,8 +20,8 @@ const Categoria = connection.define('categorias',{
         allowNull:false
     }
 })
-Categoria.sync({force:false}).then(()=>{
-    console.log("Tabela Categoria criada");
-})
+// Categoria.sync({force:false}).then(()=>{
+//     console.log("Tabela Categoria criada");
+// })
 
 module.exports = Categoria
