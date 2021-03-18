@@ -121,11 +121,6 @@ router.get("/admin/grade/editar/:gradeId", (req, res) => {
     Grade.findByPk(gradeId).then(grade => {
         G_coluna.findOne({where:{gradeId:grade.id}, raw:true}).then(coluna =>{
             G_linha.findOne({where:{gradeId:grade.id},raw:true}).then(linha =>{
-                console.log("-------------------------------")
-                console.log(linha)
-                console.log("-------------------------------")
-                console.log(coluna)
-                console.log("-------------------------------")
                 res.render("admin/grade/editar", { grade: grade, coluna:coluna, linha:linha })
             })
         })
@@ -187,6 +182,16 @@ router.post("/grade/editar", (req, res) => {
             res.redirect("/admin/grades")
         })
     })
+})
+
+
+//teste
+router.post("/teste",(req,res)=>{
+    var teste = req.body.teste
+console.log("---------------------------------")
+console.log(teste+"                           |")
+console.log("---------------------------------")
+
 })
 
 module.exports = router

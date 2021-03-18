@@ -4,14 +4,16 @@ const session = require("express-session")
 const bodyParser = require("body-parser")
 const categoriaController = require("../ecomerce/Categorias/categoriasController")
 const gradeController = require("../ecomerce/Grade/gradeController")
-const estoqueController = require("./Estoque/estoqueController")
 const produtoController = require("./Produto/produtoController")
+const estoqueController = require("./Estoque/estoqueController")
 const Categoria = require("./DataBases/Categoria")
 const Grade = require("./DataBases/Grade")
 const G_coluna = require("./DataBases/G_coluna")
 const G_linha = require("./DataBases/G_linha")
-const Estoque = require("./DataBases/Estoque")
 const Produto =  require("./DataBases/Produto")
+const Estoque = require("./DataBases/Estoque")
+const Preco = require("./DataBases/Preco")
+
 
 
 

@@ -6,7 +6,7 @@ const G_coluna = require("../DataBases/G_coluna")
 const Categoria = require("../DataBases/Categoria")
 const Estoque = require("../DataBases/Estoque")
 const Sequelize = require('sequelize')
-
+const Produto = require('../DataBases/Produto')
 
 router.get("/admin/produto/novo", (req, res) => {
     Categoria.findAll().then(categorias => {
@@ -23,15 +23,14 @@ router.post("/produto/novo",(req,res)=>{
     var categoriaId = req.body.categoriaId
     var gradeId = req.body.gradeId
 
-    console.log("nome")
-    console.log(nome)
-    console.log("descricao")
-    console.log(descricao)
-    console.log("status")
-    console.log(status)
-    console.log("categoriaId")
-    console.log(categoriaId)
-    console.log("gradeId")
-    console.log(gradeId)
+    Produto.create({
+        nome:nome,
+        descricao:descricao,
+        status:status,
+        categoriaId:categoriaId,
+        gradeId:gradeId
+    }).then(produto =>{
+        res.redirect("/admin/estoque/1entrada")
+    })
 })
 module.exports = router

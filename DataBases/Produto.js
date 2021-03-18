@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize')
 const connection = require('./database')
-const Grade =  require("./Grade")
 const Categoria = require("./Categoria")
 
 const Produto = connection.define('produtos',{
