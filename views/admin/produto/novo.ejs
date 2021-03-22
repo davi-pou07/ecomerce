@@ -45,7 +45,7 @@
 
                         <div class="col-md-3">
                             <label for="validationCustom04" class="form-label">Categoria</label>
-                            <select class="form-select" name="categoriaId" id="validationCustom04">
+                            <select class="form-select" name="categoriaId" id="validationCustom04" required>
                                 <option value=""></option>
                                 <%categorias.forEach(categoria=>{%>
                                     <option value="<%=categoria.id%>">
@@ -70,6 +70,46 @@
                                 Por favor, selecione!
                             </div>
                         </div>
+                        <hr>
+
+                        <div class="col-md-3">
+                            <label for="Preco_custo" class="form-label">Preço de Custo</label>
+                            <input type="number" class="form-control" name="custo" id="preco_custo"
+                                placeholder="00,00" step=0.01 autocomplete="off"
+                                >
+                            <div class="valid-feedback">
+                                Tudo ok!
+                            </div>
+                            <div class="invalid-feedback">
+                                Esse campo é obrigatório
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <label for="Preco_venda" class="form-label">Preço de venda</label>
+                            <input type="number" class="form-control" name="venda" id="preco_venda"
+                                placeholder="00,00" step=0.01 autocomplete="off"
+                                >
+                            <div class="valid-feedback">
+                                Tudo ok!
+                            </div>
+                            <div class="invalid-feedback">
+                                Esse campo é obrigatório
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <label for="Preco_desc" class="form-label">Preço de Desconto</label>
+                            <input type="number" class="form-control" name="desconto" id="preco_desc"
+                                placeholder="00,00" step=0.01 autocomplete="off"
+                                >
+                            <div class="valid-feedback">
+                                Tudo ok!
+                            </div>
+                            <div class="invalid-feedback">
+                                Esse campo é obrigatório
+                            </div>
+                        </div>
                 </div>
                 <div class="card-footer">
                     <button class="btn btn-primary" id="buttom">Cadastrar</button>
@@ -79,4 +119,3 @@
         </div>
         <%- include('../../partials/footer.ejs')%>
             <script src="/js/sub.js"></script>
-            
