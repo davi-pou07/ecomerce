@@ -28,21 +28,7 @@ router.post("/produto/novo", (req, res) => {
     var custo = req.body.custo
     var desconto = req.body.desconto
 
-    if(desconto == '' ||desconto == undefined){
-        desconto = 0
-    }
-    if(venda == '' ||venda == undefined){
-        venda = 0
-    }
-    if(custo == '' ||custo == undefined){
-        custo = 0
-    }
-    if(gradeId == '' ||gradeId == undefined){
-        gradeId = 0
-    }
-    if(categoriaId == '' ||categoriaId == undefined){
-        categoriaId = 0
-    }
+
     Produto.create({
         nome: nome,
         descricao: descricao,
@@ -61,12 +47,43 @@ router.post("/produto/novo", (req, res) => {
     })
 })
 
-router.get("/admin/produtos",(req,res)=>{
-    Produto.findAll().then(produtos =>{
-        Preco.findAll().then(precos =>{
-            res.render("admin/produto/index",{produtos:produtos,precos:precos})
+//Listar
+router.get("/admin/produtos", (req, res) => {
+    Produto.findAll().then(produtos => {
+        Preco.findAll().then(precos => {
+            res.render("admin/produto/index", { produtos: produtos, precos: precos })
         })
     })
 })
 
+//Editar
+router.get("/admin/produto/editar/:produtoId", (req, res) => {
+    var produtoId = req.params.produtoId
+    if (produtoId != undefined) {
+        if (!isNaN(produtoId)) {
+            Produto.findByPk(produtoId).then(produto => {
+                //valid
+                Categoria.findAll().then(categorias => {
+                    Preco.findOne({ where: { produtoId: produtoId } }).then(preco => {
+                        Grade.findAll().then(grades => {
+                            res.render("admin/produto/edit", { produto: produto, categorias: categorias, preco: preco, grades: grades })
+                        }).catch(err =>{
+                            res.send("Sem grades cadastradas")
+                        })
+                    }).catch(err =>{
+                        res.send("Preços não cadastrado")
+                    })
+                }).catch(err =>{
+                    res.send("Categoria não encontrada")
+                })
+            }).catch(err =>{
+                res.send("Produto não encontrado")
+            })
+        } else {
+            res.redirect("/")
+        }
+    } else {
+        res.redirect("/")
+    }
+})
 module.exports = router
