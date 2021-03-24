@@ -9,6 +9,7 @@ const Sequelize = require('sequelize')
 const Produto = require('../DataBases/Produto')
 const Preco = require('../DataBases/Preco')
 
+
 router.get("/admin/produto/novo", (req, res) => {
     Categoria.findAll().then(categorias => {
         Grade.findAll().then(grades => {
@@ -67,16 +68,16 @@ router.get("/admin/produto/editar/:produtoId", (req, res) => {
                     Preco.findOne({ where: { produtoId: produtoId } }).then(preco => {
                         Grade.findAll().then(grades => {
                             res.render("admin/produto/edit", { produto: produto, categorias: categorias, preco: preco, grades: grades })
-                        }).catch(err =>{
+                        }).catch(err => {
                             res.send("Sem grades cadastradas")
                         })
-                    }).catch(err =>{
+                    }).catch(err => {
                         res.send("Preços não cadastrado")
                     })
-                }).catch(err =>{
+                }).catch(err => {
                     res.send("Categoria não encontrada")
                 })
-            }).catch(err =>{
+            }).catch(err => {
                 res.send("Produto não encontrado")
             })
         } else {
@@ -85,5 +86,33 @@ router.get("/admin/produto/editar/:produtoId", (req, res) => {
     } else {
         res.redirect("/")
     }
+})
+
+
+router.post("/produtos/find", (req, res) => {
+    op = Sequelize.Op
+    buscar = `%${req.body.busca}`
+    Produto.findAll({ where: { nome: { [op.substring]: buscar } } }).then(produtos => {
+        var busca = []
+        produtos.forEach(produto => {
+            busca.push(produto.id)
+        })
+        x = busca[0]
+        for (i = 1; i < busca.length; i++) {
+            x = x + '-' + busca[i]
+        }
+        y = x.toString()
+        res.redirect("/admin/produto/busca/" + y)
+    })
+})
+
+router.get("/admin/produto/busca/:busca", (req, res) => {
+    busca = req.params.busca
+    buscar = busca.split('-')
+    Produto.findAll({ where: { id: buscar } }).then(produtos => {
+        Preco.findAll().then(precos => {
+            res.render("admin/produto/find", { produtos: produtos, precos: precos })
+        })
+    })
 })
 module.exports = router
