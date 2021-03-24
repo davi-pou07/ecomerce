@@ -1,0 +1,65 @@
+<%- include('../../partials/head.ejs')%>
+
+    <%- include('../../partials/nav.ejs')%>
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    Acerto de Saldo de Estoque
+                    <hr>
+                    <select name="produtoId" id="produto" class="form-select" onchange="teste()">
+                        <option value="0"></option>
+                        <%if(prod==0){%>
+                            <%produtos.forEach(produto=>{%>
+                                <option value="<%=produto.id%>">
+                                    <%=produto.nome%>
+                                </option>
+                            <%})%>
+                        <%}else{%>
+                            <%produtos.forEach(produto=>{%>
+                                    <%if(produto.id==prod.id){%>
+                                        <option value="<%=produto.id%>" selected>
+                                            <%=produto.nome%>
+                                        </option>
+                                    <%}else{%>
+                                        <option value="<%=produto.id%>">
+                                            <%=produto.nome%>
+                                        </option>
+                                    <%}%>
+                            <%})%>
+                        <%}%>
+                    </select>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <h4><%= grade.descricao%></h4>
+
+                        <div class="col-md-3">
+                            <select name="coluna" class="form-select">
+                                <option value="<%=coluna.coluna1%>"><%=coluna.coluna1%></option>
+                                <option value="<%=coluna.colun %>"><%=coluna.coluna1%></option>
+                                <option value="<%=coluna.coluna1%>"><%=coluna.coluna1%></option>
+                                <option value="<%=coluna.coluna1%>"><%=coluna.coluna1%></option>
+                                <option value="<%=coluna.coluna1%>"><%=coluna.coluna1%></option>
+                                <option value="<%=coluna.coluna1%>"><%=coluna.coluna1%></option>
+                                <option value="<%=coluna.coluna1%>"><%=coluna.coluna1%></option>
+                                <option value="<%=coluna.coluna1%>"><%=coluna.coluna1%></option>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+
+                </div>
+            </div>
+        </div>
+        <%- include('../../partials/footer.ejs')%>
+            <script>
+                function teste() {
+
+                    var produto = document.getElementById('produto').value
+                    
+                    window.location.href = '/admin/estoques/' + produto
+                }
+            </script>
