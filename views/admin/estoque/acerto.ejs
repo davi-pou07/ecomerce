@@ -29,29 +29,77 @@
                         <%}%>
                     </select>
                 </div>
+                
                 <div class="card-body">
-                    <div>
+
+                    <form action="/produto/novo" method="POST" class="row g-3 needs-validation"
+                        onsubmit="sub(event,this)" novalidate id="form1">
                         <h4><%= grade.descricao%></h4>
 
                         <div class="col-md-3">
-                            <select name="coluna" class="form-select">
+                        <label for="coluna" class="form-label"><%=grade.coluna%></label>
+                            <select name="coluna" class="form-select" id="coluna">
+                                <%if(coluna.coluna1 != undefined ){%>
                                 <option value="<%=coluna.coluna1%>"><%=coluna.coluna1%></option>
-                                <option value="<%=coluna.colun %>"><%=coluna.coluna1%></option>
-                                <option value="<%=coluna.coluna1%>"><%=coluna.coluna1%></option>
-                                <option value="<%=coluna.coluna1%>"><%=coluna.coluna1%></option>
-                                <option value="<%=coluna.coluna1%>"><%=coluna.coluna1%></option>
-                                <option value="<%=coluna.coluna1%>"><%=coluna.coluna1%></option>
-                                <option value="<%=coluna.coluna1%>"><%=coluna.coluna1%></option>
-                                <option value="<%=coluna.coluna1%>"><%=coluna.coluna1%></option>
-
+                                <%}%>
+                                <%if(coluna.coluna2 != undefined ){%>
+                                <option value="<%=coluna.coluna2%>"><%=coluna.coluna2%></option>
+                                <%}%>
+                                <%if(coluna.coluna3 != undefined ){%>
+                                <option value="<%=coluna.coluna3%>"><%=coluna.coluna3%></option>
+                                <%}%>
+                                <%if(coluna.coluna4 != undefined ){%>
+                                <option value="<%=coluna.coluna4%>"><%=coluna.coluna4%></option>
+                                <%}%>
+                                <%if(coluna.coluna5 != undefined ){%>
+                                <option value="<%=coluna.coluna5%>"><%=coluna.coluna5%></option>
+                                <%}%>
+                                <%if(coluna.coluna6 != undefined ){%>
+                                <option value="<%=coluna.coluna6%>"><%=coluna.coluna6%></option>
+                                <%}%>
+                                <%if(coluna.coluna7 != undefined ){%>
+                                <option value="<%=coluna.coluna7%>"><%=coluna.coluna7%></option>
+                                <%}%>
+                                <%if(coluna.coluna8 != undefined ){%>
+                                <option value="<%=coluna.coluna8%>"><%=coluna.coluna8%></option>
+                                <%}%>
+                                <%if(coluna.coluna9 != null ){%>
+                                <option value="<%=coluna.coluna9%>"><%=coluna.coluna9%></option>
+                                <%}%>
+                                <%if( coluna.coluna10 != null  ){%>
+                                <option value="<%=coluna.coluna10%>"><%=coluna.coluna10%></option>
+                                <%}%>
                             </select>
+                            <div class="invalid-feedback">
+                                Por favor, selecione!
+                            </div>
                         </div>
-                    </div>
+                        <div class="col-md-3">
+                        <label for="linha" class="form-label"><%=grade.linha%></label>
+                            <select name="linha" class="form-select" id="linha">
+                                <option value="<%=linha.linha1%>"><%=linha.linha1%></option>
+                                <option value="<%=linha.linha2%>"><%=linha.linha2%></option>
+                                <option value="<%=linha.linha3%>"><%=linha.linha3%></option>
+                                <option value="<%=linha.linha4%>"><%=linha.linha4%></option>
+                                <option value="<%=linha.linha5%>"><%=linha.linha5%></option>
+                                <option value="<%=linha.linha6%>"><%=linha.linha6%></option>
+                                <option value="<%=linha.linha7%>"><%=linha.linha7%></option>
+                                <option value="<%=linha.linha8%>"><%=linha.linha8%></option>
+                                <option value="<%=linha.linha9%>"><%=linha.linha9%></option>
+                                <option value="<%=linha.linha10%>"><%=linha.linha10%></option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Por favor, selecione!
+                            </div>
+                        </div>
                 </div>
 
                 <div class="card-footer">
-
+                    <div class="card-footer">
+                        <button class="btn btn-primary" id="buttom">Cadastrar</button>
+                    </div>
                 </div>
+            </form>
             </div>
         </div>
         <%- include('../../partials/footer.ejs')%>

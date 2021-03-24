@@ -20,15 +20,20 @@ router.get("/admin/estoques/:produto", (req, res) => {
         if (prod != 0) {
             Produto.findByPk(prod).then(prod => {
                 Grade.findOne({ where: { id: prod.gradeId } }).then(grade => {
-                    G_coluna.findOne({ where: { gradeId: grade.id } }).then(coluna=> {
-                        res.render("admin/estoque/acerto", { produtos: produtos, prod: prod, grade: grade,coluna:coluna })
+                    G_coluna.findOne({ where: { gradeId: grade.id } }).then(coluna => {
+                        G_linha.findOne({ where: { gradeId: grade.id } }).then(linha => {
+                        console.log("==============")
+                            console.log(linha.linha10)
+                            res.render("admin/estoque/acerto", { produtos: produtos, prod: prod, grade: grade, coluna: coluna, linha:linha })
+                        })
                     })
                 })
             })
         } else {
             var grade = 0
             var coluna = 0
-            res.render("admin/estoque/acerto", { produtos: produtos, prod: prod, grade: grade,coluna:coluna })
+            var linha = 0
+            res.render("admin/estoque/acerto", { produtos: produtos, prod: prod, grade: grade, coluna: coluna , linha:linha})
         }
     })
 })
