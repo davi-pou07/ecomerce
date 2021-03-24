@@ -39,34 +39,34 @@
                         <div class="col-md-3">
                         <label for="coluna" class="form-label"><%=grade.coluna%></label>
                             <select name="coluna" class="form-select" id="coluna">
-                                <%if(coluna.coluna1 != undefined ){%>
+                                <%if(coluna.coluna1 != '' ){%>
                                 <option value="<%=coluna.coluna1%>"><%=coluna.coluna1%></option>
                                 <%}%>
-                                <%if(coluna.coluna2 != undefined ){%>
+                                <%if(coluna.coluna2 != '' ){%>
                                 <option value="<%=coluna.coluna2%>"><%=coluna.coluna2%></option>
                                 <%}%>
-                                <%if(coluna.coluna3 != undefined ){%>
+                                <%if(coluna.coluna3 != '' ){%>
                                 <option value="<%=coluna.coluna3%>"><%=coluna.coluna3%></option>
                                 <%}%>
-                                <%if(coluna.coluna4 != undefined ){%>
+                                <%if(coluna.coluna4 != '' ){%>
                                 <option value="<%=coluna.coluna4%>"><%=coluna.coluna4%></option>
                                 <%}%>
-                                <%if(coluna.coluna5 != undefined ){%>
+                                <%if(coluna.coluna5 != '' ){%>
                                 <option value="<%=coluna.coluna5%>"><%=coluna.coluna5%></option>
                                 <%}%>
-                                <%if(coluna.coluna6 != undefined ){%>
+                                <%if(coluna.coluna6 != '' ){%>
                                 <option value="<%=coluna.coluna6%>"><%=coluna.coluna6%></option>
                                 <%}%>
-                                <%if(coluna.coluna7 != undefined ){%>
+                                <%if(coluna.coluna7 != '' ){%>
                                 <option value="<%=coluna.coluna7%>"><%=coluna.coluna7%></option>
                                 <%}%>
-                                <%if(coluna.coluna8 != undefined ){%>
+                                <%if(coluna.coluna8 != '' ){%>
                                 <option value="<%=coluna.coluna8%>"><%=coluna.coluna8%></option>
                                 <%}%>
-                                <%if(coluna.coluna9 != null ){%>
+                                <%if(coluna.coluna9 != '' ){%>
                                 <option value="<%=coluna.coluna9%>"><%=coluna.coluna9%></option>
                                 <%}%>
-                                <%if( coluna.coluna10 != null  ){%>
+                                <%if( coluna.coluna10 != '' ){%>
                                 <option value="<%=coluna.coluna10%>"><%=coluna.coluna10%></option>
                                 <%}%>
                             </select>
@@ -77,20 +77,53 @@
                         <div class="col-md-3">
                         <label for="linha" class="form-label"><%=grade.linha%></label>
                             <select name="linha" class="form-select" id="linha">
-                                <option value="<%=linha.linha1%>"><%=linha.linha1%></option>
-                                <option value="<%=linha.linha2%>"><%=linha.linha2%></option>
-                                <option value="<%=linha.linha3%>"><%=linha.linha3%></option>
-                                <option value="<%=linha.linha4%>"><%=linha.linha4%></option>
-                                <option value="<%=linha.linha5%>"><%=linha.linha5%></option>
-                                <option value="<%=linha.linha6%>"><%=linha.linha6%></option>
-                                <option value="<%=linha.linha7%>"><%=linha.linha7%></option>
-                                <option value="<%=linha.linha8%>"><%=linha.linha8%></option>
-                                <option value="<%=linha.linha9%>"><%=linha.linha9%></option>
-                                <option value="<%=linha.linha10%>"><%=linha.linha10%></option>
+                                <%if(linha.linha1 != '' ){%>
+                                    <option value="<%=linha.linha1%>"><%=linha.linha1%></option>
+                                    <%}%>
+                                    <%if(linha.linha2 != '' ){%>
+                                    <option value="<%=linha.linha2%>"><%=linha.linha2%></option>
+                                    <%}%>
+                                    <%if(linha.linha3 != '' ){%>
+                                    <option value="<%=linha.linha3%>"><%=linha.linha3%></option>
+                                    <%}%>
+                                    <%if(linha.linha4 != '' ){%>
+                                    <option value="<%=linha.linha4%>"><%=linha.linha4%></option>
+                                    <%}%>
+                                    <%if(linha.linha5 != '' ){%>
+                                    <option value="<%=linha.linha5%>"><%=linha.linha5%></option>
+                                    <%}%>
+                                    <%if(linha.linha6 != '' ){%>
+                                    <option value="<%=linha.linha6%>"><%=linha.linha6%></option>
+                                    <%}%>
+                                    <%if(linha.linha7 != '' ){%>
+                                    <option value="<%=linha.linha7%>"><%=linha.linha7%></option>
+                                    <%}%>
+                                    <%if(linha.linha8 != '' ){%>
+                                    <option value="<%=linha.linha8%>"><%=linha.linha8%></option>
+                                    <%}%>
+                                    <%if(linha.linha9 != '' ){%>
+                                    <option value="<%=linha.linha9%>"><%=linha.linha9%></option>
+                                    <%}%>
+                                    <%if( linha.linha10 != '' ){%>
+                                    <option value="<%=linha.linha10%>"><%=linha.linha10%></option>
+                                    <%}%>
                             </select>
                             <div class="invalid-feedback">
                                 Por favor, selecione!
                             </div>
+                            
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="titulo" class="form-label">Estoque</label>
+                        <input type="text" class="form-control" name="nome" id="titulo"
+                             autocomplete="off" required>
+                        <div class="valid-feedback">
+                            Tudo ok!
+                        </div>
+                        <div class="invalid-feedback">
+                            Esse campo é obrigatório
+                        </div>
                         </div>
                 </div>
 
