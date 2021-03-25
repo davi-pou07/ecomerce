@@ -6,6 +6,7 @@ const G_coluna = require("../DataBases/G_coluna")
 const Sequelize = require('sequelize')
 const Estoque = require("../DataBases/Estoque")
 const Produto = require("../DataBases/Produto")
+const { where } = require("sequelize")
 
 // router.get("/admin/estoques", (req, res) => {
 //     var prod = 0
@@ -22,9 +23,9 @@ router.get("/admin/estoques/:produto", (req, res) => {
                 Grade.findOne({ where: { id: prod.gradeId } }).then(grade => {
                     G_coluna.findOne({ where: { gradeId: grade.id } }).then(coluna => {
                         G_linha.findOne({ where: { gradeId: grade.id } }).then(linha => {
-                        console.log("==============")
-                            console.log(linha.linha10)
-                            res.render("admin/estoque/acerto", { produtos: produtos, prod: prod, grade: grade, coluna: coluna, linha:linha })
+                            Estoque.findAll({ where: { produtoId: prod.id } }).then(estoques => {
+                                res.render("admin/estoque/acerto", { produtos: produtos, prod: prod, grade: grade, coluna: coluna, linha: linha, estoques:estoques })
+                            })
                         })
                     })
                 })
@@ -33,25 +34,51 @@ router.get("/admin/estoques/:produto", (req, res) => {
             var grade = 0
             var coluna = 0
             var linha = 0
-            res.render("admin/estoque/acerto", { produtos: produtos, prod: prod, grade: grade, coluna: coluna , linha:linha})
+            var estoques = 0
+            res.render("admin/estoque/acerto", { produtos: produtos, prod: prod, grade: grade, coluna: coluna, linha: linha, estoques:estoques })
         }
     })
 })
 
-// router.post("/estoque/salvar",(req,res)=>{
-//     var codProd = req.body.codProd
-//     var coluna = req.body.coluna
-//     var linha = req.body.linha
-//     var quantidade = req.body.quantidade
-
-//     Estoque.create({
-//         codProd:codProd,
-//         quantidade:quantidade,
-//         coluna:coluna,
-//         linha:linha
-//     }).then(()=>{
-//         res.redirect("/")
-//     })
-// })
+router.post("/estoque/acerto",(req,res)=>{
+    prodi = req.body.prodId
+    coluna =  req.body.coluna
+    linha = req.body.linha
+    quant = req.body.adicao
+    quantidade = parseInt(quant)
+    produtoId = parseInt(prodi)
+    Estoque.findOne({where:{produtoId:produtoId,coluna:coluna,linha:linha}}).then(estoque =>{
+        if(estoque == undefined){
+            Estoque.create({
+                produtoId:produtoId,
+                coluna:coluna,
+                linha:linha,
+                quantidade:quantidade
+            }).then(estoquer =>{
+                Produto.findByPk(produtoId).then(produto=>{
+                    var total = produto.totEstoque + estoquer.quantidade
+                    Produto.update({
+                        totEstoque:total
+                    },{where:{id:produtoId}}).then(()=>{
+                        res.send("CRIADO UM NOVO")
+                    })
+                })
+            })
+        }else{
+            Estoque.update({
+                quantidade:quantidade
+            },{where:{id:estoque.id}}).then(() =>{
+                Produto.findByPk(produtoId).then(produto=>{
+                    total = produto.totEstoque +  quantidade
+                    Produto.update({
+                        totEstoque:total
+                    },{where:{id:produtoId}}).then(()=>{
+                        res.send("UPDATADO")
+                    })
+                })
+            })
+        }
+    })
+})
 
 module.exports = router
