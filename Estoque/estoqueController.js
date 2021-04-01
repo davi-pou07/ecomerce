@@ -24,7 +24,7 @@ router.get("/admin/estoques/:produto", (req, res) => {
                     G_coluna.findOne({ where: { gradeId: grade.id } }).then(coluna => {
                         G_linha.findOne({ where: { gradeId: grade.id } }).then(linha => {
                             Estoque.findAll({ where: { produtoId: prod.id } }).then(estoques => {
-                                res.render("admin/estoque/acerto", { produtos: produtos, prod: prod, grade: grade, coluna: coluna, linha: linha, estoques:estoques })
+                                res.render("admin/estoque/adicao", { produtos: produtos, prod: prod, grade: grade, coluna: coluna, linha: linha, estoques:estoques })
                             })
                         })
                     })
@@ -35,7 +35,7 @@ router.get("/admin/estoques/:produto", (req, res) => {
             var coluna = 0
             var linha = 0
             var estoques = 0
-            res.render("admin/estoque/acerto", { produtos: produtos, prod: prod, grade: grade, coluna: coluna, linha: linha, estoques:estoques })
+            res.render("admin/estoque/adicao", { produtos: produtos, prod: prod, grade: grade, coluna: coluna, linha: linha, estoques:estoques })
         }
     })
 })
@@ -78,6 +78,12 @@ router.post("/estoque/acerto",(req,res)=>{
                 })
             })
         }
+    })
+})
+
+router.get("admin/estoque/estgrade",(req,res)=>{
+    Produto.findAll().then(()=>{
+        res.render("admin/estgrade")
     })
 })
 
