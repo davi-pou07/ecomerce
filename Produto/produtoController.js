@@ -1,13 +1,29 @@
 const express = require('express')
+const multer = require('multer')
+const path = require('path')
+
 const router = express.Router()
 const Grade = require("../DataBases/Grade")
-const G_linha = require("../DataBases/G_linha")
-const G_coluna = require("../DataBases/G_coluna")
 const Categoria = require("../DataBases/Categoria")
 const Estoque = require("../DataBases/Estoque")
 const Sequelize = require('sequelize')
 const Produto = require('../DataBases/Produto')
 const Preco = require('../DataBases/Preco')
+const Imagem = require("../DataBases/Imagen")
+
+
+const storage = multer.diskStorage({
+    destination: function(req,file,cb){
+        cb(null,'public/img/uploads/')
+    },
+    filename: function(req,file,cb){
+        var nome = req.body.nome
+        var chara = nome.split(' ')[0]
+        cb(null, chara + Date.now() + path.extname(file.originalname))
+    }
+})
+
+const upload = multer({ storage })
 
 
 router.get("/admin/produto/novo", (req, res) => {
@@ -18,7 +34,19 @@ router.get("/admin/produto/novo", (req, res) => {
     })
 })
 
-router.post("/produto/novo", (req, res) => {
+router.post("/produto/novo", upload.any('img'), (req, res) => {
+
+    files = req.files
+    files.forEach(file =>{
+        destination = file.destination
+        des = destination.replace("public/","")
+        console.log("------------------------")
+        console.log(des + file.filename)
+        console.log("------------------------")
+    })
+
+    console.log(req.body, req.files)
+
     var nome = req.body.nome
     var descricao = req.body.descricao
     var status = req.body.status
@@ -42,7 +70,16 @@ router.post("/produto/novo", (req, res) => {
             custo: custo,
             desconto: desconto,
             produtoId: produto.id
-        }).then(() => {
+        }).then(produto => {
+            files.forEach(file =>{
+                destination = file.destination
+                dest = destination.replace("public/","")
+                Imagem.create({
+                    filename:file.filename,
+                    destination:dest,
+                    produtoId:produto.id
+                })
+            })
             res.redirect("/admin/produtos")
         })
     })

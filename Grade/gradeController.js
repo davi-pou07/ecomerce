@@ -93,6 +93,7 @@ router.get("/admin/grades",(req,res)=>{
 router.post("/gradeS/find", (req, res) => {
     op = Sequelize.Op
     buscar = `%${req.body.busca}`
+    //INICIA COM E MAIUSCUO MINUSCULO
     Grade.findAll({ where: { descricao: { [op.substring]: buscar } } }).then(grades => {
         var busca = []
         grades.forEach(grade => {
