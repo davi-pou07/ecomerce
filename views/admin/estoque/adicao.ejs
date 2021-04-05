@@ -6,7 +6,7 @@
                 <div class="card-header">
                     Adiçao Saldo de Estoque
                     <hr>
-                    <select name="produtoId" id="produto" class="form-select" onchange="teste()" required>
+                    <select name="produtoId" id="produto" class="form-select" onchange="selecionar()" required>
                         <option value="0"></option>
                         <%if(prod==0){%>
                             <%produtos.forEach(produto=>{%>
@@ -35,6 +35,7 @@
                     <form action="/estoque/acerto" method="POST" class="row g-3 needs-validation"
                         onsubmit="sub(event,this)" novalidate id="form1">
                         <input type="hidden" name="prodId" value="<%=prod.id%>">
+                        <%if(grade != 0){%>
                         <h4>
                             <%= grade.descricao%>
                         </h4>
@@ -171,7 +172,11 @@
                                 Por favor, selecione!
                             </div>
                         </div>
+                        <%}else{%>
+                            <select name="" id="" disabled>aaaa</select>
+                            <select name="" id="" disabled>aaaa</select>
 
+                            <%}%>
                         <div class="col-md-3">
                             <%if(prod !=0){%>
                                 <label for="adicao" class="form-label">Quantidade a Adicionar</label>
@@ -213,12 +218,5 @@
             </div>
         </div>
         <%- include('../../partials/footer.ejs')%>
-            <script>
-                function teste() {
-
-                    var produto = document.getElementById('produto').value
-
-                    window.location.href = '/admin/estoques/' + produto
-                }
-        
-            </script>
+        <script src="/js/selecionar.js"></script>
+            
