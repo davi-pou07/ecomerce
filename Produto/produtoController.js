@@ -61,7 +61,7 @@ router.post("/produto/novo", upload.any('img'), (req, res) => {
             custo: custo,
             desconto: desconto,
             produtoId: produto.id
-        }).then(produto => {
+        }).then(preco => {
             files.forEach(file => {
                 destination = file.destination
                 dest = destination.replace("public/", "")
@@ -118,6 +118,47 @@ router.get("/admin/produto/editar/:produtoId", (req, res) => {
     } else {
         res.redirect("/")
     }
+})
+
+router.post("/produto/editar", upload.any('img'), (req, res) => {
+
+    files = req.files
+    var prodId = req.body.produtoId
+    var nome = req.body.nome
+    var descricao = req.body.descricao
+    var status = req.body.status
+    var categoriaId = req.body.categoriaId
+    var gradeId = req.body.gradeId
+
+    var venda = req.body.venda
+    var custo = req.body.custo
+    var desconto = req.body.desconto
+
+
+    Produto.update({
+        nome: nome,
+        descricao: descricao,
+        status: status,
+        categoriaId: categoriaId,
+        gradeId: gradeId
+    },{where:{id:prodId}}).then(produto => {
+        Preco.update({
+            venda: venda,
+            custo: custo,
+            desconto: desconto,
+        },{where:{produtoId:prodId}}).then(preco => {
+            files.forEach(file => {
+                destination = file.destination
+                dest = destination.replace("public/", "")
+                Imagem.create({
+                    filename: file.filename,
+                    destination: dest,
+                    produtoId: prodId
+                })
+            })
+            res.redirect("/admin/produtos")
+        })
+    })
 })
 
 
