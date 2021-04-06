@@ -13,10 +13,10 @@ const Imagem = require("../DataBases/Imagen")
 
 
 const storage = multer.diskStorage({
-    destination: function(req,file,cb){
-        cb(null,'public/img/uploads/')
+    destination: function (req, file, cb) {
+        cb(null, 'public/img/uploads/')
     },
-    filename: function(req,file,cb){
+    filename: function (req, file, cb) {
         var nome = req.body.nome
         var chara = nome.split(' ')[0]
         cb(null, chara + Date.now() + path.extname(file.originalname))
@@ -37,15 +37,6 @@ router.get("/admin/produto/novo", (req, res) => {
 router.post("/produto/novo", upload.any('img'), (req, res) => {
 
     files = req.files
-    files.forEach(file =>{
-        destination = file.destination
-        des = destination.replace("public/","")
-        console.log("------------------------")
-        console.log(des + file.filename)
-        console.log("------------------------")
-    })
-
-    console.log(req.body, req.files)
 
     var nome = req.body.nome
     var descricao = req.body.descricao
@@ -71,13 +62,13 @@ router.post("/produto/novo", upload.any('img'), (req, res) => {
             desconto: desconto,
             produtoId: produto.id
         }).then(produto => {
-            files.forEach(file =>{
+            files.forEach(file => {
                 destination = file.destination
-                dest = destination.replace("public/","")
+                dest = destination.replace("public/", "")
                 Imagem.create({
-                    filename:file.filename,
-                    destination:dest,
-                    produtoId:produto.id
+                    filename: file.filename,
+                    destination: dest,
+                    produtoId: produto.id
                 })
             })
             res.redirect("/admin/produtos")
@@ -104,7 +95,11 @@ router.get("/admin/produto/editar/:produtoId", (req, res) => {
                 Categoria.findAll().then(categorias => {
                     Preco.findOne({ where: { produtoId: produtoId } }).then(preco => {
                         Grade.findAll().then(grades => {
-                            res.render("admin/produto/edit", { produto: produto, categorias: categorias, preco: preco, grades: grades })
+                            Imagem.findAll({ where: { produtoId: produtoId } }).then(imagens => {
+                                res.render("admin/produto/edit", { produto: produto, categorias: categorias, preco: preco, grades: grades, imagens: imagens })
+                            }).catch(err => {
+                                res.send("Sem imagens cadastradas")
+                            })
                         }).catch(err => {
                             res.send("Sem grades cadastradas")
                         })

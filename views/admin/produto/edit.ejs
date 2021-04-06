@@ -133,12 +133,20 @@
                             <label for="formFile" class="form-label">Adicionar mais imagens do produto</label>
                             <input class="form-control" type="file" name="img" id="formFile" multiple>
                         </div>
-                </div>
+                        <hr>
+                        <%if(imagens != undefined){%>      
+                            <%imagens.forEach(imagem =>{%>
+                                    <img src="/<%=imagem.destination%><%=imagem.filename%>" class="position-relative w-25 p-3">
+                            <%})%>
+                        <%}%>
+                <div class="position-relative">
                 <div class="card-footer">
-                    <button class="btn btn-primary" id="buttom">Atualizar</button>
+                    <button class="btn btn-primary  position-relative start-50 end-50" id="buttom">Atualizar</button>
+                </div>
                 </div>
                 </form>
             </div>
         </div>
         <%- include('../../partials/footer.ejs')%>
             <script src="/js/sub.js"></script>
+           
