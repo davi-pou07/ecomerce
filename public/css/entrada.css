@@ -1,3 +1,19 @@
-#entrada{
-    display: none;
+
+input[type="checkbox"] {
+    visibility: hidden;
+}
+
+.labelimg {
+display: inline-block;
+border: 4px solid rgb(255, 248, 248);
+padding-right: 0px;
+padding-left: 0px;
+}
+
+input[type="checkbox"]:checked+label {
+border-color: rgb(245, 16, 0);
+}
+.imgg {
+height: 80px;
+float:left;
 }

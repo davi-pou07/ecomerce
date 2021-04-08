@@ -10,6 +10,7 @@ const Sequelize = require('sequelize')
 const Produto = require('../DataBases/Produto')
 const Preco = require('../DataBases/Preco')
 const Imagem = require("../DataBases/Imagen")
+const { count } = require('console')
 
 
 const storage = multer.diskStorage({
@@ -121,7 +122,7 @@ router.get("/admin/produto/editar/:produtoId", (req, res) => {
 })
 
 router.post("/produto/editar", upload.any('img'), (req, res) => {
-
+    var imm = []
     files = req.files
     var prodId = req.body.produtoId
     var nome = req.body.nome
@@ -134,7 +135,15 @@ router.post("/produto/editar", upload.any('img'), (req, res) => {
     var custo = req.body.custo
     var desconto = req.body.desconto
 
-
+    // Imagem.findAll({where:{produtoId:prodId}}).then(imagens =>{
+    //     count = 1
+    //     imagens.forEach(()=>{
+    //         count ++
+    //     })
+    //     console.log(imagens)
+    //     console.log("__________________")
+    // })
+    
     Produto.update({
         nome: nome,
         descricao: descricao,

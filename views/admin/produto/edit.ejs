@@ -136,11 +136,18 @@
                             <input class="form-control" type="file" name="img" id="formFile" multiple>
                         </div>
                         <hr>
-                        <%if(imagens != undefined){%>      
+                        <p>Selecione as imagens que serão deletadas</p>
+                        <div id="col" class="col">
+                        <%if(imagens != undefined){%> 
+                            <%count = 1%>
                             <%imagens.forEach(imagem =>{%>
-                                    <img src="/<%=imagem.destination%><%=imagem.filename%>" class="position-relative w-25 p-3">
-                            <%})%>
+                                <input type="checkbox" name="img<%=count%>" value="<%=imagem.id%>" id="i<%=imagem.id%>" />
+                                <label for="i<%=imagem.id%>" class="labelimg"><img src="/<%=imagem.destination%><%=imagem.filename%>" class="imgg"></label>
+                                <%count ++%>
+                        <%})%>
                         <%}%>
+                    </div>
+
                 <div class="position-relative">
                 <div class="card-footer">
                     <button class="btn btn-primary  position-relative start-50 end-50" id="buttom">Atualizar</button>
