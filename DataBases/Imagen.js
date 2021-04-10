@@ -4,13 +4,10 @@ const Produto = require('./Produto')
 
 const Imagem = connection.define('imagens',{
     filename:{
-        type:Sequelize.STRING,
+        type:Sequelize.TEXT,
         allowNull:false
     },
-    destination:{
-        type:Sequelize.STRING,
-        allowNull:false
-    },coluna:{
+    coluna:{
         type:Sequelize.STRING,
         allowNull:true
     },
@@ -22,8 +19,8 @@ const Imagem = connection.define('imagens',{
 
 Imagem.belongsTo(Produto)
 
-// Imagem.sync({force:true}).then(()=>{
-//     console.log("Tabela Imagem criada")        
-// })
+Imagem.sync({force:true}).then(()=>{
+    console.log("Tabela Imagem criada")        
+})
 
 module.exports = Imagem
