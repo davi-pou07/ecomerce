@@ -108,8 +108,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="formFile" class="form-label">Imagens do produto</label>
-                            <input class="form-control" type="file" id="formFile" multiple>
-                            <input type="hidden" name="img">
+                            <input class="form-control" type="file" id="formFile" name="img" multiple>
                         </div>
                 </div>
                 <div class="card-footer">
@@ -120,21 +119,4 @@
         </div>
         <%- include('../../partials/footer.ejs')%>
             <script src="/js/sub.js"></script>
-            <script>
-                function readFile() {
-
-                    if (this.files && this.files[0]) {
-
-                        var FR = new FileReader();
-
-                        FR.addEventListener("load", function (e) {
-                            document.getElementById("imge").value = e.target.result;
-                        });
-
-                        FR.readAsDataURL(this.files[0]);
-                    }
-
-                }
-
-                document.getElementById("inp").addEventListener("change", readFile);
-            </script>
+           

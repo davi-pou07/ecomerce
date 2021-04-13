@@ -4,7 +4,11 @@ const Produto = require('./Produto')
 
 const Imagem = connection.define('imagens',{
     filename:{
-        type:Sequelize.TEXT,
+        type:Sequelize.STRING,
+        allowNull:false
+    },
+    destination:{
+        type:Sequelize.STRING,
         allowNull:false
     },
     coluna:{
