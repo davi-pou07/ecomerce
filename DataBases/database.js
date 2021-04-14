@@ -6,6 +6,7 @@ const connection = new Sequelize('ecomerce','postgres','davi6259',{
     dialect: 'postgres',
     //configurando timezone
     timezone: "-03:00",
+    logging:false
 })
 // mysql://b4be845f37ea68:295062e4@us-cdbr-east-03.cleardb.com/heroku_9b63551fa2f9a8f?reconnect=true
 module.exports = connection;

@@ -1,7 +1,7 @@
 const express = require('express')
 const multer = require('multer')
 const path = require('path')
-const fs =  require('fs')
+const fs = require('fs')
 
 const router = express.Router()
 const Grade = require("../DataBases/Grade")
@@ -145,19 +145,19 @@ router.post("/produto/editar", upload.any('img'), (req, res) => {
     //     console.log(imagens)
     //     console.log("__________________")
     // })
-    
+
     Produto.update({
         nome: nome,
         descricao: descricao,
         status: status,
         categoriaId: categoriaId,
         gradeId: gradeId
-    },{where:{id:prodId}}).then(produto => {
+    }, { where: { id: prodId } }).then(produto => {
         Preco.update({
             venda: venda,
             custo: custo,
             desconto: desconto,
-        },{where:{produtoId:prodId}}).then(preco => {
+        }, { where: { produtoId: prodId } }).then(preco => {
             files.forEach(file => {
                 destination = file.destination
                 dest = destination.replace("public/", "")
@@ -167,13 +167,31 @@ router.post("/produto/editar", upload.any('img'), (req, res) => {
                     produtoId: prodId
                 })
             })
-            Imagem.findAndCountAll({where:{produtoId:prodId}}).then(imagens =>{
-                for(var i = 1;i<=imagens.count;i++){
+            Imagem.findAll({ where: { produtoId: prodId } }).then(imagens => {
+                for (var i = 1; i <= imagens.length; i++) {
                     eval(`img${i} = req.body.img${i}`)
-                        
-                        
+                    console.log("--------img numero = requisição-------")
+                    console.log(eval(`img${i}`))
+                    console.log("-----------------------")
+                    if (eval(`img${i}`) != undefined) {
+                        console.log("------é DIFERENTE DE UNDEFINED--------")
+                        console.log(eval(`img${i}`))
+                        console.log("-----------------------")
+                        Imagem.findOne({ where: { id: eval(`img${i}`) } }).then(img => {
+                            console.log("-----IMG--------")
+                            console.log(img)
+                            console.log("-----------------------")
+                            var destino = './public/' + img.destination + img.filename
+                            console.log("-----DESTINO--------")
+                            console.log(destino)
+                            console.log("-----------------------")
+                            Imagem.destroy({ where: { id: img.id } }).then(() => {
+                                fs.unlinkSync(destino)
+                            })
+                        })
+                    }
                 }
-                
+
             })
             res.redirect("/admin/produtos")
         })

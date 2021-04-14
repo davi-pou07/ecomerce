@@ -21,7 +21,7 @@ router.post("/categorias/salvar", (req, res) => {
         status: status,
         destaque: destaque
     }).then(() => {
-        res.redirect("/admin/categoria/novo")
+        res.redirect("/admin/categorias")
     })
 })
 
