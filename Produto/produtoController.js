@@ -1,6 +1,7 @@
 const express = require('express')
 const multer = require('multer')
 const path = require('path')
+const fs =  require('fs')
 
 const router = express.Router()
 const Grade = require("../DataBases/Grade")
@@ -11,6 +12,7 @@ const Produto = require('../DataBases/Produto')
 const Preco = require('../DataBases/Preco')
 const Imagem = require("../DataBases/Imagen")
 const { count } = require('console')
+const { where } = require('sequelize')
 
 
 const storage = multer.diskStorage({
@@ -165,6 +167,14 @@ router.post("/produto/editar", upload.any('img'), (req, res) => {
                     produtoId: prodId
                 })
             })
+            Imagem.findAndCountAll({where:{produtoId:prodId}}).then(imagens =>{
+                for(var i = 1;i<=imagens.count;i++){
+                    eval(`img${i} = req.body.img${i}`)
+                        
+                        
+                }
+                
+            })
             res.redirect("/admin/produtos")
         })
     })
@@ -197,4 +207,6 @@ router.get("/admin/produto/busca/:busca", (req, res) => {
         })
     })
 })
+
+
 module.exports = router

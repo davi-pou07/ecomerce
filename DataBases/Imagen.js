@@ -23,8 +23,8 @@ const Imagem = connection.define('imagens',{
 
 Imagem.belongsTo(Produto)
 
-Imagem.sync({force:true}).then(()=>{
-    console.log("Tabela Imagem criada")        
-})
+// Imagem.sync({force:true}).then(()=>{
+//     console.log("Tabela Imagem criada")        
+// })
 
 module.exports = Imagem

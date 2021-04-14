@@ -141,10 +141,11 @@
                         <%if(imagens != undefined){%> 
                             <%count = 1%>
                             <%imagens.forEach(imagem =>{%>
-                                <input type="checkbox" name="img<%=count%>" value="<%=imagem.id%>" id="i<%=imagem.id%>" />
+                                <input type="checkbox" name="img<%=count%>" value="<%=imagem.id%>" id="i<%=imagem.id%>"/>
                                 <label for="i<%=imagem.id%>" class="labelimg"><img src="/<%=imagem.destination%><%=imagem.filename%>" class="imgg"></label>
                                 <%count ++%>
                         <%})%>
+                        <input type="hidden" id="hid" value="0" id="hid">
                         <%}%>
                     </div>
 
@@ -158,4 +159,10 @@
         </div>
         <%- include('../../partials/footer.ejs')%>
             <script src="/js/sub.js"></script>
+            <script>
+                function click(){
+                    var hid  = document.getElementById('hid').value = 1
+                    window.alert(hid)
+                }
+            </script>
            
