@@ -6,6 +6,7 @@ const categoriaController = require("../ecomerce/Categorias/categoriasController
 const gradeController = require("../ecomerce/Grade/gradeController")
 const produtoController = require("./Produto/produtoController")
 const estoqueController = require("./Estoque/estoqueController")
+const userController = require("./User/userController")
 const Categoria = require("./DataBases/Categoria")
 const Grade = require("./DataBases/Grade")
 const G_coluna = require("./DataBases/G_coluna")
@@ -13,6 +14,7 @@ const G_linha = require("./DataBases/G_linha")
 const Produto =  require("./DataBases/Produto")
 const Estoque = require("./DataBases/Estoque")
 const Preco = require("./DataBases/Preco")
+const Usuer = require("./DataBases/User")
 
 
 
@@ -60,6 +62,7 @@ app.use("/",categoriaController)
 app.use("/",gradeController)
 app.use("/",estoqueController)
 app.use("/",produtoController)
+app.use("/",userController)
 
 
 app.get("/", (req, res) => { res.render("index") })

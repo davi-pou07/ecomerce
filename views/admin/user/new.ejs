@@ -1,0 +1,24 @@
+<%- include('../../partials/head.ejs')%>
+
+    <%- include('../../partials/nav.ejs')%>
+            <div class="container">
+                <hr>
+                <div class="card mt-5">
+                    <div class="card-header">
+                        <h2>Criação de Usuário</h2>
+                    </div>
+                    <div class="card-body">
+                        //
+                        <form action="/user/novo" method="POST">
+                            <input class="form-control" type="text" name="login" placeholder="Davi_Henrique">
+                            <br>
+                            <input class="form-control" type="password" name="senha" placeholder="********">
+                            <br>
+                            <button type="submit" class="btn btn-success form-control" onclick="this.form.submit(); this.disabled=true; this.value='Carregando…';">Criar</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+    </body>
+    <%- include('../../partials/footer.ejs')%>

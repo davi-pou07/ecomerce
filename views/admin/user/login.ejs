@@ -1,0 +1,38 @@
+<%- include('../../partials/header.ejs')%>
+
+    <body>
+        <%- include('../../partials/navbar.ejs')%>
+
+            <div class="container">
+                <hr>
+                <div class="card mt-5">
+                    <div class="card-header">
+                        <h2>Login</h2>
+                    </div>
+                    <div class="card-body mx-auto">
+
+                        <form action="/autenticar" method="POST">
+                            
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">@</span>
+                                <input type="text" class="mr-sm-2" name="login" placeholder="Username"
+                                    aria-label="Username" aria-describedby="basic-addon1">
+                            </div>
+                            <br>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon2">*</span>
+                                <input type="password" class="mr-sm-2" name="senha" placeholder="Senha"
+                                    aria-label="Senha" aria-describedby="basic-addon2">
+                            </div>
+                            <hr>
+
+                            <div class="card-footer mx-auto">
+                                <button class="btn btn-primary" type="submit">Entrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+    </body>
+    <%- include('../../partials/footer.ejs')%>
