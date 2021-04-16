@@ -1,24 +1,66 @@
 <%- include('../../partials/head.ejs')%>
 
     <%- include('../../partials/nav.ejs')%>
-            <div class="container">
-                <hr>
-                <div class="card mt-5">
-                    <div class="card-header">
-                        <h2>Criação de Usuário</h2>
-                    </div>
-                    <div class="card-body">
-                        //
-                        <form action="/user/novo" method="POST">
-                            <input class="form-control" type="text" name="login" placeholder="Davi_Henrique">
-                            <br>
-                            <input class="form-control" type="password" name="senha" placeholder="********">
-                            <br>
-                            <button type="submit" class="btn btn-success form-control" onclick="this.form.submit(); this.disabled=true; this.value='Carregando…';">Criar</button>
-                        </form>
-                    </div>
+        <div class="container">
+            <hr>
+            <div class="card mt-5">
+                <div class="card-header">
+                    <h2>Criação de Usuário</h2>
                 </div>
+                <div class="card-body">
 
+                    <form action="/user/novo" method="POST" class="row g-3 needs-validation" onsubmit="sub(event,this)"
+                        novalidate id="form1">
+
+                        <label for="email" class="form-label">Email</label>
+                        <input class="form-control" id="email" type="email" name="email" placeholder="davi@davi.com"
+                            autocomplete="off" required>
+
+                        <label for="nome" class="form-label">Nome</label>
+                        <input class="form-control" type="text" id="nome" name="nome"
+                            placeholder="Davi Henrique de Almeida Reis" autocomplete="x" required>
+
+                        <div class="col-md-6">
+                            <label for="login" class="form-label">Login</label>
+                            <input class="form-control" type="text" id="login" name="login" id="login" placeholder="Davi_Henrique"
+                                autocomplete="x" required onkeyup="limpo()">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="telefone" class="form-label">Telefone</label>
+                            <input class="form-control" type="tel" id="phone" name="telefone"
+                                placeholder="(86)9 9472-6085" autocomplete="x" required onkeypress="mask(this, mphone);" onblur="mask(this, mphone);" maxlength="15">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="telefone" class="form-label">Senha</label>
+                            <input class="form-control" type="password" id="senha" name="senha" placeholder="********"
+                                required autocomplete="x">
+
+                        </div>
+                        <div class="col-md-6">
+                            <label for="telefone" class="form-label">Confirma Senha</label>
+                            <input class="form-control" type="password" id="confirm" name="confirm_pass"
+                                placeholder="********" required>
+                        </div>
+                        <br>
+                        <hr>
+                        <button type="submit" class="btn btn-primary form-control" onclick="validar()">Criar</button>
+                    </form>
+                </div>
             </div>
-    </body>
-    <%- include('../../partials/footer.ejs')%>
+
+        </div>
+        </body>
+        <%- include('../../partials/footer.ejs')%>
+        <script>
+            function limpo(){
+                limpar = document.getElementById('login').value
+                var l = limpar.replace(/\s/g,'')
+                limpar2 = document.getElementById('login').value = l 
+            }
+        </script>
+            <script src="/js/validar.js"></script>
+            <script src="/js/telefone.js"></script>
+            <script src="/js/sub.js"></script>
+            

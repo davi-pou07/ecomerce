@@ -5,7 +5,6 @@ const User =  connection.define('users',{
     login:{
         type: Sequelize.STRING,
         allowNull: false
-        //Slug é o nome editavel que sairia o titulo para ultilizar na rota por exemplo
     },senha: {
         type: Sequelize.STRING,
         allowNull: false
@@ -21,12 +20,16 @@ const User =  connection.define('users',{
     },nome:{
         type: Sequelize.STRING,
         allowNull:false
+    },
+    status:{
+        type: Sequelize.BOOLEAN,
+        allowNull:false
     }
     
 })
 
 
 //Arquivo foi removido para não tentar criar toda vez que o projeto rodar
-// User.sync({force:false}).then(()=>{console.log("usuario ok")})
+// User.sync({force:true}).then(()=>{console.log("usuario ok")})
 
 module.exports= User

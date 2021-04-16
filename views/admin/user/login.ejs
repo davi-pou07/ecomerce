@@ -1,7 +1,6 @@
-<%- include('../../partials/header.ejs')%>
+<%- include('../../partials/head.ejs')%>
 
-    <body>
-        <%- include('../../partials/navbar.ejs')%>
+    <%- include('../../partials/nav.ejs')%>
 
             <div class="container">
                 <hr>
@@ -14,20 +13,18 @@
                         <form action="/autenticar" method="POST">
                             
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">@</span>
                                 <input type="text" class="mr-sm-2" name="login" placeholder="Username"
                                     aria-label="Username" aria-describedby="basic-addon1">
                             </div>
                             <br>
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon2">*</span>
                                 <input type="password" class="mr-sm-2" name="senha" placeholder="Senha"
                                     aria-label="Senha" aria-describedby="basic-addon2">
                             </div>
                             <hr>
 
-                            <div class="card-footer mx-auto">
-                                <button class="btn btn-primary" type="submit">Entrar</button>
+                            <div class="card-footer mx-6">
+                                <button class="btn btn-primary form-control" type="submit">Entrar</button>
                             </div>
                         </form>
                     </div>
