@@ -170,21 +170,9 @@ router.post("/produto/editar", upload.any('img'), (req, res) => {
             Imagem.findAll({ where: { produtoId: prodId } }).then(imagens => {
                 for (var i = 1; i <= imagens.length; i++) {
                     eval(`img${i} = req.body.img${i}`)
-                    console.log("--------img numero = requisição-------")
-                    console.log(eval(`img${i}`))
-                    console.log("-----------------------")
                     if (eval(`img${i}`) != undefined) {
-                        console.log("------é DIFERENTE DE UNDEFINED--------")
-                        console.log(eval(`img${i}`))
-                        console.log("-----------------------")
                         Imagem.findOne({ where: { id: eval(`img${i}`) } }).then(img => {
-                            console.log("-----IMG--------")
-                            console.log(img)
-                            console.log("-----------------------")
                             var destino = './public/' + img.destination + img.filename
-                            console.log("-----DESTINO--------")
-                            console.log(destino)
-                            console.log("-----------------------")
                             Imagem.destroy({ where: { id: img.id } }).then(() => {
                                 fs.unlinkSync(destino)
                             })

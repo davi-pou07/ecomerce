@@ -15,6 +15,9 @@ const Produto =  require("./DataBases/Produto")
 const Estoque = require("./DataBases/Estoque")
 const Preco = require("./DataBases/Preco")
 const Usuer = require("./DataBases/User")
+const Promocao = require("./DataBases/Promocao")
+const PromoProd = require("./DataBases/Promoprod")
+const Empresa = require("./DataBases/Empresa")
 
 
 
