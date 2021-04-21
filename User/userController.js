@@ -63,13 +63,13 @@ router.post("/autenticar", (req, res) => {
                 }
                 console.log(req.session)
                 // res.json(req.session.usu)
-                res.redirect("/admin/produtos")
+                res.send("Usuario logado:"+" "+ usu.nome)
             } else {
-                // console.log("não existe")
+                console.log("Senha incorreta")
                 res.redirect("/")
             }
         } else {
-            // console.log("não encontrado")
+            console.log("não encontrado")
             res.redirect("/")
         }
     })

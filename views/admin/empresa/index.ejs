@@ -1,0 +1,36 @@
+<%- include('../../partials/head.ejs')%>
+
+    <%- include('../../partials/nav.ejs')%>
+    <br>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h1>Empresa</h1>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-horizontal">
+                    <button type="button" class="list-group-item list-group-item-action active"
+                        aria-current="true">
+                        Logo:
+                    <button type="button" class="list-group-item list-group-item-action active"
+                        aria-current="true">
+                        Código Empresa:
+                    <button type="button" class="list-group-item list-group-item-action active"
+                        aria-current="true" >
+                        Nome:
+                    <button type="button" class="list-group-item list-group-item-action active"
+                        aria-current="true">
+                        CNPJ:
+            </ul>
+                    <ul class="list-group list-group-horizontal" onclick="window.location='/admin/empresa/editar/<%=empresa.id%>'">
+                    <button type="button" class="list-group-item list-group-item-action" ><input type="image" height="100px" width="100px" src="<%=empresa.logo%>"> </button>  
+                    <button type="button" class="list-group-item list-group-item-action" > <%=empresa.id %> </button>
+                    <button type="button" class="list-group-item list-group-item-action"><%=empresa.nome %></button>
+                    <button type="button" class="list-group-item list-group-item-action"><%=empresa.cnpj %></button>
+                    </ul>
+            </div>
+        </div>
+    </div>
+
+        <%- include('../../partials/footer.ejs')%>
+            <script src="/js/sub.js"></script>

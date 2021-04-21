@@ -2,22 +2,28 @@ const express = require("express")
 const app = express()
 const session = require("express-session")
 const bodyParser = require("body-parser")
+
+const Categoria = require("./DataBases/Categoria")
+const Produto =  require("./DataBases/Produto")
+const Grade = require("./DataBases/Grade")
+const G_coluna = require("./DataBases/G_coluna")
+const G_linha = require("./DataBases/G_linha")
+const Estoque = require("./DataBases/Estoque")
+const Preco = require("./DataBases/Preco")
+const Imagem = require("./DataBases/Imagen")
+const Usuer = require("./DataBases/User")
+const Promocao = require("./DataBases/Promocao")
+const PromoProd = require("./DataBases/Promoprod")
+const Empresa = require("./DataBases/Empresa")
+
 const categoriaController = require("../ecomerce/Categorias/categoriasController")
 const gradeController = require("../ecomerce/Grade/gradeController")
 const produtoController = require("./Produto/produtoController")
 const estoqueController = require("./Estoque/estoqueController")
 const userController = require("./User/userController")
-const Categoria = require("./DataBases/Categoria")
-const Grade = require("./DataBases/Grade")
-const G_coluna = require("./DataBases/G_coluna")
-const G_linha = require("./DataBases/G_linha")
-const Produto =  require("./DataBases/Produto")
-const Estoque = require("./DataBases/Estoque")
-const Preco = require("./DataBases/Preco")
-const Usuer = require("./DataBases/User")
-const Promocao = require("./DataBases/Promocao")
-const PromoProd = require("./DataBases/Promoprod")
-const Empresa = require("./DataBases/Empresa")
+const empresaController = require("./Empresa/empresaController")
+
+
 
 
 
@@ -66,10 +72,17 @@ app.use("/",gradeController)
 app.use("/",estoqueController)
 app.use("/",produtoController)
 app.use("/",userController)
+app.use("/",empresaController)
 
 
-app.get("/", (req, res) => { res.render("index") })
-
+app.get("/", (req, res) => {
+    var log = req.session.usu
+    if(log == undefined){
+        res.render("admin/user/login")
+    }else{
+        res.render("index") 
+    }
+    })
 
 app.listen(PORT,()=>{
     console.log("Servidor ligado")
