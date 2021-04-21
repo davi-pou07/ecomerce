@@ -1,33 +1,45 @@
-<%- include('../../partials/head.ejs')%>
+<!DOCTYPE html>
+<html lang="pt-br">
 
-            <div class="container">
-                <hr>
-                <div class="card mt-5">
-                    <div class="card-header">
-                        <h2>Login</h2>
-                    </div>
-                    <div class="card-body mx-auto">
-
-                        <form action="/autenticar" method="POST">
-                            
-                            <div class="input-group-prepend">
-                                <input type="text" class="mr-sm-2" name="login" placeholder="Username"
-                                    aria-label="Username" aria-describedby="basic-addon1">
-                            </div>
-                            <br>
-                            <div class="input-group-prepend">
-                                <input type="password" class="mr-sm-2" name="senha" placeholder="Senha"
-                                    aria-label="Senha" aria-describedby="basic-addon2">
-                            </div>
-                            <hr>
-
-                            <div class="card-footer mx-6">
-                                <button class="btn btn-primary form-control" type="submit">Entrar</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/loginGif.css">
+    <title>ecomerce</title>
+</head>
+<body>
+    
+    <div class="container">
+        <br>
+        <div class="card position-absolute top-50 start-50 translate-middle text-white bg-primary mt-5 col-md-4">
+            <div class="card-header">
+                <h2 class="col-md-2 mx-auto">Login</h2>
             </div>
-    </body>
-    <%- include('../../partials/footer.ejs')%>
+            <div class="card-body mx-center">
+
+                <form action="/autenticar" method="POST">
+
+                    <div class="col-md-8 mx-auto">
+                        <label for="login" class="form-label">Login</label>
+                        <input type="text" class="form-control" name="login" id="login" placeholder="Username"
+                            aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                    <br>
+                    <div class="col-md-8 mx-auto">
+                        <label for="senha" class="form-label">Senha</label>
+                        <input type="password" class="form-control" name="senha" id="Senha" placeholder="*****"
+                            aria-label="Senha" aria-describedby="basic-addon2">
+                    </div>
+                    <br>
+                    <div class="col-md-4 mx-auto">
+                        <button class="btn btn-dark text-white form-control" type="submit">Entrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</body>
+<%- include('../../partials/footer.ejs')%>

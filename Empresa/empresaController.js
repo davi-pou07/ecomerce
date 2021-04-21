@@ -73,6 +73,16 @@ router.post("/empresa/novo",upload.single('logo'),(req,res)=>{
     })
 })
 
+router.get("/empresa",(req,res)=>{
+    Empresa.findOne().then(empresa =>{
+        if(empresa != undefined){
+            res.json(empresa)
+        }else{
+            res.send("Erro, fale com seu ADMINISTRADOR")
+        }
+    })
+})
+
 router.get("/admin/empresa",(req,res)=>{
     Empresa.findOne().then(empresa =>{
         if(empresa != undefined){

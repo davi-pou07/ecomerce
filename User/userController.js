@@ -1,15 +1,35 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../DataBases/User");
+const multer = require('multer')
+const path = require('path')
+const fs = require('fs')
 //npm install --save bcryptjs
 const bcrypt = require("bcryptjs")
 const { Op } = require("sequelize");
+
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/img/user/')
+    },
+    filename: function (req, file, cb) {
+        // var nome = req.body.nome
+        // console.log(nome)
+        // var chara = nome.split(' ')[0]
+        cb(null, Date.now() + path.extname(file.originalname))
+    }
+})
+
+const upload = multer({ storage })
 
 router.get("/admin/user/novo", (req, res) => {
     res.render("admin/user/new")
 })
 
-router.post("/user/novo", (req, res) => {
+router.post("/user/novo",upload.single('avatar'),(req, res) => {
+    var file = req.file
+    var imagem = file.destination.replace("public","")+file.filename
     var email = req.body.email
     var nome = req.body.nome
     var telefone = req.body.telefone
@@ -27,7 +47,8 @@ router.post("/user/novo", (req, res) => {
                 nome: nome,
                 telefone: telefone,
                 isAdmin:true,
-                status:true
+                status:true,
+                foto:imagem
             }).then(() => {
                 res.redirect("/")
             }).catch(err => {
@@ -43,6 +64,17 @@ router.get("/admin/usuarios",(req,res)=>{
     User.findAll().then(usuarios =>{
         res.render("admin/user/index",{usuarios:usuarios})
     })
+})
+router.get("/admin/usuario/editar/:user",(req,res)=>{
+    userId =  req.params.user
+    if (userId != undefined) {
+        if(!isNaN(userId)){
+            User.findByPk(userId).then(user =>{
+                res.render("admin/user/edit",{user:user})
+            })
+        }
+    }
+    
 })
 
 router.get("/login", (req, res) => {
@@ -73,6 +105,18 @@ router.post("/autenticar", (req, res) => {
             res.redirect("/")
         }
     })
+})
+
+
+router.get("/user",(req,res)=>{
+    var log = req.session.usu
+    if(log != undefined){
+        User.findByPk(log.id).then(user =>{
+            res.json(user)
+        })
+    }else{
+        res.json("Erro: Nenhum usuario logado")
+    }
 })
 
 router.get("/logout", (req, res) => {

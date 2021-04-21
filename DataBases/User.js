@@ -24,6 +24,9 @@ const User =  connection.define('users',{
     status:{
         type: Sequelize.BOOLEAN,
         allowNull:false
+    },foto:{
+        type: Sequelize.STRING,
+        allowNull:true
     }
     
 })
