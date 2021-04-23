@@ -57,6 +57,7 @@ app.use(session({
     cookie: { maxAge: 3600000 }
 }))
 
+
 //usar o EJS como view engine | renderizador de html
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
