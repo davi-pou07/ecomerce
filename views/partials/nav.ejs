@@ -1,0 +1,76 @@
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand ms-3" href="/">
+                <img src="/img/icon.png" id="logo" width="40" height="34" class="d-inline-block align-top">
+                <span id="empreza"></span>
+            </a>
+        <div class="container">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button"
+                            id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Produtos</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><input type="search" class="form-control me-2" name="pesquisa" id="pesquisa"
+                                    placeholder="Pesquisar"></li>
+                            <li><a href="/admin/produtos" class="dropdown-item">Listar</a></li>
+                            <li><a href="/admin/produto/novo" class="dropdown-item">Criar</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a href="/admin/categorias" class="dropdown-item">Categoria</a></li>
+                            <li><a href="/admin/grades" class="dropdown-item">Grade</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button"
+                            id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Estoque</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a href="/admin/estoques/0" class="dropdown-item">Adicionar</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a href="/admin/estoque/estgrade/0" class="dropdown-item">Listar</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="d-flex">
+                <div class="me-3 mt-3">
+                    <button class="btn btn-success" type="button" id="user">Usuario</button>
+                </div>
+
+                <div class="personal-imageNav">
+                    <label class="label">
+                        <figure class="personal-figureNav">
+                            <img src="/img/avatar.jpg" class="personal-avatarNav" id="img" alt="avatar">
+                        </figure>
+                    </label>
+                </div>
+            </div>
+
+        </div>
+
+        </div>
+    </nav>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        axios.get('http://localhost:8080/user').then(user => {
+            if (user.data != undefined) {
+                button = document.getElementById('user');
+                button.innerHTML = user.data.login;
+                img = document.getElementById("img");
+                img.src = user.data.foto
+            }
+        })
+        axios.get('http://localhost:8080/empresa').then(empresa => {
+            if (empresa.data != undefined) {
+                var logo = document.getElementById("logo")
+                logo.src = empresa.data.logo
+                var span = document.getElementById("empreza")
+                span.innerHTML = empresa.data.nome
+            }
+        })
+    </script>

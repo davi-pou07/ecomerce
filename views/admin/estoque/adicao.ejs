@@ -1,0 +1,222 @@
+<%- include('../../partials/head.ejs')%>
+
+    <%- include('../../partials/nav.ejs')%>
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    Adiçao Saldo de Estoque
+                    <hr>
+                    <select name="produtoId" id="produto" class="form-select" onchange="selecionar()" required>
+                        <option value="0"></option>
+                        <%if(prod==0){%>
+                            <%produtos.forEach(produto=>{%>
+                                <option value="<%=produto.id%>">
+                                    <%=produto.nome%>
+                                </option>
+                                <%})%>
+                                    <%}else{%>
+                                        <%produtos.forEach(produto=>{%>
+                                            <%if(produto.id==prod.id){%>
+                                                <option value="<%=produto.id%>" selected>
+                                                    <%=produto.nome%>
+                                                </option>
+                                                <%}else{%>
+                                                    <option value="<%=produto.id%>">
+                                                        <%=produto.nome%>
+                                                    </option>
+                                                    <%}%>
+                                                        <%})%>
+                                                            <%}%>
+                    </select>
+                </div>
+
+                <div class="card-body">
+
+                    <form action="/estoque/acerto" method="POST" class="row g-3 needs-validation"
+                        onsubmit="sub(event,this)" novalidate id="form1">
+                        <input type="hidden" name="prodId" value="<%=prod.id%>">
+                        <%if(grade != 0){%>
+                        <h4>
+                            <%= grade.descricao%>
+                        </h4>
+
+                        <div class="col-md-3">
+                            <label for="coluna" class="form-label">
+                                <%=grade.coluna%>
+                            </label>
+                            <select name="coluna" class="form-select" id="coluna">
+                                <%if(coluna.coluna1 !='' ){%>
+                                    <option value="<%=coluna.coluna1%>">
+                                        <%=coluna.coluna1%>
+                                    </option>
+                                    <%}%>
+                                        <%if(coluna.coluna2 !='' ){%>
+                                            <option value="<%=coluna.coluna2%>">
+                                                <%=coluna.coluna2%>
+                                            </option>
+                                            <%}%>
+                                                <%if(coluna.coluna3 !='' ){%>
+                                                    <option value="<%=coluna.coluna3%>">
+                                                        <%=coluna.coluna3%>
+                                                    </option>
+                                                    <%}%>
+                                                        <%if(coluna.coluna4 !='' ){%>
+                                                            <option value="<%=coluna.coluna4%>">
+                                                                <%=coluna.coluna4%>
+                                                            </option>
+                                                            <%}%>
+                                                                <%if(coluna.coluna5 !='' ){%>
+                                                                    <option value="<%=coluna.coluna5%>">
+                                                                        <%=coluna.coluna5%>
+                                                                    </option>
+                                                                    <%}%>
+                                                                        <%if(coluna.coluna6 !='' ){%>
+                                                                            <option value="<%=coluna.coluna6%>">
+                                                                                <%=coluna.coluna6%>
+                                                                            </option>
+                                                                            <%}%>
+                                                                                <%if(coluna.coluna7 !='' ){%>
+                                                                                    <option value="<%=coluna.coluna7%>">
+                                                                                        <%=coluna.coluna7%>
+                                                                                    </option>
+                                                                                    <%}%>
+                                                                                        <%if(coluna.coluna8 !='' ){%>
+                                                                                            <option
+                                                                                                value="<%=coluna.coluna8%>">
+                                                                                                <%=coluna.coluna8%>
+                                                                                            </option>
+                                                                                            <%}%>
+                                                                                                <%if(coluna.coluna9 !=''
+                                                                                                    ){%>
+                                                                                                    <option
+                                                                                                        value="<%=coluna.coluna9%>">
+                                                                                                        <%=coluna.coluna9%>
+                                                                                                    </option>
+                                                                                                    <%}%>
+                                                                                                        <%if(
+                                                                                                            coluna.coluna10
+                                                                                                            !='' ){%>
+                                                                                                            <option
+                                                                                                                value="<%=coluna.coluna10%>">
+                                                                                                                <%=coluna.coluna10%>
+                                                                                                            </option>
+                                                                                                            <%}%>
+                            </select>
+                            <div class="invalid-feedback">
+                                Por favor, selecione!
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="linha" class="form-label">
+                                <%=grade.linha%>
+                            </label>
+                            <select name="linha" class="form-select" id="linha">
+                                <%if(linha.linha1 !='' ){%>
+                                    <option value="<%=linha.linha1%>">
+                                        <%=linha.linha1%>
+                                    </option>
+                                    <%}%>
+                                        <%if(linha.linha2 !='' ){%>
+                                            <option value="<%=linha.linha2%>">
+                                                <%=linha.linha2%>
+                                            </option>
+                                            <%}%>
+                                                <%if(linha.linha3 !='' ){%>
+                                                    <option value="<%=linha.linha3%>">
+                                                        <%=linha.linha3%>
+                                                    </option>
+                                                    <%}%>
+                                                        <%if(linha.linha4 !='' ){%>
+                                                            <option value="<%=linha.linha4%>">
+                                                                <%=linha.linha4%>
+                                                            </option>
+                                                            <%}%>
+                                                                <%if(linha.linha5 !='' ){%>
+                                                                    <option value="<%=linha.linha5%>">
+                                                                        <%=linha.linha5%>
+                                                                    </option>
+                                                                    <%}%>
+                                                                        <%if(linha.linha6 !='' ){%>
+                                                                            <option value="<%=linha.linha6%>">
+                                                                                <%=linha.linha6%>
+                                                                            </option>
+                                                                            <%}%>
+                                                                                <%if(linha.linha7 !='' ){%>
+                                                                                    <option value="<%=linha.linha7%>">
+                                                                                        <%=linha.linha7%>
+                                                                                    </option>
+                                                                                    <%}%>
+                                                                                        <%if(linha.linha8 !='' ){%>
+                                                                                            <option
+                                                                                                value="<%=linha.linha8%>">
+                                                                                                <%=linha.linha8%>
+                                                                                            </option>
+                                                                                            <%}%>
+                                                                                                <%if(linha.linha9 !=''
+                                                                                                    ){%>
+                                                                                                    <option
+                                                                                                        value="<%=linha.linha9%>">
+                                                                                                        <%=linha.linha9%>
+                                                                                                    </option>
+                                                                                                    <%}%>
+                                                                                                        <%if(
+                                                                                                            linha.linha10
+                                                                                                            !='' ){%>
+                                                                                                            <option
+                                                                                                                value="<%=linha.linha10%>">
+                                                                                                                <%=linha.linha10%>
+                                                                                                            </option>
+                                                                                                            <%}%>
+                            </select>
+                            <div class="invalid-feedback">
+                                Por favor, selecione!
+                            </div>
+                        </div>
+                        <%}else{%>
+                            <select name="" id="" disabled>aaaa</select>
+                            <select name="" id="" disabled>aaaa</select>
+
+                            <%}%>
+                        <div class="col-md-3">
+                            <%if(prod !=0){%>
+                                <label for="adicao" class="form-label">Quantidade a Adicionar</label>
+                                <input type="number" class="form-control" name="adicao" id="adicao" autocomplete="off"
+                                    required>
+                                <%}else{%>
+                                    <label for="adicao" class="form-label"></label>
+                                    <input type="number" class="form-control" id="adicao"
+                                        autocomplete="off" disabled>
+                                    <%}%>
+                                        <div class="valid-feedback">
+                                            Tudo ok!
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            Esse campo é obrigatório
+                                        </div>
+                        </div>
+
+                        <hr>
+                        <div class="col-md-3">
+                            <label for="estoqueAnterior" class="form-label">Estoque total</label>
+                            <input type="number" class="form-control" id="estoqueAnterior"
+                                autocomplete="off" disabled value="<%=prod.totEstoque%>">
+                            <div class="valid-feedback">
+                                Tudo ok!
+                            </div>
+                            <div class="invalid-feedback">
+                                Esse campo é obrigatório
+                            </div>
+                        </div>
+                </div>
+
+                <div class="card-footer">
+                    <div class="card-footer">
+                        <button class="btn btn-primary form-control" id="buttom">Cadastrar</button>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+        <%- include('../../partials/footer.ejs')%>
+        <script src="/js/selecionar.js"></script>
+            

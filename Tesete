@@ -1,0 +1,87 @@
+const express = require("express")
+const app = express()
+const multer = require("multer")
+const bodyParser = require("body-parser")
+
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, "./uploads/")
+    },
+    filename: (req, file, cb) => {
+      cb(null, Date.now() + "-" + file.ogirinalname)
+    }
+  })
+
+const upload = multer({  dest : storage})
+
+
+
+app.set('view engine', 'ejs')
+
+app.get("/", (req, res) =>{
+    res.render("home_")
+})
+app.post("/test", (req, res) => {
+  // console.log(req.body, req.file)
+  var x = req.body.x
+  // console.log(x)
+  a = x.split('')
+  res.send(x)
+})
+app.listen(8080, () => {
+    console.log("running...")})
+
+
+
+localstorage.setItem("":"")
+localstorage.getItem("":"")
+
+
+
+
+
+
+<h1>Upload</h1>
+<form action="/test" method="POST" ectype="multipart/form-data">
+    <input id="images" type='file' multiple onchange="readAndShowFiles()">
+    <span id="list"></span>
+    <input type="hidden" name="x" id='x'>
+
+    <button type="submit">BUTÃO</button>
+</form>
+
+<script>
+function readAndShowFiles() {
+  var files = document.getElementById("images").files;
+
+  for (var i = 0; i < files.length; i++) {
+    // Closure to capture the file information.
+    (file => {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        // Render thumbnail.
+        var span = document.createElement('span');
+        span.innerHTML = ['<img src="', e.target.result,
+          '" title="', escape(file.name), '" width="500" height="600" >'
+        ].join('');
+        document.getElementById('list').insertBefore(span, null);
+        console.log(e.target.result)
+        document.getElementById('x').value = e.target.result
+      };
+      // Read in the image file as a data URL.
+      reader.readAsDataURL(file);
+    })(files[i]);
+  }
+}
+   
+</script>
+
+
+
+
+
+
+

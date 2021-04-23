@@ -1,0 +1,189 @@
+<%- include('../../partials/head.ejs')%>
+
+    <%- include('../../partials/nav.ejs')%>
+
+        <div class="container">
+            <br>
+            <div class="card">
+                <div class="card-header">
+                    <h3>Seja bem vindo!</h3>
+                    <p>A revolução está preste a começar!</p>
+                </div>
+                <div class="card-body">
+                    <form action="/empresa/novo" method="POST" class="row g-3 needs-validation"
+                        onsubmit="sub(event,this)" novalidate id="form1" enctype="multipart/form-data">
+
+                        <label for="nome" class="form-label">Nome da Empresa</label>
+                        <input class="form-control" type="text" id="nome" name="nome" placeholder="E M Magalhaes"
+                            autocomplete="off" required>
+
+                        <div class="col-md-4">
+                            <label for="cnpj" class="form-label">CNPJ</label>
+                            <input class="form-control" type="text" id="cnpj" name="cnpj" id="cnpj"
+                                placeholder="00.000.000/0000-00" autocomplete="off" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="inscriEstad" class="form-label">Incrição Estadual</label>
+                            <input class="form-control" type="number" id="inscriEstad" name="inscriEstad"
+                                placeholder="0000000000" autocomplete="off" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="dataAbert" class="form-label">Data de Abertura</label>
+                            <input class="form-control" type="date" id="dataAbert" name="dataAbert" autocomplete="off"
+                                required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="email" class="form-label">Email</label>
+                            <input class="form-control" type="email" id="email" name="email"
+                                placeholder="empresa@empresa.com" required autocomplete="off">
+
+                        </div>
+                        <div class="col-md-4">
+                            <label for="phone" class="form-label">Numero</label>
+                            <input class="form-control" type="tel" id="phone" name="celular"
+                                placeholder="(86)9 9472-6085" autocomplete="off" required
+                                onkeypress="mask(this, mphone);" onblur="mask(this, mphone);" maxlength="15">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="Telefone" class="form-label">Telefone</label>
+                            <input class="form-control" type="tel" id="telefone" name="telefone"
+                                placeholder="(86)4002-8922" autocomplete="off" required onkeypress="mask(this, mphone);"
+                                onblur="mask(this, mphone);" maxlength="14">
+                        </div>
+
+                        <div class="col-md-2">
+                            <label for="cep" class="form-label">CEP</label>
+                            <input class="form-control mascCEP" size="10" maxlength="9" type="text" id="cep" name="cep"
+                                placeholder="Informe o CEP" autocomplete="off" onblur="pesquisacep(this.value);"
+                                required>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label for="numero" class="form-label">Numero</label>
+                            <input class="form-control" placeholder="Ex:6259" type="number" id="numero" name="numero"
+                                autocomplete="off" required>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label for="rua" class="form-label">Rua</label>
+                            <input class="form-control" type="text" id="rua" name="rua" autocomplete="off" size="60"
+                                required>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label for="bairro" class="form-label">Bairro</label>
+                            <input class="form-control" type="text" id="bairro" name="bairro" size="40"
+                                autocomplete="off" required>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label for="cidade" class="form-label">Cidade</label>
+                            <input class="form-control" size="40" type="text" id="cidade" name="cidade"
+                                autocomplete="off" required>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label for="uf" class="form-label">UF</label>
+                            <input class="form-control" size="2" type="text" id="uf" name="estado"
+                                autocomplete="off" required>
+                        </div>
+                        <hr>
+                        <div class="col-md-12">
+                            <label for="descricao" class="form-label">Descrição</label>
+                            <textarea name="descricao" id="descricao" cols="10" rows="3" class="form-control"
+                                placeholder="Informe aqui a descição de sua empresa"></textarea>
+                        </div>
+                        <hr>
+                        <label for="descricao" class="form-label">Logo</label>
+                        <input type="file" class="form-control" name="logo">
+                        <br>
+                        <hr>
+                        <button type="submit" class="btn btn-primary form-control">Criar</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <%- include('../../partials/footer.ejs')%>
+            <script>
+                document.getElementById('cnpj').addEventListener('input', function (e) {
+                    var x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,3})(\d{0,3})(\d{0,4})(\d{0,2})/);
+                    e.target.value = !x[2] ? x[1] : x[1] + '.' + x[2] + '.' + x[3] + '/' + x[4] + (x[5] ? '-' + x[5] : '');
+                });
+            </script>
+            <script src="/js/telefone.js"></script>
+
+            <script>
+                function limpa_formulário_cep() {
+                    //Limpa valores do formulário de cep.
+                    document.getElementById('rua').value = ("");
+                    document.getElementById('bairro').value = ("");
+                    document.getElementById('cidade').value = ("");
+                    document.getElementById('uf').value = ("");
+                }
+
+                function meu_callback(conteudo) {
+                    if (!("erro" in conteudo)) {
+                        //Atualiza os campos com os valores.
+                        document.getElementById('rua').value = (conteudo.logradouro);
+                        document.getElementById('bairro').value = (conteudo.bairro);
+                        document.getElementById('cidade').value = (conteudo.localidade);
+                        document.getElementById('uf').value = (conteudo.uf);
+                    } //end if.
+                    else {
+                        //CEP não Encontrado.
+                        limpa_formulário_cep();
+                        alert("CEP não encontrado.");
+                    }
+                }
+
+                function pesquisacep(valor) {
+
+                    //Nova variável "cep" somente com dígitos.
+                    var cep = valor.replace(/\D/g, '');
+
+                    //Verifica se campo cep possui valor informado.
+                    if (cep != "") {
+
+                        //Expressão regular para validar o CEP.
+                        var validacep = /^[0-9]{8}$/;
+
+                        //Valida o formato do CEP.
+                        if (validacep.test(cep)) {
+
+                            document.getElementById('cep').value = cep.substring(0, 5)
+                                + "-"
+                                + cep.substring(5);
+
+                            //Preenche os campos com "..." enquanto consulta webservice.
+                            document.getElementById('rua').value = "...";
+                            document.getElementById('bairro').value = "...";
+                            document.getElementById('cidade').value = "...";
+                            document.getElementById('uf').value = "...";
+
+                            //Cria um elemento javascript.
+                            var script = document.createElement('script');
+
+                            //Sincroniza com o callback.
+                            script.src = 'https://viacep.com.br/ws/' + cep + '/json/?callback=meu_callback';
+
+                            //Insere script no documento e carrega o conteúdo.
+                            document.body.appendChild(script);
+
+                        } //end if.
+                        else {
+                            //cep é inválido.
+                            limpa_formulário_cep();
+                            alert("Formato de CEP inválido.");
+                        }
+                    } //end if.
+                    else {
+                        //cep sem valor, limpa formulário.
+                        limpa_formulário_cep();
+                    }
+                };
+            </script>

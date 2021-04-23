@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/loginGif.css">
+    <title>ecomerce</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <br>
+        <div class="card position-absolute top-50 start-50 translate-middle text-white bg-primary mt-5 col-md-3">
+            <div class="card-header col-md-12">
+                <h2 class="text-center">Login</h2>
+            </div>
+            <div class="card-body mx-center">
+
+                <form method="POST" id="autenticar">
+
+                    <div class="col-md-7 mx-auto">
+                        <label for="login" class="form-label">Login</label>
+                        <input type="text" class="form-control" name="login" id="login" placeholder="Username"
+                            aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                    <br>
+                    <div class="col-md-7 mx-auto">
+                        <label for="senha" class="form-label">Senha</label>
+                        <input type="password" class="form-control" name="senha" id="senha" placeholder="*****"
+                            aria-label="Senha" aria-describedby="basic-addon2">
+                    </div>
+                    <br>
+                    <div class="col-md-4 mx-auto">
+                        <button class="btn btn-dark text-white form-control" onclick="vazioIncorreto()"
+                            type="submit">Entrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</body>
+<%- include('../../partials/footer.ejs')%>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        function vazioIncorreto() {
+            event.preventDefault();
+
+            form = document.getElementById("autenticar")
+            login = document.getElementById("login")
+            senha = document.getElementById("senha")
+            if (login.value == '') {
+                alert("Campo Login está vazio")
+            } else if (senha.value == '') {
+                alert("Campo Senha está vazio")
+            } else {
+                function logi(logi) {
+                    return logi == login
+                }
+                axios.post("http://localhost:8080/autenticar",{login:login.value,senha:senha.value}).then(usuario => {
+                    usu = usuario.data
+                    if (usu.resp != undefined) {
+                        alert(usu.resp)
+                    } else {
+                        document.location.reload(true);
+                    }
+                })
+
+            }
+
+        }
+    </script>

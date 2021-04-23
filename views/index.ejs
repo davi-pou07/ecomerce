@@ -1,0 +1,45 @@
+<%- include('./partials/head.ejs')%>
+
+    <%- include('./partials/nav.ejs')%>
+        <div class="container">
+            <br>
+            <div id="carouselExampleSlidesOnly" class="carousel slide mx-auto d-block" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="/img/banners/1.jpg" class="mx-auto d-block w-75" height="300px"
+                            data-bs-interval="5000">
+                        <!-- width="1340" height="400" -->
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/img/banners/2.jpg" class="mx-auto d-block w-75" height="300px"
+                            data-bs-interval="5000">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/img/banners/3.jpg" class="mx-auto d-block w-75" height="300px"
+                            data-bs-interval="5000">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/img/banners/4.jpg" class="mx-auto d-block w-75" height="300px"
+                            data-bs-interval="5000">
+                    </div>
+                </div>
+            </div>
+            <br>
+                <h1>Painel de Controle:</h1>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="senhaAtual" class="form-label">Senha Atual</label>
+                    <input class="form-control" type="password" id="senhaAtual" name="senhaAtual" placeholder="********"
+                        required autocomplete="x">
+                </div>
+                <div class="col-md-6">
+                    <label for="senha" class="form-label">Nova Senha</label>
+                    <input class="form-control" type="password" id="senha" name="senha" placeholder="********" required
+                        autocomplete="x">
+                </div>
+            </div>
+        </div>
+
+
+        <%- include('./partials/footer.ejs')%>

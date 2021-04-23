@@ -1,0 +1,53 @@
+<%- include('../../partials/head.ejs')%>
+
+    <%- include('../../partials/nav.ejs')%>
+    <br>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h1>Listagem de Usuarios</h1>
+                <p>Vizualize usuarios cadastrado para alterações </p>
+                <a href="/admin/user/novo" class="btn btn-primary">Adicionar novo usuario</a>
+            </div>
+            <form class="d-flex" method="POST" action="/usuarios/find">
+                <input class="form-control me-2" type="search" placeholder="Search" name="busca" aria-label="Search" >
+                <button class="btn btn-outline-success" type="submit">Pesquisa</button>
+              </form>
+            <div class="card-body">
+                <ul class="list-group list-group-horizontal">
+                    <button type="button" class="list-group-item list-group-item-action active"
+                        aria-current="true">
+                        Código Usuario:
+                    <button type="button" class="list-group-item list-group-item-action active"
+                        aria-current="true" >
+                        Login:
+                    <button type="button" class="list-group-item list-group-item-action active"
+                        aria-current="true">
+                        Email:
+                        <button type="button" class="list-group-item list-group-item-action active"
+                        aria-current="true">
+                        Numero:
+                    <button type="button" class="list-group-item list-group-item-action active"
+                        aria-current="true">
+                        Status:
+
+            </ul>
+                <%usuarios.forEach(usuario=>{%>
+                    <ul class="list-group list-group-horizontal" onclick="window.location='/admin/usuario/editar/<%=usuario.id%>'">
+                    <button type="button" class="list-group-item list-group-item-action" > <%=usuario.id %> </button>
+                    <button type="button" class="list-group-item list-group-item-action"><%=usuario.login %></button>
+                    <button type="button" class="list-group-item list-group-item-action"><%=usuario.email %></button>
+                    <button type="button" class="list-group-item list-group-item-action"><%=usuario.telefone%></button>
+                    <%if(usuario.status == true){%>
+                        <button type="button" class="list-group-item list-group-item-action">Ativo</button>
+                    <%}else{%>
+                        <button type="button" class="list-group-item list-group-item-action">Desativado</button>
+                    <%}%>
+                </ul>
+            <%})%>
+            </div>
+        </div>
+    </div>
+
+        <%- include('../../partials/footer.ejs')%>
+            <script src="/js/sub.js"></script>

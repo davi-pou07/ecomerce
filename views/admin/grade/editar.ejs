@@ -1,0 +1,129 @@
+<%- include('../../partials/head.ejs')%>
+
+    <%- include('../../partials/nav.ejs')%>
+        <br>
+        <div class="container">
+
+            <div class="card">
+
+                <div class="card-header">
+                    <h1>Edição de Grade</h1>
+                    <p>Edite as grades do produto</p>
+                </div>
+                <div class="card-body">
+
+                    <form action="/grade/editar" method="POST" class="row g-3 needs-validation"
+                        onsubmit="sub(event,this)" novalidate>
+                        <input type="hidden" name="gradeId" value="<%=grade.id%>">
+
+                        <label for="titulo" class="form-label">Descrição</label>
+                        <input type="text" class="form-control" name="descricao" id="titulo"
+                            placeholder="Informe aqui a descrição de sua grade" autocomplete="off" required
+                            value="<%=grade.descricao%>">
+                        <div class="valid-feedback">
+                            Tudo ok!
+                        </div>
+                        <div class="invalid-feedback">
+                            Esse campo é obrigatório
+                        </div>
+                        <div class="col-md-3">
+                            <label for="validationCustom04" class="form-label">Status</label>
+                            <select class="form-select" name="status" id="validationCustom04" required>
+                                <%if(grade.status==true){%>
+                                    <option value="true" selected>Ativo</option>
+                                    <option value="false">Desativado</option>
+                                    <%}else{%>
+                                        <option value="true">Ativo</option>
+                                        <option value="false" selected>Desativado</option>
+                                        <%}%>
+                            </select>
+                            <div class="invalid-feedback">
+                                Por favor, selecione!
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm">
+                                <hr>
+                                <label for="linha" class="form-label">Linha</label>
+                                <input type="text" class="form-control" name="linha" id="linha"
+                                    placeholder="Informe aqui a descrição de sua grade" autocomplete="off" 
+                                    value="<%=grade.linha%>">
+                                <div class="valid-feedback">
+                                    Tudo ok!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Esse campo é obrigatório
+                                </div>
+
+                                <hr>
+                                <ul class="list-group">
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha1" value="<%=linha.linha1%>"
+                                            class="form-control"></li>
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha2"
+                                            class="form-control" value="<%=linha.linha2%>"></li>
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha3"
+                                            class="form-control" value="<%=linha.linha3%>"></li>
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha4"
+                                            class="form-control" value="<%=linha.linha4%>"></li>
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha5"
+                                            class="form-control" value="<%=linha.linha5%>"></li>
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha6"
+                                            class="form-control" value="<%=linha.linha6%>"></li>
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha7"
+                                            class="form-control" value="<%=linha.linha7%>"></li>
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha8"
+                                            class="form-control" value="<%=linha.linha8%>"></li>
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha9"
+                                            class="form-control" value="<%=linha.linha9%>"></li>
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha10"
+                                            class="form-control" value="<%=linha.linha10%>"></li>
+                                </ul>
+                            </div>
+
+                            <div class="col-sm">
+                                <hr>
+                                <label for="coluna" class="form-label">Coluna</label>
+                                <input type="text" class="form-control" name="coluna" id="coluna"
+                                    placeholder="Informe aqui a descrição de sua grade" autocomplete="off" >
+                                <div class="valid-feedback">
+                                    Tudo ok!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Esse campo é obrigatório
+                                </div>
+                                <hr>
+                                <ul class="list-group">
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="coluna1" value="<%=coluna.coluna1%>"
+                                        class="form-control"></li>
+                                <li class="list-group-item list-group-item-primary"><input type="text" name="coluna2"
+                                        class="form-control" value="<%=coluna.coluna2%>"></li>
+                                <li class="list-group-item list-group-item-primary"><input type="text" name="coluna3"
+                                        class="form-control" value="<%=coluna.coluna3%>"></li>
+                                <li class="list-group-item list-group-item-primary"><input type="text" name="coluna4"
+                                        class="form-control" value="<%=coluna.coluna4%>"></li>
+                                <li class="list-group-item list-group-item-primary"><input type="text" name="coluna5"
+                                        class="form-control" value="<%=coluna.coluna5%>"></li>
+                                <li class="list-group-item list-group-item-primary"><input type="text" name="coluna6"
+                                        class="form-control" value="<%=coluna.coluna6%>"></li>
+                                <li class="list-group-item list-group-item-primary"><input type="text" name="coluna7"
+                                        class="form-control" value="<%=coluna.coluna7%>"></li>
+                                <li class="list-group-item list-group-item-primary"><input type="text" name="coluna8"
+                                        class="form-control" value="<%=coluna.coluna8%>"></li>
+                                <li class="list-group-item list-group-item-primary"><input type="text" name="coluna9"
+                                        class="form-control" value="<%=coluna.coluna9%>"></li>
+                                <li class="list-group-item list-group-item-primary"><input type="text" name="coluna10"
+                                        class="form-control" value="<%=coluna.coluna10%>"></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <button class="btn btn-primary form-control" id="buttom">Atualizar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <%- include('../../partials/footer.ejs')%>
+            <script src="/js/sub.js"></script>

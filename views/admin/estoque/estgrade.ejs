@@ -1,0 +1,80 @@
+<%- include('../../partials/head.ejs')%>
+
+    <%- include('../../partials/nav.ejs')%>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h1>Listagem de estoque por produto</h1>
+                <hr>
+                    <select name="produtoId" id="produto" class="form-select" onchange="selecionar2()" required>
+                        <option value="0"></option>
+                        <%if(prod==0){%>
+                            <%produtos.forEach(produto=>{%>
+                                <option value="<%=produto.id%>">
+                                    <%=produto.nome%>
+                                </option>
+                                <%})%>
+                                    <%}else{%>
+                                        <%produtos.forEach(produto=>{%>
+                                            <%if(produto.id==prod.id){%>
+                                                <option value="<%=produto.id%>" selected>
+                                                    <%=produto.nome%>
+                                                </option>
+                                                <%}else{%>
+                                                    <option value="<%=produto.id%>">
+                                                        <%=produto.nome%>
+                                                    </option>
+                                                    <%}%>
+                                                        <%})%>
+                                                            <%}%>
+                    </select>
+            </div>
+            <div class="card-body">
+                <%if(grade != 0){%>
+                <h4><%= grade.descricao%></h4>
+                
+                <ul class="list-group list-group-horizontal">
+                    <button type="button" class="list-group-item list-group-item-action active"
+                        aria-current="true">
+                        Código
+                    <button type="button" class="list-group-item list-group-item-action active"
+                        aria-current="true" >
+                <%if(grade != 0){%>
+                        <%=grade.coluna%>
+                <%}else{%>
+                    Coluna
+                <%}%>
+                    <button type="button" class="list-group-item list-group-item-action active"
+                        aria-current="true">
+                        <%if(grade != 0){%>
+                            <%=grade.linha%>
+                    <%}else{%>
+                        Linha
+                    <%}%>
+                    <button type="button" class="list-group-item list-group-item-action active"
+                        aria-current="true">
+                        Quantidade
+
+                    </ul>
+                    <%}%>
+    
+                    <%if(estoques != 0){%>
+                    <%estoques.forEach(estoque=>{%>
+                    <ul class="list-group list-group-horizontal">
+                        <button type="button" class="list-group-item list-group-item-action" > <%=estoque.id %> </button>
+                        <button type="button" class="list-group-item list-group-item-action"><%=estoque.coluna %></button>
+                        <button type="button" class="list-group-item list-group-item-action"><%=estoque.linha %></button>
+                        <button type="button" class="list-group-item list-group-item-action"><%=estoque.quantidade %></button>
+                    </ul>
+                    <%})%>
+                    <%}%>
+                    <hr>
+                    <button type="button" class="list-group-item list-group-item-action active" aria-current="true">Total: <%=prod.totEstoque%></button>
+            </div>
+            <div class="card-footer">
+
+            </div>
+        </div>
+    </div>
+        <%- include('../../partials/footer.ejs')%>
+        <script src="/js/selecionar.js"></script>

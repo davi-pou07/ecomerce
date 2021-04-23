@@ -1,0 +1,75 @@
+<%- include('../../partials/head.ejs')%>
+
+    <%- include('../../partials/nav.ejs')%>
+        <br>
+        <div class="container">
+
+            <div class="card">
+
+                <div class="card-header">
+                    <h1>Edição de Categoria</h1>
+                    <p>Altere uma determinada categoria dos produtos</p>
+                </div>
+                <div class="card-body">
+
+                    <form action="/categoria/editar" method="POST" class="row g-3 needs-validation"
+                        onsubmit="sub(event,this)" novalidate>
+                        <input type="hidden" name="categoriaId" value="<%= categoria.id%>">
+
+                        <label for="titulo" class="form-label">Titulo</label>
+                        <input type="text" class="form-control" name="titulo" id="titulo"
+                            placeholder="Informe aqui o titúlo da categoria" required value="<%= categoria.titulo%>">
+                        <div class="valid-feedback">
+                            Tudo ok!
+                        </div>
+                        <div class="invalid-feedback">
+                            Esse campo é obrigatório
+                        </div>
+
+                        <label for="descricao" class="form-label">Descrição da categoria</label>
+                        <textarea name="descricao" id="descricao" placeholder="Digite a descrição dessa categoria"
+                            id="descricao" class="form-control"><%=categoria.descricao%></textarea>
+                        <div class="valid-feedback">
+                            Esse campo não é obrigatório
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="validationCustom04" class="form-label">Status</label>
+                            <select class="form-select" name="status" id="validationCustom04" required>
+                                <%if(categoria.status == true){%>
+                                <option value="true" selected>Ativo</option>
+                                <option value="false">Desativado</option>
+                                <%}else{%>
+                                <option value="true">Ativo</option>
+                                <option value="false" selected>Desativado</option>
+                                <%}%>
+                            </select>
+                            <div class="invalid-feedback">
+                                Por favor, selecione!
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+
+                            <label for="validationCustom05" class="form-label">Destaque</label>
+                            <select class="form-select" name="destaque" id="validationCustom05" required>
+                                <%if(categoria.status == true){%>
+                                <option value="true" selected>Sim</option>
+                                <option value="false">Não</option>
+                                <%}else{%>
+                                <option value="true">Sim</option>
+                                <option value="false" selected>Não</option>
+                                <%}%>
+                            </select>
+                            <div class="invalid-feedback">
+                                Por favor, selecione!
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary" id="buttom">Atualizar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <%- include('../../partials/footer.ejs')%>
+            <script src="/js/sub.js"></script>
