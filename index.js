@@ -4,7 +4,7 @@ const session = require("express-session")
 const bodyParser = require("body-parser")
 
 const Categoria = require("./DataBases/Categoria")
-const Produto =  require("./DataBases/Produto")
+const Produto = require("./DataBases/Produto")
 const Grade = require("./DataBases/Grade")
 const G_coluna = require("./DataBases/G_coluna")
 const G_linha = require("./DataBases/G_linha")
@@ -42,13 +42,13 @@ connection
         console.log(msgErro)
     })
 
-    const { Pool } = require('pg');
-    const pool = new Pool({
-        connectionString: process.env.DATABASE_URL,
-        ssl: {
-            rejectUnauthorized: false
-        }
-    });
+const { Pool } = require('pg');
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false
+    }
+});
 
 
 
@@ -68,23 +68,36 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 
-app.use("/",categoriaController)
-app.use("/",gradeController)
-app.use("/",estoqueController)
-app.use("/",produtoController)
-app.use("/",userController)
-app.use("/",empresaController)
+app.use("/", categoriaController)
+app.use("/", gradeController)
+app.use("/", estoqueController)
+app.use("/", produtoController)
+app.use("/", userController)
+app.use("/", empresaController)
 
 
 app.get("/", (req, res) => {
     var log = req.session.usu
-    if(log == undefined){
+    if (log == undefined) {
         res.render("admin/user/login")
-    }else{
-        res.render("index") 
-    }
-    })
+    } else {
+        Empresa.findOne().then(empres => {
+            if (empres == undefined) {
+                res.redirect("/admin/empresa/novo")
+            } else {
+                Produto.findAndCountAll({ where: { status: true } }).then(atv => {
+                    Produto.findAndCountAll({where:{status:false}}).then(des=>{
+                        var ativos = atv.count
+                        var desativos = des.count
+                        res.render("index", { empres: empres,ativos:ativos,desativos:desativos })
+                    })
+                })
 
-app.listen(PORT,()=>{
+            }
+        })
+    }
+})
+
+app.listen(PORT, () => {
     console.log("Servidor ligado")
 })

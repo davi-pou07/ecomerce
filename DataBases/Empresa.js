@@ -51,6 +51,9 @@ const Empresa = connection.define('empresas', {
     }, logo: {
         type: Sequelize.STRING,
         allowNull: true
+    }, dominio:{
+        type:Sequelize.STRING,
+        allowNull:true
     }
 })
 

@@ -81,7 +81,7 @@ router.post("/produto/novo", upload.any('img'), (req, res) => {
 
 //Listar
 router.get("/admin/produtos", (req, res) => {
-    Produto.findAll().then(produtos => {
+    Produto.findAll({order:[['id','asc']]}).then(produtos => {
         Preco.findAll().then(precos => {
             res.render("admin/produto/index", { produtos: produtos, precos: precos })
         })
@@ -186,10 +186,31 @@ router.post("/produto/editar", upload.any('img'), (req, res) => {
     })
 })
 
+//Axios 
+
+//ALINHAR AXIOS COM BACK
+router.post("/find", (req, res) => {
+    op = Sequelize.Op
+    buscar = `%${req.body.busca}`
+    console.log(buscar)
+    Produto.findAll({ where: { nome: { [op.substring]: buscar } } }).then(produtos => {
+        var busca = []
+        produtos.forEach(produto => {
+            busca.push(produto.id)
+        })
+        x = busca[0]
+        for (i = 1; i < busca.length; i++) {
+            x = x + '-' + busca[i]
+        }
+        y = x.toString()
+        res.json(y)
+    })
+})
 
 router.post("/produtos/find", (req, res) => {
     op = Sequelize.Op
     buscar = `%${req.body.busca}`
+    console.log(buscar)
     Produto.findAll({ where: { nome: { [op.substring]: buscar } } }).then(produtos => {
         var busca = []
         produtos.forEach(produto => {

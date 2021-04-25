@@ -1,6 +1,10 @@
 <%- include('./partials/head.ejs')%>
+    <!-- Load with base style -->
 
+    <!-- Or load different theme style -->
     <%- include('./partials/nav.ejs')%>
+    <link rel="stylesheet" href="/css/billboard.css">
+    <link rel="stylesheet" href="/css/graph.min.css">
         <div class="container">
             <br>
             <div id="carouselExampleSlidesOnly" class="carousel slide mx-auto d-block" data-bs-ride="carousel">
@@ -25,21 +29,144 @@
                 </div>
             </div>
             <br>
-                <h1>Painel de Controle:</h1>
+            <h1>Painel de Controle:</h1>
             <hr>
-            <div class="row">
-                <div class="col-md-6">
-                    <label for="senhaAtual" class="form-label">Senha Atual</label>
-                    <input class="form-control" type="password" id="senhaAtual" name="senhaAtual" placeholder="********"
-                        required autocomplete="x">
-                </div>
-                <div class="col-md-6">
-                    <label for="senha" class="form-label">Nova Senha</label>
-                    <input class="form-control" type="password" id="senha" name="senha" placeholder="********" required
-                        autocomplete="x">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card card-body text-white bg-success">
+                                <label class="form-label fw-bold"> - Total de vendas não
+                                    concluidas</label>
+                                <span class="text-uppercase text-center fw-bold fs-2">598</span>
+                                <hr>
+                                <p>Foram um total de 598 vendas no mês de Abril</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card card-body text-white bg-warning">
+                                <label class="form-label fw-bold"> - Total de carrinho não
+                                    concluidas</label>
+                                <span class="text-uppercase text-center fw-bold fs-2">56</span>
+                                <hr>
+                                <p>Foram um total de 56 vendas no mês de Abril</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card card-body text-white bg-danger">
+                                <label class="form-label fw-bold"> - Total de vendas canceladas</label>
+                                <span class="text-uppercase text-center fw-bold fs-2">16</span>
+                                <hr>
+                                <p>Foram um total de 16 vendas no mês de Abril</p>
+                            </div>
+                        </div>
+                        <label for="senha" class="form-label bg-dark text-uppercase text-white mt-4">Dados da
+                            empresa</label>
+                        <div class="col-md-12">
+                            <ul class="list-group list-group-horizontal">
+                                <button type="button" class="list-group-item list-group-item-action active"
+                                    aria-current="true">
+                                    Logo:
+                                    <button type="button" class="list-group-item list-group-item-action active"
+                                        aria-current="true">
+                                        Dominio:
+                                        <button type="button" class="list-group-item list-group-item-action active"
+                                            aria-current="true">
+                                            Nome:
+                                            <button type="button" class="list-group-item list-group-item-action active"
+                                                aria-current="true">
+                                                CNPJ:
+                            </ul>
+                            <ul class="list-group list-group-horizontal">
+                                <button type="button" class="list-group-item list-group-item-action"><input type="image"
+                                        height="100px" width="100px" src="<%=empres.logo%>"> </button>
+                                <button type="button" class="list-group-item list-group-item-action"><a
+                                        href="<%=empres.dominio %>" target="_blank">
+                                        <%=empres.dominio %>
+                                    </a> </button>
+                                <button type="button" class="list-group-item list-group-item-action">
+                                    <%=empres.nome %>
+                                </button>
+                                <button type="button" class="list-group-item list-group-item-action">
+                                    <%=empres.cnpj %>
+                                </button>
+                            </ul>
+                        </div>
+                        <div class="col-md-6 mt-3">
+                            <div class="card card-body text-dark">
+                                <div class="row">
+                                    <label class="form-label fs-5 fw-bold">Total de produtos ativos:</label>
+                                    <div class="col-md-8">
+                                        <input type="range" class="form-range" name="prod" id="" value="<%=ativos%>"
+                                            disabled>
+                                    </div>
+                                    
+                                    <div class="col-md-4">
+                                        <label class="form-label fs-5"></label>
+                                        <span class="text-center fw-bold fs-6">
+                                            <%=ativos%> Produtos
+                                        </span>
+                                    </div>
+
+                                    <label class="form-label fs-5 fw-bold">Total de produtos inativos:</label>
+                                    <div class="col-md-8">
+                                        <input type="range" class="form-range" name="prod" id="" value="<%=desativos%>"
+                                            disabled>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label fs-5"></label>
+                                        <span class="text-center fw-bold fs-6">
+                                            <%=desativos%> Produtos
+                                        </span>
+                                    </div>
+                                    
+                                </div>
+                                <a href="/admin/produtos" class="btn btn-primary md-5">Vizualizar</a>
+
+                            </div>
+
+                            <div class="card card-body text-dark">
+                                <div class="row">
+                                    <label class="form-label fs-5 fw-bold">Usuarios Logados</label>
+                                    <div class="col-md-6">
+                                        <input type="range" class="form-range" name="prod" id="" value="1"
+                                            disabled>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label fs-5"></label>
+                                        <span class="text-center fw-bold fs-6">
+                                            1 Usuario(s)
+                                        </span>
+                                        <br>
+                                        <br>
+                                    </div>
+                                    <a href="/admin/produtos" class="btn btn-primary">Vizualizar</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mt-3">
+                            <div class="card card-body text-dark">
+                                <label class="form-label fw-bold">Produto mais vendido!</label>
+                                <div id="chart"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-
+        <!-- Step 1) Load D3.js -->
+        <script src="https://d3js.org/d3.v6.min.js"></script>
+        <!-- Step 2) Load billboard.js with style -->
+        <script src="/js/billboard.js"></script>
+        <script>
+            var chart = bb.generate({
+                bindto: "#chart",
+                data: {
+                    type: "bar",
+                    columns: [
+                        ["Produto 1", 30, 200, 100, 170, 150, 250]
+                    ]
+                }
+            });
+        </script>
         <%- include('./partials/footer.ejs')%>

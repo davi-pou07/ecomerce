@@ -27,9 +27,9 @@ router.get("/admin/user/novo", (req, res) => {
     res.render("admin/user/new")
 })
 
-router.post("/user/novo",upload.single('avatar'),(req, res) => {
+router.post("/user/novo", upload.single('avatar'), (req, res) => {
     var file = req.file
-    var imagem = file.destination.replace("public","")+file.filename
+    var imagem = file.destination.replace("public", "") + file.filename
     var email = req.body.email
     var nome = req.body.nome
     var telefone = req.body.telefone
@@ -46,9 +46,9 @@ router.post("/user/novo",upload.single('avatar'),(req, res) => {
                 email: email,
                 nome: nome,
                 telefone: telefone,
-                isAdmin:true,
-                status:true,
-                foto:imagem
+                isAdmin: true,
+                status: true,
+                foto: imagem
             }).then(() => {
                 res.redirect("/")
             }).catch(err => {
@@ -60,23 +60,23 @@ router.post("/user/novo",upload.single('avatar'),(req, res) => {
     })
 })
 
-router.get("/admin/usuarios",(req,res)=>{
-    User.findAll().then(usuarios =>{
-        res.render("admin/user/index",{usuarios:usuarios})
+router.get("/admin/usuarios", (req, res) => {
+    User.findAll().then(usuarios => {
+        res.render("admin/user/index", { usuarios: usuarios })
     })
 })
 
 
-router.get("/admin/usuario/editar/:user",(req,res)=>{
-    userId =  req.params.user
+router.get("/admin/usuario/editar/:user", (req, res) => {
+    userId = req.params.user
     if (userId != undefined) {
-        if(!isNaN(userId)){
-            User.findByPk(userId).then(user =>{
-                res.render("admin/user/edit",{user:user})
+        if (!isNaN(userId)) {
+            User.findByPk(userId).then(user => {
+                res.render("admin/user/edit", { user: user })
             })
         }
     }
-    
+
 })
 
 router.get("/login", (req, res) => {
@@ -88,22 +88,28 @@ router.post("/autenticar", (req, res) => {
     var senha = req.body.senha
     User.findOne({ where: { login: login } }).then(usu => {
         if (usu != undefined) {
-            //validar senha
-            var correct = bcrypt.compareSync(senha, usu.senha)
-            if (correct) {
-                req.session.usu = {
-                    id: usu.id,
-                    login: usu.login
+            if (usu.status != false) {
+
+                //validar senha
+                var correct = bcrypt.compareSync(senha, usu.senha)
+                if (correct) {
+                    req.session.usu = {
+                        id: usu.id,
+                        login: usu.login
+                    }
+                    // res.json(req.session.usu)
+                    res.redirect("/")
+                } else {
+                    console.log("Senha incorreta")
+                    res.json({ resp: "Credenciais Incorreta" })
                 }
-                // res.json(req.session.usu)
-                res.redirect("/")
-            } else {
-                console.log("Senha incorreta")
-                res.json({resp:"Credenciais Incorreta"})
+            }else{
+                console.log("Usuario desativado")
+                res.json({ resp: "Credenciais Incorreta" }) 
             }
         } else {
             console.log("Não encontrado")
-            res.json({resp:"Credenciais Incorreta"})
+            res.json({ resp: "Credenciais Incorreta" })
         }
     })
 })
@@ -117,13 +123,13 @@ router.get("/logout", (req, res) => {
 
 
 //Axios
-router.get("/user",(req,res)=>{
+router.get("/user", (req, res) => {
     var log = req.session.usu
-    if(log != undefined){
-        User.findByPk(log.id).then(user =>{
+    if (log != undefined) {
+        User.findByPk(log.id).then(user => {
             res.json(user)
         })
-    }else{
+    } else {
         res.json("Erro: Nenhum usuario logado")
     }
 })

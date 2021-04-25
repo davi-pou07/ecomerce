@@ -7,7 +7,7 @@ const Produto = connection.define('produtos',{
         type:Sequelize.STRING,
         allowNull:false
     },
-    descrcao:{
+    descricao:{
         type:Sequelize.TEXT,
         allowNull:true
     },
