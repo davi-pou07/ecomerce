@@ -31,7 +31,6 @@ const User =  connection.define('users',{
     
 })
 
-
 //Arquivo foi removido para não tentar criar toda vez que o projeto rodar
 // User.sync({force:true}).then(()=>{console.log("usuario ok")})
 

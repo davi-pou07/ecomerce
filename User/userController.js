@@ -14,10 +14,10 @@ const storage = multer.diskStorage({
         cb(null, 'public/img/user/')
     },
     filename: function (req, file, cb) {
-        // var nome = req.body.nome
-        // console.log(nome)
-        // var chara = nome.split(' ')[0]
-        cb(null, Date.now() + path.extname(file.originalname))
+        var nome = req.body.nome
+        console.log(nome)
+        var chara = nome.split(' ')[0]
+        cb(null, Date.now()+ chara + path.extname(file.originalname))
     }
 })
 
@@ -29,7 +29,11 @@ router.get("/admin/user/novo", (req, res) => {
 
 router.post("/user/novo", upload.single('avatar'), (req, res) => {
     var file = req.file
-    var imagem = file.destination.replace("public", "") + file.filename
+    if(file != undefined){
+        var imagem = file.destination.replace("public", "") + file.filename
+    }else{
+        var imagem = "/img/avatar.jpg"
+    }
     var email = req.body.email
     var nome = req.body.nome
     var telefone = req.body.telefone
