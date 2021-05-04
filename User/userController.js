@@ -29,7 +29,11 @@ router.get("/admin/user/novo", (req, res) => {
 
 router.post("/user/novo", upload.single('avatar'), (req, res) => {
     var file = req.file
-    var imagem = file.destination.replace("public", "") + file.filename
+    if (file != undefined) {
+        var imagem = file.destination.replace("public", "") + file.filename
+    } else {
+        var imagem = "/img/avatar.jpg"
+    }
     var email = req.body.email
     var nome = req.body.nome
     var telefone = req.body.telefone
@@ -73,10 +77,77 @@ router.get("/admin/usuario/editar/:user", (req, res) => {
         if (!isNaN(userId)) {
             User.findByPk(userId).then(user => {
                 res.render("admin/user/edit", { user: user })
+            }).catch(err => {
+                console.log(err)
             })
         }
     }
+})
 
+router.post("/usuario/editar", upload.single("avatar"), (req, res) => {
+    console.log(req.file)
+    var login = req.body.login
+    var nome = req.body.nome
+    var email = req.body.email
+    var telefone = req.body.telefone
+    var senhaAtual = req.body.senhaAtual
+    var senha = req.body.senha
+    var confirm = req.body.confirm
+    var userId = req.body.userId
+    var file = req.file
+    console.log(file)
+    if (login != '' && nome != '' && email != '' && telefone != '') {
+        User.findByPk(userId).then(user => {
+            if (user != undefined) {
+                if (senha == '' && confirm == '' && senhaAtual == '') {
+                    senhaAtual = undefined
+                    var correct = true
+                } else {
+                    var correct = bcrypt.compareSync(senhaAtual, user.senha)
+                }
+                if (correct) {
+                    if (senha == confirm && senha != senhaAtual) {
+                        User.findOne({ where: { [Op.or]: [{ login: login }, { email: email }] } }).then(usu => {
+                            if (usu == undefined || (usu.email == user.email && usu.login == usu.login)) {
+                                if (file != undefined) {
+                                    var imagem = file.destination.replace("public", "") + file.filename
+                                } else {
+                                    var imagem = user.foto
+                                }
+                                if (senha != '') {
+                                    var salt = bcrypt.genSaltSync(10)
+                                    var hash = bcrypt.hashSync(senha, salt)
+                                }
+                                User.update({
+                                    login: login,
+                                    nome: nome,
+                                    email: email,
+                                    telefone: telefone,
+                                    senha: hash,
+                                    foto: imagem
+                                }, { where: { id: user.id } }).then(() => {
+                                    res.json({ resp: 'undefined' })
+                                })
+                            } else {
+                                console.log(usu.email, usu.login)
+                                console.log(user.email, user.login)
+                                res.json({ resp: "Ja existe um usuario com esses dados" })
+                            }
+                        })
+
+                    } else {
+                        res.json({ resp: "Senhas não são iguais" })
+                    }
+                } else {
+                    res.json({ resp: "Senhas incorreta" })
+                }
+            } else {
+                res.json({ resp: "usuario não encontrado" })
+            }
+        })
+    } else {
+        res.json({ resp: "Informação marcads com * não pode ficar vazia" })
+    }
 })
 
 router.get("/login", (req, res) => {
@@ -103,9 +174,9 @@ router.post("/autenticar", (req, res) => {
                     console.log("Senha incorreta")
                     res.json({ resp: "Credenciais Incorreta" })
                 }
-            }else{
+            } else {
                 console.log("Usuario desativado")
-                res.json({ resp: "Credenciais Incorreta" }) 
+                res.json({ resp: "Credenciais Incorreta" })
             }
         } else {
             console.log("Não encontrado")
@@ -117,7 +188,7 @@ router.post("/autenticar", (req, res) => {
 
 router.get("/logout", (req, res) => {
     req.session.usu = undefined
-    console.log(req.session)
+    // console.log(req.session)
     res.redirect("/")
 })
 
