@@ -2,10 +2,25 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 
         <div class="container">
-            <a class="navbar-brand ms-3" href="/">
-                <img src="/img/icon.png" id="logo" width="40" height="34" class="d-inline-block align-top">
-                <span id="empreza" class="text-uppercase fw-bold"></span>
+
+            <a class="navbar-brand" href="/">
+                <img src="/img/icon.png" id="logo" width="50" height="44" class="d-inline-block align-top">
             </a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button"
+                            id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span id="empreza" class="text-uppercase fw-bold text-white"></span></a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                            <li><a href="/admin/empresa" class="dropdown-item">Editar</a></li>
+
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
@@ -17,11 +32,13 @@
                                     <div class="input-group">
                                         <input type="search" class="form-control me-2" name="pesquisa" id="pesquisa"
                                             placeholder="Buscar">
-                                            <span class="input-group-text" onclick="busca()">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                                                  </svg>
-                                            </span>
+                                        <span class="input-group-text" onclick="busca()">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                            </svg>
+                                        </span>
                                     </div>
                                 </div>
 
@@ -110,16 +127,16 @@
                 span.innerHTML = empresa.data.nome
             }
         })
-        function busca(){
+        function busca() {
             var buscar = document.getElementById("pesquisa")
-            if (buscar.value == '' || buscar.value == undefined){
+            if (buscar.value == '' || buscar.value == undefined) {
                 alert("Digite o que deseja pesquisar!")
-            }else{
+            } else {
                 console.log(buscar.value)
-                axios.post("http://localhost:8080/find",{busca:buscar.value}).then(busca =>{
+                axios.post("http://localhost:8080/find", { busca: buscar.value }).then(busca => {
                     console.log(busca.data)
-                    window.location.href = "/admin/produto/busca/"+busca.data;
-                }).catch(err =>{
+                    window.location.href = "/admin/produto/busca/" + busca.data;
+                }).catch(err => {
                     console.log(err)
                 })
             }

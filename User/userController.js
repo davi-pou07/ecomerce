@@ -1,12 +1,13 @@
 const express = require("express");
-const router = express.Router();
-const User = require("../DataBases/User");
 const multer = require('multer')
+
+const router = express.Router();
 const path = require('path')
 const fs = require('fs')
 //npm install --save bcryptjs
 const bcrypt = require("bcryptjs")
 const { Op } = require("sequelize");
+const User = require("../DataBases/User");
 
 
 const storage = multer.diskStorage({
@@ -14,9 +15,9 @@ const storage = multer.diskStorage({
         cb(null, 'public/img/user/')
     },
     filename: function (req, file, cb) {
-        var nome = req.body.nome
-        console.log(nome)
-        var chara = nome.split(' ')[0]
+        var userid = req.body.userId
+        // var chara = nome.split(' ')[0]
+        var chara = `ID${userid}`
         cb(null, Date.now()+ chara + path.extname(file.originalname))
     }
 })
@@ -84,8 +85,7 @@ router.get("/admin/usuario/editar/:user", (req, res) => {
     }
 })
 
-router.post("/usuario/editar", upload.single("avatar"), (req, res) => {
-    console.log(req.file)
+router.post("/usuario/editar", upload.single("file"), (req, res) => {
     var login = req.body.login
     var nome = req.body.nome
     var email = req.body.email
@@ -95,7 +95,6 @@ router.post("/usuario/editar", upload.single("avatar"), (req, res) => {
     var confirm = req.body.confirm
     var userId = req.body.userId
     var file = req.file
-    console.log(file)
     if (login != '' && nome != '' && email != '' && telefone != '') {
         User.findByPk(userId).then(user => {
             if (user != undefined) {
@@ -110,7 +109,10 @@ router.post("/usuario/editar", upload.single("avatar"), (req, res) => {
                         User.findOne({ where: { [Op.or]: [{ login: login }, { email: email }] } }).then(usu => {
                             if (usu == undefined || (usu.email == user.email && usu.login == usu.login)) {
                                 if (file != undefined) {
-                                    var imagem = file.destination.replace("public", "") + file.filename
+                                    var delimg = "./public/"+user.foto
+                                    fs.unlinkSync(delimg)
+                                    var dest = file.destination
+                                    var imagem = dest.replace("public", "") + file.filename
                                 } else {
                                     var imagem = user.foto
                                 }
@@ -126,7 +128,8 @@ router.post("/usuario/editar", upload.single("avatar"), (req, res) => {
                                     senha: hash,
                                     foto: imagem
                                 }, { where: { id: user.id } }).then(() => {
-                                    res.json({ resp: 'undefined' })
+                                    // res.json({ resp: 'undefined' })
+                                    res.redirect("/admin/usuarios")
                                 })
                             } else {
                                 console.log(usu.email, usu.login)
@@ -168,7 +171,7 @@ router.post("/autenticar", (req, res) => {
                         id: usu.id,
                         login: usu.login
                     }
-                    // res.json(req.session.usu)
+                    console.log(req.session)
                     res.redirect("/")
                 } else {
                     console.log("Senha incorreta")

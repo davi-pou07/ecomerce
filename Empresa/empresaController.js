@@ -18,19 +18,20 @@ const upload = multer({ storage })
 
 
 
-router.get("/admin/empresa/novo",(req,res)=>{
-    Empresa.findOne().then(empresa=>{
-        if(empresa == undefined){
+router.get("/admin/empresa/novo", (req, res) => {
+    Empresa.findOne().then(empresa => {
+        if (empresa == undefined) {
             res.render("admin/empresa/novo")
-        }else{
-            res.send("Ja existe uma empresa cadastrada:" + " "+ empresa.nome)
+        } else {
+            res.send("Ja existe uma empresa cadastrada:" + " " + empresa.nome)
         }
     })
 })
-router.post("/empresa/novo",upload.single('logo'),(req,res)=>{
+
+router.post("/empresa/novo", upload.single('logo'), (req, res) => {
     var nome = req.body.nome
     var cnpj = req.body.cnpj
-    var inscriEstad =  req.body.inscriEstad
+    var inscriEstad = req.body.inscriEstad
     var data = req.body.dataAbert
     var email = req.body.email
     var cep = req.body.cep
@@ -44,50 +45,69 @@ router.post("/empresa/novo",upload.single('logo'),(req,res)=>{
     var descricao = req.body.descricao
     var dest = req.file.destination
     var filename = req.file.filename
-    var logo = dest.replace("public","")+filename
+    var logo = dest.replace("public", "") + filename
     var dataAbert = moment(data).format()
-    Empresa.findOne().then(empresa=>{
-        if(empresa == undefined){
+    Empresa.findOne().then(empresa => {
+        if (empresa == undefined) {
             Empresa.create({
-                nome:nome,
-                cnpj:cnpj,
-                inscriEstad:inscriEstad,
-                dataAbert:dataAbert,
-                email:email,
-                cep:cep,
-                rua:rua,
-                numero:numero,
-                bairro:bairro,
-                cidade:cidade,
-                estado:estado,
-                telefone:telefone,
-                celular:celular,
-                descricao:descricao,
+                nome: nome,
+                cnpj: cnpj,
+                inscriEstad: inscriEstad,
+                dataAbert: dataAbert,
+                email: email,
+                cep: cep,
+                rua: rua,
+                numero: numero,
+                bairro: bairro,
+                cidade: cidade,
+                estado: estado,
+                telefone: telefone,
+                celular: celular,
+                descricao: descricao,
                 logo: logo
-            }).then(empresao =>{
+            }).then(empresao => {
                 res.redirect("/admin/empresa")
             })
-        }else{
-            res.send("Ja existe uma empresa cadastrada:" + " "+ empresa.nome)
+        } else {
+            res.send("Ja existe uma empresa cadastrada:" + " " + empresa.nome)
         }
     })
 })
 
-router.get("/empresa",(req,res)=>{
-    Empresa.findOne().then(empresa =>{
-        if(empresa != undefined){
+router.get("/admin/empresa/editar/:empresaId", (req, res) => {
+    var empresaId = req.params.empresaId
+    if (empresaId != undefined) {
+        if (!isNaN(empresaId)) {
+            Empresa.findByPk(empresaId).then(empresa => {
+                if (empresa != undefined) {
+                    res.render("admin/empresa/editar",{empresa:empresa})
+                } else {
+                    res.json({ resp: "Erro. Empresa não existe" })
+                }
+            })
+        } else {
+            res.json({ resp: "Erro. Requisição não é um numero" })
+        }
+    } else {
+        res.json({ resp: "Erro. Requisição não existe" })
+    }
+})
+
+router.get("/empresa", (req, res) => {
+    Empresa.findOne().then(empresa => {
+        if (empresa != undefined) {
             res.json(empresa)
-        }else{
+        } else {
             res.send("Erro, fale com seu ADMINISTRADOR")
         }
     })
 })
 
-router.get("/admin/empresa",(req,res)=>{
-    Empresa.findOne().then(empresa =>{
-        if(empresa != undefined){
-        res.render("admin/empresa/index",{empresa:empresa})
-        }else{
+router.get("/admin/empresa", (req, res) => {
+    Empresa.findOne().then(empresa => {
+        if (empresa != undefined) {
+            res.render("admin/empresa/index", { empresa: empresa })
+        } else {
             res.send("Erro, fale com seu ADMINISTRADOR")
         }
     })

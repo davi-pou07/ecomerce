@@ -9,15 +9,15 @@
                 </div>
                 <div class="card-body">
 
-                    <form method="POST" class="row g-3 needs-validation" novalidate
+                    <form method="POST" action="/usuario/editar" name="form1" class="row g-3 needs-validation" novalidate
                         id="form1" enctype="multipart/form-data">
 
                         <input type="hidden" name="userId" id="userId" value="<%=user.id%>">
-
+                        
                         <div class="col-md-2">
                             <div class="personal-image">
                                 <label class="label">
-                                    <input type="file" name="avatar" id="file" />
+                                    <input type="file" name="file" id="file" />
                                     <figure class="personal-figure">
                                         <img src="<%=user.foto%>" class="personal-avatar" alt="avatar">
                                         <figcaption class="personal-figcaption">
@@ -94,7 +94,7 @@
 
             <script>
                 function validar() {
-                    
+
                     var senha = document.getElementById("senha").value
                     var confirm = document.getElementById('confirm').value
                     var login = document.getElementById("login").value
@@ -105,14 +105,14 @@
                     var senha = document.getElementById("senha").value
                     var confirm = document.getElementById("confirm").value
                     var userId = document.getElementById("userId").value
-                    var file = document.querySelector("file")
                     event.preventDefault();
                     axios.post("http://localhost:8080/usuario/editar",{login:login, nome:nome, email:email, telefone:telefone, senha:senha, senhaAtual:senhaAtual,confirm:confirm,userId:userId,file:file}).then(res => {
                         console.log(res)
-                        if (res.data.resp != 'undefined') {
+                        if (res.data.resp != undefined) {
                             alert(res.data.resp)
                         } else {
                             // document.location.reload(true);
+                            document.form1.submit()
                         }
                     }).catch(err => {
                         console.log(err)
