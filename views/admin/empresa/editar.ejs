@@ -4,44 +4,63 @@
         <div class="container">
             <br>
             <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-primary text-white">
                     <h3>Edição de dados da empresa</h3>
                     <p>Deseja fazer alguma alteração?</p>
                 </div>
                 <div class="card-body">
-                    <form action="/empresa/novo" method="POST" class="row g-3 needs-validation"
-                        onsubmit="sub(event,this)" novalidate id="form1" enctype="multipart/form-data">
+                    <form action="/empresa/edit" method="POST" class="row g-3 needs-validation"
+                        onsubmit="sub(event,this)" novalidate name="form2" id="form1" enctype="multipart/form-data">
 
-                        <label for="nome" class="form-label">Nome da Empresa</label>
-                        <input class="form-control" type="text" id="nome" name="nome" placeholder="E M Magalhaes"
-                            autocomplete="off" required value="<%=empresa.nome%>">
+                        <input type="hidden" id="empresaId" name="empresaId" value="<%=empresa.id%>">
+
+                        <div class="col-md-8">
+                            <label for="nome" class="form-label">Nome da Empresa*</label>
+                            <input class="form-control" type="text" id="nome" name="nome" placeholder="E M Magalhaes"
+                                autocomplete="off" required value="<%=empresa.nome%>">
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="personal-image">
+                                <label class="label">
+                                    <input type="file" class="form-control" name="logo">
+                                    <figure class="personal-figure">
+                                        <img src="<%=empresa.logo%>" class="personal-avatar" alt="avatar">
+                                        <figcaption class="personal-figcaption">
+                                            <img
+                                                src="https://raw.githubusercontent.com/ThiagoLuizNunes/angular-boilerplate/master/src/assets/imgs/camera-white.png">
+                                        </figcaption>
+                                    </figure>
+                                </label>
+                            </div>
+                        </div>
 
                         <div class="col-md-4">
-                            <label for="cnpj" class="form-label">CNPJ</label>
+                            <label for="cnpj" class="form-label">CNPJ*</label>
                             <input class="form-control" type="text" id="cnpj" name="cnpj" id="cnpj"
                                 placeholder="00.000.000/0000-00" autocomplete="off" required value="<%=empresa.cnpj%>">
                         </div>
 
                         <div class="col-md-4">
-                            <label for="inscriEstad" class="form-label">Incrição Estadual</label>
+                            <label for="inscriEstad" class="form-label">Incrição Estadual*</label>
                             <input class="form-control" type="number" id="inscriEstad" name="inscriEstad"
                                 placeholder="0000000000" autocomplete="off" required value="<%=empresa.inscriEstad%>">
                         </div>
 
                         <div class="col-md-4">
-                            <label for="dataAbert" class="form-label">Data de Abertura</label>
+                            <label for="dataAbert" class="form-label">Data de Abertura*</label>
                             <input class="form-control" type="date" id="dataAbert" name="dataAbert" autocomplete="off"
-                                required value="<%=empresa.dataAbert%>">
+                                required value="<%=data%>">
                         </div>
 
                         <div class="col-md-4">
-                            <label for="email" class="form-label">Email</label>
+                            <label for="email" class="form-label">Email*</label>
                             <input value="<%=empresa.email%>" class="form-control" type="email" id="email" name="email"
                                 placeholder="empresa@empresa.com" required autocomplete="off">
 
                         </div>
                         <div class="col-md-4">
-                            <label for="phone" class="form-label">Numero</label>
+                            <label for="phone" class="form-label">Numero*</label>
                             <input value="<%=empresa.numero%>" class="form-control" type="tel" id="phone" name="celular"
                                 placeholder="(86)9 9472-6085" autocomplete="off" required
                                 onkeypress="mask(this, mphone);" onblur="mask(this, mphone);" maxlength="15">
@@ -49,46 +68,46 @@
 
                         <div class="col-md-4">
                             <label for="Telefone" class="form-label">Telefone</label>
-                            <input value="<%=empresa.telefone%>" class="form-control" type="tel" id="telefone" name="telefone"
-                                placeholder="(86)4002-8922" autocomplete="off" required onkeypress="mask(this, mphone);"
-                                onblur="mask(this, mphone);" maxlength="14">
+                            <input value="<%=empresa.telefone%>" class="form-control" type="tel" id="telefone"
+                                name="telefone" placeholder="(86)4002-8922" autocomplete="off" required
+                                onkeypress="mask(this, mphone);" onblur="mask(this, mphone);" maxlength="14">
                         </div>
 
                         <div class="col-md-2">
-                            <label for="cep" class="form-label">CEP</label>
-                            <input value="<%=empresa.cep%>" class="form-control mascCEP" size="10" maxlength="9" type="text" id="cep" name="cep"
-                                placeholder="Informe o CEP" autocomplete="off" onblur="pesquisacep(this.value);"
-                                required>
+                            <label for="cep" class="form-label">CEP*</label>
+                            <input value="<%=empresa.cep%>" class="form-control mascCEP" size="10" maxlength="9"
+                                type="text" id="cep" name="cep" placeholder="Informe o CEP" autocomplete="off"
+                                onblur="pesquisacep(this.value);" required>
                         </div>
 
                         <div class="col-md-2">
-                            <label for="numero" class="form-label">Numero</label>
-                            <input value="<%=empresa.numero%>" class="form-control" placeholder="Ex:6259" type="number" id="numero" name="numero"
-                                autocomplete="off" required>
+                            <label for="numero" class="form-label">Numero*</label>
+                            <input value="<%=empresa.numero%>" class="form-control" placeholder="Ex:6259" type="number"
+                                id="numero" name="numero" autocomplete="off" required>
                         </div>
 
                         <div class="col-md-2">
-                            <label for="rua" class="form-label">Rua</label>
-                            <input value="<%=empresa.rua%>" class="form-control" type="text" id="rua" name="rua" autocomplete="off" size="60"
-                                required>
+                            <label for="rua" class="form-label">Rua*</label>
+                            <input value="<%=empresa.rua%>" class="form-control" type="text" id="rua" name="rua"
+                                autocomplete="off" size="60" required>
                         </div>
 
                         <div class="col-md-2">
-                            <label for="bairro" class="form-label">Bairro</label>
-                            <input value="<%=empresa.bairro%>" class="form-control" type="text" id="bairro" name="bairro" size="40"
-                                autocomplete="off" required>
+                            <label for="bairro" class="form-label">Bairro*</label>
+                            <input value="<%=empresa.bairro%>" class="form-control" type="text" id="bairro"
+                                name="bairro" size="40" autocomplete="off" required>
                         </div>
 
                         <div class="col-md-2">
-                            <label for="cidade" class="form-label">Cidade</label>
-                            <input value="<%=empresa.cidade%>" class="form-control" size="40" type="text" id="cidade" name="cidade"
-                                autocomplete="off" required>
+                            <label for="cidade" class="form-label">Cidade*</label>
+                            <input value="<%=empresa.cidade%>" class="form-control" size="40" type="text" id="cidade"
+                                name="cidade" autocomplete="off" required>
                         </div>
 
                         <div class="col-md-2">
-                            <label for="uf" class="form-label">UF</label>
-                            <input value="<%=empresa.estado%>" class="form-control" size="2" type="text" id="uf" name="estado" autocomplete="off"
-                                required>
+                            <label for="uf" class="form-label">UF*</label>
+                            <input value="<%=empresa.estado%>" class="form-control" size="2" type="text" id="uf"
+                                name="estado" autocomplete="off" required>
                         </div>
                         <hr>
                         <div class="col-md-12">
@@ -97,17 +116,43 @@
                                 placeholder="Informe aqui a descição de sua empresa"><%=empresa.descricao%></textarea>
                         </div>
                         <hr>
-                        <label for="descricao" class="form-label">Logo</label>
-                        <input type="file" class="form-control" name="logo">
-                        <br>
-                        <hr>
-                        <button type="submit" class="btn btn-primary form-control">Criar</button>
+                        <button type="button" class="btn btn-primary form-control"
+                            onclick="validar()">Atualizar</button>
 
                     </form>
                 </div>
             </div>
         </div>
         <%- include('../../partials/footer.ejs')%>
+            <script>
+                function validar() {
+                    var nome = document.getElementById("nome").value
+                    var empresaId = document.getElementById("empresaId").value
+                    var cnpj = document.getElementById("cnpj").value
+                    var inscriEstad = document.getElementById("cnpj").value
+                    var dataAbert = document.getElementById("dataAbert").value
+                    var email = document.getElementById("email").value
+                    var phone = document.getElementById("phone").value
+                    var telefone = document.getElementById("telefone").value
+                    var cep = document.getElementById("cep").value
+                    var numero = document.getElementById("numero").value
+                    var rua = document.getElementById("rua").value
+                    var bairro = document.getElementById("bairro").value
+                    var cidade = document.getElementById("cidade").value
+                    var uf = document.getElementById("uf").value
+                    var descricao = document.getElementById("descricao").value
+                    event.preventDefault()
+                    axios.post("http://localhost:8080/empresa/edit", {empresaId:empresaId, nome: nome, cnpj: cnpj, inscriEstad: inscriEstad, dataAbert: dataAbert, email: email, phone: phone, telefone: telefone, cep: cep, numero: numero, rua: rua, bairro: bairro, cidade: cidade, uf: uf, descricao: descricao }).then(res => {
+                        if (res.data.resp != undefined) {
+                            alert(res.data.resp)
+                        } else {
+                            document.form2.submit()
+                        }
+                    })
+
+                }
+            </script>
+            <script src="/js/sub.js"></script>
             <script src="/js/cnpj.js"></script>
             <script src="/js/telefone.js"></script>
             <script src="/js/pesquisaCep.js"></script>

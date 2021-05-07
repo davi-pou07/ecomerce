@@ -5,7 +5,8 @@ const Sequelize = require('sequelize')
 const moment = require('moment');
 const multer = require('multer')
 const path = require('path')
-const fs = require('fs')
+const fs = require('fs');
+const { where } = require('sequelize');
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'public/img/')
@@ -80,7 +81,8 @@ router.get("/admin/empresa/editar/:empresaId", (req, res) => {
         if (!isNaN(empresaId)) {
             Empresa.findByPk(empresaId).then(empresa => {
                 if (empresa != undefined) {
-                    res.render("admin/empresa/editar",{empresa:empresa})
+                    var data = moment(empresa.dataAbert).format("YYYY-MM-DD")
+                    res.render("admin/empresa/editar", { empresa: empresa, data: data })
                 } else {
                     res.json({ resp: "Erro. Empresa não existe" })
                 }
@@ -91,6 +93,71 @@ router.get("/admin/empresa/editar/:empresaId", (req, res) => {
     } else {
         res.json({ resp: "Erro. Requisição não existe" })
     }
+})
+
+router.post("/empresa/edit", upload.any("logo"), (req, res) => {
+    var empresaId = req.body.empresaId
+    var nome = req.body.nome
+    var cnpj = req.body.cnpj
+    var inscriEstad = req.body.inscriEstad
+    var data = req.body.dataAbert
+    var email = req.body.email
+    var cep = req.body.cep
+    var rua = req.body.rua
+    var numero = req.body.numero
+    var bairro = req.body.bairro
+    var cidade = req.body.cidade
+    var estado = req.body.estado
+    var telefone = req.body.telefone
+    var celular = req.body.celular
+    var descricao = req.body.descricao
+    var dataAbert = moment(data).format()
+    if (empresaId != undefined) {
+        if (!isNaN(empresaId)) {
+            if(nome != "" && cnpj != "" && inscriEstad != "" && data != "" && email != "" && cep != "" && rua != "" && numero != "" && bairro != "" && cidade != "" && estado != "" && celular != ''){
+            Empresa.findByPk(empresaId).then(empresa => {
+                if (req.file != undefined) {
+                    var excluiLogo = "./public"+empresa.logo
+                    fs.unlinkSync(excluiLogo)
+                    var dest = req.file.destination
+                    var filename = req.file.filename
+                    var logo = dest.replace("public", "") + filename
+                } else {
+                    var logo = empresa.logo
+                }
+                Empresa.update({
+                    nome: nome,
+                    cnpj: cnpj,
+                    inscriEstad: inscriEstad,
+                    dataAbert: dataAbert,
+                    email: email,
+                    cep: cep,
+                    rua: rua,
+                    numero: numero,
+                    bairro: bairro,
+                    cidade: cidade,
+                    estado: estado,
+                    telefone: telefone,
+                    celular: celular,
+                    descricao: descricao,
+                    logo: logo
+                },{where:{id:empresa.id}}).then(()=>{
+                    res.redirect("/admin/empresa")
+                })
+            }).catch(err => {
+                res.json({ resp: err })
+            })
+        }else{
+            res.json({ resp: "Dados marcados com * não podem ficar vazio" })
+
+        }
+        } else {
+            res.json({ resp: "Nenhuma alteração feita por inconsistencia dos dados" })
+        }
+    } else {
+        res.json({ resp: "Nenhuma alteração feita por inconsistencia dos dados" })
+    }
+
 })
 
 router.get("/empresa", (req, res) => {
