@@ -112,7 +112,7 @@
         axios.get('http://localhost:8080/user').then(user => {
             if (user.data != undefined) {
                 aUser = document.getElementById('user');
-                aUser.innerHTML = user.data.login;
+                aUser.innerHTML = `[${user.data.id}] ${user.data.login}`;
                 edit = document.getElementById('edit');
                 edit.href = "/admin/usuario/editar/" + user.data.id
                 img = document.getElementById("img");

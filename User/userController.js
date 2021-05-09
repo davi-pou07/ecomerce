@@ -201,7 +201,7 @@ router.get("/user", (req, res) => {
     var log = req.session.usu
     if (log != undefined) {
         User.findByPk(log.id).then(user => {
-            res.json(user)
+            res.json({login:user.login,id:user.id,foto:user.foto})
         })
     } else {
         res.json("Erro: Nenhum usuario logado")

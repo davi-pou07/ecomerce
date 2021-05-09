@@ -52,7 +52,7 @@
 
                             <label for="validationCustom05" class="form-label">Destaque</label>
                             <select class="form-select" name="destaque" id="validationCustom05" required>
-                                <%if(categoria.status == true){%>
+                                <%if(categoria.destaque == true){%>
                                 <option value="true" selected>Sim</option>
                                 <option value="false">Não</option>
                                 <%}else{%>
@@ -65,7 +65,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button class="btn btn-primary" id="buttom">Atualizar</button>
+                            <button class="btn btn-primary form-control" id="buttom">Atualizar</button>
                         </div>
                     </form>
                 </div>
