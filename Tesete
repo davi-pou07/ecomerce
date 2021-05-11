@@ -81,7 +81,52 @@ function readAndShowFiles() {
 
 
 
+11 - 05 - 2021
 
+
+<script>
+function readAndShowFiles() {
+  var files = document.getElementById("images").files;
+    var x = 1
+  for (var i = 0; i < files.length; i++) {
+      
+    // Closure to capture the file information.
+    (file => {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        // Render thumbnail.
+        var span = document.createElement('span');
+        span.innerHTML = ['<img src="', e.target.result,
+          '" title="', escape(file.name), '" width="500" height="600" >'
+        ].join('');
+        var hidden = document.createElement('input');
+        hidden.type = "hidden"
+        hidden.name = `a${x}`
+        hidden.value = e.target.result
+        document.getElementById('list').insertBefore(span, null);
+        document.getElementById('list').insertBefore(hidden, null);
+        // console.log(e.target.result)
+        // document.getElementById('x').value = e.target.result
+        x++
+      };
+      // Read in the image file as a data URL.
+      reader.readAsDataURL(file);
+    })(files[i]);
+  }
+}
+   
+</script>
+
+
+app.post("/test",(req,res)=>{
+    for(var y=1;y<=3;y++){
+        console.log(y)
+        eval(`a${y} = req.body.a${y}`)
+        Imagem.create({
+            imagem:eval(`a${y} = req.body.a${y}`)
+        })
+    }
+})
 
 
 
