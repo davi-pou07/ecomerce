@@ -37,9 +37,9 @@ router.get("/admin/produto/novo", (req, res) => {
     })
 })
 
-router.post("/produto/novo", upload.any('img'), (req, res) => {
+router.post("/produto/novo", (req, res) => {
 
-    files = req.files
+    var count = req.body.count
 
     var nome = req.body.nome
     var descricao = req.body.descricao
@@ -65,15 +65,13 @@ router.post("/produto/novo", upload.any('img'), (req, res) => {
             desconto: desconto,
             produtoId: produto.id
         }).then(preco => {
-            files.forEach(file => {
-                destination = file.destination
-                dest = destination.replace("public/", "")
+            for (var y = 1; y <= count; y++) {
                 Imagem.create({
-                    filename: file.filename,
-                    destination: dest,
+                    imagem: eval(`a${y} = req.body.a${y}`),
                     produtoId: produto.id
                 })
-            })
+            }
+
             res.redirect("/admin/produtos")
         })
     })
@@ -81,7 +79,7 @@ router.post("/produto/novo", upload.any('img'), (req, res) => {
 
 //Listar
 router.get("/admin/produtos", (req, res) => {
-    Produto.findAll({order:[['id','asc']]}).then(produtos => {
+    Produto.findAll({ order: [['id', 'asc']] }).then(produtos => {
         Preco.findAll().then(precos => {
             res.render("admin/produto/index", { produtos: produtos, precos: precos })
         })
@@ -137,14 +135,6 @@ router.post("/produto/editar", upload.any('img'), (req, res) => {
     var custo = req.body.custo
     var desconto = req.body.desconto
 
-    // Imagem.findAll({where:{produtoId:prodId}}).then(imagens =>{
-    //     count = 1
-    //     imagens.forEach(()=>{
-    //         count ++
-    //     })
-    //     console.log(imagens)
-    //     console.log("__________________")
-    // })
 
     Produto.update({
         nome: nome,
@@ -172,10 +162,7 @@ router.post("/produto/editar", upload.any('img'), (req, res) => {
                     eval(`img${i} = req.body.img${i}`)
                     if (eval(`img${i}`) != undefined) {
                         Imagem.findOne({ where: { id: eval(`img${i}`) } }).then(img => {
-                            var destino = './public/' + img.destination + img.filename
-                            Imagem.destroy({ where: { id: img.id } }).then(() => {
-                                fs.unlinkSync(destino)
-                            })
+                            Imagem.destroy({ where: { id: img.id } }).then(() => {})
                         })
                     }
                 }

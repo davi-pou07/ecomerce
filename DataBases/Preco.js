@@ -17,7 +17,7 @@ const Preco = connection.define('precos',{
     }
 })
 
-Preco.belongsTo(Produto)
+Preco.belongsTo(Produto,{unique:true})
 
 // Preco.sync({force:true}).then(()=>{
 //     console.log("Tabela Preco criada")

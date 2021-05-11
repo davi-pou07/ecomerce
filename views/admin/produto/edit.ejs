@@ -142,7 +142,7 @@
                             <%count = 1%>
                             <%imagens.forEach(imagem =>{%>
                                 <input type="checkbox" name="img<%=count%>" value="<%=imagem.id%>" id="i<%=imagem.id%>"/>
-                                <label for="i<%=imagem.id%>" class="labelimg"><img src="/<%=imagem.destination%><%=imagem.filename%>" class="imgg"></label>
+                                <label for="i<%=imagem.id%>" class="labelimg"><img src="<%=imagem.imagem%>" class="imgg"></label>
                                 <%count ++%>
                         <%})%>
                         <input type="hidden" id="hid" value="0" id="hid">

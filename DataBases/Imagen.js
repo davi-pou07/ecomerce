@@ -3,12 +3,8 @@ const connection = require('./database')
 const Produto = require('./Produto')
 
 const Imagem = connection.define('imagens',{
-    filename:{
-        type:Sequelize.STRING,
-        allowNull:false
-    },
-    destination:{
-        type:Sequelize.STRING,
+    imagem:{
+        type:Sequelize.TEXT,
         allowNull:false
     },
     coluna:{

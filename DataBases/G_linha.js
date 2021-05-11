@@ -42,6 +42,46 @@ const G_linha = connection.define('g_linhas',{
     linha10:{
         type:Sequelize.STRING,
         allowNull:true
+    },
+    codL1:{
+        type:Sequelize.INTEGER,
+        allowNull:true
+    },
+    codL2:{
+        type:Sequelize.INTEGER,
+        allowNull:true
+    },
+    codL3:{
+        type:Sequelize.INTEGER,
+        allowNull:true
+    },
+    codL4:{
+        type:Sequelize.INTEGER,
+        allowNull:true
+    },
+    codL5:{
+        type:Sequelize.INTEGER,
+        allowNull:true
+    },
+    codL6:{
+        type:Sequelize.INTEGER,
+        allowNull:true
+    },
+    codL7:{
+        type:Sequelize.INTEGER,
+        allowNull:true
+    },
+    codL8:{
+        type:Sequelize.INTEGER,
+        allowNull:true
+    },
+    codL9:{
+        type:Sequelize.INTEGER,
+        allowNull:true
+    },
+    codL10:{
+        type:Sequelize.INTEGER,
+        allowNull:true
     }
 })
 

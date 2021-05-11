@@ -12,8 +12,8 @@
                 </div>
                 <div class="card-body">
 
-                    <form action="/produto/novo" method="POST" enctype="multipart/form-data"
-                        class="row g-3 needs-validation" onsubmit="sub(event,this)" novalidate id="form1">
+                    <form action="/produto/novo" method="POST" class="row g-3 needs-validation"
+                        onsubmit="sub(event,this)" novalidate id="form1">
 
                         <label for="titulo" class="form-label">Nome</label>
                         <input type="text" class="form-control" name="nome" id="titulo"
@@ -108,7 +108,11 @@
                         </div>
                         <div class="mb-3">
                             <label for="formFile" class="form-label">Imagens do produto</label>
-                            <input class="form-control" type="file" id="formFile" name="img" multiple>
+                            <input class="form-control" type="file" id="formFile" name="img" multiple onchange="readAndShowFiles()">
+                        </div>
+                        <div id="col" class="col">
+                            <span id="list"></span>
+                            <input type="hidden" name="count" id="count">
                         </div>
                 </div>
                 <div class="card-footer">
@@ -119,4 +123,35 @@
         </div>
         <%- include('../../partials/footer.ejs')%>
             <script src="/js/sub.js"></script>
-           
+            <script>
+                function readAndShowFiles() {
+                    var files = document.getElementById("formFile").files;
+                    var x = 1
+                    for (var i = 0; i < files.length; i++) {
+
+                        // Closure to capture the file information.
+                        (file => {
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+                                // Render thumbnail.
+                                var span = document.createElement('span');
+                                span.innerHTML = ['<img src="', e.target.result,
+                                    '" title="', escape(file.name), '" width="70" height="70" class = "me-5" >'
+                                ].join('');
+                                var hidden = document.createElement('input');
+                                hidden.type = "hidden"
+                                hidden.name = `a${x}`
+                                hidden.value = e.target.result
+                                document.getElementById('list').insertBefore(span, null);
+                                document.getElementById('list').insertBefore(hidden, null);
+                                document.getElementById('count').value = x
+                                // console.log(e.target.result)
+                                // document.getElementById('x').value = e.target.result
+                                x++
+                            };
+                            // Read in the image file as a data URL.
+                            reader.readAsDataURL(file);
+                        })(files[i]);
+                    }
+                }
+            </script>

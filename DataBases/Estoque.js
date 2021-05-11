@@ -15,7 +15,16 @@ const Estoque = connection.define('estoques',{
     linha:{
         type:Sequelize.STRING,
         allowNull:true
+    },
+    status:{
+        type:Sequelize.BOOLEAN,
+        allowNull:false
+    },
+    referencia:{
+        type:Sequelize.STRING,
+        allowNull:true
     }
+    
 })
 
 Estoque.belongsTo(Produto)
