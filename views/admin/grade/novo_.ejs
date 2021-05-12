@@ -50,10 +50,16 @@
                                 
                                 <hr>
                                 <ul class="list-group">
-                                    <input type="hidden" name="count" id="count" value="1">
-                                    <li class="list-group-item list-group-item-primary"><input type="text" name="l1" id="l1" class="form-control"></li>
-                                    <span id="span"></span>
-                                    <input type="button" class="form-control btn btn-success mt-3 fw-bold fs-3" value="+" onclick="maisUm()">
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha1" class="form-control"></li>
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha2" class="form-control"></li>
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha3" class="form-control"></li>
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha4" class="form-control"></li>
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha5" class="form-control"></li>
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha6" class="form-control"></li>
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha7" class="form-control"></li>
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha8" class="form-control"></li>
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha9" class="form-control"></li>
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha10" class="form-control"></li>
                                 </ul>
                             </div>
 
@@ -93,16 +99,3 @@
         </div>
         <%- include('../../partials/footer.ejs')%>
             <script src="/js/sub.js"></script>
-            <script>
-                var x = 1
-                function maisUm(){
-                    
-                    var hidden = document.getElementById("count").value
-                    var count = x + parseInt(hidden)
-                    x++
-                    var span = document.getElementById('span')
-                    var span2 = document.createElement("span")
-                    span2.innerHTML = `<li class="list-group-item list-group-item-primary"><input type="text" name="l${count}" id="l${count}" class="form-control"></li>`
-                    span.insertBefore(span2, null);
-                }
-            </script>

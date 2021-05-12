@@ -13,11 +13,11 @@ router.get("/admin/estoques", (req, res) => {
 })
 
 router.get("/admin/estoques/:produto", (req, res) => {
-    var prod = req.params.produto
+    var prode = req.params.produto
 
     Produto.findAll().then(produtos => {
-        if (prod != 0) {
-            Produto.findByPk(prod).then(prod => {
+        if (prode != 0) {
+            Produto.findByPk(prode).then(prod => {
                 if(prod.gradeId != 0){
                 Grade.findOne({ where: { id: prod.gradeId } }).then(grade => {
                     G_coluna.findOne({ where: { gradeId: grade.id } }).then(coluna => {
@@ -41,7 +41,7 @@ router.get("/admin/estoques/:produto", (req, res) => {
             var coluna = 0
             var linha = 0
             var estoques = 0
-            res.render("admin/estoque/adicao", { produtos: produtos, prod: prod, grade: grade, coluna: coluna, linha: linha, estoques:estoques })
+            res.render("admin/estoque/adicao", { produtos: produtos, prode: prode, grade: grade, coluna: coluna, linha: linha, estoques:estoques })
         }
     })
 })

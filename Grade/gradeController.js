@@ -17,6 +17,17 @@ router.post("/grade/salvar", (req, res) => {
     var coluna = req.body.coluna
     var status = req.body.status
 
+    var codl1 = req.body.codl1
+    var codl2 = req.body.codl2
+    var codl3 = req.body.codl3
+    var codl4 = req.body.codl4
+    var codl5 = req.body.codl5
+    var codl6 = req.body.codl6
+    var codl7 = req.body.codl7
+    var codl8 = req.body.codl8
+    var codl9 = req.body.codl9
+    var codl10 = req.body.codl10
+
     var linha1 = req.body.linha1
     var linha2 = req.body.linha2
     var linha3 = req.body.linha3
@@ -27,6 +38,17 @@ router.post("/grade/salvar", (req, res) => {
     var linha8 = req.body.linha8
     var linha9 = req.body.linha9
     var linha10 = req.body.linha10
+
+    var codc1 = req.body.codc1
+    var codc2 = req.body.codc2
+    var codc3 = req.body.codc3
+    var codc4 = req.body.codc4
+    var codc5 = req.body.codc5
+    var codc6 = req.body.codc6
+    var codc7 = req.body.codc7
+    var codc8 = req.body.codc8
+    var codc9 = req.body.codc9
+    var codc10 = req.body.codc10
 
     var coluna1 = req.body.coluna1
     var coluna2 = req.body.coluna2
