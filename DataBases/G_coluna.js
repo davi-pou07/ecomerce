@@ -43,43 +43,43 @@ const G_coluna = connection.define('g_colunas',{
         type:Sequelize.STRING,
         allowNull:true
     },
-    codC1:{
+    codc1:{
         type:Sequelize.INTEGER,
         allowNull:true
     },
-    codC2:{
+    codc2:{
         type:Sequelize.INTEGER,
         allowNull:true
     },
-    codC3:{
+    codc3:{
         type:Sequelize.INTEGER,
         allowNull:true
     },
-    codC4:{
+    codc4:{
         type:Sequelize.INTEGER,
         allowNull:true
     },
-    codC5:{
+    codc5:{
         type:Sequelize.INTEGER,
         allowNull:true
     },
-    codC6:{
+    codc6:{
         type:Sequelize.INTEGER,
         allowNull:true
     },
-    codC7:{
+    codc7:{
         type:Sequelize.INTEGER,
         allowNull:true
     },
-    codC8:{
+    codc8:{
         type:Sequelize.INTEGER,
         allowNull:true
     },
-    codC9:{
+    codc9:{
         type:Sequelize.INTEGER,
         allowNull:true
     },
-    codC10:{
+    codc10:{
         type:Sequelize.INTEGER,
         allowNull:true
     }
