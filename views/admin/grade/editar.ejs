@@ -58,26 +58,17 @@
 
                                 <hr>
                                 <ul class="list-group">
-                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha1" value="<%=linha.linha1%>"
+                                    <%var countl = 1%>
+                                    <%linhas.forEach(linha =>{%>
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="l<%=countl%>>" value="<%=linha.linha%>"
                                             class="form-control"></li>
-                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha2"
-                                            class="form-control" value="<%=linha.linha2%>"></li>
-                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha3"
-                                            class="form-control" value="<%=linha.linha3%>"></li>
-                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha4"
-                                            class="form-control" value="<%=linha.linha4%>"></li>
-                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha5"
-                                            class="form-control" value="<%=linha.linha5%>"></li>
-                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha6"
-                                            class="form-control" value="<%=linha.linha6%>"></li>
-                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha7"
-                                            class="form-control" value="<%=linha.linha7%>"></li>
-                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha8"
-                                            class="form-control" value="<%=linha.linha8%>"></li>
-                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha9"
-                                            class="form-control" value="<%=linha.linha9%>"></li>
-                                    <li class="list-group-item list-group-item-primary"><input type="text" name="linha10"
-                                            class="form-control" value="<%=linha.linha10%>"></li>
+                                        <%countl ++%>
+                                            <%})%>
+                                            <input type="hidden" name="countl" id="countl" value="<%=countl%>">
+                                            <span id="spanl"></span>
+                                            <input type="button" class="form-control btn btn-success mt-3 fw-bold fs-3" value="+" onclick="addLinha()">
+                                            <input type="hidden" name="countl" id="contageml">
+
                                 </ul>
                             </div>
 
@@ -94,26 +85,17 @@
                                 </div>
                                 <hr>
                                 <ul class="list-group">
-                                    <li class="list-group-item list-group-item-primary"><input type="text" name="coluna1" value="<%=coluna.coluna1%>"
+                                    <%var countc = 1%>
+                                    <%colunas.forEach(coluna =>{%>
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="c<%=countc%>" value="<%=coluna.coluna%>"
                                         class="form-control"></li>
-                                <li class="list-group-item list-group-item-primary"><input type="text" name="coluna2"
-                                        class="form-control" value="<%=coluna.coluna2%>"></li>
-                                <li class="list-group-item list-group-item-primary"><input type="text" name="coluna3"
-                                        class="form-control" value="<%=coluna.coluna3%>"></li>
-                                <li class="list-group-item list-group-item-primary"><input type="text" name="coluna4"
-                                        class="form-control" value="<%=coluna.coluna4%>"></li>
-                                <li class="list-group-item list-group-item-primary"><input type="text" name="coluna5"
-                                        class="form-control" value="<%=coluna.coluna5%>"></li>
-                                <li class="list-group-item list-group-item-primary"><input type="text" name="coluna6"
-                                        class="form-control" value="<%=coluna.coluna6%>"></li>
-                                <li class="list-group-item list-group-item-primary"><input type="text" name="coluna7"
-                                        class="form-control" value="<%=coluna.coluna7%>"></li>
-                                <li class="list-group-item list-group-item-primary"><input type="text" name="coluna8"
-                                        class="form-control" value="<%=coluna.coluna8%>"></li>
-                                <li class="list-group-item list-group-item-primary"><input type="text" name="coluna9"
-                                        class="form-control" value="<%=coluna.coluna9%>"></li>
-                                <li class="list-group-item list-group-item-primary"><input type="text" name="coluna10"
-                                        class="form-control" value="<%=coluna.coluna10%>"></li>
+                                        <input type="hidden" name="cid<%=countc%>" value="<%=coluna.id%>">
+                                        <%countc ++%>
+                                        <%})%>
+                                        <input type="hidden" id="countc" value="<%=countc%>">
+                                            <span id="spanc"></span>
+                                            <input type="button" class="form-control btn btn-success mt-3 fw-bold fs-3" value="+" onclick="addColuna()">
+                                            <input type="hidden" name="countc" id="contagemc">
                                 </ul>
                             </div>
                         </div>
@@ -127,3 +109,27 @@
         </div>
         <%- include('../../partials/footer.ejs')%>
             <script src="/js/sub.js"></script>
+            <script>
+                var x = 0
+                function addLinha(){
+                    var hidden = document.getElementById("countl").value
+                    var y = parseInt(hidden) + x
+                    var contageml = document.getElementById("contageml").value = y
+                    var span = document.getElementById('spanl')
+                    var span2 = document.createElement("span")
+                    span2.innerHTML = `<li class="list-group-item list-group-item-primary"><input type="text" name="l${y}" id="l${y}" class="form-control"></li>`
+                    span.insertBefore(span2, null);
+                    x++
+                }
+                var k = 0
+                function addColuna(){
+                    var hidden = document.getElementById("countc").value
+                    var z = parseInt(hidden) + k
+                    var contagemc = document.getElementById("contagemc").value = z
+                    var span = document.getElementById('spanc')
+                    var span2 = document.createElement("span")
+                    span2.innerHTML = `<li class="list-group-item list-group-item-primary"><input type="text" name="c${z}" id="c${z}" class="form-control"></li>`
+                    span.insertBefore(span2, null);
+                    k++
+                }
+            </script>

@@ -50,10 +50,10 @@
                                 
                                 <hr>
                                 <ul class="list-group">
-                                    <input type="hidden" name="count" id="count" value="1">
+                                    <input type="hidden" name="countl" id="countl" value="1">
                                     <li class="list-group-item list-group-item-primary"><input type="text" name="l1" id="l1" class="form-control"></li>
-                                    <span id="span"></span>
-                                    <input type="button" class="form-control btn btn-success mt-3 fw-bold fs-3" value="+" onclick="maisUm()">
+                                    <span id="spanl"></span>
+                                    <input type="button" class="form-control btn btn-success mt-3 fw-bold fs-3" value="+" onclick="addLinha()">
                                 </ul>
                             </div>
 
@@ -70,16 +70,10 @@
                                 </div>
                                 <hr>
                                 <ul class="list-group">
-                                    <li class="list-group-item list-group-item-primary"><input type="text" name="coluna1" class="form-control"></li>
-                                    <li class="list-group-item list-group-item-primary"><input type="text" name="coluna2" class="form-control"></li>
-                                    <li class="list-group-item list-group-item-primary"><input type="text" name="coluna3" class="form-control"></li>
-                                    <li class="list-group-item list-group-item-primary"><input type="text" name="coluna4" class="form-control"></li>
-                                    <li class="list-group-item list-group-item-primary"><input type="text" name="coluna5" class="form-control"></li>
-                                    <li class="list-group-item list-group-item-primary"><input type="text" name="coluna6" class="form-control"></li>
-                                    <li class="list-group-item list-group-item-primary"><input type="text" name="coluna7" class="form-control"></li>
-                                    <li class="list-group-item list-group-item-primary"><input type="text" name="coluna8" class="form-control"></li>
-                                    <li class="list-group-item list-group-item-primary"><input type="text" name="coluna9" class="form-control"></li>
-                                    <li class="list-group-item list-group-item-primary"><input type="text" name="coluna10" class="form-control"></li>
+                                    <input type="hidden" name="countc" id="countc" value="1">
+                                    <li class="list-group-item list-group-item-primary"><input type="text" name="c1" id="c1" class="form-control"></li>
+                                    <span id="spanc"></span>
+                                    <input type="button" class="form-control btn btn-success mt-3 fw-bold fs-3" value="+" onclick="addColuna()">
                                 </ul>
                             </div>
                         </div>
@@ -95,14 +89,23 @@
             <script src="/js/sub.js"></script>
             <script>
                 var x = 1
-                function maisUm(){
-                    
-                    var hidden = document.getElementById("count").value
-                    var count = x + parseInt(hidden)
+                function addLinha(){
+                    var count = x + 1
+                    var hidden = document.getElementById("countl").value = count
                     x++
-                    var span = document.getElementById('span')
+                    var span = document.getElementById('spanl')
                     var span2 = document.createElement("span")
                     span2.innerHTML = `<li class="list-group-item list-group-item-primary"><input type="text" name="l${count}" id="l${count}" class="form-control"></li>`
+                    span.insertBefore(span2, null);
+                }
+                var k = 1
+                function addColuna(){
+                    var countc = k + 1
+                    var hidden = document.getElementById("countc").value = countc
+                    k++
+                    var span = document.getElementById('spanc')
+                    var span2 = document.createElement("span")
+                    span2.innerHTML = `<li class="list-group-item list-group-item-primary"><input type="text" name="c${countc}" id="c${countc}" class="form-control"></li>`
                     span.insertBefore(span2, null);
                 }
             </script>
