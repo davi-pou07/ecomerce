@@ -20,68 +20,75 @@ router.get("/admin/estoques/:produto", (req, res) => {
             Produto.findByPk(prode).then(prod => {
                 if(prod.gradeId != 0){
                 Grade.findOne({ where: { id: prod.gradeId } }).then(grade => {
-                    G_coluna.findOne({ where: { gradeId: grade.id } }).then(coluna => {
-                        G_linha.findOne({ where: { gradeId: grade.id } }).then(linha => {
+                    G_coluna.findAll({ where: { gradeId: grade.id } }).then(colunas => {
+                        G_linha.findAll({ where: { gradeId: grade.id } }).then(linhas => {
                             Estoque.findAll({ where: { produtoId: prod.id } }).then(estoques => {
-                                res.render("admin/estoque/adicao", { produtos: produtos, prod: prod, grade: grade, coluna: coluna, linha: linha, estoques:estoques })
+                                res.render("admin/estoque/adicao", { produtos: produtos, prod: prod, grade: grade, colunas: colunas, linhas: linhas, estoques:estoques })
                             })
                         })
                     })
                 })
             }else{
                 var grade = 0
-                var coluna = 0
-                var linha = 0
+                var colunas = 0
+                var linhas = 0
                 var estoques = 0
-                res.render("admin/estoque/adicao", { produtos: produtos, prod: prod, grade: grade, coluna: coluna, linha: linha, estoques:estoques })
+                res.render("admin/estoque/adicao", { produtos: produtos, prod: prod, grade: grade, colunas: colunas, linhas: linhas, estoques:estoques })
             }
             })
         } else {
+            var prod = 0
             var grade = 0
-            var coluna = 0
-            var linha = 0
+            var colunas = 0
+            var linhas = 0
             var estoques = 0
-            res.render("admin/estoque/adicao", { produtos: produtos, prode: prode, grade: grade, coluna: coluna, linha: linha, estoques:estoques })
+            res.render("admin/estoque/adicao", { produtos: produtos, prod: prod, grade: grade, colunas: colunas, linhas: linhas, estoques:estoques })
         }
     })
 })
 
 router.post("/estoque/acerto",(req,res)=>{
     prodi = req.body.prodId
-    coluna =  req.body.coluna
-    linha = req.body.linha
+    refcoluna =  req.body.coluna
+    console.log("refcoluna: "+refcoluna)
+    reflinha = req.body.linha
+    console.log("reflinha: "+reflinha)
     quant = req.body.adicao
+    status = req.body.status
     quantidade = parseInt(quant)
     produtoId = parseInt(prodi)
     Produto.findByPk(produtoId).then(prod =>{
         if(prod.gradeId !=0){
-            Estoque.findOne({where:{produtoId:produtoId,coluna:coluna,linha:linha}}).then(estoque =>{
+            Estoque.findOne({where:{produtoId:produtoId,refcoluna:refcoluna,reflinha:reflinha}}).then(estoque =>{
                 if(estoque == undefined){
                     Estoque.create({
                         produtoId:produtoId,
-                        coluna:coluna,
-                        linha:linha,
-                        quantidade:quantidade
+                        refcoluna:refcoluna,
+                        reflinha:reflinha,
+                        quantidade:quantidade,
+                        status:status
                     }).then(estoquer =>{
                         Produto.findByPk(produtoId).then(produto=>{
                             var total = produto.totEstoque + estoquer.quantidade
                             Produto.update({
                                 totEstoque:total
                             },{where:{id:produtoId}}).then(()=>{
-                                res.send("CRIADO UM NOVO")
+                                res.redirect("/admin/estoques/"+0)
                             })
                         })
                     })
                 }else{
+                    var tot = estoque.quantidade + quantidade
                     Estoque.update({
-                        quantidade:quantidade
+                        quantidade:tot,
+                        status:status
                     },{where:{id:estoque.id}}).then(() =>{
                         Produto.findByPk(produtoId).then(produto=>{
                             total = produto.totEstoque +  quantidade
                             Produto.update({
                                 totEstoque:total
                             },{where:{id:produtoId}}).then(()=>{
-                                res.send("UPDATADO")
+                                res.redirect("/admin/estoques/"+0)
                             })
                         })
                     })
@@ -92,7 +99,7 @@ router.post("/estoque/acerto",(req,res)=>{
             Produto.update({
                 totEstoque:total
             },{where:{id:produtoId}}).then(()=>{
-                res.send("UPDATADO")
+                res.redirect("/admin/estoques/"+0)
             }) 
         }
     })
@@ -107,28 +114,28 @@ router.get("/admin/estoque/estgrade/:prod",(req,res)=>{
             Produto.findByPk(prod).then(prod => {
                 if(prod.gradeId != 0){
                 Grade.findOne({ where: { id: prod.gradeId } }).then(grade => {
-                    G_coluna.findOne({ where: { gradeId: grade.id } }).then(coluna => {
-                        G_linha.findOne({ where: { gradeId: grade.id } }).then(linha => {
+                    G_coluna.findAll({ where: { gradeId: grade.id } }).then(colunas => {
+                        G_linha.findAll({ where: { gradeId: grade.id } }).then(linhas => {
                             Estoque.findAll({ where: { produtoId: prod.id } }).then(estoques => {
-                                res.render("admin/estoque/estgrade", { produtos: produtos, prod: prod, grade: grade, coluna: coluna, linha: linha, estoques:estoques })
+                                res.render("admin/estoque/estgrade", { produtos: produtos, prod: prod, grade: grade, colunas: colunas, linhas: linhas, estoques:estoques })
                             })
                         })
                     })
                 })
             }else{
                 var grade = 0
-                var coluna = 0
-                var linha = 0
+                var colunas = 0
+                var linhas = 0
                 var estoques = 0
-                res.render("admin/estoque/estgrade", { produtos: produtos, prod: prod, grade: grade, coluna: coluna, linha: linha, estoques:estoques })
+                res.render("admin/estoque/estgrade", { produtos: produtos, prod: prod, grade: grade, colunas: colunas, linhas: linhas, estoques:estoques })
             }
             })
         } else {
             var grade = 0
-            var coluna = 0
-            var linha = 0
+            var colunas = 0
+            var linhas = 0
             var estoques = 0
-            res.render("admin/estoque/estgrade", { produtos: produtos, prod: prod, grade: grade, coluna: coluna, linha: linha, estoques:estoques })
+            res.render("admin/estoque/estgrade", { produtos: produtos, prod: prod, grade: grade, colunas: colunas, linhas: linhas, estoques:estoques })
         }
     })
 })

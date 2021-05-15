@@ -47,7 +47,7 @@
                                 <hr>
                                 <label for="linha" class="form-label">Linha</label>
                                 <input type="text" class="form-control" name="linha" id="linha"
-                                    placeholder="Informe aqui a descrição de sua grade" autocomplete="off" 
+                                    placeholder="Informe aqui a descrição de sua grade" autocomplete="off"
                                     value="<%=grade.linha%>">
                                 <div class="valid-feedback">
                                     Tudo ok!
@@ -59,15 +59,22 @@
                                 <hr>
                                 <ul class="list-group">
                                     <%var countl = 1%>
-                                    <%linhas.forEach(linha =>{%>
-                                    <li class="list-group-item list-group-item-primary"><input type="text" name="l<%=countl%>>" value="<%=linha.linha%>"
-                                            class="form-control"></li>
-                                        <%countl ++%>
-                                            <%})%>
-                                            <input type="hidden" name="countl" id="countl" value="<%=countl%>">
-                                            <span id="spanl"></span>
-                                            <input type="button" class="form-control btn btn-success mt-3 fw-bold fs-3" value="+" onclick="addLinha()">
-                                            <input type="hidden" name="countl" id="contageml">
+                                        <%linhas.forEach(linha=>{%>
+                                            <li class="list-group-item list-group-item-primary"><input type="text"
+                                                    name="l<%=countl%>" value="<%=linha.linha%>" class="form-control">
+                                            </li>
+                                            <input type="hidden" name="lid<%=countl%>" value="<%=linha.id%>">
+                                            <%countl ++%>
+                                                <%})%>
+                                                    <!-- Coountl -> A contagem de itens existentes na linha -->
+                                                    <input type="hidden" name="countl" id="countl" value="<%=linhas.length%>">
+                                                    <span id="spanl"></span>
+                                                    <input type="button"
+                                                        class="form-control btn btn-success mt-3 fw-bold fs-3" value="+"
+                                                        onclick="addLinha()">
+                                                    <!-- contageml -> A contagem de itens existentes + a contagem de itens adicionados la linha -->
+                                                    <!-- Se nada for adicionado o contageml vai ser = '' -->
+                                                    <input type="hidden" name="contageml" id="contageml">
 
                                 </ul>
                             </div>
@@ -76,7 +83,8 @@
                                 <hr>
                                 <label for="coluna" class="form-label">Coluna</label>
                                 <input type="text" class="form-control" name="coluna" id="coluna"
-                                    placeholder="Informe aqui a descrição de sua grade" autocomplete="off" >
+                                    placeholder="Informe aqui a descrição de sua grade" autocomplete="off"
+                                    value="<%=grade.coluna%>">
                                 <div class="valid-feedback">
                                     Tudo ok!
                                 </div>
@@ -86,16 +94,23 @@
                                 <hr>
                                 <ul class="list-group">
                                     <%var countc = 1%>
-                                    <%colunas.forEach(coluna =>{%>
-                                    <li class="list-group-item list-group-item-primary"><input type="text" name="c<%=countc%>" value="<%=coluna.coluna%>"
-                                        class="form-control"></li>
-                                        <input type="hidden" name="cid<%=countc%>" value="<%=coluna.id%>">
-                                        <%countc ++%>
-                                        <%})%>
-                                        <input type="hidden" id="countc" value="<%=countc%>">
-                                            <span id="spanc"></span>
-                                            <input type="button" class="form-control btn btn-success mt-3 fw-bold fs-3" value="+" onclick="addColuna()">
-                                            <input type="hidden" name="countc" id="contagemc">
+                                        <%colunas.forEach(coluna=>{%>
+                                            <li class="list-group-item list-group-item-primary"><input type="text"
+                                                    name="c<%=countc%>" value="<%=coluna.coluna%>" class="form-control">
+                                            </li>
+                                            <input type="hidden" name="cid<%=countc%>" value="<%=coluna.id%>">
+                                            <%countc ++%>
+                                                <%})%>
+                                                    <!-- Countc -> A contagem de itens existentes na linha -->
+                                                    <input type="hidden" name="countc" id="countc" value="<%=colunas.length%>">
+                                                    <span id="spanc"></span>
+                                                    <input type="button"
+                                                        class="form-control btn btn-success mt-3 fw-bold fs-3" value="+"
+                                                        onclick="addColuna()">
+                                                    <!-- contageml -> A contagem de itens existentes + a contagem de itens adicionados la linha -->
+                                                    <!-- Se nada for adicionado o contageml vai ser = '' -->
+                                                    <input type="hidden" name="contagemc" id="contagemc">
+
                                 </ul>
                             </div>
                         </div>
@@ -110,26 +125,39 @@
         <%- include('../../partials/footer.ejs')%>
             <script src="/js/sub.js"></script>
             <script>
-                var x = 0
-                function addLinha(){
+                var x = 1
+                function addLinha() {
                     var hidden = document.getElementById("countl").value
                     var y = parseInt(hidden) + x
                     var contageml = document.getElementById("contageml").value = y
                     var span = document.getElementById('spanl')
                     var span2 = document.createElement("span")
+                    var inputId = document.createElement("input")
+                    inputId.setAttribute("type", "hidden");
+                    inputId.setAttribute("name", `lid${parseInt(y)}`);
+                    inputId.setAttribute("value", 0);
                     span2.innerHTML = `<li class="list-group-item list-group-item-primary"><input type="text" name="l${y}" id="l${y}" class="form-control"></li>`
                     span.insertBefore(span2, null);
+                    span.insertBefore(inputId, null)
                     x++
                 }
-                var k = 0
-                function addColuna(){
-                    var hidden = document.getElementById("countc").value
-                    var z = parseInt(hidden) + k
+
+            </script>
+            <script>
+                var k = 1
+                function addColuna() {
+                    var hidden1 = document.getElementById("countc").value
+                    var z = parseInt(hidden1) + k
                     var contagemc = document.getElementById("contagemc").value = z
-                    var span = document.getElementById('spanc')
-                    var span2 = document.createElement("span")
-                    span2.innerHTML = `<li class="list-group-item list-group-item-primary"><input type="text" name="c${z}" id="c${z}" class="form-control"></li>`
-                    span.insertBefore(span2, null);
+                    var span1 = document.getElementById('spanc')
+                    var span3 = document.createElement("span")
+                    var inputIdc = document.createElement("input")
+                    inputIdc.setAttribute("type", "hidden");
+                    inputIdc.setAttribute("name", `cid${parseInt(z)}`);
+                    inputIdc.setAttribute("value", 0);
+                    span3.innerHTML = `<li class="list-group-item list-group-item-primary"><input type="text" name="c${z}" id="c${z}" class="form-control"></li>`
+                    span1.insertBefore(span3, null);
+                    span1.insertBefore(inputIdc, null)
                     k++
                 }
             </script>

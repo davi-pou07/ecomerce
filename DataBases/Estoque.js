@@ -6,23 +6,19 @@ const Produto =  require("./Produto")
 const Estoque = connection.define('estoques',{
     quantidade:{
         type:Sequelize.INTEGER,
-        allowNull:false
-    },
-    coluna:{
-        type:Sequelize.STRING,
         allowNull:true
     },
-    linha:{
-        type:Sequelize.STRING,
+    refcoluna:{
+        type:Sequelize.INTEGER,
+        allowNull:true
+    },
+    reflinha:{
+        type:Sequelize.INTEGER,
         allowNull:true
     },
     status:{
         type:Sequelize.BOOLEAN,
         allowNull:false
-    },
-    referencia:{
-        type:Sequelize.STRING,
-        allowNull:true
     }
     
 })

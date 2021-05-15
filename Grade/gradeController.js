@@ -92,8 +92,8 @@ router.get("/admin/grade/busca/:busca", (req, res) => {
 router.get("/admin/grade/editar/:gradeId", (req, res) => {
     var gradeId = req.params.gradeId
     Grade.findByPk(gradeId).then(grade => {
-        G_coluna.findAll({ where: { gradeId: grade.id }, raw: true }).then(colunas => {
-            G_linha.findAll({ where: { gradeId: grade.id }, raw: true }).then(linhas => {
+        G_coluna.findAll({ where: { gradeId: grade.id }, raw: true,order: [['id','asc']] }).then(colunas => {
+            G_linha.findAll({ where: { gradeId: grade.id }, raw: true,order: [['id','asc']] }).then(linhas => {
                 res.render("admin/grade/editar", { grade: grade, colunas: colunas, linhas: linhas })
             })
         })
@@ -105,8 +105,14 @@ router.post("/grade/editar", (req, res) => {
     var linha = req.body.linha
     var coluna = req.body.coluna
     var status = req.body.status
+
     var countc = req.body.countc
+    
     var countl = req.body.countl
+    var contagemc = req.body.contagemc
+    var contageml = req.body.contageml
+
+    // res.json(req.body)
     //ID das existentes
     //inexistentes criar uma nova
 
@@ -117,41 +123,60 @@ router.post("/grade/editar", (req, res) => {
                 linha: linha,
                 coluna: coluna,
                 status: status
-            }, { where: { id: grade.id } }).then(() => {
-                for (var x = 1; x <= countl; x++) {
-                    G_linha.findOne({ where: { id: eval(`lid${x} = req.body.lid${x}`) } }).then(glinha => {
-                        if (glinha != undefined) {
-                            G_linha.update({
-                                linha: eval(`l${x} = req.body.l${x}`)
-                            }, { where: { id: eval(`lid${x} = req.body.lid${x}`) } })
-                        } else {
-                            if (eval(`l${x} = req.body.l${x}`) != '') {
-                                G_linha.create({
-                                    gradeId: gradeId,
-                                    linha: eval(`l${x} = req.body.l${x}`)
-                                })
+            }, { where: { id: grade.id } }).then(prox => {
+                if (contageml != "") {
+                    var contadorL = parseInt(contageml)
+                } else {
+                    var contadorL = parseInt(countl)
+                }
+                for (var x = 1; x <= contadorL; x++) {
+                    var y =1 
+                    G_linha.findOne({ where: { id: eval(`lid${x} = req.body.lid${x}`), gradeId: grade.id } }).then(glinha => {
+                            if (glinha != undefined) {
+                                G_linha.update({
+                                    linha: eval(`l${y} = req.body.l${y}`)
+                                }, { where: { id: glinha.id } })
+                            } else {
+                                if (eval(`l${y} = req.body.l${y}`) != '') {
+                                    G_linha.create({
+                                        gradeId: gradeId,
+                                        linha: eval(`l${y} = req.body.l${y}`)
+                                    })
+                                }
                             }
-                        }
+                        y++
                     })
                 }
-                for (var x = 1; x <= countc; x++) {
-                    G_coluna.findOne({ where: { id: eval(`cid${x} = req.body.cid${x}`) } }).then(gcoluna => {
-                        if (gcoluna != undefined) {
-                            G_coluna.update({
-                                coluna: eval(`c${x} = req.body.c${x}`)
-                            }, { where: { id: eval(`cid${x} = req.body.cid${x}`) } })
-                        } else {
-                            if (eval(`c${x} = req.body.c${x}`) != '') {
-                                G_coluna.create({
-                                    gradeId: gradeId,
-                                    coluna: eval(`c${x} = req.body.c${x}`)
-                                })
+
+                if (contagemc != "") {
+                    var contadorC = parseInt(contagemc)
+                } else {
+                    var contadorC = parseInt(countc)
+                }
+                for (var z = 1; z <= contadorC; z++) {
+                    var k = 1; 
+                    G_coluna.findOne({ where: { id: eval(`cid${z} = req.body.cid${z}`), gradeId: grade.id } }).then(gcoluna => {
+                            if (gcoluna != undefined) {
+                                G_coluna.update({
+                                    coluna: eval(`c${k} = req.body.c${k}`)
+                                }, { where: { id: gcoluna.id } })
+                            } else {
+                                if (eval(`c${k} = req.body.c${k}`) != '') {
+                                    G_coluna.create({
+                                        gradeId: gradeId,
+                                        coluna: eval(`c${k} = req.body.c${k}`)
+                                    })
+                                }
                             }
-                        }
+                        k++
                     })
                 }
+            }).catch(err => {
+                res.json({ err: err, resp: "Não fossivel alterar a grade" })
             })
             res.redirect("/admin/grades")
+        } else {
+            res.json("Grade não encontrada")
         }
     })
 })
