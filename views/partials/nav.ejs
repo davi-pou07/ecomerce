@@ -22,7 +22,9 @@
             </div>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-white" href="#" role="button"
                             id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Produtos</a>
@@ -53,9 +55,22 @@
                         </ul>
                     </li>
 
+                    
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-white" href="#" role="button"
                             id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Estoque</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a href="/admin/estoques/0" class="dropdown-item">Adicionar</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a href="/admin/estoque/estgrade/0" class="dropdown-item">Listar</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button"
+                            id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Promoção</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <li><a href="/admin/estoques/0" class="dropdown-item">Adicionar</a></li>
                             <li>
@@ -132,10 +147,12 @@
             if (buscar.value == '' || buscar.value == undefined) {
                 alert("Digite o que deseja pesquisar!")
             } else {
-                console.log(buscar.value)
                 axios.post("http://localhost:8080/find", { busca: buscar.value }).then(busca => {
-                    console.log(busca.data)
-                    window.location.href = "/admin/produto/busca/" + busca.data;
+                    if (busca.data != undefined) {
+                        window.location.href = "/admin/produto/busca/" + busca.data;
+                    } else {
+                        alert("Busca inválida ou produto não encontrado")
+                    }
                 }).catch(err => {
                     console.log(err)
                 })

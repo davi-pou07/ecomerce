@@ -162,13 +162,13 @@ router.post("/produto/editar", upload.any('img'), (req, res) => {
                     eval(`img${i} = req.body.img${i}`)
                     if (eval(`img${i}`) != undefined) {
                         Imagem.findOne({ where: { id: eval(`img${i}`) } }).then(img => {
-                            Imagem.destroy({ where: { id: img.id } }).then(() => {})
+                            Imagem.destroy({ where: { id: img.id } }).then(() => { })
                         })
                     }
                 }
 
             })
-            res.redirect("/admin/produtos")
+            res.redirect("/admin/produto/editar/"+prodId)
         })
     })
 })
@@ -181,16 +181,21 @@ router.post("/find", (req, res) => {
     buscar = `%${req.body.busca}`
     console.log(buscar)
     Produto.findAll({ where: { nome: { [op.substring]: buscar } } }).then(produtos => {
-        var busca = []
-        produtos.forEach(produto => {
-            busca.push(produto.id)
-        })
-        x = busca[0]
-        for (i = 1; i < busca.length; i++) {
-            x = x + '-' + busca[i]
+        if (produtos != undefined) {
+            var busca = []
+            produtos.forEach(produto => {
+                busca.push(produto.id)
+            })
+            x = busca[0]
+            for (i = 1; i < busca.length; i++) {
+                x = x + '-' + busca[i]
+            }
+            y = x.toString()
+            res.json(y)
+        } else {
+            res.json(produtos)
         }
-        y = x.toString()
-        res.json(y)
+
     })
 })
 

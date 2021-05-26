@@ -70,18 +70,19 @@
                                 Por favor, selecione!
                             </div>
                         </div>
+                        <div class="col-md-3">
+                            <label for="adicao" class="form-label">Status</label>
+                            <select class="form-select" name="status">
+                                <option value="true">Ativo</option>
+                                <option value="false">Desativado</option>
+                            </select>
+                        </div>
                         <%}else{%>
                             <select name="" id="" disabled></select>
                             <select name="" id="" disabled></select>
 
                             <%}%>
-                            <div class="col-md-3">
-                                <label for="adicao" class="form-label">Status</label>
-                                <select class="form-select" name="status">
-                                    <option value="true">Ativo</option>
-                                    <option value="false">Desativado</option>
-                                </select>
-                            </div>
+                            
                         <div class="col-md-3">
                             <%if(prod !=0){%>
                                 <label for="adicao" class="form-label">Quantidade a Adicionar</label>
