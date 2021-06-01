@@ -12,7 +12,7 @@
                 </div>
                 <div class="card-body">
 
-                    <form action="/produto/editar" enctype="multipart/form-data" method="POST" class="row g-3 needs-validation"
+                    <form action="/produto/editar" method="POST" class="row g-3 needs-validation"
                         onsubmit="sub(event,this)" novalidate id="form1">
 
                          <input type="hidden" name="produtoId" value="<%=produto.id%>">
@@ -133,7 +133,9 @@
                         </div>
                         <div class="mb-3">
                             <label for="formFile" class="form-label">Adicionar mais imagens do produto</label>
-                            <input class="form-control" type="file" name="img" id="formFile" multiple>
+                            <input class="form-control" type="file" name="img" id="formFile" multiple onchange="readAndShowFiles()">
+                            <span id="list"></span>
+                            <input type="hidden" name="count" id="count">
                         </div>
                         <hr>
                         <p>Selecione as imagens que serão deletadas</p>
@@ -159,4 +161,31 @@
         </div>
         <%- include('../../partials/footer.ejs')%>
             <script src="/js/sub.js"></script>
+            <script>
+                function readAndShowFiles() {
+                    var files = document.getElementById("formFile").files;
+                    var x = 1
+                    for (var i = 0; i < files.length; i++) {
+
+                        // Closure to capture the file information.
+                        (file => {
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+                                // Render thumbnail.
+                                var hidden = document.createElement('input');
+                                hidden.type = "hidden"
+                                hidden.name = `a${x}`
+                                hidden.value = e.target.result
+                                document.getElementById('list').insertBefore(hidden, null);
+                                document.getElementById('count').value = x
+                                // console.log(e.target.result)
+                                // document.getElementById('x').value = e.target.result
+                                x++
+                            };
+                            // Read in the image file as a data URL.
+                            reader.readAsDataURL(file);
+                        })(files[i]);
+                    }
+                }
+            </script>
            

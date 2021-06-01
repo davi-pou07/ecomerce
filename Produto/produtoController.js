@@ -121,9 +121,9 @@ router.get("/admin/produto/editar/:produtoId", (req, res) => {
     }
 })
 
-router.post("/produto/editar", upload.any('img'), (req, res) => {
-    var imm = []
-    files = req.files
+router.post("/produto/editar", (req, res) => {
+    var count = req.body.count
+
     var prodId = req.body.produtoId
     var nome = req.body.nome
     var descricao = req.body.descricao
@@ -134,7 +134,6 @@ router.post("/produto/editar", upload.any('img'), (req, res) => {
     var venda = req.body.venda
     var custo = req.body.custo
     var desconto = req.body.desconto
-
 
     Produto.update({
         nome: nome,
@@ -148,29 +147,32 @@ router.post("/produto/editar", upload.any('img'), (req, res) => {
             custo: custo,
             desconto: desconto,
         }, { where: { produtoId: prodId } }).then(preco => {
-            files.forEach(file => {
-                destination = file.destination
-                dest = destination.replace("public/", "")
-                Imagem.create({
-                    filename: file.filename,
-                    destination: dest,
-                    produtoId: prodId
-                })
-            })
             Imagem.findAll({ where: { produtoId: prodId } }).then(imagens => {
                 for (var i = 1; i <= imagens.length; i++) {
                     eval(`img${i} = req.body.img${i}`)
                     if (eval(`img${i}`) != undefined) {
                         Imagem.findOne({ where: { id: eval(`img${i}`) } }).then(img => {
-                            Imagem.destroy({ where: { id: img.id } }).then(() => {})
+                            Imagem.destroy({ where: { id: img.id } }).then(() => { })
                         })
                     }
                 }
-
+            }).then(img => {
+                for (var y = 1; y <= count; y++) {
+                    Imagem.create({
+                        imagem: eval(`a${y} = req.body.a${y}`),
+                        produtoId: prodId
+                    })
+                }
+            }).catch(err => {
+                res.json({ Resp: err })
             })
-            res.redirect("/admin/produtos")
+        }).catch(err => {
+            res.json({ Resp: err })
         })
+    }).catch(err => {
+        res.json({ Resp: err })
     })
+    res.redirect("/admin/produtos")
 })
 
 //Axios 
