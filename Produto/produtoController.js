@@ -135,6 +135,9 @@ router.post("/produto/editar", (req, res) => {
     var custo = req.body.custo
     var desconto = req.body.desconto
 
+    var vendaBr = venda.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
+    var custoBr = custo.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
+    var descontoBr = desconto.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
     Produto.update({
         nome: nome,
         descricao: descricao,
@@ -143,9 +146,9 @@ router.post("/produto/editar", (req, res) => {
         gradeId: gradeId
     }, { where: { id: prodId } }).then(produto => {
         Preco.update({
-            venda: venda,
-            custo: custo,
-            desconto: desconto,
+            venda: vendaBr,
+            custo: custoBr,
+            desconto: descontoBr,
         }, { where: { produtoId: prodId } }).then(preco => {
             Imagem.findAll({ where: { produtoId: prodId } }).then(imagens => {
                 for (var i = 1; i <= imagens.length; i++) {
