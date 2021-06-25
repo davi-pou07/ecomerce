@@ -18,6 +18,7 @@ const Empresa = require("./DataBases/Empresa")
 
 const categoriaController = require("./Categorias/categoriasController")
 const gradeController = require("./Grade/gradeController")
+
 const produtoController = require("./Produto/produtoController")
 const estoqueController = require("./Estoque/estoqueController")
 const userController = require("./User/userController")
