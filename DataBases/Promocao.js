@@ -34,8 +34,8 @@ const Promocao = connection.define('promocao',{
 })
 
 
-// Promocao.sync({force:true}).then(()=>{
-//     console.log("Tabela Promoção criada")        
-// })
+Promocao.sync({force:true}).then(()=>{
+    console.log("Tabela Promoção criada")        
+})
 
 module.exports = Promocao

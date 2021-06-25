@@ -11,8 +11,8 @@ const G_linha = connection.define('g_linhas', {
 
 G_linha.belongsTo(Grade)
 
-// G_linha.sync({force:true}).then(()=>{
-//     console.log("Tabela G_Linha criada")        
-// })
+G_linha.sync({force:true}).then(()=>{
+    console.log("Tabela G_Linha criada")        
+})
 
 module.exports = G_linha

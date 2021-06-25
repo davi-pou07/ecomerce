@@ -19,8 +19,8 @@ const Preco = connection.define('precos',{
 
 Preco.belongsTo(Produto,{unique:true})
 
-// Preco.sync({force:true}).then(()=>{
-//     console.log("Tabela Preco criada")
-// })
+Preco.sync({force:true}).then(()=>{
+    console.log("Tabela Preco criada")
+})
 
 module.exports = Preco

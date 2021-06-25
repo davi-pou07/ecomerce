@@ -25,8 +25,8 @@ const Estoque = connection.define('estoques',{
 
 Estoque.belongsTo(Produto)
 
-// Estoque.sync({force:true}).then(()=>{
-//     console.log("Tabela Estoque criada")        
-// })
+Estoque.sync({force:true}).then(()=>{
+    console.log("Tabela Estoque criada")        
+})
 
 module.exports = Estoque
