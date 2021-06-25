@@ -27,8 +27,8 @@ const Produto = connection.define('produtos',{
 
 Produto.belongsTo(Categoria)
 
-Produto.sync({force:true}).then(()=>{
-    console.log("Tabela Produto criada")        
-})
+// Produto.sync({force:true}).then(()=>{
+//     console.log("Tabela Produto criada")        
+// })
 
 module.exports = Produto
