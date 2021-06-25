@@ -58,8 +58,8 @@ const Empresa = connection.define('empresas', {
 })
 
 
-Empresa.sync({force:true}).then(()=>{
-    console.log("Tabela Empresa criada")        
-})
+// Empresa.sync({force:true}).then(()=>{
+//     console.log("Tabela Empresa criada")        
+// })
 
 module.exports = Empresa
