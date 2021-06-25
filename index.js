@@ -16,7 +16,7 @@ const Promocao = require("./DataBases/Promocao")
 const PromoProd = require("./DataBases/Promoprod")
 const Empresa = require("./DataBases/Empresa")
 
-const categoriaController = require("../ecomerce/Categorias/categoriasController")
+const categoriaController = require("./categorias/categoriasController")
 const gradeController = require("../ecomerce/Grade/gradeController")
 const produtoController = require("./Produto/produtoController")
 const estoqueController = require("./Estoque/estoqueController")
