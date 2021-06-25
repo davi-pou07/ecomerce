@@ -9,8 +9,8 @@ PromoProd.belongsTo(Produto)
 PromoProd.belongsTo(Promocao)
 
 
-PromoProd.sync({force:true}).then(()=>{
-    console.log("Tabela PromoProd criada")        
-})
+// PromoProd.sync({force:true}).then(()=>{
+//     console.log("Tabela PromoProd criada")        
+// })
 
 module.exports = PromoProd
