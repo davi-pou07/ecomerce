@@ -17,7 +17,7 @@ const connection = new Sequelize('d9f1ts6ismirrp','xzohavpuwebfje','cce7fe39b756
 })
 module.exports = connection;
 //postgres://xzohavpuwebfje:cce7fe39b756ba090b9a03883dca985ce43bf137b608cb4cfbc1fcd6ee921e15@ec2-34-200-94-86.compute-1.amazonaws.com:5432/d9f1ts6ismirrp
-// "dbname=dee932clc3mg8h host=ec2-123-73-145-214.compute-1.amazonaws.com port=6212 user=user3121 password=98kd8a9 sslmode=require"
+// "dbname=d9f1ts6ismirrp host=ec2-34-200-94-86.compute-1.amazonaws.com port=6212 user=xzohavpuwebfje password=cce7fe39b756ba090b9a03883dca985ce43bf137b608cb4cfbc1fcd6ee921e15 sslmode=require"
 
 
 //https://help.heroku.com/DR0TTWWD/seeing-fatal-no-pg_hba-conf-entry-errors-in-postgres
