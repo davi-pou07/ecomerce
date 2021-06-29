@@ -10,7 +10,7 @@
                 </div>
                 <div class="card-body">
                     <form action="/empresa/edit" method="POST" class="row g-3 needs-validation"
-                        onsubmit="sub(event,this)" novalidate name="form2" id="form1" enctype="multipart/form-data">
+                        onsubmit="sub(event,this)" novalidate name="form2" id="form1">
 
                         <input type="hidden" id="empresaId" name="empresaId" value="<%=empresa.id%>">
 
@@ -23,9 +23,10 @@
                         <div class="col-md-2">
                             <div class="personal-image">
                                 <label class="label">
-                                    <input type="file" class="form-control" name="logo">
+                                    <input type="file" class="form-control" id="logoAtual" onchange="encodeImageFileAsURL()">
+                                    <input type="hidden" name="logo" id="logo">
                                     <figure class="personal-figure">
-                                        <img src="<%=empresa.logo%>" class="personal-avatar" alt="avatar">
+                                        <img src="<%=empresa.logo%>" id="logoFoto" class="personal-avatar" alt="avatar">
                                         <figcaption class="personal-figcaption">
                                             <img
                                                 src="https://raw.githubusercontent.com/ThiagoLuizNunes/angular-boilerplate/master/src/assets/imgs/camera-white.png">
@@ -124,6 +125,21 @@
             </div>
         </div>
         <%- include('../../partials/footer.ejs')%>
+        <script>
+            function encodeImageFileAsURL() {
+                var filesSelected = document.getElementById("logoFoto").files;
+                if (filesSelected.length > 0) {
+                    var fileToLoad = filesSelected[0];
+                    var fileReader = new FileReader();
+                    fileReader.onload = function (fileLoadedEvent) {
+                        var srcData = fileLoadedEvent.target.result; // <--- data: base64
+                        var logo = document.getElementById("logo").value = srcData
+                        var logo = document.getElementById("logoFoto").src = srcData
+                    }
+                    fileReader.readAsDataURL(fileToLoad);
+                }
+            }
+        </script>
             <script>
                 function validar() {
                     var nome = document.getElementById("nome").value
@@ -140,9 +156,10 @@
                     var bairro = document.getElementById("bairro").value
                     var cidade = document.getElementById("cidade").value
                     var uf = document.getElementById("uf").value
+                    var logo = document.getElementById("logo").value
                     var descricao = document.getElementById("descricao").value
                     event.preventDefault()
-                    axios.post("http://localhost:8080/empresa/edit", {empresaId:empresaId, nome: nome, cnpj: cnpj, inscriEstad: inscriEstad, dataAbert: dataAbert, email: email, phone: phone, telefone: telefone, cep: cep, numero: numero, rua: rua, bairro: bairro, cidade: cidade, uf: uf, descricao: descricao }).then(res => {
+                    axios.post("https://ecomerce-back.herokuapp.com/empresa/edit", {empresaId:empresaId, nome: nome, cnpj: cnpj, inscriEstad: inscriEstad, dataAbert: dataAbert, email: email, phone: phone, telefone: telefone, cep: cep, numero: numero, rua: rua, bairro: bairro, cidade: cidade, uf: uf, descricao: descricao,logo:logo }).then(res => {
                         if (res.data.resp != undefined) {
                             alert(res.data.resp)
                         } else {

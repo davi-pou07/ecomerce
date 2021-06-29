@@ -9,7 +9,7 @@
                 </div>
                 <div class="card-body">
                     <form action="/empresa/novo" method="POST" class="row g-3 needs-validation"
-                        onsubmit="sub(event,this)" novalidate id="form1" enctype="multipart/form-data">
+                        onsubmit="sub(event,this)" novalidate id="form1">
 
                         <label for="nome" class="form-label">Nome da Empresa</label>
                         <input class="form-control" type="text" id="nome" name="nome" placeholder="E M Magalhaes"
@@ -97,7 +97,8 @@
                         </div>
                         <hr>
                         <label for="descricao" class="form-label">Logo</label>
-                        <input type="file" class="form-control" name="logo">
+                        <input type="file" class="form-control" id="logoFoto" name="logoFoto" onchange="encodeImageFileAsURL()">
+                        <input type="hidden" name="logo" id="logo">
                         <br>
                         <hr>
                         <button type="submit" class="btn btn-primary form-control">Criar</button>
@@ -107,6 +108,21 @@
             </div>
         </div>
         <%- include('../../partials/footer.ejs')%>
+
         <script src="/js/cnpj.js"></script>
         <script src="/js/telefone.js"></script>
         <script src="/js/pesquisaCep.js"></script>
+        <script>
+            function encodeImageFileAsURL() {
+                var filesSelected = document.getElementById("logoFoto").files;
+                if (filesSelected.length > 0) {
+                    var fileToLoad = filesSelected[0];
+                    var fileReader = new FileReader();
+                    fileReader.onload = function (fileLoadedEvent) {
+                        var srcData = fileLoadedEvent.target.result; // <--- data: base64
+                        var logo = document.getElementById("logo").value = srcData
+                    }
+                    fileReader.readAsDataURL(fileToLoad);
+                }
+            }
+        </script>

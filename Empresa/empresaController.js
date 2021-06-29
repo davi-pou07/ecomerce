@@ -29,7 +29,7 @@ router.get("/admin/empresa/novo", (req, res) => {
     })
 })
 
-router.post("/empresa/novo", upload.single('logo'), (req, res) => {
+router.post("/empresa/novo", (req, res) => {
     var nome = req.body.nome
     var cnpj = req.body.cnpj
     var inscriEstad = req.body.inscriEstad
@@ -45,8 +45,7 @@ router.post("/empresa/novo", upload.single('logo'), (req, res) => {
     var celular = req.body.celular
     var descricao = req.body.descricao
     var dest = req.file.destination
-    var filename = req.file.filename
-    var logo = dest.replace("public", "") + filename
+    var logo = req.body.logo
     var dataAbert = moment(data).format()
     Empresa.findOne().then(empresa => {
         if (empresa == undefined) {
@@ -95,7 +94,7 @@ router.get("/admin/empresa/editar/:empresaId", (req, res) => {
     }
 })
 
-router.post("/empresa/edit", upload.any("logo"), (req, res) => {
+router.post("/empresa/edit",(req, res) => {
     var empresaId = req.body.empresaId
     var nome = req.body.nome
     var cnpj = req.body.cnpj
@@ -111,20 +110,12 @@ router.post("/empresa/edit", upload.any("logo"), (req, res) => {
     var telefone = req.body.telefone
     var celular = req.body.celular
     var descricao = req.body.descricao
+    var logo = req.body.logo
     var dataAbert = moment(data).format()
     if (empresaId != undefined) {
         if (!isNaN(empresaId)) {
             if(nome != "" && cnpj != "" && inscriEstad != "" && data != "" && email != "" && cep != "" && rua != "" && numero != "" && bairro != "" && cidade != "" && estado != "" && celular != ''){
             Empresa.findByPk(empresaId).then(empresa => {
-                if (req.file != undefined) {
-                    var excluiLogo = "./public"+empresa.logo
-                    fs.unlinkSync(excluiLogo)
-                    var dest = req.file.destination
-                    var filename = req.file.filename
-                    var logo = dest.replace("public", "") + filename
-                } else {
-                    var logo = empresa.logo
-                }
                 Empresa.update({
                     nome: nome,
                     cnpj: cnpj,

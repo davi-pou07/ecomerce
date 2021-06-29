@@ -106,7 +106,7 @@
                     var confirm = document.getElementById("confirm").value
                     var userId = document.getElementById("userId").value
                     event.preventDefault();
-                    axios.post("http://localhost:8080/usuario/editar",{login:login, nome:nome, email:email, telefone:telefone, senha:senha, senhaAtual:senhaAtual,confirm:confirm,userId:userId,file:file}).then(res => {
+                    axios.post("https://ecomerce-back.herokuapp.com/usuario/editar",{login:login, nome:nome, email:email, telefone:telefone, senha:senha, senhaAtual:senhaAtual,confirm:confirm,userId:userId,file:file}).then(res => {
                         console.log(res)
                         if (res.data.resp != undefined) {
                             alert(res.data.resp)
