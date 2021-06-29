@@ -130,6 +130,7 @@
                 aUser.innerHTML = `[${user.data.id}] ${user.data.login}`;
                 edit = document.getElementById('edit');
                 edit.href = "/admin/usuario/editar/" + user.data.id
+                console.log(user.data)
                 if (user.data.foto != undefined) {
                     img = document.getElementById("img");
                     img.src = user.data.foto
