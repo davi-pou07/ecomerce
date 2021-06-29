@@ -7,6 +7,7 @@ const multer = require('multer')
 const path = require('path')
 const fs = require('fs');
 const { where } = require('sequelize');
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'public/img/')
@@ -44,7 +45,6 @@ router.post("/empresa/novo", (req, res) => {
     var telefone = req.body.telefone
     var celular = req.body.celular
     var descricao = req.body.descricao
-    var dest = req.file.destination
     var logo = req.body.logo
     var dataAbert = moment(data).format()
     Empresa.findOne().then(empresa => {
