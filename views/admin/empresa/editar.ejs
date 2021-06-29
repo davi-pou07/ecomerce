@@ -160,6 +160,7 @@
                     var descricao = document.getElementById("descricao").value
                     event.preventDefault()
                     axios.post("https://ecomerce-back.herokuapp.com/empresa/edit", {empresaId:empresaId, nome: nome, cnpj: cnpj, inscriEstad: inscriEstad, dataAbert: dataAbert, email: email, phone: phone, telefone: telefone, cep: cep, numero: numero, rua: rua, bairro: bairro, cidade: cidade, uf: uf, descricao: descricao,logo:logo }).then(res => {
+                        console.log(res)
                         if (res.data.resp != undefined) {
                             alert(res.data.resp)
                         } else {
