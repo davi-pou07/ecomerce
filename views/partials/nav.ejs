@@ -22,9 +22,9 @@
             </div>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                
+
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-white" href="#" role="button"
                             id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Produtos</a>
@@ -55,7 +55,7 @@
                         </ul>
                     </li>
 
-                    
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-white" href="#" role="button"
                             id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Estoque</a>
@@ -130,8 +130,10 @@
                 aUser.innerHTML = `[${user.data.id}] ${user.data.login}`;
                 edit = document.getElementById('edit');
                 edit.href = "/admin/usuario/editar/" + user.data.id
-                img = document.getElementById("img");
-                img.src = user.data.foto
+                if (user.data.foto != undefined) {
+                    img = document.getElementById("img");
+                    img.src = user.data.foto
+                }
             }
         })
         axios.get('https://ecomerce-back.herokuapp.com/empresa').then(empresa => {
