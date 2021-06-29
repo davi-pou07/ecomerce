@@ -23,10 +23,10 @@
                         <div class="col-md-2">
                             <div class="personal-image">
                                 <label class="label">
-                                    <input type="file" class="form-control" id="logoAtual" onchange="encodeImageFileAsURL()">
+                                    <input type="file" class="form-control" id="logoFoto" onchange="encodeImageFileAsURL()">
                                     <input type="hidden" name="logo" id="logo">
                                     <figure class="personal-figure">
-                                        <img src="<%=empresa.logo%>" id="logoFoto" class="personal-avatar" alt="avatar">
+                                        <img src="<%=empresa.logo%>" id="logoAtual" class="personal-avatar" alt="avatar">
                                         <figcaption class="personal-figcaption">
                                             <img
                                                 src="https://raw.githubusercontent.com/ThiagoLuizNunes/angular-boilerplate/master/src/assets/imgs/camera-white.png">
@@ -134,7 +134,7 @@
                     fileReader.onload = function (fileLoadedEvent) {
                         var srcData = fileLoadedEvent.target.result; // <--- data: base64
                         var logo = document.getElementById("logo").value = srcData
-                        var logo = document.getElementById("logoFoto").src = srcData
+                        var logo = document.getElementById("logoAtual").src = srcData
                     }
                     fileReader.readAsDataURL(fileToLoad);
                 }
