@@ -65,8 +65,8 @@ app.set('view engine', 'ejs')
 //Carregamento de arquivos estaticos no express
 app.use(express.static(path.join(__dirname, 'public')))
 //Carregamento do bodyPerser
-app.use(bodyParser.urlencoded({ extended: false, limit:"10000kb" }))
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false, limit: "50mb" }))
+app.use(bodyParser.json({ limit: '50mb' }))
 
 
 app.use("/", categoriaController)
