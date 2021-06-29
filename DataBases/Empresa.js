@@ -49,7 +49,7 @@ const Empresa = connection.define('empresas', {
         type: Sequelize.TEXT,
         allowNull: true
     }, logo: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: true
     }, dominio:{
         type:Sequelize.STRING,
@@ -58,8 +58,8 @@ const Empresa = connection.define('empresas', {
 })
 
 
-// Empresa.sync({force:true}).then(()=>{
-//     console.log("Tabela Empresa criada")        
-// })
+Empresa.sync({force:true}).then(()=>{
+    console.log("Tabela Empresa criada")        
+})
 
 module.exports = Empresa
