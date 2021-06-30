@@ -23,10 +23,10 @@
                         <div class="col-md-2">
                             <div class="personal-image">
                                 <label class="label">
-                                    <input type="file" class="form-control" id="logoFoto" onchange="encodeImageFileAsURL()">
-                                    <input type="hidden" name="logo" id="logo">
+                                    <input type="file" class="form-control" id="novaFoto" onchange="encodeImageFileAsURL()">
+                                    <input type="hidden" name="logo" id="foto">
                                     <figure class="personal-figure">
-                                        <img src="<%=empresa.logo%>" id="logoAtual" class="personal-avatar" alt="avatar">
+                                        <img src="<%=empresa.logo%>" id="fotoAtual" class="personal-avatar" alt="avatar">
                                         <figcaption class="personal-figcaption">
                                             <img
                                                 src="https://raw.githubusercontent.com/ThiagoLuizNunes/angular-boilerplate/master/src/assets/imgs/camera-white.png">
@@ -126,21 +126,7 @@
         </div>
         <%- include('../../partials/footer.ejs')%>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script>
-            function encodeImageFileAsURL() {
-                var filesSelected = document.getElementById("logoFoto").files;
-                if (filesSelected.length > 0) {
-                    var fileToLoad = filesSelected[0];
-                    var fileReader = new FileReader();
-                    fileReader.onload = function (fileLoadedEvent) {
-                        var srcData = fileLoadedEvent.target.result; // <--- data: base64
-                        var logo = document.getElementById("logo").value = srcData
-                        var logo = document.getElementById("logoAtual").src = srcData
-                    }
-                    fileReader.readAsDataURL(fileToLoad);
-                }
-            }
-        </script>
+        <script src="/js/uploadImagens.js"></script>
             <script>
                 function validar() {
                     var nome = document.getElementById("nome").value
@@ -157,7 +143,7 @@
                     var bairro = document.getElementById("bairro").value
                     var cidade = document.getElementById("cidade").value
                     var uf = document.getElementById("uf").value
-                    var logo = document.getElementById("logo").value
+                    var logo = document.getElementById("foto").value
                     var descricao = document.getElementById("descricao").value
                     event.preventDefault()
                     axios.post("https://ecomerce-back.herokuapp.com/empresa/edit", {empresaId:empresaId, nome: nome, cnpj: cnpj, inscriEstad: inscriEstad, dataAbert: dataAbert, email: email, phone: phone, telefone: telefone, cep: cep, numero: numero, rua: rua, bairro: bairro, cidade: cidade, uf: uf, descricao: descricao,logo:logo }).then(res => {

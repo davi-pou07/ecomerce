@@ -52,7 +52,6 @@
     <script>
         function vazioIncorreto() {
             event.preventDefault();
-
             form = document.getElementById("autenticar")
             login = document.getElementById("login")
             senha = document.getElementById("senha")
@@ -69,7 +68,7 @@
                     if (usu.resp != undefined) {
                         alert(usu.resp)
                     } else {
-                        document.location = 'https://ecomerce-back.herokuapp.com'
+                        document.location = 'http://localhost:8080'
                     }
                 })
 

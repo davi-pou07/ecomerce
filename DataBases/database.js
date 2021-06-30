@@ -8,12 +8,17 @@ const Sequelize = require("sequelize");
 //     timezone: "-03:00",
 //     logging:false
 // })
-const connection = new Sequelize('d9f1ts6ismirrp','xzohavpuwebfje','cce7fe39b756ba090b9a03883dca985ce43bf137b608cb4cfbc1fcd6ee921e15',{
-    host:'ec2-34-200-94-86.compute-1.amazonaws.com',
+const connection = new Sequelize('d9f1ts6ismirrp', 'xzohavpuwebfje', 'cce7fe39b756ba090b9a03883dca985ce43bf137b608cb4cfbc1fcd6ee921e15', {
+    host: 'ec2-34-200-94-86.compute-1.amazonaws.com',
     dialect: 'postgres',
-    //configurando timezone
     timezone: "-03:00",
-    logging:false
+    logging: false,
+    dialectOptions: {
+        ssl: {
+            require: true,
+            rejectUnauthorized: false // <<<<<<< YOU NEED THIS
+        }
+    }
 })
 module.exports = connection;
 //postgres://xzohavpuwebfje:cce7fe39b756ba090b9a03883dca985ce43bf137b608cb4cfbc1fcd6ee921e15@ec2-34-200-94-86.compute-1.amazonaws.com:5432/d9f1ts6ismirrp

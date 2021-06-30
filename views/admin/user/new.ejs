@@ -10,15 +10,16 @@
                 <div class="card-body">
 
                     <form action="/user/novo" method="POST" class="row g-3 needs-validation" onsubmit="sub(event,this)"
-                        novalidate id="form1" enctype="multipart/form-data">
+                        novalidate id="form1">
 
 
                         <div class="col-md-2">
                             <div class="personal-image">
                                 <label class="label">
-                                    <input type="file" name="avatar" />
+                                    <input type="file" name="avatar" id="novaFoto" onchange="encodeImageFileAsURL()"/>
+                                    <input type="hidden" name="foto" id="foto">
                                     <figure class="personal-figure">
-                                        <img src="/img/avatar.jpg" class="personal-avatar" alt="avatar">
+                                        <img src="/img/avatar.jpg" class="personal-avatar" id="fotoAtual" alt="avatar">
                                         <figcaption class="personal-figcaption">
                                             <img
                                                 src="https://raw.githubusercontent.com/ThiagoLuizNunes/angular-boilerplate/master/src/assets/imgs/camera-white.png">
@@ -81,6 +82,7 @@
                     limpar2 = document.getElementById('login').value = l
                 }
             </script>
+            <script src="/js/uploadImagens.js"></script>
             <script src="/js/validar.js"></script>
             <script src="/js/telefone.js"></script>
             <script src="/js/sub.js"></script>

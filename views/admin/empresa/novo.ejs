@@ -97,8 +97,8 @@
                         </div>
                         <hr>
                         <label for="descricao" class="form-label">Logo</label>
-                        <input type="file" class="form-control" id="logoFoto" name="logoFoto" onchange="encodeImageFileAsURL()">
-                        <input type="hidden" name="logo" id="logo">
+                        <input type="file" class="form-control" id="novaFoto" name="logoFoto" onchange="encodeImageFileAsURL()">
+                        <input type="hidden" name="logo" id="foto">
                         <br>
                         <hr>
                         <button type="submit" class="btn btn-primary form-control">Criar</button>
@@ -112,17 +112,4 @@
         <script src="/js/cnpj.js"></script>
         <script src="/js/telefone.js"></script>
         <script src="/js/pesquisaCep.js"></script>
-        <script>
-            function encodeImageFileAsURL() {
-                var filesSelected = document.getElementById("logoFoto").files;
-                if (filesSelected.length > 0) {
-                    var fileToLoad = filesSelected[0];
-                    var fileReader = new FileReader();
-                    fileReader.onload = function (fileLoadedEvent) {
-                        var srcData = fileLoadedEvent.target.result; // <--- data: base64
-                        var logo = document.getElementById("logo").value = srcData
-                    }
-                    fileReader.readAsDataURL(fileToLoad);
-                }
-            }
-        </script>
+        <script src="/js/uploadImagens.js"></script>

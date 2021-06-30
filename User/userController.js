@@ -28,18 +28,13 @@ router.get("/admin/user/novo", (req, res) => {
     res.render("admin/user/new")
 })
 
-router.post("/user/novo", upload.single('avatar'), (req, res) => {
-    var file = req.file
-    if(file != undefined){
-        var imagem = file.destination.replace("public", "") + file.filename
-    }else{
-        var imagem = "/img/avatar.jpg"
-    }
+router.post("/user/novo", (req, res) => {
     var email = req.body.email
     var nome = req.body.nome
     var telefone = req.body.telefone
     var login = req.body.login
     var senha = req.body.senha
+    var foto = req.body.foto
 
     User.findOne({ where: { [Op.or]: [{ login: login }, { email: email }] } }).then(user => {
         if (user == undefined) {
@@ -53,7 +48,7 @@ router.post("/user/novo", upload.single('avatar'), (req, res) => {
                 telefone: telefone,
                 isAdmin: true,
                 status: true,
-                foto: imagem
+                foto: foto
             }).then(() => {
                 res.redirect("/")
             }).catch(err => {
@@ -85,7 +80,7 @@ router.get("/admin/usuario/editar/:user", (req, res) => {
     }
 })
 
-router.post("/usuario/editar", upload.single("file"), (req, res) => {
+router.post("/usuario/editar", (req, res) => {
     var login = req.body.login
     var nome = req.body.nome
     var email = req.body.email
@@ -94,7 +89,7 @@ router.post("/usuario/editar", upload.single("file"), (req, res) => {
     var senha = req.body.senha
     var confirm = req.body.confirm
     var userId = req.body.userId
-    var file = req.file
+    var foto = req.body.foto
     if (login != '' && nome != '' && email != '' && telefone != '') {
         User.findByPk(userId).then(user => {
             if (user != undefined) {
@@ -108,14 +103,6 @@ router.post("/usuario/editar", upload.single("file"), (req, res) => {
                     if (senha == confirm && senha != senhaAtual) {
                         User.findOne({ where: { [Op.or]: [{ login: login }, { email: email }] } }).then(usu => {
                             if (usu == undefined || (usu.email == user.email && usu.login == usu.login)) {
-                                if (file != undefined) {
-                                    var delimg = "./public/"+user.foto
-                                    fs.unlinkSync(delimg)
-                                    var dest = file.destination
-                                    var imagem = dest.replace("public", "") + file.filename
-                                } else {
-                                    var imagem = user.foto
-                                }
                                 if (senha != '') {
                                     var salt = bcrypt.genSaltSync(10)
                                     var hash = bcrypt.hashSync(senha, salt)
@@ -126,7 +113,7 @@ router.post("/usuario/editar", upload.single("file"), (req, res) => {
                                     email: email,
                                     telefone: telefone,
                                     senha: hash,
-                                    foto: imagem
+                                    foto: foto
                                 }, { where: { id: user.id } }).then(() => {
                                     // res.json({ resp: 'undefined' })
                                     res.redirect("/admin/usuarios")
@@ -171,7 +158,6 @@ router.post("/autenticar", (req, res) => {
                         id: usu.id,
                         login: usu.login
                     }
-                    console.log(req.session)
                     res.redirect("/")
                 } else {
                     console.log("Senha incorreta")

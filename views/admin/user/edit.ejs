@@ -10,16 +10,17 @@
                 <div class="card-body">
 
                     <form method="POST" action="/usuario/editar" name="form1" class="row g-3 needs-validation" novalidate
-                        id="form1" enctype="multipart/form-data">
+                        id="form1">
 
                         <input type="hidden" name="userId" id="userId" value="<%=user.id%>">
                         
                         <div class="col-md-2">
                             <div class="personal-image">
                                 <label class="label">
-                                    <input type="file" name="file" id="file" />
+                                    <input type="file" name="file" id="novaFoto" onchange="encodeImageFileAsURL()"/>
+                                    <input type="hidden" name="foto" id="foto">
                                     <figure class="personal-figure">
-                                        <img src="<%=user.foto%>" class="personal-avatar" alt="avatar">
+                                        <img src="<%=user.foto%>" class="personal-avatar" id="fotoAtual" alt="avatar">
                                         <figcaption class="personal-figcaption">
                                             <img
                                                 src="https://raw.githubusercontent.com/ThiagoLuizNunes/angular-boilerplate/master/src/assets/imgs/camera-white.png">
@@ -74,7 +75,7 @@
 
                         <hr>
 
-                        <button type="button" id="buttom" class="btn btn-primary form-control"
+                        <button type="submit" id="buttom" class="btn btn-primary form-control"
                             onclick="validar()">Atualizar</button>
                     </form>
                 </div>
@@ -84,6 +85,7 @@
         </body>
         <%- include('../../partials/footer.ejs')%>
             <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+            <script src="/js/uploadImagens.js"></script>
             <script>
                 function limpo() {
                     limpar = document.getElementById('login').value
@@ -105,8 +107,9 @@
                     var senha = document.getElementById("senha").value
                     var confirm = document.getElementById("confirm").value
                     var userId = document.getElementById("userId").value
+                    var foto = document.getElementById("foto").value
                     event.preventDefault();
-                    axios.post("https://ecomerce-back.herokuapp.com/usuario/editar",{login:login, nome:nome, email:email, telefone:telefone, senha:senha, senhaAtual:senhaAtual,confirm:confirm,userId:userId,file:file}).then(res => {
+                    axios.post("https://ecomerce-back.herokuapp.com/usuario/editar",{login:login, nome:nome, email:email, telefone:telefone, senha:senha, senhaAtual:senhaAtual,confirm:confirm,userId:userId,foto:foto}).then(res => {
                         console.log(res)
                         if (res.data.resp != undefined) {
                             alert(res.data.resp)

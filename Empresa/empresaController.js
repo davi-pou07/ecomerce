@@ -111,7 +111,6 @@ router.post("/empresa/edit",(req, res) => {
     var celular = req.body.celular
     var descricao = req.body.descricao
     var logo = req.body.logo
-    console.log(logo)
     var dataAbert = moment(data).format()
     if (empresaId != undefined) {
         if (!isNaN(empresaId)) {

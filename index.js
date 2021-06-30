@@ -2,7 +2,6 @@ const express = require("express")
 const app = express()
 const session = require("express-session")
 const bodyParser = require("body-parser")
-
 const Categoria = require("./DataBases/Categoria")
 const Produto = require("./DataBases/Produto")
 const Grade = require("./DataBases/Grade")
@@ -18,16 +17,10 @@ const Empresa = require("./DataBases/Empresa")
 
 const categoriaController = require("./Categorias/categoriasController")
 const gradeController = require("./Grade/gradeController")
-
 const produtoController = require("./Produto/produtoController")
 const estoqueController = require("./Estoque/estoqueController")
 const userController = require("./User/userController")
 const empresaController = require("./Empresa/empresaController")
-
-
-
-
-
 
 const connection = require('./DataBases/database')
 //databases
@@ -50,8 +43,6 @@ const pool = new Pool({
         rejectUnauthorized: false
     }
 });
-
-
 
 app.use(session({
     secret: "sdfsdfsdfgdfgfgh",
