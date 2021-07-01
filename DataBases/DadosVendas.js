@@ -45,8 +45,8 @@ const DadosVendas = connection.define('dadosvendas',{
         allowNull:true
     }
 })
-DadosVendas.sync({force:true}).then(()=>{
-    console.log("Tabela DadosVendas criada");
-})
+// DadosVendas.sync({force:true}).then(()=>{
+//     console.log("Tabela DadosVendas criada");
+// })
 
 module.exports = DadosVendas
