@@ -14,7 +14,6 @@ router.post("/categorias/salvar", (req, res) => {
     var descricao = req.body.descricao
     var status = req.body.status
     var destaque = req.body.destaque
-    console.log(titulo)
     Categoria.create({
         titulo: titulo,
         descricao: descricao,

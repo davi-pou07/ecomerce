@@ -1,7 +1,11 @@
 const express = require("express")
 const app = express()
+const cors = require("cors")
+app.use(cors())
 const session = require("express-session")
 const bodyParser = require("body-parser")
+
+
 const Categoria = require("./DataBases/Categoria")
 const Produto = require("./DataBases/Produto")
 const Grade = require("./DataBases/Grade")
@@ -14,6 +18,9 @@ const User = require("./DataBases/User")
 const Promocao = require("./DataBases/Promocao")
 const PromoProd = require("./DataBases/Promoprod")
 const Empresa = require("./DataBases/Empresa")
+const DadosPagamentos = require("./DataBases/DadosPagamentos")
+const DadosVendas = require("./DataBases/DadosVendas")
+
 
 const categoriaController = require("./Categorias/categoriasController")
 const gradeController = require("./Grade/gradeController")
