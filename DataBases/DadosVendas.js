@@ -28,11 +28,11 @@ const DadosVendas = connection.define('dadosvendas',{
         type:Sequelize.STRING,
         allowNull:false
     },
-    idCliente:{
+    clienteId:{
         type:Sequelize.INTEGER,
         allowNull:false
     },
-    idCarrinho:{
+    carrinhoId:{
         type:Sequelize.INTEGER,
         allowNull:false
     },
@@ -45,8 +45,8 @@ const DadosVendas = connection.define('dadosvendas',{
         allowNull:true
     }
 })
-// DadosVendas.sync({force:true}).then(()=>{
-//     console.log("Tabela DadosVendas criada");
-// })
+DadosVendas.sync({force:true}).then(()=>{
+    console.log("Tabela DadosVendas criada");
+})
 
 module.exports = DadosVendas
