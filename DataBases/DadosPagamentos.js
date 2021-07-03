@@ -29,30 +29,30 @@ const DadosPagamentos = connection.define('dadospagamentos',{
         allowNull:false
     },
     ordeId:{
-        type:Sequelize.INTEGER,
+        type:Sequelize.STRING,
         allowNull:false
     },
     detalhePagamento:{
         type:Sequelize.STRING,
-        allowNull:false
+        allowNull:true
     },
     dataLancamento:{
         type:Sequelize.DATE,
-        allowNull:false
+        allowNull:true
     },
     dataExpiracao:{
         type:Sequelize.DATE,
-        allowNull:false
+        allowNull:true
     },
     codigoDeBarras:{
         type:Sequelize.TEXT,
-        allowNull:false
+        allowNull:true
     },
-    idCliente:{
+    clienteId:{
         type:Sequelize.INTEGER,
         allowNull:false
     },
-    idCarrinho:{
+    carrinhoId:{
         type:Sequelize.INTEGER,
         allowNull:false
     },
@@ -69,8 +69,8 @@ const DadosPagamentos = connection.define('dadospagamentos',{
         allowNull:true
     }
 })
-// DadosPagamentos.sync({force:true}).then(()=>{
-//     console.log("Tabela DadosPagamentos criada");
-// })
+DadosPagamentos.sync({force:true}).then(()=>{
+    console.log("Tabela DadosPagamentos criada");
+})
 
 module.exports = DadosPagamentos
