@@ -14,11 +14,11 @@ const DadosPagamentos = connection.define('dadospagamentos',{
     },
     totalPago:{
         type:Sequelize.FLOAT,
-        allowNull:false
+        allowNull:true
     },
     valorBrutoRecebido:{
         type:Sequelize.FLOAT,
-        allowNull:false
+        allowNull:true
     },
     external_reference:{
         type:Sequelize.STRING,
