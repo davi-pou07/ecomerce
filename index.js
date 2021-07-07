@@ -20,6 +20,7 @@ const PromoProd = require("./DataBases/Promoprod")
 const Empresa = require("./DataBases/Empresa")
 const DadosPagamentos = require("./DataBases/DadosPagamentos")
 const DadosVendas = require("./DataBases/DadosVendas")
+const DadosTransicoes = require("./DataBases/DadosTransicoes")
 
 
 const categoriaController = require("./Categorias/categoriasController")
