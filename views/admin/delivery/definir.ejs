@@ -1,0 +1,19 @@
+<%- include('../../partials/head.ejs')%>
+    <%- include('../../partials/nav.ejs')%>
+
+    <div class="container">
+        <div class="card mt-3 ">
+            <div class="card-header text-white bg-primary">
+                <h3>Definir preços do Delivery por bairro</h3>
+                <p>Nessa rotina seré realizado a definicção de preços do delivery por bairro de cada cidade</p>
+            </div>
+            <div class="body mt-3 mx-3">
+                <label for="selectCidade" class="form-label">Selecione a cidade</label>
+                <select class="form-select form-select-lg mb-3" id="selectCidade">
+                    <option value="0">Cidade</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+        <%- include('../../partials/footer.ejs')%>

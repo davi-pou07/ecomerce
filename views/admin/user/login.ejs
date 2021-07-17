@@ -63,12 +63,12 @@
                 function logi(logi) {
                     return logi == login
                 }
-                axios.post("https://ecomerce-back.herokuapp.com/autenticar", { login: login.value, senha: senha.value }).then(usuario => {
+                axios.post("http://localhost:8080/autenticar", { login: login.value, senha: senha.value }).then(usuario => {
                     usu = usuario.data
                     if (usu.resp != undefined) {
                         alert(usu.resp)
                     } else {
-                        document.location = 'https://ecomerce-back.herokuapp.com/'
+                        document.location = 'http://localhost:8080/'
                     }
                 })
 
