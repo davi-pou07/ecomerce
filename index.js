@@ -22,6 +22,7 @@ const DadosPagamentos = require("./DataBases/DadosPagamentos")
 const DadosVendas = require("./DataBases/DadosVendas")
 const DadosTransicoes = require("./DataBases/DadosTransicoes")
 const LocaisDelivery = require("./DataBases/LocaisDelivery")
+const dadosEntregas = require("./DataBases/DadosEntregas")
 
 
 const categoriaController = require("./Categorias/categoriasController")
