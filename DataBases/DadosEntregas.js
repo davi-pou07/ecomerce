@@ -2,10 +2,6 @@ const Sequelize = require('sequelize')
 const connection = require('./database')
 
 const DadosEntregas = connection.define('dadosentregas',{
-    descricao:{
-        type:Sequelize.TEXT,
-        allowNull:false
-    },
     cep:{
         type:Sequelize.STRING,
         allowNull:false
