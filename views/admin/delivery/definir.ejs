@@ -24,35 +24,75 @@
                     <div class="row">
                         <div class="col-md-3">
                             <label for="selectCidade">Selecione a cidade</label>
-                            <select name="cidade" class="form-control" id="selectCidade">
+                            <select name="cidade1" class="form-control" id="selectCidade">
                                 <option value="0">Selecione...</option>
                             </select>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-5">
                             <label for="bairro">Informe o bairro</label>
-                            <input type="text" class="form-control" id="bairro">
+                            <input type="text" class="form-control" id="bairro" autocomplete="off">
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label for="valor">Informe o valor</label>
-                            <input type="text" class="form-control" name="venda" id="valor1" placeholder="00,00"
-                                step=0.01 autocomplete="off" value="0">
+                            <input type="price" class="form-control" name="valor1" id="valor1"
+                                autocomplete="off" value="0" onblur="formataValor(this)">
                         </div>
-                        <div class="col-md-3 mt-4">
-                            <button class="btn btn-success ms-4">Salvar</button>
+                        <div class="col-md-2 mt-4 text-center">
                             <button class="btn btn-danger">Deletar</button>
                         </div>
-
                     </div>
+<span id="span">
 
+</span>
+                    <input type="hidden" id="count" name="count" value="1">
+
+                    <div class="text-center mt-3">
+                        <input type="button" class="form-control btn btn-success mt-3 fw-bold fs-3" value="+" onclick="adicionar()">
+                    </div>
                 </div>
             </div>
         </div>
         <%- include('../../partials/footer.ejs')%>
             <script>
+                var l = 1
+                function adicionar(){
+                    var count = l + 1
+                    var hidden = document.getElementById("count").value = count
+                    l++
+                    var span= document.getElementById('span')
+                    var div = document.createElement("div")
+                    div.classList.add('row')
+                    d.innerHTML = `<div class="col-md-3">
+                            <label for="selectCidade">Selecione a cidade</label>
+                            <select name="cidade" class="form-control" id="selectCidade">
+                                <option value="0">Selecione...</option>
+                            </select>
+                        </div>
+                        <div class="col-md-5">
+                            <label for="bairro">Informe o bairro</label>
+                            <input type="text" class="form-control" id="bairro" autocomplete="off">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="valor">Informe o valor</label>
+                            <input type="price" class="form-control" name="valor1" id="valor1"
+                                autocomplete="off" value="0" onblur="formataValor(this)">
+                        </div>
+                        <div class="col-md-2 mt-4 text-center">
+                            <button class="btn btn-danger">Deletar</button>
+                        </div>`
+                    span2.innerHTML = `<li class="list-group-item list-group-item-primary"><input type="text" name="l${count}" id="l${count}" class="form-control"></li>`
+                    span.insertBefore(span2, null);
+                }
+                function formataValor(valor){
+                    var novoValor = document.getElementById(valor.id)
+                    novoValor.value = parseInt(valor.value).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
+                }
+
                 function selecionaCidades(estado) {
                     axios.get("http://localhost:8080/cidades/filtro/" + estado).then(resp => {
-                        var cidades = resp.data.cidades
+                        var cidades = resp.data.cidades.cidades
                         var selectCidade = document.getElementById('selectCidade')
+
                         for (var x = 0; x < cidades.length; x++) {
                             var option = document.createElement("option")
                             if (cidades[x] != undefined) {
@@ -61,6 +101,8 @@
                                 selectCidade.insertBefore(option, null);
                             }
                         }
+                    }).catch(err =>{
+                        console.log(err)
                     })
                 }
             </script>
