@@ -48,8 +48,8 @@ const DadosEntregas = connection.define('dadosentregas',{
     }
 })
 
-DadosEntregas.sync({force:true}).then(()=>{
-    console.log("Tabela DadosEntregas criada");
-})
+// DadosEntregas.sync({force:true}).then(()=>{
+//     console.log("Tabela DadosEntregas criada");
+// })
 
 module.exports = DadosEntregas
