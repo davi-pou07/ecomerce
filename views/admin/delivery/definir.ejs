@@ -1,19 +1,66 @@
 <%- include('../../partials/head.ejs')%>
     <%- include('../../partials/nav.ejs')%>
 
-    <div class="container">
-        <div class="card mt-3 ">
-            <div class="card-header text-white bg-primary">
-                <h3>Definir preços do Delivery por bairro</h3>
-                <p>Nessa rotina seré realizado a definicção de preços do delivery por bairro de cada cidade</p>
-            </div>
-            <div class="body mt-3 mx-3">
-                <label for="selectCidade" class="form-label">Selecione a cidade</label>
-                <select class="form-select form-select-lg mb-3" id="selectCidade">
-                    <option value="0">Cidade</option>
-                </select>
+        <div class="container">
+            <div class="card mt-3 ">
+                <div class="card-header text-white bg-primary">
+                    <h3>Definir preços do Delivery por bairro</h3>
+                    <p>Nessa rotina seré realizado a definicção de preços do delivery por bairro de cada cidade</p>
+                </div>
+                <div class="body mt-3 mx-3">
+                    <label for="selectCidade" class="form-label">Selecione o estado</label>
+                    <select class="form-select form-select-lg mb-3" name='estado' id="selectEstado"
+                        onchange="selecionaCidades(this.value)">
+                        <option value="0">Selecione...</option>
+                        <%estados.forEach(estado=>{%>
+                            <option value="<%=estado.nome%>">
+                                <%=estado.nome%>
+                            </option>
+                            <%})%>
+                    </select>
+                </div>
+
+                <div class="card-body mt-4">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="selectCidade">Selecione a cidade</label>
+                            <select name="cidade" class="form-control" id="selectCidade">
+                                <option value="0">Selecione...</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="bairro">Informe o bairro</label>
+                            <input type="text" class="form-control" id="bairro">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="valor">Informe o valor</label>
+                            <input type="text" class="form-control" name="venda" id="valor1" placeholder="00,00"
+                                step=0.01 autocomplete="off" value="0">
+                        </div>
+                        <div class="col-md-3 mt-4">
+                            <button class="btn btn-success ms-4">Salvar</button>
+                            <button class="btn btn-danger">Deletar</button>
+                        </div>
+
+                    </div>
+
+                </div>
             </div>
         </div>
-    </div>
-
         <%- include('../../partials/footer.ejs')%>
+            <script>
+                function selecionaCidades(estado) {
+                    axios.get("http://localhost:8080/cidades/filtro/" + estado).then(resp => {
+                        var cidades = resp.data.cidades
+                        var selectCidade = document.getElementById('selectCidade')
+                        for (var x = 0; x < cidades.length; x++) {
+                            var option = document.createElement("option")
+                            if (cidades[x] != undefined) {
+                                option.value = `${cidades[x]}`
+                                option.innerHTML = `${cidades[x]}`
+                                selectCidade.insertBefore(option, null);
+                            }
+                        }
+                    })
+                }
+            </script>

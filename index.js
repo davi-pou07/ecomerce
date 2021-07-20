@@ -81,10 +81,10 @@ app.use("/", deliveryController)
 
 
 app.get("/", (req, res) => {
-    var log = req.session.usu
-    if (log == undefined) {
-        res.render("admin/user/login")
-    } else {
+    // var log = req.session.usu
+    // if (log == undefined) {
+    //     res.render("admin/user/login")
+    // } else {
         Empresa.findOne().then(empres => {
             if (empres == undefined) {
                 res.redirect("/admin/empresa/novo")
@@ -99,7 +99,7 @@ app.get("/", (req, res) => {
 
             }
         })
-    }
+    // }
 })
 
 app.listen(PORT, () => {
