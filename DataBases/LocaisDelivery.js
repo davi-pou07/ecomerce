@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const connection = require('./database')
 
-const LocaisDelivery = connection.define('locaisdelivery',{
+const LocaisDelivery = connection.define('locaisdeliveries',{
     cidade:{
         type:Sequelize.STRING,
         allowNull:false

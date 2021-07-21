@@ -8,9 +8,13 @@
                     <p>Nessa rotina seré realizado a definicção de preços do delivery por bairro de cada cidade</p>
                 </div>
                 <div class="body mt-3 mx-3">
+                    <div class="text-end">
+                        <button class="btn btn-outline-success"
+                            onclick="document.location.reload(true);">Recarregar</button>
+                    </div>
                     <label for="selectCidade" class="form-label">Selecione o estado</label>
-                    <select class="form-select form-select-lg mb-3" name='estado' id="selectEstado"
-                        onchange="selecionaCidades(this.value)">
+                    <select class="form-select form-select-lg mb-3" name='estado' id="estado"
+                        onchange="selecionaCidadesSalva(this.value);selecionaCidades(this.value)">
                         <option value="0">Selecione...</option>
                         <%estados.forEach(estado=>{%>
                             <option value="<%=estado.nome%>">
@@ -21,10 +25,13 @@
                 </div>
 
                 <div class="card-body mt-4">
+                    <span id="locaisSalvos">
+
+                    </span>
                     <div class="row">
                         <div class="col-md-3">
-                            <label for="selectCidade">Selecione a cidade</label>
-                            <select name="cidade1" class="form-control" id="selectCidade">
+                            <label for="cidade">Selecione a cidade</label>
+                            <select class="form-control" id="cidade">
                                 <option value="0">Selecione...</option>
                             </select>
                         </div>
@@ -34,64 +41,90 @@
                         </div>
                         <div class="col-md-2">
                             <label for="valor">Informe o valor</label>
-                            <input type="price" class="form-control" name="valor1" id="valor1"
-                                autocomplete="off" value="0" onblur="formataValor(this)">
+                            <input type="price" class="form-control" data-valor="0" id="valor" autocomplete="off"
+                                value="0" onblur="formataValor(this)" step="0.2" onfocus="aleraFormato(this)">
                         </div>
-                        <div class="col-md-2 mt-4 text-center">
-                            <button class="btn btn-danger">Deletar</button>
+                        <input type="hidden" id="cidadeId" value="1">
+                        <div class="col-md-2 mt-4" id="comandos">
+                            <button class="btn btn-danger" onclick="deletar()" disabled>Deletar</button>
+                            <button class="btn btn-warning" onclick="atualizar()" disabled>Atualizar</button>
                         </div>
                     </div>
-<span id="span">
+                    <span id="span">
 
-</span>
+                    </span>
                     <input type="hidden" id="count" name="count" value="1">
 
-                    <div class="text-center mt-3">
-                        <input type="button" class="form-control btn btn-success mt-3 fw-bold fs-3" value="+" onclick="adicionar()">
+                    <div class="text-center mt-3" id="button">
+                        <input type="button" class="form-control btn btn-primary mt-3 fw-bold fs-3" value="+"
+                            onclick="adicionar()">
                     </div>
                 </div>
             </div>
         </div>
         <%- include('../../partials/footer.ejs')%>
             <script>
-                var l = 1
-                function adicionar(){
-                    var count = l + 1
-                    var hidden = document.getElementById("count").value = count
-                    l++
-                    var span= document.getElementById('span')
-                    var div = document.createElement("div")
-                    div.classList.add('row')
-                    d.innerHTML = `<div class="col-md-3">
-                            <label for="selectCidade">Selecione a cidade</label>
-                            <select name="cidade" class="form-control" id="selectCidade">
-                                <option value="0">Selecione...</option>
+                function selecionaCidadesSalva(estado) {
+                    var button = document.getElementById("button")
+                    button.innerHTML = `<button class="form-control btn btn-primary mt-3 fw-bold" type="button" disabled>
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                        Loading...
+                                    </button>`
+                    axios.get("http://localhost:8080/cidades/filtro/" + estado).then(async resp => {
+                        var cidadesSalva = resp.data.locaisDelivery
+                        var span = document.getElementById("locaisSalvos")
+
+                        cidadesSalva.forEach((cidade, x) => {
+                            var div = document.createElement("div")
+                            div.classList.add('row')
+                            if (cidade != undefined) {
+                                console.log(cidade)
+                                div.innerHTML = `<div class="col-md-3">
+                            <label for="cidade${x}">Selecione a cidade</label>
+                            <select name="cidade${x}" class="form-control" id="cidade${x}" disabled>
+                                <option value="${cidade.cidade}">${cidade.cidade}</option>
                             </select>
                         </div>
                         <div class="col-md-5">
-                            <label for="bairro">Informe o bairro</label>
-                            <input type="text" class="form-control" id="bairro" autocomplete="off">
+                            <label for="bairro${x}">Informe o bairro</label>
+                            <input type="text" class="form-control" id="bairro${x}" value = '${cidade.bairro}' autocomplete="off" disabled>
                         </div>
+                        
                         <div class="col-md-2">
-                            <label for="valor">Informe o valor</label>
-                            <input type="price" class="form-control" name="valor1" id="valor1"
-                                autocomplete="off" value="0" onblur="formataValor(this)">
+                            <label for="valor${x}">Informe o valor</label>
+                            <input type="price" class="form-control" name="valor${x}" id="valor${x}" autocomplete="off"
+                                value="${parseFloat(cidade.preco).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}"  data-valor="${parseFloat(cidade.preco)}" onblur="formataValor(this)" disabled>
                         </div>
-                        <div class="col-md-2 mt-4 text-center">
-                            <button class="btn btn-danger">Deletar</button>
+                        <input type="hidden" id="cidadeId${x}" value="${cidade.id}">
+                        <div class="col-md-2 mt-4" id="comandos${x}">
+                            <button class="btn btn-danger" id = 'deletar${x}' onclick="deletar(${cidade.id},this,${x})">Deletar</button>
+                            <button class="btn btn-warning" id = 'atualizar${x}' onclick="atualizar(${cidade.id},this,${x})">Atualizar</button>
                         </div>`
-                    span2.innerHTML = `<li class="list-group-item list-group-item-primary"><input type="text" name="l${count}" id="l${count}" class="form-control"></li>`
-                    span.insertBefore(span2, null);
-                }
-                function formataValor(valor){
-                    var novoValor = document.getElementById(valor.id)
-                    novoValor.value = parseInt(valor.value).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
+                                span.insertBefore(div, null);
+                            }
+
+                        })
+
+                        var count = document.getElementById('count')
+                        count.value = parseInt(cidadesSalva.length) + 1
+                        document.getElementById('cidade').id = `cidade${parseInt(count.value)}`
+                        document.getElementById('bairro').id = `bairro${parseInt(count.value)}`
+                        document.getElementById('valor').id = `valor${parseInt(count.value)}`
+                        document.getElementById('cidadeId').id = `cidadeId${parseInt(count.value)}`
+                        document.getElementById('comandos').id = `comandos${parseInt(count.value)}`
+                        button.innerHTML = `<input type = "button" class="form-control btn btn-primary mt-3 fw-bold fs-3"  value = "+"
+                        onclick = "adicionar()">`
+                    }).catch(err => {
+                        console.log(err)
+                    })
                 }
 
                 function selecionaCidades(estado) {
+
                     axios.get("http://localhost:8080/cidades/filtro/" + estado).then(resp => {
                         var cidades = resp.data.cidades.cidades
-                        var selectCidade = document.getElementById('selectCidade')
+                        var count = document.getElementById("count").value
+                        var selectCidade = document.getElementById(`cidade${count}`)
 
                         for (var x = 0; x < cidades.length; x++) {
                             var option = document.createElement("option")
@@ -101,8 +134,117 @@
                                 selectCidade.insertBefore(option, null);
                             }
                         }
-                    }).catch(err =>{
+                    }).catch(err => {
                         console.log(err)
                     })
+                    document.getElementById("estado").disabled = true
+                }
+
+                function formataValor(valor) {
+                    var novoValor = document.getElementById(valor.id)
+                    novoValor.dataset.valor = parseFloat(novoValor.value)
+                    novoValor.value = parseFloat(novoValor.value).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
+                }
+                function aleraFormato(valor) {
+                    var novoValor = document.getElementById(valor.id)
+                    novoValor.value = parseFloat(novoValor.dataset.valor)
+                }
+
+                function deliveryAdicionar() {
+                    var count = document.getElementById("count").value
+                    var estado = document.getElementById("estado")
+                    var cidade = document.getElementById(`cidade${count}`)
+                    var bairro = document.getElementById(`bairro${count}`)
+                    var valor = document.getElementById(`valor${count}`)
+                    var cidadeId = document.getElementById(`cidadeId${count}`)
+                    var comandos = document.getElementById(`comandos${count}`)
+                    if (estado.value != 0 && cidade.value != 0 && !isNaN(valor.dataset.valor)) {
+                        axios.post("http://localhost:8080/delivery/adicionar", { estado: estado.value, cidade: cidade.value, bairro: bairro.value, preco: valor.dataset.valor }).then(resp => {
+                            console.log(resp.data)
+                            cidadeId.value = resp.data.id
+                            cidade.disabled = true
+                            bairro.disabled = true
+                            valor.disabled = true
+                            comandos.innerHTML = `<button class="btn btn-danger" id = 'deletar${count}' onclick="deletar(${resp.data.id},this,${count})">Deletar</button>
+                            <button class="btn btn-warning" id = 'atualizar${count}' onclick="atualizar(${resp.data.id},this,${count})">Atualizar</button>`
+                        }).catch(err => {
+                            console.log(err)
+                        })
+
+                        return true
+                    } else {
+                        alert("Valores estão vazios ou incorretos")
+                        return false
+                    }
+                }
+
+                async function adicionar() {
+                    var hidden = document.getElementById("count")
+
+                    var deliveryAdiciona = await deliveryAdicionar()
+
+                    if (deliveryAdiciona) {
+
+                        var count = parseInt(hidden.value) + 1
+                        var span = document.getElementById('span')
+                        var div = document.createElement("div")
+                        div.classList.add('row')
+
+                        div.innerHTML = `<div class="col-md-3">
+                            <label for="cidade${count}">Selecione a cidade</label>
+                            <select name="cidade${count}" class="form-control" id="cidade${count}">
+                                <option value="0">Selecione...</option>
+                            </select>
+                        </div>
+                        <div class="col-md-5">
+                            <label for="bairro${count}">Informe o bairro</label>
+                            <input type="text" class="form-control" id="bairro${count}" autocomplete="off">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="valor${count}">Informe o valor</label>
+                            <input type="price" class="form-control" name="valor${count}" id="valor${count}"
+                                autocomplete="off" value="0" data-valor="0" onblur="formataValor(this)">
+                        </div>
+                        <input type="hidden" id="cidadeId${count}" value="">
+                        <div class="col-md-2 mt-4" id="comandos${count}">
+                            <button class="btn btn-danger" id = 'deletar${count}' onclick="deletar()" disabled>Deletar</button>
+                            <button class="btn btn-warning" id = 'atualizar${count}' onclick="atualizar()" disabled>Atualizar</button>
+                        </div>`
+                        span.insertBefore(div, null);
+                        hidden.value = count
+                        var estado = document.getElementById("estado").value
+                        selecionaCidades(estado)
+                    }
+                }
+                function salvar(id, index) {
+                    console.log('chamou')
+                    var cidade = document.getElementById(`cidade${index}`)
+                    var bairro = document.getElementById(`bairro${index}`)
+                    var valor = document.getElementById(`valor${index}`)
+
+                    axios.post("http://localhost:8080/delivery/atualizar/" + id, { cidade: cidade.value, bairro: bairro.value, valor: valor.dataset.valor }).then(resp => {
+                        console.log(resp.data)
+                    }).catch(err => {
+                        console.log(err)
+                    })
+                    var botao = document.getElementById(`atualizar${index}`)
+                    botao.classList.remove('btn-info')
+                    botao.classList.add('btn-warning')
+                    botao.innerHTML = 'Atualizar'
+                    botao.removeAttribute('onclick')
+                    var bairro = document.getElementById(`bairro${index}`).disabled = true
+                    var valor = document.getElementById(`valor${index}`).disabled = true
+                }
+                async function atualizar(id, button, index) {
+                    var bairro = document.getElementById(`bairro${index}`).disabled = false
+                    var valor = document.getElementById(`valor${index}`).disabled = false
+                    var botao = document.getElementById(button.id)
+                    botao.classList.remove('btn-warning')
+                    botao.classList.add('btn-info')
+                    botao.classList.add('text-white')
+                    botao.innerHTML = 'Salvar'
+                    setTimeout(() => {
+                        botao.setAttribute('onclick', `salvar(${id},${index})`)
+                    }, 1000)
                 }
             </script>
