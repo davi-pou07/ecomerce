@@ -41,10 +41,10 @@ router.post("/delivery/deletar/:id", async (req, res) => {
     var localDelivery = await LocaisDelivery.findByPk(id)
     if (localDelivery != undefined) {
         LocaisDelivery.destroy({ where: { id: localDelivery.id } }).then(() => {
-            res.json({ resp: "Exclusão concluida" })
+            res.redirect("/admin/delivery/definir-preco")
         })
     } else {
-        res.json({ erro: "Impossivel efetuar a exclusão" })
+        res.redirect("/admin/delivery/definir-preco")
     }
 })
 

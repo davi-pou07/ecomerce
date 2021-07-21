@@ -45,6 +45,10 @@ const DadosEntregas = connection.define('dadosentregas',{
     codigoRastreioInterno:{
         type:Sequelize.STRING,
         allowNull:false
+    },
+    valor:{
+        type:Sequelize.FLOAT,
+        allowNull:false
     }
 })
 

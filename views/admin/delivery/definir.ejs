@@ -35,7 +35,7 @@
                                 <option value="0">Selecione...</option>
                             </select>
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-md-4">
                             <label for="bairro">Informe o bairro</label>
                             <input type="text" class="form-control" id="bairro" autocomplete="off">
                         </div>
@@ -45,9 +45,11 @@
                                 value="0" onblur="formataValor(this)" step="0.2" onfocus="aleraFormato(this)">
                         </div>
                         <input type="hidden" id="cidadeId" value="1">
-                        <div class="col-md-2 mt-4" id="comandos">
-                            <button class="btn btn-danger" onclick="deletar()" disabled>Deletar</button>
-                            <button class="btn btn-warning" onclick="atualizar()" disabled>Atualizar</button>
+                        <div class="col-md-3 mt-4" id="comandos">
+                            <form action="/delivery/deletar" method="POST">
+                                <button class="btn btn-danger" type="submit" onclick="return deletar()" disabled>Deletar</button>
+                                <button class="btn btn-warning" type="button" onclick="atualizar()" disabled>Atualizar</button>
+                            </form>
                         </div>
                     </div>
                     <span id="span">
@@ -64,6 +66,7 @@
         </div>
         <%- include('../../partials/footer.ejs')%>
             <script>
+
                 function selecionaCidadesSalva(estado) {
                     var button = document.getElementById("button")
                     button.innerHTML = `<button class="form-control btn btn-primary mt-3 fw-bold" type="button" disabled>
@@ -85,7 +88,7 @@
                                 <option value="${cidade.cidade}">${cidade.cidade}</option>
                             </select>
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-md-4">
                             <label for="bairro${x}">Informe o bairro</label>
                             <input type="text" class="form-control" id="bairro${x}" value = '${cidade.bairro}' autocomplete="off" disabled>
                         </div>
@@ -96,9 +99,11 @@
                                 value="${parseFloat(cidade.preco).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}"  data-valor="${parseFloat(cidade.preco)}" onblur="formataValor(this)" disabled>
                         </div>
                         <input type="hidden" id="cidadeId${x}" value="${cidade.id}">
-                        <div class="col-md-2 mt-4" id="comandos${x}">
-                            <button class="btn btn-danger" id = 'deletar${x}' onclick="deletar(${cidade.id},this,${x})">Deletar</button>
-                            <button class="btn btn-warning" id = 'atualizar${x}' onclick="atualizar(${cidade.id},this,${x})">Atualizar</button>
+                        <div class="col-md-3 mt-4" id="comandos${x}">
+                            <form action="/delivery/deletar/${cidade.id}" method="POST">
+                            <button class="btn btn-danger" id = 'deletar${x}' type="submit" onclick="return deletar()">Deletar</button>
+                            <button class="btn btn-warning" id = 'atualizar${x}' type="button" onclick="atualizar(${cidade.id},this,${x})">Atualizar</button>
+                            </form>
                         </div>`
                                 span.insertBefore(div, null);
                             }
@@ -165,8 +170,8 @@
                             cidade.disabled = true
                             bairro.disabled = true
                             valor.disabled = true
-                            comandos.innerHTML = `<button class="btn btn-danger" id = 'deletar${count}' onclick="deletar(${resp.data.id},this,${count})">Deletar</button>
-                            <button class="btn btn-warning" id = 'atualizar${count}' onclick="atualizar(${resp.data.id},this,${count})">Atualizar</button>`
+                            comandos.innerHTML = `<button class="btn btn-danger" id = 'deletar${count}' type="submit" onclick="return deletar()">Deletar</button>
+                            <button class="btn btn-warning" id = 'atualizar${count}' type="button" onclick="atualizar(${resp.data.id},this,${count})">Atualizar</button>`
                         }).catch(err => {
                             console.log(err)
                         })
@@ -196,7 +201,7 @@
                                 <option value="0">Selecione...</option>
                             </select>
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-md-4">
                             <label for="bairro${count}">Informe o bairro</label>
                             <input type="text" class="form-control" id="bairro${count}" autocomplete="off">
                         </div>
@@ -206,9 +211,11 @@
                                 autocomplete="off" value="0" data-valor="0" onblur="formataValor(this)">
                         </div>
                         <input type="hidden" id="cidadeId${count}" value="">
-                        <div class="col-md-2 mt-4" id="comandos${count}">
-                            <button class="btn btn-danger" id = 'deletar${count}' onclick="deletar()" disabled>Deletar</button>
-                            <button class="btn btn-warning" id = 'atualizar${count}' onclick="atualizar()" disabled>Atualizar</button>
+                        <div class="col-md-3 mt-4" id="comandos${count}">
+                            <form action="/delivery/deletar/" method="POST">
+                            <button class="btn btn-danger" id = 'deletar${count}' type="submit" onclick="return deletar()" disabled>Deletar</button>
+                            <button class="btn btn-warning" id = 'atualizar${count}' type="button" onclick="atualizar()" disabled>Atualizar</button>
+                            </form>
                         </div>`
                         span.insertBefore(div, null);
                         hidden.value = count
@@ -216,6 +223,20 @@
                         selecionaCidades(estado)
                     }
                 }
+                
+                async function atualizar(id, button, index) {
+                    var bairro = document.getElementById(`bairro${index}`).disabled = false
+                    var valor = document.getElementById(`valor${index}`).disabled = false
+                    var botao = document.getElementById(button.id)
+                    botao.classList.remove('btn-warning')
+                    botao.classList.add('btn-info')
+                    botao.classList.add('text-white')
+                    botao.innerHTML = 'Salvar'
+                    setTimeout(() => {
+                        botao.setAttribute('onclick', `salvar(${id},${index})`)
+                    }, 1000)
+                }
+
                 function salvar(id, index) {
                     console.log('chamou')
                     var cidade = document.getElementById(`cidade${index}`)
@@ -234,17 +255,10 @@
                     botao.removeAttribute('onclick')
                     var bairro = document.getElementById(`bairro${index}`).disabled = true
                     var valor = document.getElementById(`valor${index}`).disabled = true
+                    botao.disabled = true
                 }
-                async function atualizar(id, button, index) {
-                    var bairro = document.getElementById(`bairro${index}`).disabled = false
-                    var valor = document.getElementById(`valor${index}`).disabled = false
-                    var botao = document.getElementById(button.id)
-                    botao.classList.remove('btn-warning')
-                    botao.classList.add('btn-info')
-                    botao.classList.add('text-white')
-                    botao.innerHTML = 'Salvar'
-                    setTimeout(() => {
-                        botao.setAttribute('onclick', `salvar(${id},${index})`)
-                    }, 1000)
+
+                function deletar() {
+                    return confirm("Tem certeza que deseja remover?")
                 }
             </script>
