@@ -73,8 +73,8 @@ const DadosPagamentos = connection.define('dadospagamentos',{
         allowNull:true
     }
 })
-DadosPagamentos.sync({force:true}).then(()=>{
-    console.log("Tabela DadosPagamentos criada");
-})
+// DadosPagamentos.sync({force:true}).then(()=>{
+//     console.log("Tabela DadosPagamentos criada");
+// })
 
 module.exports = DadosPagamentos
