@@ -1,77 +1,77 @@
-// const Sequelize = require('sequelize')
+const Seq = require('sequelize')
 const connection = require('./database')
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = new Sequelize(/* ... */);
 const queryInterface = sequelize.getQueryInterface();
+
 const DadosPagamentos = connection.define('dadospagamentos',{
-    
     dadosId:{
-        type:Sequelize.STRING,
+        type:Seq.STRING,
         allowNull:false,
         unique: true
     },
     dataAutorizacao:{
-        type:Sequelize.DATE,
+        type:Seq.DATE,
         allowNull:true
     },
     totalPago:{
-        type:Sequelize.FLOAT,
+        type:Seq.FLOAT,
         allowNull:true
     },
     valorBrutoRecebido:{
-        type:Sequelize.FLOAT,
+        type:Seq.FLOAT,
         allowNull:true
     },
     external_reference:{
-        type:Sequelize.STRING,
+        type:Seq.STRING,
         allowNull:false
     },
     tipoDePagamento:{
-        type:Sequelize.STRING,
+        type:Seq.STRING,
         allowNull:false
     },
     ordeId:{
-        type:Sequelize.STRING,
+        type:Seq.STRING,
         allowNull:false
     },
     detalhePagamento:{
-        type:Sequelize.STRING,
+        type:Seq.STRING,
         allowNull:true
     },
     dataLancamento:{
-        type:Sequelize.DATE,
+        type:Seq.DATE,
         allowNull:true
     },
     dataExpiracao:{
-        type:Sequelize.DATE,
+        type:Seq.DATE,
         allowNull:true
     },
     codigoDeBarras:{
-        type:Sequelize.TEXT,
+        type:Seq.TEXT,
         allowNull:true
     },
     clienteId:{
-        type:Sequelize.INTEGER,
+        type:Seq.INTEGER,
         allowNull:false
     },
     carrinhoId:{
-        type:Sequelize.INTEGER,
+        type:Seq.INTEGER,
         allowNull:false
     },
     status:{
-        type:Sequelize.STRING,
+        type:Seq.STRING,
         allowNull:true
     },
     descricao:{
-        type:Sequelize.STRING,
+        type:Seq.STRING,
         allowNull:true
     },
     metodoPagamento:{
-        type:Sequelize.STRING,
+        type:Seq.STRING,
         allowNull:true
     }
 })
-queryInterface.addColumn('dadospagamentos', 'boletoUrl', { type:Sequelize.TEXT,allowNull:true });
+queryInterface.addColumn('dadospagamentos', 'boletoUrl', { type:Seq.TEXT,allowNull:true });
 
 DadosPagamentos.sync({force:false}).then(()=>{
     console.log("Tabela DadosPagamentos criada");
