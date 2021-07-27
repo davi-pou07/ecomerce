@@ -33,8 +33,8 @@ const DadosTransicoes = connection.define('dadostransicoes',{
         allowNull:false
     }
 })
-// DadosTransicoes.sync({force:true}).then(()=>{
-//     console.log("Tabela DadosTransicoes criada");
-// })
+DadosTransicoes.sync({force:true}).then(()=>{
+    console.log("Tabela DadosTransicoes criada");
+})
 
 module.exports = DadosTransicoes
