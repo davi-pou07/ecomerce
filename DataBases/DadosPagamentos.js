@@ -69,7 +69,7 @@ const DadosPagamentos = connection.define('dadospagamentos',{
         allowNull:true
     },
     boletoUrl:{
-        typeof:Sequelize.TEXT,
+        type:Sequelize.TEXT,
         allowNull:true
     }
 })
