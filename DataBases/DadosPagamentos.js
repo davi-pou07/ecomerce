@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 const connection = require('./database')
-
+const queryInterface = sequelize.getQueryInterface();
 const DadosPagamentos = connection.define('dadospagamentos',{
     
     dadosId:{
@@ -69,7 +69,7 @@ const DadosPagamentos = connection.define('dadospagamentos',{
         allowNull:true
     }
 })
-DadosPagamentos.addColumn('dadospagamentos', 'boletoUrl', { type:Sequelize.TEXT,allowNull:true });
+queryInterface.addColumn('dadospagamentos', 'boletoUrl', { type:Sequelize.TEXT,allowNull:true });
 
 DadosPagamentos.sync({force:false}).then(()=>{
     console.log("Tabela DadosPagamentos criada");
