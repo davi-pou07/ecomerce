@@ -73,7 +73,6 @@ const DadosPagamentos = connection.define('dadospagamentos',{
         allowNull:true
     }
 })
-DadosPagamentos.addColumn('dadospagamentos', 'boletoUrl', { typeof:Sequelize.TEXT,allowNull:true });
 DadosPagamentos.sync({force:true}).then(()=>{
     console.log("Tabela DadosPagamentos criada");
 })
