@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 const connection = require('./database')
-const queryInterface = sequelize.getQueryInterface();
+const queryInterface = Sequelize.getQueryInterface();
 const DadosPagamentos = connection.define('dadospagamentos',{
     
     dadosId:{
