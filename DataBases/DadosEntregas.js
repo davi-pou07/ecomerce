@@ -50,7 +50,7 @@ const DadosEntregas = connection.define('dadosentregas',{
         type:Sequelize.FLOAT,
         allowNull:false
     },dataPrevista:{
-        type:Sequelize.DATE,
+        type:Sequelize.STRING,
         allowNull:true
     }
 })
