@@ -49,11 +49,14 @@ const DadosEntregas = connection.define('dadosentregas',{
     valor:{
         type:Sequelize.FLOAT,
         allowNull:false
+    },dataPrevista:{
+        type:Sequelize.DATE,
+        allowNull:true
     }
 })
 
-// DadosEntregas.sync({force:true}).then(()=>{
-//     console.log("Tabela DadosEntregas criada");
-// })
+DadosEntregas.sync({force:true}).then(()=>{
+    console.log("Tabela DadosEntregas criada");
+})
 
 module.exports = DadosEntregas
