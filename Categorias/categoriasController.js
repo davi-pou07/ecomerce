@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const Categoria = require("../DataBases/Categoria")
 const Sequelize = require('sequelize')
+const Categoria = require("../DataBases/Categoria")
 const { json } = require('sequelize')
 
 //Novo
