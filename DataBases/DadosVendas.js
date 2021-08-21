@@ -43,6 +43,10 @@ const DadosVendas = connection.define('dadosvendas',{
     tentativas:{
         type:Sequelize.STRING,
         allowNull:true
+    },
+    tipoDePagamento:{
+        type:Sequelize.INTEGER,
+        allowNull:true
     }
 })
 // DadosVendas.sync({force:true}).then(()=>{

@@ -24,6 +24,9 @@ const DadosTransicoes = require("./DataBases/DadosTransicoes")
 const LocaisDelivery = require("./DataBases/LocaisDelivery")
 const dadosEntregas = require("./DataBases/DadosEntregas")
 const banners = require("./DataBases/Banners")
+const DadosPagamentosPix = require("./DataBases/DadosPagamentosPix")
+const DadosPagamentosEntrega = require("./DataBases/DadosPagamentosEntrega")
+
 
 
 const categoriaController = require("./Categorias/categoriasController")
@@ -81,7 +84,6 @@ app.use("/", userController)
 app.use("/", empresaController)
 app.use("/", deliveryController)
 app.use("/", bannerController)
-
 
 app.get("/", (req, res) => {
     // var log = req.session.usu
