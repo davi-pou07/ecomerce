@@ -16,7 +16,7 @@ const DadosPagamentosPix = connection.define('dadospagamentospix',{
     },
     valorRecebido:{
         type:Sequelize.FLOAT,
-        allowNull:false
+        allowNull:true
     },
     comprovante:{
         type:Sequelize.TEXT,
@@ -24,8 +24,7 @@ const DadosPagamentosPix = connection.define('dadospagamentospix',{
     },
     dadosId:{
         type:Sequelize.STRING,
-        allowNull:false,
-        unique: true
+        allowNull:true
     },
     ordeId:{
         type:Sequelize.STRING,

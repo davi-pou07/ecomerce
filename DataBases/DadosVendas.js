@@ -44,7 +44,7 @@ const DadosVendas = connection.define('dadosvendas',{
         type:Sequelize.STRING,
         allowNull:true
     },
-    tipoDePagamento:{
+    opcaoDePagamento:{
         type:Sequelize.INTEGER,
         allowNull:true
     }
