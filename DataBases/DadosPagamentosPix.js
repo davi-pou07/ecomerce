@@ -6,6 +6,10 @@ const DadosPagamentosPix = connection.define('dadospagamentospix',{
         type:Sequelize.STRING,
         allowNull:false
     },
+    statusId:{
+        type:Sequelize.INTEGER,
+        allowNull:true
+    },
     clienteId:{
         type:Sequelize.INTEGER,
         allowNull:false
@@ -16,7 +20,7 @@ const DadosPagamentosPix = connection.define('dadospagamentospix',{
     },
     valorRecebido:{
         type:Sequelize.FLOAT,
-        allowNull:false
+        allowNull:true
     },
     comprovante:{
         type:Sequelize.TEXT,
@@ -33,8 +37,8 @@ const DadosPagamentosPix = connection.define('dadospagamentospix',{
     }
 })
 
-// DadosPagamentosPix.sync({force:true}).then(()=>{
-//     console.log("Tabela DadosPagamentosPix criada");
-// })
+DadosPagamentosPix.sync({force:true}).then(()=>{
+    console.log("Tabela DadosPagamentosPix criada");
+})
 
 module.exports = DadosPagamentosPix
