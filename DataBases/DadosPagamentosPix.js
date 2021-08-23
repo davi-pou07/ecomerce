@@ -28,8 +28,7 @@ const DadosPagamentosPix = connection.define('dadospagamentospix',{
     },
     dadosId:{
         type:Sequelize.STRING,
-        allowNull:false,
-        unique: true
+        allowNull:true
     },
     ordeId:{
         type:Sequelize.STRING,
