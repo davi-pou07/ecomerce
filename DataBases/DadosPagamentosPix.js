@@ -36,8 +36,8 @@ const DadosPagamentosPix = connection.define('dadospagamentospix',{
     }
 })
 
-DadosPagamentosPix.sync({force:true}).then(()=>{
-    console.log("Tabela DadosPagamentosPix criada");
-})
+// DadosPagamentosPix.sync({force:true}).then(()=>{
+//     console.log("Tabela DadosPagamentosPix criada");
+// })
 
 module.exports = DadosPagamentosPix
