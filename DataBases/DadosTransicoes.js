@@ -20,7 +20,7 @@ const DadosTransicoes = connection.define('dadostransicoes',{
         type:Sequelize.INTEGER,
         allowNull:false
     },
-    collection_status:{
+    statusColetado:{
         type:Sequelize.STRING,
         allowNull:true
     },
