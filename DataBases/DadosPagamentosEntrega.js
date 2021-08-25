@@ -1,9 +1,13 @@
 const Sequelize = require('sequelize')
 const connection = require('./database')
 
-const DadosPagamentosEntrega = connection.define('dadospagamentosentrega',{  
+const DadosPagamentosEntrega = connection.define('dadospagamentosentregas',{  
     status:{
         type:Sequelize.STRING,
+        allowNull:false
+    },
+    statusId:{
+        type:Sequelize.INTEGER,
         allowNull:false
     },
     clienteId:{
@@ -16,7 +20,7 @@ const DadosPagamentosEntrega = connection.define('dadospagamentosentrega',{
     },
     valorRecebido:{
         type:Sequelize.FLOAT,
-        allowNull:false
+        allowNull:true
     },
     comprovante:{
         type:Sequelize.TEXT,
