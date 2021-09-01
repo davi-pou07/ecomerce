@@ -28,7 +28,7 @@ const DadosPagamentosEntrega = connection.define('dadospagamentosentregas',{
     },
     dadosId:{
         type:Sequelize.STRING,
-        allowNull:false,
+        allowNull:true,
         unique: true
     },
     ordeId:{
