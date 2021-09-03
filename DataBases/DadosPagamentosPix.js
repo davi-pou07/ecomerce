@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const connection = require('./database')
 
-const DadosPagamentosPix = connection.define('dadospagamentospix',{  
+const DadosPagamentosPix = connection.define('dadospagamentospixes',{  
     status:{
         type:Sequelize.STRING,
         allowNull:false
