@@ -1,59 +1,79 @@
 <%- include('../../partials/head.ejs')%>
 
     <%- include('../../partials/nav.ejs')%>
-        <div class="card">
-            <div class="card-header">
-                <h1>Listagem de Produtos</h1>
-                <p>Vizualize seus produtos </p>
-                <a href="/admin/produto/novo" class="btn btn-primary">Adicionar novo produto</a>
-            </div>
-            <form class="d-flex" method="POST" action="/produtos/find">
-                <input class="form-control me-2" type="search" placeholder="Search" name="busca" aria-label="Search" >
-                <button class="btn btn-outline-success" type="submit">Pesquisa</button>
-              </form>
-            <div class="card-body">
-                <ul class="list-group list-group-horizontal">
-                    <button type="button" class="list-group-item list-group-item-action active"
-                        aria-current="true">
-                        Código:
-                    <button type="button" class="list-group-item list-group-item-action active"
-                        aria-current="true" >
-                        Nome:
-                    <button type="button" class="list-group-item list-group-item-action active"
-                        aria-current="true">
-                        Estoque:
-                        <button type="button" class="list-group-item list-group-item-action active"
-                        aria-current="true">
-                        Preço:
-                    <button type="button" class="list-group-item list-group-item-action active"
-                        aria-current="true">
-                        Status:
+        <div class="container-fluid">
+            <div class="row">
+                <%- include('../../partials/navegador.ejs')%>
+                    <div class="card">
+                        <div class="card-header">
+                            <h1>Listagem de Produtos</h1>
+                            <p>Vizualize seus produtos </p>
+                            <a href="/admin/produto/novo" class="btn btn-primary">Adicionar novo produto</a>
+                        </div>
+                        <form class="d-flex" method="POST" action="/produtos/find">
+                            <input class="form-control me-2" type="search" placeholder="Search" name="busca"
+                                aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Pesquisa</button>
+                        </form>
+                        <div class="card-body">
+                            <ul class="list-group list-group-horizontal">
+                                <button type="button" class="list-group-item list-group-item-action active"
+                                    aria-current="true">
+                                    Código:
+                                    <button type="button" class="list-group-item list-group-item-action active"
+                                        aria-current="true">
+                                        Nome:
+                                        <button type="button" class="list-group-item list-group-item-action active"
+                                            aria-current="true">
+                                            Estoque:
+                                            <button type="button" class="list-group-item list-group-item-action active"
+                                                aria-current="true">
+                                                Preço:
+                                                <button type="button"
+                                                    class="list-group-item list-group-item-action active"
+                                                    aria-current="true">
+                                                    Status:
 
-            </ul>
-                <%produtos.forEach(produto=>{%>
-                    <ul class="list-group list-group-horizontal" onclick="window.location='/admin/produto/editar/<%=produto.id%>'">
-                    <button type="button" class="list-group-item list-group-item-action" > <%=produto.id %> </button>
-                    <button type="button" class="list-group-item list-group-item-action"><%=produto.nome %></button>
-                    <%if(produto.totEstoque == ''|| produto.totEstoque == undefined){%>
-                    <button type="button" class="list-group-item list-group-item-action">0</button>
-                        <%}else{%>
-                    <button type="button" class="list-group-item list-group-item-action"><%=produto.totEstoque%></button>
-                    <%}%>
-                    <%precos.forEach(preco =>{%>
-                        <%if(preco.produtoId == produto.id){%>
-                    <button type="button" class="list-group-item list-group-item-action"><%=preco.venda%></button>
-                        <%}%>
-                    <%})%>
+                            </ul>
+                            <%produtos.forEach(produto=>{%>
+                                <ul class="list-group list-group-horizontal"
+                                    onclick="window.location='/admin/produto/editar/<%=produto.id%>'">
+                                    <button type="button" class="list-group-item list-group-item-action">
+                                        <%=produto.id %>
+                                    </button>
+                                    <button type="button" class="list-group-item list-group-item-action">
+                                        <%=produto.nome %>
+                                    </button>
+                                    <%if(produto.totEstoque=='' || produto.totEstoque==undefined){%>
+                                        <button type="button" class="list-group-item list-group-item-action">0</button>
+                                        <%}else{%>
+                                            <button type="button" class="list-group-item list-group-item-action">
+                                                <%=produto.totEstoque%>
+                                            </button>
+                                            <%}%>
+                                                <%precos.forEach(preco=>{%>
+                                                    <%if(preco.produtoId==produto.id){%>
+                                                        <button type="button"
+                                                            class="list-group-item list-group-item-action">
+                                                            <%=preco.venda%>
+                                                        </button>
+                                                        <%}%>
+                                                            <%})%>
 
-                    <%if(produto.status == true){%>
-                        <button type="button" class="list-group-item list-group-item-action">Ativo</button>
-                    <%}else{%>
-                        <button type="button" class="list-group-item list-group-item-action">Desativado</button>
-                    <%}%>
-                </ul>
-            <%})%>
+                                                                <%if(produto.status==true){%>
+                                                                    <button type="button"
+                                                                        class="list-group-item list-group-item-action">Ativo</button>
+                                                                    <%}else{%>
+                                                                        <button type="button"
+                                                                            class="list-group-item list-group-item-action">Desativado</button>
+                                                                        <%}%>
+                                </ul>
+                                <%})%>
+                        </div>
+                    </div>
             </div>
         </div>
+
 
         <%- include('../../partials/footer.ejs')%>
             <script src="/js/sub.js"></script>

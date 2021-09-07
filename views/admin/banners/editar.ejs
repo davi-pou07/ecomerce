@@ -1,72 +1,76 @@
 <%- include('../../partials/head.ejs')%>
     <%- include('../../partials/nav.ejs')%>
-        <link rel="stylesheet" href="/css/banner.css">
-        <div class="container">
-            <form action="/admin/banners/atualizar" id="form" method="POST">
-                <input type="hidden" name="id" value="<%=banner.id%>">
-                <div class="card my-4">
-                    <%if(resp==0){%>
-                        <div class="alert alert-danger" role="alert">
-                            Dados invalidos ou incompletos, tente novamente!
-                        </div>
-                        <%}else if(resp==1){%>
-                            <div class="alert alert-success" role="alert">
-                                Banner atualizado com sucesso
-                            </div>
-                            <%}%>
-                    <div class="card-header  text-dark border-light">
-                        <div class="banner-image">
-                            <label class="label">
-                                <input type="file" id="novaFoto" onchange="encodeImageFileAsURL()">
-                                <input type="hidden" name="imagem" id="foto">
-                                <figure class="banner-figure">
-                                    <img src="<%=banner.img%>" class="d-block w-100 banner-avatar" id="fotoAtual"
-                                        alt="">
-                                </figure>
-                            </label>
-                            <p class="text-muted">OBS:Tamaho das imagens ideal é de 1600px / 500px </p>
-                        </div>
-                    </div>
-                    <div class="card-body border-primary">
+        <div class="container-fluid">
+            <div class="row">
+                <%- include('../../partials/navegador.ejs')%>
+                    <link rel="stylesheet" href="/css/banner.css">
+                    <form action="/admin/banners/atualizar" id="form" method="POST">
+                        <input type="hidden" name="id" value="<%=banner.id%>">
+                        <div class="card my-4">
+                            <%if(resp==0){%>
+                                <div class="alert alert-danger" role="alert">
+                                    Dados invalidos ou incompletos, tente novamente!
+                                </div>
+                                <%}else if(resp==1){%>
+                                    <div class="alert alert-success" role="alert">
+                                        Banner atualizado com sucesso
+                                    </div>
+                                    <%}%>
+                                        <div class="card-header  text-dark border-light">
+                                            <div class="banner-image">
+                                                <label class="label">
+                                                    <input type="file" id="novaFoto" onchange="encodeImageFileAsURL()">
+                                                    <input type="hidden" name="imagem" id="foto">
+                                                    <figure class="banner-figure">
+                                                        <img src="<%=banner.img%>" class="d-block w-100 banner-avatar"
+                                                            id="fotoAtual" alt="">
+                                                    </figure>
+                                                </label>
+                                                <p class="text-muted">OBS:Tamaho das imagens ideal é de 1600px / 500px
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="card-body border-primary">
 
-                        <div class="row mt-2">
-                            <div class="col-md-4">
-                                <label for="titulo">Titulo</label>
-                                <input type="text" class="form-control" name="titulo" id="titulo"
-                                    value="<%=banner.titulo%>">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="titulo">Destaque</label>
-                                <select name="destaque" id="destaque" class="form-select">
-                                    <%if(banner.destaque==true){%>
-                                        <option value="true" selected>Ativo</option>
-                                        <option value="false">Desativo</option>
-                                        <%}else{%>
-                                            <option value="true">Ativo</option>
-                                            <option value="false" selected>Desativo</option>
-                                            <%}%>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="titulo">Status</label>
-                                <select name="status" id="status" class="form-select">
-                                    <%if(banner.destaque==true){%>
-                                        <option value="true" selected>Ativo</option>
-                                        <option value="false">Desativo</option>
-                                        <%}else{%>
-                                            <option value="true">Ativo</option>
-                                            <option value="false" selected>Desativo</option>
-                                            <%}%>
-                                </select>
-                            </div>
+                                            <div class="row mt-2">
+                                                <div class="col-md-4">
+                                                    <label for="titulo">Titulo</label>
+                                                    <input type="text" class="form-control" name="titulo" id="titulo"
+                                                        value="<%=banner.titulo%>">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="titulo">Destaque</label>
+                                                    <select name="destaque" id="destaque" class="form-select">
+                                                        <%if(banner.destaque==true){%>
+                                                            <option value="true" selected>Ativo</option>
+                                                            <option value="false">Desativo</option>
+                                                            <%}else{%>
+                                                                <option value="true">Ativo</option>
+                                                                <option value="false" selected>Desativo</option>
+                                                                <%}%>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="titulo">Status</label>
+                                                    <select name="status" id="status" class="form-select">
+                                                        <%if(banner.destaque==true){%>
+                                                            <option value="true" selected>Ativo</option>
+                                                            <option value="false">Desativo</option>
+                                                            <%}else{%>
+                                                                <option value="true">Ativo</option>
+                                                                <option value="false" selected>Desativo</option>
+                                                                <%}%>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer">
+                                            <button type="button" onclick="validar()"
+                                                class="form-control bg-success text-white">Salvar</button>
+                                        </div>
                         </div>
-                    </div>
-                    <div class="card-footer">
-                        <button type="button" onclick="validar()"
-                            class="form-control bg-success text-white">Salvar</button>
-                    </div>
-                </div>
-            </form>
+                    </form>
+            </div>
         </div>
 
         <%- include('../../partials/footer.ejs')%>

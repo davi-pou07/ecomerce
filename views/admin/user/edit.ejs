@@ -1,88 +1,93 @@
 <%- include('../../partials/head.ejs')%>
 
     <%- include('../../partials/nav.ejs')%>
-        <div class="container">
-            <hr>
-            <div class="card mt-5">
-                <div class="card-header">
-                    <h2>Edição de Usuário</h2>
-                </div>
-                <div class="card-body">
+        <div class="container-fluid">
+            <div class="row">
+                <%- include('../../partials/navegador.ejs')%>
+                    <div class="card mt-5">
+                        <div class="card-header">
+                            <h2>Edição de Usuário</h2>
+                        </div>
+                        <div class="card-body">
 
-                    <form method="POST" action="/usuario/editar" name="form1" class="row g-3 needs-validation" novalidate
-                        id="form1">
+                            <form method="POST" action="/usuario/editar" name="form1" class="row g-3 needs-validation"
+                                novalidate id="form1">
 
-                        <input type="hidden" name="userId" id="userId" value="<%=user.id%>">
-                        
-                        <div class="col-md-2">
-                            <div class="personal-image">
-                                <label class="label">
-                                    <input type="file" name="file" id="novaFoto" onchange="encodeImageFileAsURL()"/>
-                                    <input type="hidden" name="foto" id="foto">
-                                    <figure class="personal-figure">
-                                        <img src="<%=user.foto%>" class="personal-avatar" id="fotoAtual" alt="avatar">
-                                        <figcaption class="personal-figcaption">
-                                            <img
-                                                src="https://raw.githubusercontent.com/ThiagoLuizNunes/angular-boilerplate/master/src/assets/imgs/camera-white.png">
-                                        </figcaption>
-                                    </figure>
+                                <input type="hidden" name="userId" id="userId" value="<%=user.id%>">
+
+                                <div class="col-md-2">
+                                    <div class="personal-image">
+                                        <label class="label">
+                                            <input type="file" name="file" id="novaFoto"
+                                                onchange="encodeImageFileAsURL()" />
+                                            <input type="hidden" name="foto" id="foto">
+                                            <figure class="personal-figure">
+                                                <img src="<%=user.foto%>" class="personal-avatar" id="fotoAtual"
+                                                    alt="avatar">
+                                                <figcaption class="personal-figcaption">
+                                                    <img
+                                                        src="https://raw.githubusercontent.com/ThiagoLuizNunes/angular-boilerplate/master/src/assets/imgs/camera-white.png">
+                                                </figcaption>
+                                            </figure>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-10">
+                                    <label for="nome" class="form-label">Nome*</label>
+                                    <input class="form-control" type="text" id="nome" name="nome" autocomplete="x"
+                                        required value="<%=user.nome%>">
+                                </div>
+
+                                <label for="email" class="form-label">Email*
+                                    <input class="form-control" id="email" type="email" name="email"
+                                        placeholder="davi@davi.com" autocomplete="off" required value="<%=user.email%>">
                                 </label>
-                            </div>
-                        </div>
 
-                        <div class="col-md-10">
-                            <label for="nome" class="form-label">Nome*</label>
-                            <input class="form-control" type="text" id="nome" name="nome" autocomplete="x" required
-                                value="<%=user.nome%>">
-                        </div>
+                                <div class="col-md-6">
+                                    <label for="login" class="form-label">Login*</label>
+                                    <input class="form-control" type="text" id="login" name="login" id="login"
+                                        placeholder="Davi_Henrique" autocomplete="x" required value="<%=user.login%>"
+                                        onkeyup="limpo()">
+                                </div>
 
-                        <label for="email" class="form-label">Email*
-                            <input class="form-control" id="email" type="email" name="email" placeholder="davi@davi.com"
-                                autocomplete="off" required value="<%=user.email%>">
-                        </label>
+                                <div class="col-md-6">
+                                    <label for="telefone" class="form-label">Telefone*</label>
+                                    <input class="form-control" type="tel" id="phone" name="telefone"
+                                        placeholder="(86)9 9472-6085" autocomplete="x" required
+                                        onkeypress="mask(this, mphone);" onblur="mask(this, mphone);" maxlength="15"
+                                        value="<%=user.telefone%>">
+                                </div>
+                                <!-- FALTA VALIDAR -->
+                                <div class="col-md-4">
+                                    <label for="senhaAtual" class="form-label">Senha Atual</label>
+                                    <input class="form-control" type="password" id="senhaAtual" name="senhaAtual"
+                                        placeholder="********" required autocomplete="x">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="senha" class="form-label">Nova Senha</label>
+                                    <input class="form-control" type="password" id="senha" name="senha"
+                                        placeholder="********" required autocomplete="x">
+                                </div>
 
-                        <div class="col-md-6">
-                            <label for="login" class="form-label">Login*</label>
-                            <input class="form-control" type="text" id="login" name="login" id="login"
-                                placeholder="Davi_Henrique" autocomplete="x" required value="<%=user.login%>"
-                                onkeyup="limpo()">
-                        </div>
+                                <div class="col-md-4">
+                                    <label for="confirm" class="form-label">Confirma Senha</label>
+                                    <input class="form-control" type="password" id="confirm" name="confirm"
+                                        placeholder="********" required>
+                                </div>
+                                <br>
 
-                        <div class="col-md-6">
-                            <label for="telefone" class="form-label">Telefone*</label>
-                            <input class="form-control" type="tel" id="phone" name="telefone"
-                                placeholder="(86)9 9472-6085" autocomplete="x" required onkeypress="mask(this, mphone);"
-                                onblur="mask(this, mphone);" maxlength="15" value="<%=user.telefone%>">
-                        </div>
-                        <!-- FALTA VALIDAR -->
-                        <div class="col-md-4">
-                            <label for="senhaAtual" class="form-label">Senha Atual</label>
-                            <input class="form-control" type="password" id="senhaAtual" name="senhaAtual"
-                                placeholder="********" required autocomplete="x">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="senha" class="form-label">Nova Senha</label>
-                            <input class="form-control" type="password" id="senha" name="senha" placeholder="********"
-                                required autocomplete="x">
-                        </div>
+                                <hr>
 
-                        <div class="col-md-4">
-                            <label for="confirm" class="form-label">Confirma Senha</label>
-                            <input class="form-control" type="password" id="confirm" name="confirm"
-                                placeholder="********" required>
+                                <button type="submit" id="buttom" class="btn btn-primary form-control"
+                                    onclick="validar()">Atualizar</button>
+                            </form>
                         </div>
-                        <br>
+                    </div>
 
-                        <hr>
-
-                        <button type="submit" id="buttom" class="btn btn-primary form-control"
-                            onclick="validar()">Atualizar</button>
-                    </form>
-                </div>
             </div>
-
         </div>
-        </body>
+
         <%- include('../../partials/footer.ejs')%>
             <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
             <script src="/js/uploadImagens.js"></script>
@@ -109,7 +114,7 @@
                     var userId = document.getElementById("userId").value
                     var foto = document.getElementById("foto").value
                     event.preventDefault();
-                    axios.post("https://ecomerce-back.herokuapp.com/usuario/editar",{login:login, nome:nome, email:email, telefone:telefone, senha:senha, senhaAtual:senhaAtual,confirm:confirm,userId:userId,foto:foto}).then(res => {
+                    axios.post("https://ecomerce-back.herokuapp.com/usuario/editar", { login: login, nome: nome, email: email, telefone: telefone, senha: senha, senhaAtual: senhaAtual, confirm: confirm, userId: userId, foto: foto }).then(res => {
                         console.log(res)
                         if (res.data.resp != undefined) {
                             alert(res.data.resp)

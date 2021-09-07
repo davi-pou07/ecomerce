@@ -1,46 +1,58 @@
-<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 mt-2 d-md-block bg-light sidebar collapse">
     <div class="position-sticky pt-3">
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">
+                <a class="nav-link active" aria-current="page" href="/">
                     <span data-feather="home"></span>
                     Dashboard
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">
-                    <span data-feather="file"></span>
+                    <span data-feather="dollar-sign"></span>
                     Ordens
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/admin/produtos">
+            <li class="nav-item dropdown">
+                <a class="nav-link  dropdown-toggle" onclick="dropDowProduto()" href="#">
                     <span data-feather="shopping-cart"></span>
                     Produtos
                 </a>
+                <ul class="dropdown-menu" id="dropProduto">
+                    <li><a class="dropdown-item" href="/admin/produtos">Produtos</a></li>
+                    <li><a class="dropdown-item" href="/admin/categorias">Categorias</a></li>
+                    <li><a class="dropdown-item" href="/admin/grades">Grades</a></li>
+                    <li><a class="dropdown-item disabled" href="/admin/estoques"><s>Estoque</s></a></li>
+                </ul>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="users"></span>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" onclick="dropDowCustomizar()" href="#">
+                    <span data-feather="box"></span>
                     Customizar
                 </a>
+                <ul class="dropdown-menu" id="dropCustomizar">
+                    <li><a class="dropdown-item" href="/admin/banners">Banners</a></li>
+                </ul>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="bar-chart-2"></span>
-                    Reports
+                <a class="nav-link" href="/admin/usuarios">
+                    <span data-feather="users"></span>
+                    Usuarios
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="layers"></span>
-                    Integração
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle"  onclick="dropDowParametros()" href="#">
+                    <span data-feather="settings"></span>
+                    Parametros
                 </a>
+                <ul class="dropdown-menu" id="dropParametros">
+                    <li><a class="dropdown-item" href="/admin/empresa">Empresa</a></li>
+                    <li><a class="dropdown-item" href="/admin/delivery/definir-preco">Delivery</a></li>
+                </ul>
             </li>
         </ul>
 
-        <h6
-            class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
             <span>Saved reports</span>
             <a class="link-secondary" href="#" aria-label="Add a new report">
                 <span data-feather="plus-circle"></span>
@@ -74,5 +86,15 @@
         </ul>
     </div>
 </nav>
-
+<script>
+    function dropDowProduto() {
+        document.getElementById("dropProduto").classList.toggle('show')
+    }
+    function dropDowCustomizar() {
+        document.getElementById("dropCustomizar").classList.toggle('show')
+    }
+    function dropDowParametros() {
+        document.getElementById("dropParametros").classList.toggle('show')
+    }
+</script>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">

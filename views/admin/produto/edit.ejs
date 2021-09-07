@@ -1,190 +1,197 @@
 <%- include('../../partials/head.ejs')%>
 
     <%- include('../../partials/nav.ejs')%>
-    <%- include('../../partials/navegador.ejs')%>
-       
+        <div class="container-fluid">
+            <div class="row">
+                <%- include('../../partials/navegador.ejs')%>
+                    <div class="card">
 
-            <div class="card">
-
-                <div class="card-header">
-                    <h1>Edição de Produto</h1>
-                    <p>Edite aqui seus produtos!</p>
-                </div>
-                <div class="card-body">
-
-                    <form action="/produto/editar" method="POST" class="row g-3 needs-validation"
-                        onsubmit="sub(event,this)" novalidate id="form1">
-
-                         <input type="hidden" name="produtoId" value="<%=produto.id%>">
-
-                        <label for="titulo" class="form-label">Nome</label>
-                        <input type="text" class="form-control" name="nome" id="titulo"
-                            placeholder="Informe aqui a descrição de sua grade" autocomplete="off" required value="<%=produto.nome%>">
-                        <div class="valid-feedback">
-                            Tudo ok!
+                        <div class="card-header">
+                            <h1>Edição de Produto</h1>
+                            <p>Edite aqui seus produtos!</p>
                         </div>
-                        <div class="invalid-feedback">
-                            Esse campo é obrigatório
-                        </div>
+                        <div class="card-body">
 
-                        <label for="descricao" class="form-label">Descrição</label>
-                        <input type="text" class="form-control" name="descricao" id="descricao"
-                            placeholder="Informe aqui a descrição de sua grade" autocomplete="off" value="<%=produto.descricao%>" >
-                        <div class="valid-feedback">
-                            Tudo ok!
-                        </div>
+                            <form action="/produto/editar" method="POST" class="row g-3 needs-validation"
+                                onsubmit="sub(event,this)" novalidate id="form1">
 
-                        <div class="col-md-3">
-                            <label for="validationCustom04" class="form-label">Status</label>
-                            <select class="form-select" name="status" id="validationCustom04" required>
-                                <%if(produto.status == true){%>
-                                <option value="true" selected>Ativo</option>
-                                <option value="false">Desativado</option>
-                                    <%}else{%>
-                                <option value="true">Ativo</option>
-                                <option value="false" selected>Desativado</option>
-                                <%}%>
-                            </select>
-                            <div class="invalid-feedback">
-                                Por favor, selecione!
-                            </div>
-                        </div>
+                                <input type="hidden" name="produtoId" value="<%=produto.id%>">
 
-                        <div class="col-md-3">
-                            <label for="validationCustom04" class="form-label">Categoria</label>
-                            <select class="form-select" name="categoriaId" id="validationCustom04" required>
-                                <%categorias.forEach(categoria=>{%>
-                                    <%if(categoria.id == produto.categoriaId){%>
-                                    <option value="<%=categoria.id%>" selected>
-                                        <%=categoria.titulo%>
-                                    </option>
-                                    <%}else{%>
-                                    <option value="<%=categoria.id%>">
-                                        <%=categoria.titulo%>
-                                    </option>
-                                    <%}%>
-                                    <%})%>
-                            </select>
+                                <label for="titulo" class="form-label">Nome</label>
+                                <input type="text" class="form-control" name="nome" id="titulo"
+                                    placeholder="Informe aqui a descrição de sua grade" autocomplete="off" required
+                                    value="<%=produto.nome%>">
+                                <div class="valid-feedback">
+                                    Tudo ok!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Esse campo é obrigatório
+                                </div>
 
-                        </div>
+                                <label for="descricao" class="form-label">Descrição</label>
+                                <input type="text" class="form-control" name="descricao" id="descricao"
+                                    placeholder="Informe aqui a descrição de sua grade" autocomplete="off"
+                                    value="<%=produto.descricao%>">
+                                <div class="valid-feedback">
+                                    Tudo ok!
+                                </div>
 
-                        <div class="col-md-3">
-                            <label for="validationCustom04" class="form-label">Grades</label>
-                            <select class="form-select" name="gradeId" id="validationCustom04">
-                                <option value="0"></option>
-                                <%grades.forEach(grade=>{%>
-                                    <%if(grade.id == produto.gradeId){%>
-                                    <option value="<%=grade.id%>" selected>
-                                        <%=grade.descricao%>
-                                    </option>
-                                    <%}else{%>
-                                    <option value="<%=grade.id%>">
-                                        <%=grade.descricao%>
-                                    </option>
-                                    <%}%>
-                                    <%})%>
-                            </select>
-                            <div class="invalid-feedback">
-                                Por favor, selecione!
-                            </div>
-                        </div>
-                        <hr>
+                                <div class="col-md-3">
+                                    <label for="validationCustom04" class="form-label">Status</label>
+                                    <select class="form-select" name="status" id="validationCustom04" required>
+                                        <%if(produto.status==true){%>
+                                            <option value="true" selected>Ativo</option>
+                                            <option value="false">Desativado</option>
+                                            <%}else{%>
+                                                <option value="true">Ativo</option>
+                                                <option value="false" selected>Desativado</option>
+                                                <%}%>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Por favor, selecione!
+                                    </div>
+                                </div>
 
-                        <div class="col-md-3">
-                            <label for="Preco_custo" class="form-label">Preço de Custo</label>
-                            <%if(preco.produtoId == produto.id){%>
-                            <input type="number" class="form-control" name="custo" id="preco_custo"
-                                placeholder="00,00" step=0.01 autocomplete="off" value="<%=preco.custo%>">
-                            <%}%>
-                            <div class="valid-feedback">
-                                Tudo ok!
-                            </div>
-                            <div class="invalid-feedback">
-                                Esse campo é obrigatório
-                            </div>
+                                <div class="col-md-3">
+                                    <label for="validationCustom04" class="form-label">Categoria</label>
+                                    <select class="form-select" name="categoriaId" id="validationCustom04" required>
+                                        <%categorias.forEach(categoria=>{%>
+                                            <%if(categoria.id==produto.categoriaId){%>
+                                                <option value="<%=categoria.id%>" selected>
+                                                    <%=categoria.titulo%>
+                                                </option>
+                                                <%}else{%>
+                                                    <option value="<%=categoria.id%>">
+                                                        <%=categoria.titulo%>
+                                                    </option>
+                                                    <%}%>
+                                                        <%})%>
+                                    </select>
+
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="validationCustom04" class="form-label">Grades</label>
+                                    <select class="form-select" name="gradeId" id="validationCustom04">
+                                        <option value="0"></option>
+                                        <%grades.forEach(grade=>{%>
+                                            <%if(grade.id==produto.gradeId){%>
+                                                <option value="<%=grade.id%>" selected>
+                                                    <%=grade.descricao%>
+                                                </option>
+                                                <%}else{%>
+                                                    <option value="<%=grade.id%>">
+                                                        <%=grade.descricao%>
+                                                    </option>
+                                                    <%}%>
+                                                        <%})%>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Por favor, selecione!
+                                    </div>
+                                </div>
+                                <hr>
+
+                                <div class="col-md-3">
+                                    <label for="Preco_custo" class="form-label">Preço de Custo</label>
+                                    <%if(preco.produtoId==produto.id){%>
+                                        <input type="number" class="form-control" name="custo" id="preco_custo"
+                                            placeholder="00,00" step=0.01 autocomplete="off" value="<%=preco.custo%>">
+                                        <%}%>
+                                            <div class="valid-feedback">
+                                                Tudo ok!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Esse campo é obrigatório
+                                            </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="Preco_venda" class="form-label">Preço de venda</label>
+                                    <%if(preco.produtoId==produto.id){%>
+                                        <input type="number" class="form-control" name="venda" id="preco_venda"
+                                            placeholder="00,00" step=0.01 autocomplete="off" value="<%=preco.venda%>">
+                                        <%}%>
+                                            <div class="valid-feedback">
+                                                Tudo ok!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Esse campo é obrigatório
+                                            </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="Preco_desc" class="form-label">Preço de Desconto</label>
+                                    <%if(preco.produtoId==produto.id){%>
+                                        <input type="number" class="form-control" name="desconto" id="preco_desc"
+                                            placeholder="00,00" step=0.01 autocomplete="off"
+                                            value="<%=preco.desconto%>">
+                                        <%}%>
+                                            <div class="valid-feedback">
+                                                Tudo ok!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Esse campo é obrigatório
+                                            </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="formFile" class="form-label">Adicionar mais imagens do produto</label>
+                                    <input class="form-control" type="file" name="img" id="formFile" multiple
+                                        onchange="readAndShowFiles()">
+                                    <span id="list"></span>
+                                    <input type="hidden" name="count" id="count">
+                                </div>
+                                <hr>
+                                <p>Selecione as imagens que serão deletadas</p>
+                                <div id="col" class="col">
+                                    <%if(imagens !=undefined){%>
+                                        <%count=1%>
+                                            <%imagens.forEach(imagem=>{%>
+                                                <input type="checkbox" name="img<%=count%>" value="<%=imagem.id%>"
+                                                    id="i<%=imagem.id%>" />
+                                                <label for="i<%=imagem.id%>" class="labelimg"><img
+                                                        src="<%=imagem.imagem%>" class="imgg"></label>
+                                                <%count ++%>
+                                                    <%})%>
+                                                        <input type="hidden" id="hid" value="0" id="hid">
+                                                        <%}%>
+                                </div>
+
+                                <div class="position-relative">
+                                    <div class="card-footer">
+                                        <button class="btn btn-primary form-control" id="buttom">Atualizar</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                        
-                        <div class="col-md-3">
-                            <label for="Preco_venda" class="form-label">Preço de venda</label>
-                            <%if(preco.produtoId == produto.id){%>
-                            <input type="number" class="form-control" name="venda" id="preco_venda"
-                                placeholder="00,00" step=0.01 autocomplete="off" value="<%=preco.venda%>">
-                            <%}%>
-                            <div class="valid-feedback">
-                                Tudo ok!
-                            </div>
-                            <div class="invalid-feedback">
-                                Esse campo é obrigatório
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-3">
-                            <label for="Preco_desc" class="form-label">Preço de Desconto</label>
-                            <%if(preco.produtoId == produto.id){%>
-                            <input type="number" class="form-control" name="desconto" id="preco_desc"
-                                placeholder="00,00" step=0.01 autocomplete="off" value="<%=preco.desconto%>">
-                            <%}%>
-                            <div class="valid-feedback">
-                                Tudo ok!
-                            </div>
-                            <div class="invalid-feedback">
-                                Esse campo é obrigatório
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="formFile" class="form-label">Adicionar mais imagens do produto</label>
-                            <input class="form-control" type="file" name="img" id="formFile" multiple onchange="readAndShowFiles()">
-                            <span id="list"></span>
-                            <input type="hidden" name="count" id="count">
-                        </div>
-                        <hr>
-                        <p>Selecione as imagens que serão deletadas</p>
-                        <div id="col" class="col">
-                        <%if(imagens != undefined){%> 
-                            <%count = 1%>
-                            <%imagens.forEach(imagem =>{%>
-                                <input type="checkbox" name="img<%=count%>" value="<%=imagem.id%>" id="i<%=imagem.id%>"/>
-                                <label for="i<%=imagem.id%>" class="labelimg"><img src="<%=imagem.imagem%>" class="imgg"></label>
-                                <%count ++%>
-                        <%})%>
-                        <input type="hidden" id="hid" value="0" id="hid">
-                        <%}%>
                     </div>
-
-                <div class="position-relative">
-                <div class="card-footer">
-                    <button class="btn btn-primary form-control" id="buttom">Atualizar</button>
-                </div>
-                </div>
-                </form>
             </div>
-        <%- include('../../partials/footer.ejs')%>
-            <script src="/js/sub.js"></script>
-            <script>
-                function readAndShowFiles() {
-                    var files = document.getElementById("formFile").files;
-                    var x = 1
-                    for (var i = 0; i < files.length; i++) {
+            <%- include('../../partials/footer.ejs')%>
+                <script src="/js/sub.js"></script>
+                <script>
+                    function readAndShowFiles() {
+                        var files = document.getElementById("formFile").files;
+                        var x = 1
+                        for (var i = 0; i < files.length; i++) {
 
-                        // Closure to capture the file information.
-                        (file => {
-                            var reader = new FileReader();
-                            reader.onload = function (e) {
-                                // Render thumbnail.
-                                var hidden = document.createElement('input');
-                                hidden.type = "hidden"
-                                hidden.name = `a${x}`
-                                hidden.value = e.target.result
-                                document.getElementById('list').insertBefore(hidden, null);
-                                document.getElementById('count').value = x
-                                // console.log(e.target.result)
-                                // document.getElementById('x').value = e.target.result
-                                x++
-                            };
-                            // Read in the image file as a data URL.
-                            reader.readAsDataURL(file);
-                        })(files[i]);
+                            // Closure to capture the file information.
+                            (file => {
+                                var reader = new FileReader();
+                                reader.onload = function (e) {
+                                    // Render thumbnail.
+                                    var hidden = document.createElement('input');
+                                    hidden.type = "hidden"
+                                    hidden.name = `a${x}`
+                                    hidden.value = e.target.result
+                                    document.getElementById('list').insertBefore(hidden, null);
+                                    document.getElementById('count').value = x
+                                    // console.log(e.target.result)
+                                    // document.getElementById('x').value = e.target.result
+                                    x++
+                                };
+                                // Read in the image file as a data URL.
+                                reader.readAsDataURL(file);
+                            })(files[i]);
+                        }
                     }
-                }
-            </script>
-           
+                </script>

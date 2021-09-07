@@ -1,51 +1,64 @@
 <%- include('../../partials/head.ejs')%>
     <%- include('../../partials/nav.ejs')%>
-    <div class="container">
-        <div class="card">
-            <div class="card-header">
-                <h1>Listagem de banners</h1>
-                <p>Vizualize seus banners cadastrados</p>
-                <a href="/admin/banners/adicionar" class="btn btn-primary">Adicionar novo banner</a>
-            </div>
-            <form class="d-flex" method="POST" action="/baner/find">
-                <input class="form-control me-2" type="search" placeholder="Search" name="busca" aria-label="Search" >
-                <button class="btn btn-outline-success" type="submit">Pesquisa</button>
-              </form>
-            <div class="card-body">
-                
-                <ul class="list-group list-group-horizontal">
-                    <button type="button" class="list-group-item list-group-item-action active"
-                        aria-current="true">
-                        Código:
-                    <button type="button" class="list-group-item list-group-item-action active"
-                        aria-current="true" >
-                        Titulo:
-                    <button type="button" class="list-group-item list-group-item-action active"
-                        aria-current="true">
-                        Destaque:
-                    <button type="button" class="list-group-item list-group-item-action active"
-                        aria-current="true">
-                        Status:
+        <div class="container-fluid">
+            <div class="row">
+                <%- include('../../partials/navegador.ejs')%>
+                    <div class="card">
+                        <div class="card-header">
+                            <h1>Listagem de banners</h1>
+                            <p>Vizualize seus banners cadastrados</p>
+                            <a href="/admin/banners/adicionar" class="btn btn-primary">Adicionar novo banner</a>
+                        </div>
+                        <form class="d-flex" method="POST" action="/baner/find">
+                            <input class="form-control me-2" type="search" placeholder="Search" name="busca"
+                                aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Pesquisa</button>
+                        </form>
+                        <div class="card-body">
 
-            </ul>
-                <%banners.forEach(banner=>{%>
-                    <ul class="list-group list-group-horizontal" onclick="window.location='/admin/banner/editar/<%=banner.id%>'">
-                    <button type="button" class="list-group-item list-group-item-action" > <%=banner.id %> </button>
-                    <button type="button" class="list-group-item list-group-item-action"><%=banner.titulo %></button>
-                    <%if(banner.destaque == true){%>
-                        <button type="button" class="list-group-item list-group-item-action">Sim</button>
-                    <%}else{%>
-                        <button type="button" class="list-group-item list-group-item-action">Não</button>
-                    <%}%>
-                    <%if(banner.status == true){%>
-                        <button type="button" class="list-group-item list-group-item-action">Ativo</button>
-                    <%}else{%>
-                        <button type="button" class="list-group-item list-group-item-action">Desativado</button>
-                    <%}%>
-                </ul>
-            <%})%>
+                            <ul class="list-group list-group-horizontal">
+                                <button type="button" class="list-group-item list-group-item-action active"
+                                    aria-current="true">
+                                    Código:
+                                    <button type="button" class="list-group-item list-group-item-action active"
+                                        aria-current="true">
+                                        Titulo:
+                                        <button type="button" class="list-group-item list-group-item-action active"
+                                            aria-current="true">
+                                            Destaque:
+                                            <button type="button" class="list-group-item list-group-item-action active"
+                                                aria-current="true">
+                                                Status:
+
+                            </ul>
+                            <%banners.forEach(banner=>{%>
+                                <ul class="list-group list-group-horizontal"
+                                    onclick="window.location='/admin/banner/editar/<%=banner.id%>'">
+                                    <button type="button" class="list-group-item list-group-item-action">
+                                        <%=banner.id %>
+                                    </button>
+                                    <button type="button" class="list-group-item list-group-item-action">
+                                        <%=banner.titulo %>
+                                    </button>
+                                    <%if(banner.destaque==true){%>
+                                        <button type="button"
+                                            class="list-group-item list-group-item-action">Sim</button>
+                                        <%}else{%>
+                                            <button type="button"
+                                                class="list-group-item list-group-item-action">Não</button>
+                                            <%}%>
+                                                <%if(banner.status==true){%>
+                                                    <button type="button"
+                                                        class="list-group-item list-group-item-action">Ativo</button>
+                                                    <%}else{%>
+                                                        <button type="button"
+                                                            class="list-group-item list-group-item-action">Desativado</button>
+                                                        <%}%>
+                                </ul>
+                                <%})%>
+                        </div>
+                    </div>
             </div>
         </div>
-    </div>
 
-    <%- include('../../partials/footer.ejs')%>
+        <%- include('../../partials/footer.ejs')%>

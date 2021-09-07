@@ -1,8 +1,9 @@
 <%- include('../../partials/head.ejs')%>
 
     <%- include('../../partials/nav.ejs')%>
-        <div class="container">
-            <hr>
+    <div class="container-fluid">
+        <div class="row">
+            <%- include('../../partials/navegador.ejs')%>
             <div class="card mt-5">
                 <div class="card-header">
                     <h2>Criação de Usuário</h2>
@@ -73,7 +74,7 @@
             </div>
 
         </div>
-        </body>
+    </div>
         <%- include('../../partials/footer.ejs')%>
             <script>
                 function limpo() {
