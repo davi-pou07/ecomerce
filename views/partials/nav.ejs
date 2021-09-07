@@ -1,156 +1,37 @@
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 
-        <div class="container">
-
-            <a class="navbar-brand" href="/">
-                <img src="/img/icon.png" id="logo" width="50" height="44" class="d-inline-block align-top">
-            </a>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white" href="#" role="button"
-                            id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span id="empreza" class="text-uppercase fw-bold text-white"></span></a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-
-                            <li><a href="/admin/empresa" class="dropdown-item">Editar</a></li>
-
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white" href="#" role="button"
-                            id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Produtos</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li>
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <input type="search" class="form-control me-2" name="pesquisa" id="pesquisa"
-                                            placeholder="Buscar">
-                                        <span class="input-group-text" onclick="busca()">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                                <path
-                                                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                                            </svg>
-                                        </span>
-                                    </div>
-                                </div>
-
-                            </li>
-                            <li><a href="/admin/produtos" class="dropdown-item">Listar</a></li>
-                            <li><a href="/admin/produto/novo" class="dropdown-item">Criar</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a href="/admin/categorias" class="dropdown-item">Categoria</a></li>
-                            <li><a href="/admin/grades" class="dropdown-item">Grade</a></li>
-                        </ul>
-                    </li>
-
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white" href="#" role="button"
-                            id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Estoque</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a href="/admin/estoques/0" class="dropdown-item">Adicionar</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a href="/admin/estoque/estgrade/0" class="dropdown-item">Listar</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white" href="#" role="button"
-                            id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Delivery</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a href="/admin/delivery/listagem-delivery" class="dropdown-item">Listagem de
-                                    Delivery's</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a href="/admin/delivery/definir-preco" class="dropdown-item">Definir preços</a></li>
-                            <li><a href="/admin/estoque/estgrade/0" class="dropdown-item">Listagem de preços</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" id="navbarDropdownMenuLink"
-                            data-bs-toggle="dropdown" aria-expanded="false">Interface</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a href="/admin/banners" class="dropdown-item">Banners</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a href="/" class="dropdown-item">Cores</a></li>
-                        </ul>
-                    </li>
-                </ul>
-               
-            </div>
-
-
-            <div class="personal-imageNav">
-                <label class="label">
-                    <figure class="personal-figureNav">
-                        <div class="collapse navbar-collapse">
-                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle text-white" href="#" role="button"
-                                        id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"><img
-                                            src="/img/avatar.jpg" class="personal-avatarNav" id="img" alt="avatar"></a>
-                                    <ul class="dropdown-menu dropdown-menu-dark"
-                                        aria-labelledby="navbarDropdownMenuLink">
-                                        <li><a class="dropdown-item text-center" id="user">Usuario</a></li>
-                                        <li>
-                                            <hr class="dropdown-divider">
-                                        </li>
-                                        <li><a class="dropdown-item" id="edit">Editar</a></li>
-                                        <li>
-                                            <hr class="dropdown-divider">
-                                        </li>
-                                        <li><a class="dropdown-item" id="aUsuarios" href="/admin/usuarios">Usuarios</a>
-                                        </li>
-                                        <li>
-                                            <hr class="dropdown-divider">
-                                        </li>
-                                        <li><a class="dropdown-item" id="aUsuarios" href="/logout">Sair</a></li>
-
-                                    </ul>
-                                </li>
-                        </div>
-                    </figure>
-                </label>
+    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand" href="/">
+            <img src="/img/icon.png" id="logo" width="50" height="44">
+            <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" id="empreza" href="/">Company name</a>
+        </a>
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+        <div class="navbar-nav">
+            <div class="nav-item text-nowrap">
+                <a class="nav-link px-3" href="#">Sair</a>
             </div>
         </div>
-
-        </div>
-
-        </div>
-    </nav>
+    </header>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-        axios.get('https://ecomerce-back.herokuapp.com/user').then(user => {
-            if (user.data != undefined) {
-                aUser = document.getElementById('user');
-                aUser.innerHTML = `[${user.data.id}] ${user.data.login}`;
-                edit = document.getElementById('edit');
-                edit.href = "/admin/usuario/editar/" + user.data.id
-                if (user.data.foto != undefined) {
-                    img = document.getElementById("img");
-                    img.src = user.data.foto
-                }
-            }
-        })
+        // axios.get('https://ecomerce-back.herokuapp.com/user').then(user => {
+        //     if (user.data != undefined) {
+        //         aUser = document.getElementById('user');
+        //         aUser.innerHTML = `[${user.data.id}] ${user.data.login}`;
+        //         edit = document.getElementById('edit');
+        //         edit.href = "/admin/usuario/editar/" + user.data.id
+        //         if (user.data.foto != undefined) {
+        //             img = document.getElementById("img");
+        //             img.src = user.data.foto
+        //         }
+        //     }
+        // })
         axios.get('https://ecomerce-back.herokuapp.com/empresa').then(empresa => {
             if (empresa.data != undefined) {
                 var logo = document.getElementById("logo")
@@ -177,3 +58,5 @@
         }
 
     </script>
+    <div class="container-fluid">
+        <div class="row">
