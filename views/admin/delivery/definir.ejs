@@ -76,7 +76,7 @@
                                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                         Loading...
                                     </button>`
-                    axios.get("http://localhost:8080/cidades/filtro/" + estado).then(async resp => {
+                    axios.get("/cidades/filtro/" + estado).then(async resp => {
                         var cidadesSalva = resp.data.locaisDelivery
                         var span = document.getElementById("locaisSalvos")
 
@@ -129,7 +129,7 @@
 
                 function selecionaCidades(estado) {
 
-                    axios.get("http://localhost:8080/cidades/filtro/" + estado).then(resp => {
+                    axios.get("/cidades/filtro/" + estado).then(resp => {
                         var cidades = resp.data.cidades.cidades
                         var count = document.getElementById("count").value
                         var selectCidade = document.getElementById(`cidade${count}`)
@@ -167,7 +167,7 @@
                     var cidadeId = document.getElementById(`cidadeId${count}`)
                     var comandos = document.getElementById(`comandos${count}`)
                     if (estado.value != 0 && cidade.value != 0 && !isNaN(valor.dataset.valor)) {
-                        axios.post("http://localhost:8080/delivery/adicionar", { estado: estado.value, cidade: cidade.value, bairro: bairro.value, preco: valor.dataset.valor }).then(resp => {
+                        axios.post("/delivery/adicionar", { estado: estado.value, cidade: cidade.value, bairro: bairro.value, preco: valor.dataset.valor }).then(resp => {
                             console.log(resp.data)
                             cidadeId.value = resp.data.id
                             cidade.disabled = true
@@ -246,7 +246,7 @@
                     var bairro = document.getElementById(`bairro${index}`)
                     var valor = document.getElementById(`valor${index}`)
 
-                    axios.post("http://localhost:8080/delivery/atualizar/" + id, { cidade: cidade.value, bairro: bairro.value, valor: valor.dataset.valor }).then(resp => {
+                    axios.post("/delivery/atualizar/" + id, { cidade: cidade.value, bairro: bairro.value, valor: valor.dataset.valor }).then(resp => {
                         console.log(resp.data)
                     }).catch(err => {
                         console.log(err)
