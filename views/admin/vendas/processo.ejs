@@ -1,0 +1,102 @@
+<%- include('../../partials/head.ejs')%>
+
+    <%- include('../../partials/nav.ejs')%>
+        <div class="container-fluid">
+            <div class="row">
+                <%- include('../../partials/navegador.ejs')%>
+                    <div class="card border-primary mt-4">
+                        <div class="card-header text-white bg-primary">
+                            <h3>Vendas em processo</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="accordion" id="accordionExample">
+                                <%carrinhos.forEach((carrinho,index)=>{%>
+                                    <%clientes.forEach(cliente=>{%>
+                                        <%if(carrinho.clienteId==cliente.id){%>
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="heading<%=index%>">
+                                                    <button class="accordion-button" type="button"
+                                                        data-bs-toggle="collapse" data-bs-target="#collapse<%=index%>"
+                                                        aria-expanded="false" aria-controls="collapse<%=index%>">
+                                                        <%var data=datasCarrinho.find(data=> data.carrinhoId ==
+                                                            carrinho.id &&
+                                                            data.clienteId == cliente.id)%>
+                                                            <span> Carrinho #<%=carrinho.id%> Cliente: <strong>
+                                                                        <%=cliente.nome%> (<%=cliente.id%>)
+                                                                    </strong> - Ultima Modificação - <%=data.data%>
+                                                            </span>
+                                                    </button>
+                                                </h2>
+                                                <div id="collapse<%=index%>" class="accordion-collapse collapse"
+                                                    aria-labelledby="heading<%=index%>"
+                                                    data-bs-parent="#accordionExample">
+                                                    <div class="accordion-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th scope="col">
+                                                                            Cod.Prod
+                                                                        </th>
+                                                                        <th scope="col">
+                                                                            Desc. Prod
+                                                                        </th>
+                                                                        <th scope="col">
+                                                                            Val. Unit
+                                                                        </th>
+                                                                        <th scope="col">
+                                                                            Quantidade
+                                                                        </th>
+                                                                        <th scope="col">
+                                                                            Val. Tot
+                                                                        </th>
+                                                                        <th scope="col">
+                                                                            Data Adic.
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <%codItens.forEach(coditen=>{%>
+                                                                        <%if(coditen.carrinhoId==carrinho.id){%>
+                                                                            <%produtos.forEach(produto=>{%>
+                                                                                <%if(produto.id == coditen.produtoId){%>
+                                                                                <tr>
+                                                                                    <th scope="row">
+                                                                                        <%=coditen.produtoId%>
+                                                                                    </th>
+                                                                                    <td><%=produto.nome%></td>
+                                                                                    <td>
+                                                                                        <%=coditen.precoUnit%>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <%=coditen.quantidade%>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <%=coditen.precoTotalItem%>
+                                                                                    </td>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <%=coditen.updatedAt%>
+                                                                                    </td>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <%}%>
+                                                                                <%})%>
+                                                                                    <%}%>
+                                                                                        <%})%>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <%}%>
+                                                <%})%>
+                                                    <%})%>
+                            </div>
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+        <%- include('../../partials/footer.ejs')%>
