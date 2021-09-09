@@ -7,11 +7,14 @@
                     Dashboard
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
+            <li class="nav-item dropdown">
+                <a class="nav-link  dropdown-toggle" data-bs-auto-close="outside" onclick="dropDowOrdens()" href="#">
                     <span data-feather="dollar-sign"></span>
                     Ordens
                 </a>
+                <ul class="dropdown-menu" id="dropOrdens">
+                    <li><a class="dropdown-item" href="/admin/vendas/processo">Vendas em processo</a></li>
+                </ul>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link  dropdown-toggle" onclick="dropDowProduto()" href="#">
@@ -87,6 +90,9 @@
     </div>
 </nav>
 <script>
+    function dropDowOrdens() {
+        document.getElementById("dropOrdens").classList.toggle('show')
+    }
     function dropDowProduto() {
         document.getElementById("dropProduto").classList.toggle('show')
     }

@@ -37,6 +37,7 @@ const userController = require("./User/userController")
 const empresaController = require("./Empresa/empresaController")
 const deliveryController = require("./Delivery/deliveryController")
 const bannerController = require("./Banners/bannersController")
+const vendasController = require("./Vendas/vendasController")
 
 const connection = require('./DataBases/database')
 //databases
@@ -74,7 +75,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 //Carregamento do bodyPerser
 app.use(bodyParser.urlencoded({ extended: false, limit: "50mb" }))
 app.use(bodyParser.json({ limit: '50mb' }))
-
+const knex = require('./DataBases/dataBaseCL')
 
 app.use("/", categoriaController)
 app.use("/", gradeController)
@@ -84,6 +85,7 @@ app.use("/", userController)
 app.use("/", empresaController)
 app.use("/", deliveryController)
 app.use("/", bannerController)
+app.use("/", vendasController)
 
 app.get("/", (req, res) => {
     // var log = req.session.usu
