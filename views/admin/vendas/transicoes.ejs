@@ -1,22 +1,41 @@
 <%- include('../../partials/head.ejs')%>
 
-    <%- include('../../partials/nav.ejs')%>
-        <div class="container-fluid">
-            <div class="row">
-                <%- include('../../partials/navegador.ejs')%>
-                <nav>
-                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                      <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Home</button>
-                      <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</button>
-                      <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</button>
-                    </div>
-                  </nav>
-                  <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">teste1</div>
-                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">teste12</div>
-                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">teste13</div>
-                  </div>
-                
+  <%- include('../../partials/nav.ejs')%>
+    <div class="container-fluid">
+      <div class="row">
+        <%- include('../../partials/navegador.ejs')%>
+          <nav>
+            <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
+              <button class="nav-link active" id="nav-Autorizados-tab" data-bs-toggle="tab"
+                data-bs-target="#nav-Autorizados" type="button" role="tab" aria-controls="nav-Autorizados"
+                aria-selected="true">Autorizados</button>
+              <button class="nav-link" id="nav-Pendentes-tab" data-bs-toggle="tab" data-bs-target="#nav-Pendentes"
+                type="button" role="tab" aria-controls="nav-Pendentes" aria-selected="false">Pendentes</button>
+              <button class="nav-link" id="nav-Rejeitados-tab" data-bs-toggle="tab" data-bs-target="#nav-Rejeitados"
+                type="button" role="tab" aria-controls="nav-Rejeitados" aria-selected="false">Rejeitados</button>
             </div>
-        </div>
-        <%- include('../../partials/footer.ejs')%>
+          </nav>
+          <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-Autorizados" role="tabpanel"
+              aria-labelledby="nav-Autorizados-tab">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                  <tr>
+                    
+                  </tr>  
+                  </thead>
+                </table>
+
+              </div>
+
+            </div>
+            <div class="tab-pane fade" id="nav-Pendentes" role="tabpanel" aria-labelledby="nav-Pendentes-tab">teste12
+            </div>
+            <div class="tab-pane fade" id="nav-Rejeitados" role="tabpanel" aria-labelledby="nav-Rejeitados-tab">teste13
+            </div>
+          </div>
+
+      </div>
+    </div>
+    <%- include('../../partials/footer.ejs')%>
