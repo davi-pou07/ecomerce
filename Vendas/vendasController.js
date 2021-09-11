@@ -36,4 +36,11 @@ router.get("/admin/vendas/processo", async (req, res) => {
 })
 //-----------FIM VENDAS EM PROCESSO ------------//
 
+//----------- VENDAS ------------//
+router.get("/admin/vendas/transicoes", async (req, res) => {
+    
+    res.render("admin/vendas/transicoes")
+})
+//-----------FIM VENDAS ------------//
+
 module.exports = router
