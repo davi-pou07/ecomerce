@@ -4,38 +4,66 @@
     <div class="container-fluid">
       <div class="row">
         <%- include('../../partials/navegador.ejs')%>
-          <nav>
-            <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
-              <button class="nav-link active" id="nav-Autorizados-tab" data-bs-toggle="tab"
-                data-bs-target="#nav-Autorizados" type="button" role="tab" aria-controls="nav-Autorizados"
-                aria-selected="true">Autorizados</button>
-              <button class="nav-link" id="nav-Pendentes-tab" data-bs-toggle="tab" data-bs-target="#nav-Pendentes"
-                type="button" role="tab" aria-controls="nav-Pendentes" aria-selected="false">Pendentes</button>
-              <button class="nav-link" id="nav-Rejeitados-tab" data-bs-toggle="tab" data-bs-target="#nav-Rejeitados"
-                type="button" role="tab" aria-controls="nav-Rejeitados" aria-selected="false">Rejeitados</button>
-            </div>
-          </nav>
-          <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="nav-Autorizados" role="tabpanel"
-              aria-labelledby="nav-Autorizados-tab">
-              <div class="table-responsive">
-                <table class="table">
-                  <thead>
-                  <tr>
-                    
-                  </tr>  
-                  </thead>
-                </table>
+          <div class="card">
+            <div class="card-header">
+              <div class="row">
+                <di class="col-md-2">
+                  <div class="form-check mt-md-2">
+                    <input class="form-check-input" checked type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                      Todos
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                    <label class="form-check-label" for="flexRadioDefault1">
+                      Autorizadas
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                      Pendentes
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                      Rejeitadas
+                    </label>
+                  </div>
 
+                </di>
+                <div class="col-md-3">
+                  <select name="" class="form-select mt-md-4" id="">
+                    <option selected value="0">Todos Clientes</option>
+                    <option value="">Davi</option>
+                  </select>
+                  <input type="number" class="form-control mt-1" name="" placeholder="ID Carrinho" id="">
+                </div>
+                <div class="col-md-3">
+                  <input type="text" class="form-control mt-1" name="" placeholder="Codigo Venda" id="">
+                  <input type="text" class="form-control mt-1" name="" placeholder="Codigo Pagamento" id="">
+                  <input type="text" class="form-control mt-1" name="" placeholder="Codigo Entrega" id="">
+                </div>
+                <div class="col-md-4">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="form-label" for="flexRadioDefault2">Periodo Inicial
+                        <input type="date" class="form-control" name="" id="">
+                      </label>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label" for="flexRadioDefault2">Periodo Final
+                        <input type="date" class="form-control" name="" id="">
+                      </label>
+                    </div>
+                  </div>
+                  <button class="btn btn-success form-control mt-1 mt-md-3">Filtar</button>
+                </div>
               </div>
-
-            </div>
-            <div class="tab-pane fade" id="nav-Pendentes" role="tabpanel" aria-labelledby="nav-Pendentes-tab">teste12
-            </div>
-            <div class="tab-pane fade" id="nav-Rejeitados" role="tabpanel" aria-labelledby="nav-Rejeitados-tab">teste13
             </div>
           </div>
-
       </div>
     </div>
     <%- include('../../partials/footer.ejs')%>

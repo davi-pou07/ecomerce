@@ -61,14 +61,14 @@
                                                                             <%produtos.forEach(produto=>{%>
                                                                                 <%if(produto.id == coditen.produtoId){%>
                                                                                 <tr>
-                                                                                    <th scope="row">
+                                                                                    <th scope="row" class="ps-md-4">
                                                                                         <%=coditen.produtoId%>
                                                                                     </th>
                                                                                     <td><%=produto.nome%></td>
                                                                                     <td>
                                                                                         <%=coditen.precoUnit%>
                                                                                     </td>
-                                                                                    <td>
+                                                                                    <td class="ps-md-5">
                                                                                         <%=coditen.quantidade%>
                                                                                     </td>
                                                                                     <td>
@@ -85,6 +85,17 @@
                                                                                     <%}%>
                                                                                         <%})%>
                                                                 </tbody>
+                                                                <tfoot>
+                                                                   
+                                                                        <tr>
+                                                                            <th>Total:</th>
+                                                                            <th></th>
+                                                                            <th></th>
+                                                                            <th class="ps-md-5"><%=carrinho.quantidade%></th>
+                                                                            <th><%=carrinho.precoTotal%></th>
+                                                                            <th></th>
+                                                                        </tr>
+                                                                </tfoot>
                                                             </table>
                                                         </div>
                                                     </div>
