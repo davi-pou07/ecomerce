@@ -5,6 +5,11 @@ const knex = require('../DataBases/dataBaseCL')
 const moment = require('moment')
 const Produto = require("../DataBases/Produto")
 const { Op, ConnectionTimedOutError } = require("sequelize");
+const DadosVendas = require('../DataBases/DadosVendas')
+const DadosPagamentos = require('../DataBases/DadosPagamentos')
+const DadosPagamentosPix = require('../DataBases/DadosPagamentosPix')
+const DadosPagamentosEntrega = require('../DataBases/DadosPagamentosEntrega')
+const DadosTransicoes = require('../DataBases/DadosTransicoes')
 //-----------VENDAS EM PROCESSO ------------//
 router.get("/admin/vendas/processo", async (req, res) => {
     var carrinhos = await knex("carrinhos").select().where({ status: true }).andWhere('quantidade', '>', 0).orderBy('createdAt', 'asc')
@@ -42,8 +47,44 @@ router.get("/admin/vendas/processo", async (req, res) => {
 
 //----------- VENDAS ------------//
 router.get("/admin/vendas/transicoes", async (req, res) => {
-    
-    res.render("admin/vendas/transicoes")
+
+    var clientes = await knex('clientes').select('id','nome').where({status:true})
+    var carrinhos = await knex('carrinhos').select()
+    var codItens = await knex("coditens").select()
+    var dadosVendas = await DadosVendas.findAll()
+
+    dadosVendas.forEach(dadoVenda =>{
+        dadoVenda.updatedAt = dadoVenda.updatedAt + ''
+        var data = dadoVenda.updatedAt
+        dadoVenda.updatedAt = moment(data).format('DD/MM/YYYY') 
+    })
+   
+    var dadosTransicoes = await DadosTransicoes.findAll()
+    dadosTransicoes.forEach(pagamento =>{
+        var data = pagamento.updatedAt
+        pagamento.updatedAt = moment(data).format('DD/MM/YYYY')
+    })
+
+    var dadosPagamentos = await DadosPagamentos.findAll()
+    dadosPagamentos.forEach(pagamento =>{
+        var data = pagamento.updatedAt
+        pagamento.updatedAt = moment(data).format('DD/MM/YYYY')
+    })
+
+    var dadosPagamentosPix = await DadosPagamentosPix.findAll()
+    dadosPagamentosPix.forEach(pagamento =>{
+        var data = pagamento.updatedAt
+        pagamento.updatedAt = moment(data).format('DD/MM/YYYY')
+    })
+
+    var dadosPagamentosEntrega = await DadosPagamentosEntrega.findAll()
+    dadosPagamentosEntrega.forEach(pagamento =>{
+        var data = pagamento.updatedAt
+        pagamento.updatedAt = moment(data).format('DD/MM/YYYY')
+    })
+
+
+    res.render("admin/vendas/transicoes",{clientes:clientes,carrinhos:carrinhos,codItens:codItens,dadosVendas:dadosVendas,dadosTransicoes:dadosTransicoes,dadosPagamentos:dadosPagamentos,dadosPagamentosPix:dadosPagamentosPix,dadosPagamentosEntrega:dadosPagamentosEntrega})
 })
 //-----------FIM VENDAS ------------//
 

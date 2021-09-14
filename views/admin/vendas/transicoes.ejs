@@ -4,7 +4,7 @@
     <div class="container-fluid">
       <div class="row">
         <%- include('../../partials/navegador.ejs')%>
-          <div class="card">
+          <div class="card mt-3">
             <div class="card-header">
               <div class="row">
                 <di class="col-md-2">
@@ -37,7 +37,9 @@
                 <div class="col-md-3">
                   <select name="" class="form-select mt-md-4" id="">
                     <option selected value="0">Todos Clientes</option>
-                    <option value="">Davi</option>
+                    <%clientes.forEach(cliente =>{%>
+                    <option value="<%=cliente.id%>"><%=cliente.nome%></option>
+                    <%})%>
                   </select>
                   <input type="number" class="form-control mt-1" name="" placeholder="ID Carrinho" id="">
                 </div>
@@ -61,6 +63,117 @@
                   </div>
                   <button class="btn btn-success form-control mt-1 mt-md-3">Filtar</button>
                 </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-10">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th class="text-nowrap" scope="col">#</th>
+                          <th class="text-nowrap" scope="col">ID</th>
+                          <th class="text-nowrap" scope="col">dadosId</th>
+                          <th class="text-nowrap" scope="col">Cliente</th>
+                          <th class="text-nowrap" scope="col">Cod.Carrinho</th>
+                          <th class="text-nowrap" scope="col">Data Venda</th>
+                          <th class="text-nowrap" scope="col">Status</th>
+                          <th class="text-nowrap" scope="col">Valor Total</th>
+                          <th class="text-nowrap" scope="col">Qtd.Total</th>
+                          <th class="text-nowrap" scope="col">Cod.Pagamento</th>
+                          <th class="text-nowrap" scope="col">Form.Pagamento</th>
+                          <th class="text-nowrap" scope="col">Status Pagamento</th>
+                          <th class="text-nowrap" scope="col">Data Pagamento</th>
+                          <th class="text-nowrap" scope="col">Cod.Rastreio</th>
+                          <th class="text-nowrap" scope="col">Sit.Entrega</th>
+                          <th class="text-nowrap" scope="col">Data Entrega</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <%dadosVendas.forEach(dadoVenda =>{%>
+                          <%dadosTransicoes.forEach(dadosTransicao =>{%>
+                            <%if(dadosTransicao.dadosId == dadoVenda.dadosId){%>
+
+                          <%if(dadoVenda.opcaoDePagamento == 1){%>
+                            <%var dadosPagamento = dadosPagamentosPix.find(pagamento => pagamento.dadosId == dadoVenda.dadosId)%>
+
+                            <%}else if(dadoVenda.opcaoDePagamento == 2){%>
+                            <%var dadosPagamento = dadosPagamentos.find(pagamento => pagamento.dadosId == dadoVenda.dadosId)%>
+
+                            <%}else if(dadoVenda.opcaoDePagamento == 3){%>
+                            <%var dadosPagamento = dadosPagamentosEntrega.find(pagamento => pagamento.dadosId == dadoVenda.dadosId)%>
+                            <%}%>
+                        <tr>
+                          <th scope="row"><input type="radio" name="vendaSelecionada" id="vendaSelecionada"></th>
+
+                          <th scope="row"><%=dadoVenda.id%></th>
+
+                          <td class="text-nowrap"><%=dadoVenda.dadosId%></td>
+
+                          <%var cliente = clientes.find(c => c.id == dadosTransicao.clienteId)%>
+                          <td class="text-nowrap"><%=cliente.nome%></td>
+
+                          <%var carrinho = carrinhos.find(c => c.id == dadosTransicao.carrinhoId)%>
+                          <td class="text-nowrap"><%=carrinho.id%></td>
+
+                          <td class="text-nowrap"><%=dadoVenda.updatedAt%></td>
+
+                          <td class="text-nowrap"><%=dadoVenda.status%></td>
+                          <td class="text-nowrap"><%=dadoVenda.unit_price%></td>
+                          <td class="text-nowrap"><%=carrinho.quantidade%></td>
+                          <td class="text-nowrap"><%=dadosPagamento.orderId%></td>
+                          <td class="text-nowrap"><%=dadosTransicao.formaPagamento%></td>
+                          <td class="text-nowrap"><%=dadosTransicao.statusColetado%></td>
+                          <td class="text-nowrap"><%=dadosTransicao.updatedAt%></td>
+                          <td class="text-nowrap">Cod.Rastreio</td>
+                          <td class="text-nowrap">Sit.Entrega</td>
+                          <td class="text-nowrap">Data Entrega</td>
+                        </tr>
+
+                        <%}%>
+                        <%})%>
+                        <%})%>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="col-md-2 mt-md-4 mt-2">
+                  <button class="btn btn-warning text-white form-control">Editar</button>
+                  <button class="btn btn-info text-white form-control my-2">Imprimir</button>
+                  <button class="btn btn-danger text-white form-control">Deletar</button>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th class="text-nowrap">Cod.Produto</th>
+                      <th class="text-nowrap">Descrição</th>
+                      <th class="text-nowrap">Valor Unitario</th>
+                      <th class="text-nowrap">Quantidade</th>
+                      <th class="text-nowrap">Valor Frete</th>
+                      <th class="text-nowrap">Valor Descontro</th>
+                      <th class="text-nowrap">Valor Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <th></th>
+                  </tbody>
+                  <tfoot>
+                    <td>Total:</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>0</td>
+                    <td></td>
+                    <td></td>
+                    <td>R$</td>
+                  </tfoot>
+                </table>
               </div>
             </div>
           </div>
