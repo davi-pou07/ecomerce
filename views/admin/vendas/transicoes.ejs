@@ -115,20 +115,30 @@
                           <td class="text-nowrap"><%=cliente.nome%></td>
 
                           <%var carrinho = carrinhos.find(c => c.id == dadosTransicao.carrinhoId)%>
-                          <td class="text-nowrap"><%=carrinho.id%></td>
+                          <td class="text-nowrap ps-md-5"><%=carrinho.id%></td>
 
-                          <td class="text-nowrap"><%=dadoVenda.updatedAt%></td>
+                          <%var dataVenda = datasVendas.find(d => d.dadosId == dadoVenda.dadosId)%>
+                          <td class="text-nowrap"><%=dataVenda.data%></td>
 
-                          <td class="text-nowrap"><%=dadoVenda.status%></td>
+                          <td class="text-nowrap ps-md-3"><%=dadoVenda.status%></td>
+
                           <td class="text-nowrap"><%=dadoVenda.unit_price%></td>
-                          <td class="text-nowrap"><%=carrinho.quantidade%></td>
-                          <td class="text-nowrap"><%=dadosPagamento.orderId%></td>
+
+                          <td class="text-nowrap ps-md-4"><%=carrinho.quantidade%></td>
+
+                          <td class="text-nowrap"><%=dadosPagamento.ordeId%></td>
+
                           <td class="text-nowrap"><%=dadosTransicao.formaPagamento%></td>
+
                           <td class="text-nowrap"><%=dadosTransicao.statusColetado%></td>
-                          <td class="text-nowrap"><%=dadosTransicao.updatedAt%></td>
-                          <td class="text-nowrap">Cod.Rastreio</td>
-                          <td class="text-nowrap">Sit.Entrega</td>
-                          <td class="text-nowrap">Data Entrega</td>
+
+                          <%var dataTransicao = datasTransicoes.find(d => d.dadosId == dadoVenda.dadosId)%>
+                          <td class="text-nowrap"><%=dataTransicao.data%></td>
+
+                          <%var entrega = dadosEntregas.find(e => e.carrinhoId == carrinho.id && e.clienteId == cliente.id)%>
+                          <td class="text-nowrap"><%=entrega.codigoRastreioInterno%></td>
+                          <td class="text-nowrap"><%=entrega.status%></td>
+                          <td class="text-nowrap"><%=entrega.dataPrevista%></td>
                         </tr>
 
                         <%}%>
