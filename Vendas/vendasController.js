@@ -97,13 +97,10 @@ router.get("/admin/vendas/transicoes", async (req, res) => {
     })
 
     var dadosEntregas = await DadosEntregas.findAll()
-    var datasDadosEntregas = []
-    dadosEntregas.forEach(dadosEntrega => {
-        console.log(dadosEntrega.dataPrevista)
-        dadosEntrega.dataPrevista = moment(dadosEntrega.dataPrevista).format('DD/MM/YYYY')
-        console.log(dadosEntrega.dataPrevista)
-
-    })
+    // var datasDadosEntregas = []
+    // dadosEntregas.forEach(dadosEntrega => {
+    //     dadosEntrega.dataPrevista = moment(dadosEntrega.dataPrevista).format('DD/MM/YYYY')
+    // })
 
     res.render("admin/vendas/transicoes", {
         clientes: clientes,
@@ -120,9 +117,74 @@ router.get("/admin/vendas/transicoes", async (req, res) => {
         datasPagamentoPix: datasPagamentoPix,
         datasPagamentoEntrega: datasPagamentoEntrega,
         dadosEntregas: dadosEntregas,
-        datasDadosEntregas: datasDadosEntregas
+        // datasDadosEntregas: datasDadosEntregas
     })
 })
 //-----------FIM VENDAS ------------//
+
+//-----------FILTO VENDAS ------------//
+
+
+
+//-----------FILTO VENDAS ------------//
+
+// -----------PRODUTOS VENDAS -----------//
+router.get("/produtos/vendas/:dadosVendasId", async (req, res) => {
+    var dadosVendasId = req.params.dadosVendasId
+    var produto = []
+    try {
+        var dadoVenda = await DadosVendas.findByPk(dadosVendasId)
+        if (dadoVenda != undefined) {
+            var carrinho = await knex("carrinhos").select().where({ id: dadoVenda.carrinhoId, clienteId: dadoVenda.clienteId })
+            var codItens = await knex("coditens").select().where({ carrinhoId: carrinho[0].id })
+
+            var produtosIds = []
+            codItens.forEach(codItem => {
+                produtosIds.push(codItem.produtoId)
+            })
+            var produtos = await Produto.findAll({
+                where: {
+                    id: { [Op.in]: produtosIds }
+                }
+            })
+
+            var descontoTotal = 0
+            var valorTotal = 0
+            var quantidadeTotal = 0
+            codItens.forEach(codItem => {
+                var nome = produtos.find(p => p.id == codItem.produtoId)
+
+                descontoTotal = descontoTotal + 0
+                valorTotal = valorTotal+codItem.precoTotalItem
+                quantidadeTotal = quantidadeTotal + codItem.quantidade
+                var desconto = 0
+                    produto.push({
+                        id: codItem.produtoId,
+                        nome: nome.nome,
+                        precoUnit: codItem.precoUnit.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }),
+                        quantidade: codItem.quantidade,
+                        desconto: desconto.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }),
+                        valotTotalItem: codItem.precoTotalItem.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }),
+                    })
+            })
+            valores = {
+                descontoTotal:descontoTotal.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }),
+                valorTotal:valorTotal.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }),
+                quantidadeTotal:quantidadeTotal
+            }
+
+            res.json({ produtos: produto, valores:valores})
+
+        } else {
+            res.json({ erro: "Venda Inexistente" })
+        }
+    } catch (err) {
+        console.log(err)
+        res.json({ erro: "Não foi possivel cosultar venda" })
+    }
+})
+
+//-----------FIM PRODUTOS VENDAS ------------//
+
 
 module.exports = router

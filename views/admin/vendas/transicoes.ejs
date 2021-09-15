@@ -15,19 +15,19 @@
                     </label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                    <input class="form-check-input" type="radio" disabled name="flexRadioDefault" id="flexRadioDefault1">
                     <label class="form-check-label" for="flexRadioDefault1">
                       Autorizadas
                     </label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                    <input class="form-check-input" type="radio" disabled name="flexRadioDefault" id="flexRadioDefault2">
                     <label class="form-check-label" for="flexRadioDefault2">
                       Pendentes
                     </label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                    <input class="form-check-input" type="radio" disabled name="flexRadioDefault" id="flexRadioDefault2">
                     <label class="form-check-label" for="flexRadioDefault2">
                       Rejeitadas
                     </label>
@@ -35,33 +35,35 @@
 
                 </di>
                 <div class="col-md-3">
-                  <select name="" class="form-select mt-md-4" id="">
+                  <select name="" disabled class="form-select mt-md-4" id="">
                     <option selected value="0">Todos Clientes</option>
-                    <%clientes.forEach(cliente =>{%>
-                    <option value="<%=cliente.id%>"><%=cliente.nome%></option>
-                    <%})%>
+                    <%clientes.forEach(cliente=>{%>
+                      <option value="<%=cliente.id%>">
+                        <%=cliente.nome%>
+                      </option>
+                      <%})%>
                   </select>
-                  <input type="number" class="form-control mt-1" name="" placeholder="ID Carrinho" id="">
+                  <input type="number" class="form-control mt-1" name="" disabled placeholder="ID Carrinho" id="">
                 </div>
                 <div class="col-md-3">
-                  <input type="text" class="form-control mt-1" name="" placeholder="Codigo Venda" id="">
-                  <input type="text" class="form-control mt-1" name="" placeholder="Codigo Pagamento" id="">
-                  <input type="text" class="form-control mt-1" name="" placeholder="Codigo Entrega" id="">
+                  <input type="text" class="form-control mt-1" name="" disabled placeholder="Codigo Venda" id="">
+                  <input type="text" class="form-control mt-1" name="" disabled placeholder="Codigo Pagamento" id="">
+                  <input type="text" class="form-control mt-1" name="" disabled placeholder="Codigo Entrega" id="">
                 </div>
                 <div class="col-md-4">
                   <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-xxl-6">
                       <label class="form-label" for="flexRadioDefault2">Periodo Inicial
-                        <input type="date" class="form-control" name="" id="">
+                        <input type="date" disabled class="form-control" name="" id="">
                       </label>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-xxl-6">
                       <label class="form-label" for="flexRadioDefault2">Periodo Final
-                        <input type="date" class="form-control" name="" id="">
+                        <input type="date" disabled class="form-control" name="" id="">
                       </label>
                     </div>
                   </div>
-                  <button class="btn btn-success form-control mt-1 mt-md-3">Filtar</button>
+                  <button class="btn btn-success form-control mt-1 mt-md-3" disabled>Filtar</button>
                 </div>
               </div>
             </div>
@@ -91,59 +93,97 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <%dadosVendas.forEach(dadoVenda =>{%>
-                          <%dadosTransicoes.forEach(dadosTransicao =>{%>
-                            <%if(dadosTransicao.dadosId == dadoVenda.dadosId){%>
+                        <%dadosVendas.forEach(dadoVenda=>{%>
+                          <%dadosTransicoes.forEach(dadosTransicao=>{%>
+                            <%if(dadosTransicao.dadosId==dadoVenda.dadosId){%>
 
-                          <%if(dadoVenda.opcaoDePagamento == 1){%>
-                            <%var dadosPagamento = dadosPagamentosPix.find(pagamento => pagamento.dadosId == dadoVenda.dadosId)%>
+                              <%if(dadoVenda.opcaoDePagamento==1){%>
+                                <%var dadosPagamento=dadosPagamentosPix.find(pagamento=> pagamento.dadosId ==
+                                  dadoVenda.dadosId)%>
 
-                            <%}else if(dadoVenda.opcaoDePagamento == 2){%>
-                            <%var dadosPagamento = dadosPagamentos.find(pagamento => pagamento.dadosId == dadoVenda.dadosId)%>
+                                  <%}else if(dadoVenda.opcaoDePagamento==2){%>
+                                    <%var dadosPagamento=dadosPagamentos.find(pagamento=> pagamento.dadosId ==
+                                      dadoVenda.dadosId)%>
 
-                            <%}else if(dadoVenda.opcaoDePagamento == 3){%>
-                            <%var dadosPagamento = dadosPagamentosEntrega.find(pagamento => pagamento.dadosId == dadoVenda.dadosId)%>
-                            <%}%>
-                        <tr>
-                          <th scope="row"><input type="radio" name="vendaSelecionada" id="vendaSelecionada"></th>
+                                      <%}else if(dadoVenda.opcaoDePagamento==3){%>
+                                        <%var dadosPagamento=dadosPagamentosEntrega.find(pagamento=> pagamento.dadosId
+                                          == dadoVenda.dadosId)%>
+                                          <%}%>
+                                            <tr>
+                                              <th scope="row"><input type="radio" name="vendaSelecionada"
+                                                  value="<%=dadoVenda.id%>" onchange="produtos(this.value)"
+                                                  id="vendaSelecionada"></th>
 
-                          <th scope="row"><%=dadoVenda.id%></th>
+                                              <th scope="row">
+                                                <%=dadoVenda.id%>
+                                              </th>
 
-                          <td class="text-nowrap"><%=dadoVenda.dadosId%></td>
+                                              <td class="text-nowrap">
+                                                <%=dadoVenda.dadosId%>
+                                              </td>
 
-                          <%var cliente = clientes.find(c => c.id == dadosTransicao.clienteId)%>
-                          <td class="text-nowrap"><%=cliente.nome%></td>
+                                              <%var cliente=clientes.find(c=> c.id == dadosTransicao.clienteId)%>
+                                                <td class="text-nowrap">
+                                                  <%=cliente.nome%>
+                                                </td>
 
-                          <%var carrinho = carrinhos.find(c => c.id == dadosTransicao.carrinhoId)%>
-                          <td class="text-nowrap ps-md-5"><%=carrinho.id%></td>
+                                                <%var carrinho=carrinhos.find(c=> c.id == dadosTransicao.carrinhoId)%>
+                                                  <td class="text-nowrap ps-md-5">
+                                                    <%=carrinho.id%>
+                                                  </td>
 
-                          <%var dataVenda = datasVendas.find(d => d.dadosId == dadoVenda.dadosId)%>
-                          <td class="text-nowrap"><%=dataVenda.data%></td>
+                                                  <%var dataVenda=datasVendas.find(d=> d.dadosId == dadoVenda.dadosId)%>
+                                                    <td class="text-nowrap">
+                                                      <%=dataVenda.data%>
+                                                    </td>
 
-                          <td class="text-nowrap ps-md-3"><%=dadoVenda.status%></td>
+                                                    <td class="text-nowrap ps-md-3">
+                                                      <%=dadoVenda.status%>
+                                                    </td>
 
-                          <td class="text-nowrap"><%=dadoVenda.unit_price%></td>
+                                                    <td class="text-nowrap">
+                                                      <%=dadoVenda.unit_price%>
+                                                    </td>
 
-                          <td class="text-nowrap ps-md-4"><%=carrinho.quantidade%></td>
+                                                    <td class="text-nowrap ps-md-4">
+                                                      <%=carrinho.quantidade%>
+                                                    </td>
 
-                          <td class="text-nowrap"><%=dadosPagamento.ordeId%></td>
+                                                    <td class="text-nowrap">
+                                                      <%=dadosPagamento.ordeId%>
+                                                    </td>
 
-                          <td class="text-nowrap"><%=dadosTransicao.formaPagamento%></td>
+                                                    <td class="text-nowrap">
+                                                      <%=dadosTransicao.formaPagamento%>
+                                                    </td>
 
-                          <td class="text-nowrap"><%=dadosTransicao.statusColetado%></td>
+                                                    <td class="text-nowrap">
+                                                      <%=dadosTransicao.statusColetado%>
+                                                    </td>
 
-                          <%var dataTransicao = datasTransicoes.find(d => d.dadosId == dadoVenda.dadosId)%>
-                          <td class="text-nowrap"><%=dataTransicao.data%></td>
+                                                    <%var dataTransicao=datasTransicoes.find(d=> d.dadosId ==
+                                                      dadoVenda.dadosId)%>
+                                                      <td class="text-nowrap">
+                                                        <%=dataTransicao.data%>
+                                                      </td>
 
-                          <%var entrega = dadosEntregas.find(e => e.carrinhoId == carrinho.id && e.clienteId == cliente.id)%>
-                          <td class="text-nowrap"><%=entrega.codigoRastreioInterno%></td>
-                          <td class="text-nowrap"><%=entrega.status%></td>
-                          <td class="text-nowrap"><%=entrega.dataPrevista%></td>
-                        </tr>
+                                                      <%var entrega=dadosEntregas.find(e=> e.carrinhoId == carrinho.id
+                                                        && e.clienteId == cliente.id)%>
+                                                        <td class="text-nowrap">
+                                                          <%=entrega.codigoRastreioInterno%>
+                                                        </td>
+                                                        <td class="text-nowrap">
+                                                          <%=entrega.status%>
+                                                        </td>
+                                                        <td class="text-nowrap">
+                                                          <%=entrega.dataPrevista%>
+                                                        </td>
+                                                        
+                                            </tr>
 
-                        <%}%>
-                        <%})%>
-                        <%})%>
+                                            <%}%>
+                                              <%})%>
+                                                <%})%>
                       </tbody>
                     </table>
                   </div>
@@ -155,8 +195,9 @@
                 </div>
               </div>
             </div>
-            <div class="card-footer">
+            <div class="card-footer" id="tabelaProdutos" style="display: none;">
               <div class="table-responsive">
+
                 <table class="table">
                   <thead>
                     <tr>
@@ -165,23 +206,21 @@
                       <th class="text-nowrap">Descrição</th>
                       <th class="text-nowrap">Valor Unitario</th>
                       <th class="text-nowrap">Quantidade</th>
-                      <th class="text-nowrap">Valor Frete</th>
                       <th class="text-nowrap">Valor Descontro</th>
                       <th class="text-nowrap">Valor Total</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <th></th>
+                  <tbody id="produtos">
+                    
                   </tbody>
                   <tfoot>
-                    <td>Total:</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>0</td>
-                    <td></td>
-                    <td></td>
-                    <td>R$</td>
+                    <th>Total:</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th class="text-nowrap ps-md-5" id="quantidadeTotal"></th>
+                    <th class="text-nowrap" id="descontoTotal"></th>
+                    <th class="text-nowrap" id="valorTotal"></th>
                   </tfoot>
                 </table>
               </div>
@@ -189,4 +228,42 @@
           </div>
       </div>
     </div>
+
+
     <%- include('../../partials/footer.ejs')%>
+      <script>
+        function produtos(id) {
+          document.getElementById("tabelaProdutos").style.display = 'inline'
+          var tbody = document.getElementById('produtos')
+          tbody.innerHTML = '<div class="spinner-grow text-primary" role="status"><span class="visually-hidden"></span></div>'
+          axios.get("/produtos/vendas/"+id).then(resp =>{
+            if (resp.data.produtos != undefined) {
+              var produtos = resp.data.produtos
+              var valores = resp.data.valores
+              tbody.innerHTML = ''
+              
+              produtos.forEach((produto,index) =>{
+                var tr = document.createElement('tr')
+                tr.innerHTML = `<th>${parseInt(index+1)}</th>
+                    <td class="text-nowrap ps-md-4">${produto.id}</td>
+                    <td class="text-nowrap">${produto.nome}</td>
+                    <td class="text-nowrap">${produto.precoUnit}</td>
+                    <td class="text-nowrap ps-md-5">${produto.quantidade}</td>
+                    <td class="text-nowrap">${produto.desconto}</td>
+                    <td class="text-nowrap">${produto.valotTotalItem}</td>`
+                    tbody.insertBefore(tr,null)
+                    
+                    
+              })
+                    document.getElementById('descontoTotal').innerHTML = `${valores.descontoTotal}`
+                    document.getElementById('valorTotal').innerHTML = `${valores.valorTotal}`
+                    document.getElementById('quantidadeTotal').innerHTML = `${valores.quantidadeTotal}`
+            } else {
+              alert(resp.data.erro)
+            }
+          }).catch(err =>{
+            alert("Erro")
+            console.log(erro)
+          })
+        }
+      </script>
