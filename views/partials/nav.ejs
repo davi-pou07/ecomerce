@@ -1,22 +1,17 @@
 <body>
 
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand" href="/">
-            <img src="/img/icon.png" id="logo" width="50" height="44">
-            <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" id="empreza" href="/">Company name</a>
-        </a>
-        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
-            data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" id="empreza" href="#">Company name</a>
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
         </button>
         <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
         <div class="navbar-nav">
-            <div class="nav-item text-nowrap">
-                <a class="nav-link px-3" href="#">Sair</a>
-            </div>
+          <div class="nav-item text-nowrap">
+            <a class="nav-link px-3" href="#">Sair</a>
+          </div>
         </div>
-    </header>
+      </header>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
@@ -34,8 +29,6 @@
         // })
         axios.get('https://ecomerce-back.herokuapp.com/empresa').then(empresa => {
             if (empresa.data != undefined) {
-                var logo = document.getElementById("logo")
-                logo.src = empresa.data.logo
                 var span = document.getElementById("empreza")
                 span.innerHTML = empresa.data.nome
             }

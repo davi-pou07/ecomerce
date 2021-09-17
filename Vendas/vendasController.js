@@ -186,5 +186,10 @@ router.get("/produtos/vendas/:dadosVendasId", async (req, res) => {
 
 //-----------FIM PRODUTOS VENDAS ------------//
 
+//-----------EDIÇÃO DE VENDA ------------//
+router.get("/teste",(req,res) =>{
+    res.render("admin/vendas/edicao")
+})
+//-----------FIM EDIÇÃO DE VENDA ------------//
 
 module.exports = router

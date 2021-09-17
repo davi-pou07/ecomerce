@@ -1,0 +1,225 @@
+<%- include('../../partials/head.ejs')%>
+
+    <%- include('../../partials/nav.ejs')%>
+        <div class="container-fluid">
+            <div class="row">
+                <%- include('../../partials/navegador.ejs')%>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Informações do Destinatario</h4>
+                            <hr>
+                            <div class="row">
+                                <div class="col-xl-2 text-center">
+                                    <div class="personal-image">
+                                        <label class="label">
+                                            <figure class="personal-figure">
+                                                <img src="\img\avatar.jpg" class="personal-avatar" id="fotoAtual"
+                                                    alt="avatar">
+                                            </figure>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-info text-white" id="basic-addon1">ID: 1</span>
+                                        <input type="text" class="form-control bg-light" placeholder="Username"
+                                            value="Teste da Silva" disabled aria-label="Username"
+                                            aria-describedby="basic-addon1">
+                                    </div>
+                                    <div class="input-group my-2">
+                                        <span class="input-group-text bg-info text-white"
+                                            id="basic-addon1">E-mail</span>
+                                        <input type="text" class="form-control bg-light" placeholder="Username"
+                                            value="teste@teste.com" disabled aria-label="Username"
+                                            aria-describedby="basic-addon1">
+                                    </div>
+                                    <div class="input-group my-2">
+                                        <span class="input-group-text bg-info text-white"
+                                            id="basic-addon1">Número</span>
+                                        <input type="text" class="form-control bg-light" placeholder="Username"
+                                            value="(86)9 9411-6691" disabled aria-label="Username"
+                                            aria-describedby="basic-addon1">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card mt-3">
+                        <div class="card-header ">
+                            <h4>Informações Carrinho</h4>
+                        </div>
+                        <div class="card-body">
+                            <h5>Produtos</h5>
+                            <hr>
+                            <div class="row">
+                                <div class="col-lg-10">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th class="text-nowrap">Cod.Produto</th>
+                                                    <th class="text-nowrap">Descrição</th>
+                                                    <th class="text-nowrap">Valor Unitario</th>
+                                                    <th class="text-nowrap text-center">Quantidade</th>
+                                                    <th class="text-nowrap">Valor Desconto</th>
+                                                    <th class="text-nowrap">Valor Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th><input type="radio" name="vendaSelecionada"></th>
+                                                    <td>556</td>
+                                                    <td>Porta Canetas</td>
+                                                    <td>R$35,90</td>
+                                                    <td class="text-center">1</td>
+                                                    <td>R$00,00</td>
+                                                    <td>R$35,90</td>
+                                                </tr>
+                                                <tr>
+                                                    <th><input type="radio" name="vendaSelecionada"></th>
+                                                    <td>556</td>
+                                                    <td>Porta Canetas</td>
+                                                    <td>R$35,90</td>
+                                                    <td class="text-center">1</td>
+                                                    <td>R$00,00</td>
+                                                    <td>R$35,90</td>
+                                                </tr>
+                                                <tr>
+                                                    <th><input type="radio" name="vendaSelecionada"></th>
+                                                    <td>556</td>
+                                                    <td>Porta Canetas</td>
+                                                    <td>R$35,90</td>
+                                                    <td class="text-center">1</td>
+                                                    <td>R$00,00</td>
+                                                    <td>R$35,90</td>
+                                                </tr>
+                                                <tr>
+                                                    <th><input type="radio" name="vendaSelecionada"></th>
+                                                    <td>556</td>
+                                                    <td>Porta Canetas</td>
+                                                    <td>R$35,90</td>
+                                                    <td class="text-center">1</td>
+                                                    <td>R$00,00</td>
+                                                    <td>R$35,90</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 border-start">
+                                    <button class="btn btn-warning form-control text-white  mt-5">Editar</button>
+                                    <button class="btn btn-primary form-control text-white  my-2">Adicionar</button>
+                                    <button class="btn btn-danger form-control text-white ">Excluir</button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="card-footer">
+                            <h5>Totais</h5>
+                            <hr>
+                            <div class="row">
+                                <div class="col-lg-10">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <th>#</th>
+                                                <th class="text-nowrap">Produtos</th>
+                                                <th class="text-nowrap">Quantidade</th>
+                                                <th class="text-nowrap">Valor Desconto</th>
+                                                <th class="text-nowrap">Valor Total</th>
+                                            </thead>
+                                            <tbody>
+                                                <th>#</th>
+                                                <td class="text-nowrap">4</td>
+                                                <td class="text-nowrap">4</td>
+                                                <td class="text-nowrap">R$00,00</td>
+                                                <td class="text-nowrap">R$143,06</td>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 border-start">
+                                    <button class="btn btn-warning form-control text-white mt-4 ">Alterar
+                                        Valores</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mt-3">
+                        <div class="card-header">
+                            <div class="row mt-2">
+                                <div class="col-10">
+                                    <h4>Informações da Entrega</h4>
+                                </div>
+                                <div class="col-l-2 col-4">
+                                    <button class="btn btn-warning form-control text-white">Alterar</button>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-4 mb-lg-2 col-md-6">
+                                    <label for="cep" class="form-label">CEP</label>
+                                    <input class="form-control mascCEP" size="10" maxlength="9" type="text" id="cep"
+                                        name="cep" placeholder="Informe o CEP" autocomplete="off"
+                                        onblur="pesquisacep(this.value);" required>
+                                </div>
+
+                                <div class="col-lg-4 mb-lg-2 col-md-6">
+                                    <label for="numero" class="form-label">Numero</label>
+                                    <input class="form-control" placeholder="Ex:6259" type="number" id="numero"
+                                        name="numero" autocomplete="off" required>
+                                </div>
+
+                                <div class="col-lg-4 mb-lg-2 col-md-6">
+                                    <label for="rua" class="form-label">Rua</label>
+                                    <input class="form-control" type="text" id="rua" name="rua" autocomplete="off"
+                                        size="60" required>
+                                </div>
+
+                                <div class="col-lg-4 mb-lg-2 col-md-6">
+                                    <label for="bairro" class="form-label">Bairro</label>
+                                    <input class="form-control" type="text" id="bairro" name="bairro" size="40"
+                                        autocomplete="off" required>
+                                </div>
+
+                                <div class="col-lg-4 mb-lg-2 col-md-6">
+                                    <label for="cidade" class="form-label">Cidade</label>
+                                    <input class="form-control" size="40" type="text" id="cidade" name="cidade"
+                                        autocomplete="off" required>
+                                </div>
+
+                                <div class="col-lg-4 mb-lg-2 col-md-6">
+                                    <label for="uf" class="form-label">UF</label>
+                                    <input class="form-control" size="2" type="text" id="uf" name="estado"
+                                        autocomplete="off" required>
+                                </div>
+                                <input type="hidden" id="enderecoValidado" value="false">
+
+                                <div class="col-md-12">
+                                    <label for="complemento" class="form-label mt-2">Complemento</label>
+                                    <input class="form-control" size="2" type="text" id="complemento" name="complemento"
+                                        autocomplete="off" required>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <h5 class="mt-3">Frete</h5>
+                            <hr>
+                            <div class="col-lg-2 col-md-3 col-4 mx-auto">
+                                <input class="form-control" size="2" value="R$10,00" type="text" id="frete" name="frete"
+                                    autocomplete="off" required>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+        <%- include('../../partials/footer.ejs')%>
