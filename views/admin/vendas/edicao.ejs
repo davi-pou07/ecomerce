@@ -213,9 +213,23 @@
                         <div class="card-footer">
                             <h5 class="mt-3">Frete</h5>
                             <hr>
-                            <div class="col-lg-2 col-md-3 col-4 mx-auto">
-                                <input class="form-control" size="2" value="R$10,00" type="text" id="frete" name="frete"
-                                    autocomplete="off" required>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6">
+                                    <label for="complemento" class="form-label mt-2">Valor</label>
+                                    <input class="form-control" size="2" value="R$10,00" type="text" id="frete"
+                                        name="frete" autocomplete="off" required>
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    <label for="dataFrete" class="form-label mt-2">Data Entrega</label>
+                                    <input class="form-control" value="2021-09-01" type="date" id="dataFrete"
+                                        name="dataFrete" autocomplete="off" required>
+                                </div>
+                                <div class="col-lg-4 col-md-12">
+                                    <label for="complemento" class="form-label mt-2">Status</label>
+                                    <select name="" class="form-select" id="">
+                                        <option value="">Entregue</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -253,7 +267,18 @@
                             </div>
                         </div>
                         <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <label for="forma" class="form-label">Ordem Pagamento</label>
+                                    <input type="text" class="form-control" value="351342134">
+                                </div>
+                                <div class="col-lg-4">
 
+                                </div>
+                                <div class="col-lg-4">
+
+                                </div>
+                            </div>
                         </div>
                     </div>
             </div>
