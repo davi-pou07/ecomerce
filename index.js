@@ -26,7 +26,7 @@ const dadosEntregas = require("./DataBases/DadosEntregas")
 const banners = require("./DataBases/Banners")
 const DadosPagamentosPix = require("./DataBases/DadosPagamentosPix")
 const DadosPagamentosEntrega = require("./DataBases/DadosPagamentosEntrega")
-
+const StatusEntrega = require("./DataBases/StatusEntrega")
 
 
 const categoriaController = require("./Categorias/categoriasController")
@@ -38,6 +38,7 @@ const empresaController = require("./Empresa/empresaController")
 const deliveryController = require("./Delivery/deliveryController")
 const bannerController = require("./Banners/bannersController")
 const vendasController = require("./Vendas/vendasController")
+const statusController = require("./Status/statusControler")
 
 const connection = require('./DataBases/database')
 //databases
@@ -86,6 +87,8 @@ app.use("/", empresaController)
 app.use("/", deliveryController)
 app.use("/", bannerController)
 app.use("/", vendasController)
+app.use("/", statusController)
+
 
 app.get("/", (req, res) => {
     // var log = req.session.usu

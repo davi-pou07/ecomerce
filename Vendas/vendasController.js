@@ -71,14 +71,17 @@ router.get("/admin/vendas/transicoes", async (req, res) => {
         var data = moment(d).format('DD/MM/YYYY')
         datasTransicoes.push({ data: data, dadosId: transicoes.dadosId })
     })
-
+    console.log("Algo?0")
     var dadosPagamentos = await DadosPagamentos.findAll()
+    console.log("Algo?1")
     var datasPagamento = []
     dadosPagamentos.forEach(pagamento => {
+        console.log("Algo?3")
         var d = pagamento.updatedAt
         var data = moment(d).format('DD/MM/YYYY')
         datasPagamento.push({ data: data, dadosId: pagamento.dadosId })
     })
+    console.log("Algo?2")
 
     var dadosPagamentosPix = await DadosPagamentosPix.findAll()
     var datasPagamentoPix = []

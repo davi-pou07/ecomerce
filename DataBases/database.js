@@ -12,7 +12,7 @@ const connection = new Sequelize('d9f1ts6ismirrp', 'xzohavpuwebfje', 'cce7fe39b7
     host: 'ec2-34-200-94-86.compute-1.amazonaws.com',
     dialect: 'postgres',
     timezone: "-03:00",
-    logging: false,
+    logging: true,
     dialectOptions: {
         ssl: {
             require: true,
