@@ -182,13 +182,5 @@ router.post("/grade/editar", (req, res) => {
 })
 
 
-//teste
-router.post("/teste", (req, res) => {
-    var teste = req.body.teste
-    console.log("---------------------------------")
-    console.log(teste + "                           |")
-    console.log("---------------------------------")
-
-})
 
 module.exports = router
