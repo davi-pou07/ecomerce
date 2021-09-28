@@ -11,6 +11,7 @@ const Sequelize = require('sequelize')
 const Produto = require('../DataBases/Produto')
 const Preco = require('../DataBases/Preco')
 const Imagem = require("../DataBases/Imagen")
+const Marca = require("../DataBases/Marca")
 const { count } = require('console')
 const { where } = require('sequelize')
 
@@ -31,8 +32,9 @@ const upload = multer({ storage })
 
 router.get("/admin/produto/novo", (req, res) => {
     Categoria.findAll().then(categorias => {
-        Grade.findAll().then(grades => {
-            res.render("admin/produto/novo", { categorias: categorias, grades: grades })
+        Grade.findAll().then(async grades => {
+            var marcas = await Marca.findAll()
+            res.render("admin/produto/novo", { categorias: categorias, grades: grades,marcas:marcas })
         })
     })
 })

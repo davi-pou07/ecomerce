@@ -27,6 +27,7 @@ const banners = require("./DataBases/Banners")
 const DadosPagamentosPix = require("./DataBases/DadosPagamentosPix")
 const DadosPagamentosEntrega = require("./DataBases/DadosPagamentosEntrega")
 const StatusEntrega = require("./DataBases/StatusEntrega")
+const Marca = require("./DataBases/Marca")
 
 
 const categoriaController = require("./Categorias/categoriasController")
