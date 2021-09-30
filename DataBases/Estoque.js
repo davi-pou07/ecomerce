@@ -4,10 +4,6 @@ const Grade = require('./Grade')
 const Produto =  require("./Produto")
 
 const Estoque = connection.define('estoques',{
-    quantidade:{
-        type:Sequelize.INTEGER,
-        allowNull:true
-    },
     refcoluna:{
         type:Sequelize.INTEGER,
         allowNull:true

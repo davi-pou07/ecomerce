@@ -8,21 +8,21 @@
                 </a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link  dropdown-toggle" data-bs-auto-close="outside" onclick="dropDowOrdens()" href="#">
+                <a class="nav-link dropdown-toggle" href="#" id="dropDowOrdens" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                     <span data-feather="dollar-sign"></span>
                     Ordens
                 </a>
-                <ul class="dropdown-menu" id="dropOrdens">
+                <ul class="dropdown-menu" aria-labelledby="dropDowOrdens">
                     <li><a class="dropdown-item" href="/admin/vendas/processo">Vendas em processo</a></li>
                     <li><a class="dropdown-item" href="/admin/vendas/transicoes">Transições</a></li>
                 </ul>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link  dropdown-toggle" onclick="dropDowProduto()" href="#">
+                <a class="nav-link  dropdown-toggle" href="#" id="dropDowProduto" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                     <span data-feather="shopping-cart"></span>
                     Produtos
                 </a>
-                <ul class="dropdown-menu" id="dropProduto">
+                <ul class="dropdown-menu" aria-labelledby="dropDowProduto">
                     <li><a class="dropdown-item" href="/admin/produtos">Produtos</a></li>
                     <li><a class="dropdown-item" href="/admin/categorias">Categorias</a></li>
                     <li><a class="dropdown-item" href="/admin/grades">Grades</a></li>
@@ -30,11 +30,11 @@
                 </ul>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" onclick="dropDowCustomizar()" href="#">
+                <a class="nav-link dropdown-toggle" href="#" id="dropDowCustomizar" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                     <span data-feather="box"></span>
                     Customizar
                 </a>
-                <ul class="dropdown-menu" id="dropCustomizar">
+                <ul class="dropdown-menu" aria-labelledby="dropDowCustomizar">
                     <li><a class="dropdown-item" href="/admin/banners">Banners</a></li>
                 </ul>
             </li>
@@ -45,11 +45,11 @@
                 </a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle"  onclick="dropDowParametros()" href="#">
+                <a class="nav-link dropdown-toggle" id="dropDowParametros" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                     <span data-feather="settings"></span>
                     Parametros
                 </a>
-                <ul class="dropdown-menu" id="dropParametros">
+                <ul class="dropdown-menu" aria-labelledby="dropDowParametros">
                     <li><a class="dropdown-item" href="/admin/empresa">Empresa</a></li>
                     <li><a class="dropdown-item" href="/admin/delivery/definir-preco">Delivery</a></li>
                 </ul>
@@ -90,18 +90,5 @@
         </ul>
     </div>
 </nav>
-<script>
-    function dropDowOrdens() {
-        document.getElementById("dropOrdens").classList.toggle('show')
-    }
-    function dropDowProduto() {
-        document.getElementById("dropProduto").classList.toggle('show')
-    }
-    function dropDowCustomizar() {
-        document.getElementById("dropCustomizar").classList.toggle('show')
-    }
-    function dropDowParametros() {
-        document.getElementById("dropParametros").classList.toggle('show')
-    }
-</script>
+
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">

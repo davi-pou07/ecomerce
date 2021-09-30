@@ -12,6 +12,9 @@ const Produto = require('../DataBases/Produto')
 const Preco = require('../DataBases/Preco')
 const Imagem = require("../DataBases/Imagen")
 const Marca = require("../DataBases/Marca")
+const G_linha = require("../DataBases/G_linha")
+const G_coluna = require("../DataBases/G_coluna")
+
 const { count } = require('console')
 const { where } = require('sequelize')
 
@@ -34,7 +37,7 @@ router.get("/admin/produto/novo", (req, res) => {
     Categoria.findAll().then(categorias => {
         Grade.findAll().then(async grades => {
             var marcas = await Marca.findAll()
-            res.render("admin/produto/novo", { categorias: categorias, grades: grades,marcas:marcas })
+            res.render("admin/produto/novo", { categorias: categorias, grades: grades, marcas: marcas })
         })
     })
 })
@@ -48,6 +51,7 @@ router.post("/produto/novo", (req, res) => {
     var status = req.body.status
     var categoriaId = req.body.categoriaId
     var gradeId = req.body.gradeId
+    var marcaId = req.body.marcaId
 
     var venda = req.body.venda
     var custo = req.body.custo
@@ -59,19 +63,42 @@ router.post("/produto/novo", (req, res) => {
         descricao: descricao,
         status: status,
         categoriaId: categoriaId,
-        gradeId: gradeId
+        gradeId: gradeId,
+        marcaId: marcaId
     }).then(produto => {
         Preco.create({
             venda: venda,
             custo: custo,
             desconto: desconto,
             produtoId: produto.id
-        }).then(preco => {
+        }).then(async preco => {
             for (var y = 1; y <= count; y++) {
                 Imagem.create({
                     imagem: eval(`a${y} = req.body.a${y}`),
                     produtoId: produto.id
                 })
+            }
+            if (gradeId != 0) {
+                var grade = await Grade.findByPk(gradeId)
+                var glinha = await G_coluna.findAll({ where: { gradeId: grade.id } })
+                var gcoluna = await G_linha.findAll({ where: { gradeId: grade.id } })
+                console.log(`glinha ${glinha.length}`)
+                console.log(`gcoluna ${gcoluna.length}`)
+//Era pra dar certo,, fazer no forEach sapoha
+                for(var a = 0;a<=glinha.length;a++){
+                    console.log("1a")
+                    console.log(a)
+                    for(var b = 0;b<=gcoluna.length;b++){
+                    console.log(a)
+                    console.log(b)
+                        Estoque.create({
+                            produtoId: produto.id,
+                            refcoluna: gcoluna[b].id,
+                            reflinha: glinha[a].id,
+                            status: true
+                        })
+                    }
+                }
             }
 
             res.redirect("/admin/produtos")
@@ -98,8 +125,9 @@ router.get("/admin/produto/editar/:produtoId", (req, res) => {
                 Categoria.findAll().then(categorias => {
                     Preco.findOne({ where: { produtoId: produtoId } }).then(preco => {
                         Grade.findAll().then(grades => {
-                            Imagem.findAll({ where: { produtoId: produtoId } }).then(imagens => {
-                                res.render("admin/produto/edit", { produto: produto, categorias: categorias, preco: preco, grades: grades, imagens: imagens })
+                            Imagem.findAll({ where: { produtoId: produtoId } }).then(async imagens => {
+                                var marcas = await Marca.findAll()
+                                res.render("admin/produto/edit", { produto: produto, categorias: categorias, preco: preco, grades: grades, imagens: imagens, marcas: marcas, })
                             }).catch(err => {
                                 res.send("Sem imagens cadastradas")
                             })
@@ -132,20 +160,23 @@ router.post("/produto/editar", (req, res) => {
     var status = req.body.status
     var categoriaId = req.body.categoriaId
     var gradeId = req.body.gradeId
+    var marcaId = req.body.marcaId
+
 
     var venda = req.body.venda
     var custo = req.body.custo
     var desconto = req.body.desconto
 
-    var vendaBr = venda.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
-    var custoBr = custo.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
-    var descontoBr = desconto.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
+    var vendaBr = venda.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
+    var custoBr = custo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
+    var descontoBr = desconto.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
     Produto.update({
         nome: nome,
         descricao: descricao,
         status: status,
         categoriaId: categoriaId,
-        gradeId: gradeId
+        gradeId: gradeId,
+        marcaId: marcaId
     }, { where: { id: prodId } }).then(produto => {
         Preco.update({
             venda: vendaBr,

@@ -40,6 +40,8 @@ const deliveryController = require("./Delivery/deliveryController")
 const bannerController = require("./Banners/bannersController")
 const vendasController = require("./Vendas/vendasController")
 const statusController = require("./Status/statusControler")
+const marcaController = require("./Marcas/marcaController")
+const atualizacaoController = require("./Atualizar/atualizacaoControler")
 
 const connection = require('./DataBases/database')
 //databases
@@ -89,6 +91,8 @@ app.use("/", deliveryController)
 app.use("/", bannerController)
 app.use("/", vendasController)
 app.use("/", statusController)
+app.use("/", atualizacaoController)
+app.use("/", marcaController)
 
 
 app.get("/", (req, res) => {

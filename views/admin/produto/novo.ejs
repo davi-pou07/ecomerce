@@ -70,7 +70,47 @@
                                         Por favor, selecione!
                                     </div>
                                 </div>
+
+                                <div class="col-md-3">
+                                    <label for="marcaId" class="form-label">Marca</label>
+                                    <select onchange="marcas(this.value)" class="form-select" name="marcaId"
+                                        id="marcaId">
+                                        <option value="0"></option>
+                                        <%marcas.forEach(marca=>{%>
+                                            <option value="<%=marca.id%>">
+                                                <%=marca.marca%>
+                                            </option>
+                                            <%})%>
+                                                <option value="A">Cadastrar Nova Marca</option>
+                                    </select>
+                                </div>
+
+                                <div class="modal fade" id="modalMarca" data-bs-backdrop="static"
+                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalMarcaLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modalMarcaLabel">Cadastro de Marca</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <label for="marca" class="form-label">Nome da Marca</label>
+                                                <input type="text" class="form-control" name="nomeMarca" id="nomeMarca"
+                                                    placeholder="Informe aqui nome da marca" autocomplete="off">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal" id="modalFechar">Fechar</button>
+                                                <button type="button" class="btn btn-primary"
+                                                    onclick="salvarMarca()">Salvar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <hr>
+
 
                                 <div class="col-md-3">
                                     <label for="Preco_custo" class="form-label">Preço de Custo</label>
@@ -125,6 +165,7 @@
             </div>
         </div>
         <%- include('../../partials/footer.ejs')%>
+            <script src="/js/marca.js"></script>
             <script src="/js/sub.js"></script>
             <script>
                 function readAndShowFiles() {
