@@ -82,25 +82,20 @@ router.post("/produto/novo", (req, res) => {
                 var grade = await Grade.findByPk(gradeId)
                 var glinha = await G_coluna.findAll({ where: { gradeId: grade.id } })
                 var gcoluna = await G_linha.findAll({ where: { gradeId: grade.id } })
-                console.log(`glinha ${glinha.length}`)
-                console.log(`gcoluna ${gcoluna.length}`)
-//Era pra dar certo,, fazer no forEach sapoha
-                for(var a = 0;a<=glinha.length;a++){
-                    console.log("1a")
-                    console.log(a)
-                    for(var b = 0;b<=gcoluna.length;b++){
-                    console.log(a)
-                    console.log(b)
+                
+                for (var a = 0; a < glinha.length; a++) {
+                    for (var b = 0; b < gcoluna.length; b++) {
                         Estoque.create({
                             produtoId: produto.id,
                             refcoluna: gcoluna[b].id,
                             reflinha: glinha[a].id,
                             status: true
+                        }).then(estoque =>{
+                            console.log(estoque)
                         })
                     }
                 }
             }
-
             res.redirect("/admin/produtos")
         })
     })
