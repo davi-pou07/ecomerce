@@ -80,8 +80,9 @@ router.post("/produto/novo", (req, res) => {
             }
             if (gradeId != 0) {
                 var grade = await Grade.findByPk(gradeId)
-                var glinha = await G_coluna.findAll({ where: { gradeId: grade.id } })
-                var gcoluna = await G_linha.findAll({ where: { gradeId: grade.id } })
+                
+                var glinha = await G_linha.findAll({ where: { gradeId: grade.id } })
+                var gcoluna = await G_coluna.findAll({ where: { gradeId: grade.id } })
                 
                 for (var a = 0; a < glinha.length; a++) {
                     for (var b = 0; b < gcoluna.length; b++) {
