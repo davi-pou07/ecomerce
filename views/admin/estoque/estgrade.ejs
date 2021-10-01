@@ -38,10 +38,12 @@
                                 </h4>
 
                                 <ul class="list-group list-group-horizontal">
-                                    <button type="button" class="list-group-item list-group-item-action text-center active"
+                                    <button type="button"
+                                        class="list-group-item list-group-item-action text-center active"
                                         aria-current="true">
                                         Código
-                                        <button type="button" class="list-group-item  text-center list-group-item-action active"
+                                        <button type="button"
+                                            class="list-group-item  text-center list-group-item-action active"
                                             aria-current="true">
                                             <%if(grade !=0){%>
                                                 <%=grade.coluna%>
@@ -86,22 +88,33 @@
                                                                         </button>
                                                                         <%}%>
                                                                             <%})%>
-                                                                            <select class="list-group-item list-group-item-action form-select">
-                                                                                <%if(estoque.status == true){%>
-                                                                                    <option value="<%=estoque.status%>" selected>Disponivel</option>
-                                                                                    <option value="<%=estoque.status%>">Indisponivel</option>
-                                                                                <%}else{%>
-                                                                                    <option value="<%=estoque.status%>"selected>Indisponivel</option>
-                                                                                    <option value="<%=estoque.status%>" >Disponivel</option>
-                                                                                <%}%>
-                                                                            </select>
-                                                                                
+                                                                                <select data-estoque="<%=estoque.id%>"
+                                                                                    onchange="aleterarStatus(this.dataset.estoque)"
+                                                                                    class="list-group-item list-group-item-action form-select">
+                                                                                    <%if(estoque.status==true){%>
+                                                                                        <option
+                                                                                            value="<%=estoque.status%>"
+                                                                                            selected>Disponivel</option>
+                                                                                        <option
+                                                                                            value="<%=estoque.status%>">
+                                                                                            Indisponivel</option>
+                                                                                        <%}else{%>
+                                                                                            <option
+                                                                                                value="<%=estoque.status%>"
+                                                                                                selected>Indisponivel
+                                                                                            </option>
+                                                                                            <option
+                                                                                                value="<%=estoque.status%>">
+                                                                                                Disponivel</option>
+                                                                                            <%}%>
+                                                                                </select>
+
                                             </ul>
                                             <%})%>
                                                 <%}%>
                                                     <hr>
-                                                    <button type="button"
-                                                        class="btn btn-primary form-control">Salvar</button>
+                                                    <button type="button" class="btn btn-primary form-control"
+                                                        onclick="atualizarEstoque()">Salvar</button>
                         </div>
                         <div class="card-footer">
 
@@ -111,3 +124,35 @@
         </div>
         <%- include('../../partials/footer.ejs')%>
             <script src="/js/selecionar.js"></script>
+            <script>
+                var estoquesId = []
+                function aleterarStatus(estoqueId) {
+                    var idx = estoquesId.indexOf(estoqueId)
+                    if (idx > -1) {
+                        estoquesId.splice(idx, 1)
+                    } else {
+                        estoquesId.push(estoqueId)
+                    }
+                }
+                function atualizarEstoque() {
+                    var conf = confirm("Deseja realmente realizar alterações?")
+                    if (conf == true) {
+                        if (estoquesId.length > 0) {
+                            axios.post("/estoque/editar", { estoquesId: estoquesId }).then(resp => {
+                                if (resp.data.erro == undefined) {
+                                    console.log(resp.data.resp)
+                                    alert(resp.data.resp)
+                                    window.location.reload()
+                                } else {
+                                    alert(resp.data.erro)
+                                }
+                            })
+                        } else {
+                            alert("Nenhuma alteração realizada")
+                            window.location.reload()
+                        }
+                    } else {
+                        window.location.reload()
+                    }
+                }
+            </script>
