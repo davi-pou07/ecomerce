@@ -95,21 +95,22 @@
                                     <label for="marcaId" class="form-label">Marca</label>
                                     <select onchange="marcas(this.value)" class="form-select" name="marcaId"
                                         id="marcaId">
-                                        <%marcas.forEach(marca=>{%>
-                                            <%if(produto.marcaId == 0 || produto.marcaId == undefined || produto.marcaId == ''){%>
-                                                <option value="0"></option>
-                                                <%}%>
-                                            <%if(marca.id == produto.marcaId){%>
-                                                <option value="<%=marca.id%>" selected>
-                                                    <%=marca.marca%>
-                                                </option>
-                                            <%}else{%>
-                                                    <option value="<%=marca.id%>">
-                                                        <%=marca.marca%>
-                                                    </option>
+                                        <%if(produto.marcaId==0 || produto.marcaId==undefined || produto.marcaId==''
+                                            ){%>
+                                            <option value="0"></option>
                                             <%}%>
-                                        <%})%>
-                                                            <option value="A">Cadastrar Nova Marca</option>
+                                                <%marcas.forEach(marca=>{%>
+                                                    <%if(marca.id==produto.marcaId){%>
+                                                        <option value="<%=marca.id%>" selected>
+                                                            <%=marca.marca%>
+                                                        </option>
+                                                        <%}else{%>
+                                                            <option value="<%=marca.id%>">
+                                                                <%=marca.marca%>
+                                                            </option>
+                                                            <%}%>
+                                                                <%})%>
+                                                                    <option value="A">Cadastrar Nova Marca</option>
                                     </select>
                                 </div>
 
