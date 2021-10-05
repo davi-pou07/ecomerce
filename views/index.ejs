@@ -153,43 +153,5 @@
                         </div>
                     
             <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-            <script>
-                // axios.get('https://ecomerce-back.herokuapp.com/user').then(user => {
-                //     if (user.data != undefined) {
-                //         aUser = document.getElementById('user');
-                //         aUser.innerHTML = `[${user.data.id}] ${user.data.login}`;
-                //         edit = document.getElementById('edit');
-                //         edit.href = "/admin/usuario/editar/" + user.data.id
-                //         if (user.data.foto != undefined) {
-                //             img = document.getElementById("img");
-                //             img.src = user.data.foto
-                //         }
-                //     }
-                // })
-                axios.get('https://ecomerce-back.herokuapp.com/empresa').then(empresa => {
-                    if (empresa.data != undefined) {
-                        logo.src = empresa.data.logo
-                        var span = document.getElementById("empreza")
-                        span.innerHTML = empresa.data.nome
-                    }
-                })
-                function busca() {
-                    var buscar = document.getElementById("pesquisa")
-                    if (buscar.value == '' || buscar.value == undefined) {
-                        alert("Digite o que deseja pesquisar!")
-                    } else {
-                        axios.post("https://ecomerce-back.herokuapp.com/find", { busca: buscar.value }).then(busca => {
-                            if (busca.data != undefined) {
-                                window.location.href = "/admin/produto/busca/" + busca.data;
-                            } else {
-                                alert("Busca inválida ou produto não encontrado")
-                            }
-                        }).catch(err => {
-                            console.log(err)
-                        })
-                    }
-                }
-        
-            </script>
 
         <%- include('./partials/footer.ejs')%>
