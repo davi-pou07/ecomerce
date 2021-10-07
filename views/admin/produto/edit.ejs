@@ -72,7 +72,7 @@
 
                                 <div class="col-md-3">
                                     <label for="validationCustom04" class="form-label">Grades</label>
-                                    <select class="form-select" name="gradeId" id="validationCustom04">
+                                    <select class="form-select" name="gradeId" <%if(produto.gradeId != 0){%>disabled<%}%> id="validationCustom04">
                                         <option value="0"></option>
                                         <%grades.forEach(grade=>{%>
                                             <%if(grade.id==produto.gradeId){%>

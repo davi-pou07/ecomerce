@@ -80,10 +80,10 @@ router.post("/produto/novo", (req, res) => {
             }
             if (gradeId != 0) {
                 var grade = await Grade.findByPk(gradeId)
-                
+
                 var glinha = await G_linha.findAll({ where: { gradeId: grade.id } })
                 var gcoluna = await G_coluna.findAll({ where: { gradeId: grade.id } })
-                
+
                 for (var a = 0; a < glinha.length; a++) {
                     for (var b = 0; b < gcoluna.length; b++) {
                         Estoque.create({
@@ -91,7 +91,7 @@ router.post("/produto/novo", (req, res) => {
                             refcoluna: gcoluna[b].id,
                             reflinha: glinha[a].id,
                             status: true
-                        }).then(estoque =>{
+                        }).then(estoque => {
                             console.log(estoque)
                         })
                     }
@@ -147,7 +147,7 @@ router.get("/admin/produto/editar/:produtoId", (req, res) => {
     }
 })
 
-router.post("/produto/editar", (req, res) => {
+router.post("/produto/editar", async (req, res) => {
     var count = req.body.count
 
     var prodId = req.body.produtoId
@@ -158,6 +158,12 @@ router.post("/produto/editar", (req, res) => {
     var gradeId = req.body.gradeId
     var marcaId = req.body.marcaId
 
+    var produto = await Produto.findByPk(prodId)
+    if (gradeId != 0) {
+        if (produto.gradeId != 0) {
+            gradeId == produto.gradeId
+        }
+    }
 
     var venda = req.body.venda
     var custo = req.body.custo
@@ -173,7 +179,7 @@ router.post("/produto/editar", (req, res) => {
         categoriaId: categoriaId,
         gradeId: gradeId,
         marcaId: marcaId
-    }, { where: { id: prodId } }).then(produto => {
+    }, { where: { id: produto.id } }).then(prod => {
         Preco.update({
             venda: vendaBr,
             custo: custoBr,
@@ -188,13 +194,34 @@ router.post("/produto/editar", (req, res) => {
                         })
                     }
                 }
-            }).then(img => {
+            }).then(async img => {
                 for (var y = 1; y <= count; y++) {
                     Imagem.create({
                         imagem: eval(`a${y} = req.body.a${y}`),
                         produtoId: prodId
                     })
                 }
+               
+
+                if (produto.gradeId == 0 && gradeId != 0) {
+                    var grade = await Grade.findByPk(gradeId)
+                    var glinha = await G_linha.findAll({ where: { gradeId: grade.id } })
+                    var gcoluna = await G_coluna.findAll({ where: { gradeId: grade.id } })
+
+                    for (var a = 0; a < glinha.length; a++) {
+                        for (var b = 0; b < gcoluna.length; b++) {
+                            Estoque.create({
+                                produtoId: produto.id,
+                                refcoluna: gcoluna[b].id,
+                                reflinha: glinha[a].id,
+                                status: true
+                            }).then(estoque => {
+                                console.log(estoque)
+                            })
+                        }
+                    }
+                }
+                res.redirect("/admin/produtos")
             }).catch(err => {
                 res.json({ Resp: err })
             })
@@ -204,7 +231,6 @@ router.post("/produto/editar", (req, res) => {
     }).catch(err => {
         res.json({ Resp: err })
     })
-    res.redirect("/admin/produtos")
 })
 
 //Axios 
