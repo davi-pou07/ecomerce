@@ -27,7 +27,7 @@
                                         <label class="label">
                                             <input type="file" class="form-control" id="novaFoto"
                                                 onchange="encodeImageFileAsURL()">
-                                            <input type="hidden" name="logo" id="foto">
+                                            <input type="hidden" name="logo" value="<%=empresa.logo%>" id="foto">
                                             <figure class="personal-figure">
                                                 <img src="<%=empresa.logo%>" id="fotoAtual" class="personal-avatar"
                                                     alt="avatar">
@@ -153,7 +153,7 @@
                     var logo = document.getElementById("foto").value
                     var descricao = document.getElementById("descricao").value
                     event.preventDefault()
-                    axios.post("https://ecomerce-back.herokuapp.com/empresa/edit", { empresaId: empresaId, nome: nome, cnpj: cnpj, inscriEstad: inscriEstad, dataAbert: dataAbert, email: email, phone: phone, telefone: telefone, cep: cep, numero: numero, rua: rua, bairro: bairro, cidade: cidade, uf: uf, descricao: descricao, logo: logo }).then(res => {
+                    axios.post("https://ecomerce-back.herokuapp.com/empresa/edit", { empresaId: empresaId, nome: nome, cnpj: cnpj, inscriEstad: inscriEstad, dataAbert: dataAbert, email: email, celular: phone, telefone: telefone, cep: cep, numero: numero, rua: rua, bairro: bairro, cidade: cidade, uf: uf, descricao: descricao, logo: logo }).then(res => {
                         console.log(res)
                         if (res.data.resp != undefined) {
                             alert(res.data.resp)
