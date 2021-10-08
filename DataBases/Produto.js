@@ -26,6 +26,10 @@ const Produto = connection.define('produtos',{
     marcaId:{
         type:Sequelize.INTEGER,
         allowNull:true
+    },
+    materiald:{
+        type:Sequelize.INTEGER,
+        allowNull:true
     }
 })
 
