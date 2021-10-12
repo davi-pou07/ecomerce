@@ -27,7 +27,7 @@ const Produto = connection.define('produtos',{
         type:Sequelize.INTEGER,
         allowNull:true
     },
-    materiald:{
+    materialId:{
         type:Sequelize.INTEGER,
         allowNull:true
     }

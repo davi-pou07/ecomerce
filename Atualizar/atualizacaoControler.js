@@ -33,17 +33,17 @@ router.get("/atualizar/produto", async (req, res) => {
     //     console.log("materialId finalizado")
     // })
 
-    // queryInterface.removeColumn(
-    //     'produtos',
-    //     'slug',
-    //     {
-    //         type: Sequelize.STRING,
-    //         allowNull: true
-    //     }
-    // ).then(() => {
-    //     console.log("slug finalizado")
-    // res.send("Finalizado")
-    // })
+    queryInterface.removeColumn(
+        'produtos',
+        'materiald',
+        {
+            type: Sequelize.STRING,
+            allowNull: true
+        }
+    ).then(() => {
+        console.log("slug finalizado")
+    res.send("Finalizado")
+    })
     // var produtos =  await Produto.findAll()
     //     await produtos.forEach(produto => {
     //         Produto.update({

@@ -105,6 +105,7 @@ router.post("/produto/novo", (req, res) => {
 //Listar
 router.get("/admin/produtos", (req, res) => {
     Produto.findAll({ order: [['id', 'asc']] }).then(produtos => {
+        console.log(produtos)
         Preco.findAll().then(precos => {
             res.render("admin/produto/index", { produtos: produtos, precos: precos })
         })
