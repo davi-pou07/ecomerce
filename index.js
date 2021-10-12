@@ -100,20 +100,13 @@ app.get("/", (req, res) => {
     // if (log == undefined) {
     //     res.render("admin/user/login")
     // } else {
-        Empresa.findOne().then(empres => {
-            if (empres == undefined) {
-                res.redirect("/admin/empresa/novo")
-            } else {
-                Produto.findAndCountAll({ where: { status: true } }).then(atv => {
-                    Produto.findAndCountAll({where:{status:false}}).then(des=>{
-                        var ativos = atv.count
-                        var desativos = des.count
-                        res.render("index", { empres: empres,ativos:ativos,desativos:desativos })
-                    })
-                })
-
-            }
-        })
+    Empresa.findOne().then(empres => {
+        if (empres == undefined) {
+            res.redirect("/admin/empresa/novo")
+        } else {
+            res.render("index", { empres: empres})
+        }
+    })
     // }
 })
 
