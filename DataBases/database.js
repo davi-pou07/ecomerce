@@ -38,3 +38,6 @@ module.exports = connection;
 
 //heroku git:remote -a thawing-inlet-61413
 
+// heroku config:add TZ=America/Recife
+// heroku run bash
+// date
