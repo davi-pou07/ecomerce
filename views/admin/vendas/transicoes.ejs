@@ -15,19 +15,22 @@
                     </label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" disabled name="flexRadioDefault" id="flexRadioDefault1">
+                    <input class="form-check-input" type="radio" disabled name="flexRadioDefault"
+                      id="flexRadioDefault1">
                     <label class="form-check-label" for="flexRadioDefault1">
                       Autorizadas
                     </label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" disabled name="flexRadioDefault" id="flexRadioDefault2">
+                    <input class="form-check-input" type="radio" disabled name="flexRadioDefault"
+                      id="flexRadioDefault2">
                     <label class="form-check-label" for="flexRadioDefault2">
                       Pendentes
                     </label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" disabled name="flexRadioDefault" id="flexRadioDefault2">
+                    <input class="form-check-input" type="radio" disabled name="flexRadioDefault"
+                      id="flexRadioDefault2">
                     <label class="form-check-label" for="flexRadioDefault2">
                       Rejeitadas
                     </label>
@@ -88,6 +91,7 @@
                           <th class="text-nowrap" scope="col">Status Pagamento</th>
                           <th class="text-nowrap" scope="col">Data Pagamento</th>
                           <th class="text-nowrap" scope="col">Cod.Rastreio</th>
+                          <th class="text-nowrap" scope="col">Val.Entrega</th>
                           <th class="text-nowrap" scope="col">Sit.Entrega</th>
                           <th class="text-nowrap" scope="col">Data Entrega</th>
                         </tr>
@@ -173,12 +177,15 @@
                                                           <%=entrega.codigoRastreioInterno%>
                                                         </td>
                                                         <td class="text-nowrap">
+                                                          <%=entrega.valor%>
+                                                        </td>
+                                                        <td class="text-nowrap">
                                                           <%=entrega.status%>
                                                         </td>
                                                         <td class="text-nowrap">
                                                           <%=entrega.dataPrevista%>
                                                         </td>
-                                                        
+
                                             </tr>
 
                                             <%}%>
@@ -189,7 +196,7 @@
                   </div>
                 </div>
                 <div class="col-md-2 mt-md-4 mt-2">
-                  <button class="btn btn-warning text-white form-control">Editar</button>
+                  <a id="btnEditar" href="#" class="btn btn-warning text-white form-control">Editar</a>
                   <button class="btn btn-info text-white form-control my-2">Imprimir</button>
                   <button class="btn btn-danger text-white form-control">Deletar</button>
                 </div>
@@ -211,7 +218,7 @@
                     </tr>
                   </thead>
                   <tbody id="produtos">
-                    
+
                   </tbody>
                   <tfoot>
                     <th>Total:</th>
@@ -236,32 +243,34 @@
           document.getElementById("tabelaProdutos").style.display = 'inline'
           var tbody = document.getElementById('produtos')
           tbody.innerHTML = '<div class="spinner-grow text-primary" role="status"><span class="visually-hidden"></span></div>'
-          axios.get("/produtos/vendas/"+id).then(resp =>{
+          axios.get("/produtos/vendas/" + id).then(resp => {
             if (resp.data.produtos != undefined) {
               var produtos = resp.data.produtos
               var valores = resp.data.valores
+              document.getElementById("btnEditar").href = `/admin/vendas/transicoes/editar/${resp.data.dadosId}`
+
               tbody.innerHTML = ''
-              
-              produtos.forEach((produto,index) =>{
+
+              produtos.forEach((produto, index) => {
                 var tr = document.createElement('tr')
-                tr.innerHTML = `<th>${parseInt(index+1)}</th>
+                tr.innerHTML = `<th>${parseInt(index + 1)}</th>
                     <td class="text-nowrap ps-md-4">${produto.id}</td>
                     <td class="text-nowrap">${produto.nome}</td>
                     <td class="text-nowrap">${produto.precoUnit}</td>
                     <td class="text-nowrap ps-md-5">${produto.quantidade}</td>
                     <td class="text-nowrap">${produto.desconto}</td>
                     <td class="text-nowrap">${produto.valotTotalItem}</td>`
-                    tbody.insertBefore(tr,null)
-                    
-                    
+                tbody.insertBefore(tr, null)
+
+
               })
-                    document.getElementById('descontoTotal').innerHTML = `${valores.descontoTotal}`
-                    document.getElementById('valorTotal').innerHTML = `${valores.valorTotal}`
-                    document.getElementById('quantidadeTotal').innerHTML = `${valores.quantidadeTotal}`
+              document.getElementById('descontoTotal').innerHTML = `${valores.descontoTotal}`
+              document.getElementById('valorTotal').innerHTML = `${valores.valorTotal}`
+              document.getElementById('quantidadeTotal').innerHTML = `${valores.quantidadeTotal}`
             } else {
               alert(resp.data.erro)
             }
-          }).catch(err =>{
+          }).catch(err => {
             alert("Erro")
             console.log(erro)
           })

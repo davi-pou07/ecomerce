@@ -14,7 +14,7 @@
                                     <div class="personal-image">
                                         <label class="label">
                                             <figure class="personal-figure">
-                                                <img src="\img\avatar.jpg" class="personal-avatar" id="fotoAtual"
+                                                <img src="<%=cliente.foto%>" class="personal-avatar" id="fotoAtual"
                                                     alt="avatar">
                                             </figure>
                                         </label>
@@ -22,23 +22,25 @@
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="input-group">
-                                        <span class="input-group-text bg-info text-white" id="basic-addon1">ID: 1</span>
+                                        <span class="input-group-text bg-info text-white" id="basic-addon1">ID:
+                                            <%=cliente.id%>
+                                        </span>
                                         <input type="text" class="form-control bg-light" placeholder="Username"
-                                            value="Teste da Silva" disabled aria-label="Username"
+                                            value="<%=cliente.nome%>" disabled aria-label="Username"
                                             aria-describedby="basic-addon1">
                                     </div>
                                     <div class="input-group my-2">
                                         <span class="input-group-text bg-info text-white"
                                             id="basic-addon1">E-mail</span>
                                         <input type="text" class="form-control bg-light" placeholder="Username"
-                                            value="teste@teste.com" disabled aria-label="Username"
+                                            value="<%=cliente.email%>" disabled aria-label="Username"
                                             aria-describedby="basic-addon1">
                                     </div>
                                     <div class="input-group my-2">
                                         <span class="input-group-text bg-info text-white"
                                             id="basic-addon1">Número</span>
                                         <input type="text" class="form-control bg-light" placeholder="Username"
-                                            value="(86)9 9411-6691" disabled aria-label="Username"
+                                            value="<%=cliente.numero%>" disabled aria-label="Username"
                                             aria-describedby="basic-addon1">
                                     </div>
                                 </div>
@@ -66,11 +68,21 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>342aef243r2f</td>
-                                            <td class="text-nowrap">1xtalcoisa</td>
-                                            <td>R$123,70</td>
-                                            <td>Aprovado</td>
-                                            <td>Pix</td>
+                                            <td>
+                                                <%=dadoVenda.dadosId%>
+                                            </td>
+                                            <td class="text-nowrap">
+                                                <%=dadoVenda.descricao%>
+                                            </td>
+                                            <td>
+                                                <%=dadoVenda.unit_price%>
+                                            </td>
+                                            <td>
+                                                <%=dadoVenda.status%>
+                                            </td>
+                                            <td>
+                                                <%=dadoVenda.opcaoDePagamento%>
+                                            </td>
                                         </tr>
 
                                     </tbody>
@@ -102,42 +114,30 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <th><input type="radio" name="vendaSelecionada"></th>
-                                                    <td>556</td>
-                                                    <td>Porta Canetas</td>
-                                                    <td>R$35,90</td>
-                                                    <td class="text-center">1</td>
-                                                    <td>R$00,00</td>
-                                                    <td>R$35,90</td>
-                                                </tr>
-                                                <tr>
-                                                    <th><input type="radio" name="vendaSelecionada"></th>
-                                                    <td>556</td>
-                                                    <td>Porta Canetas</td>
-                                                    <td>R$35,90</td>
-                                                    <td class="text-center">1</td>
-                                                    <td>R$00,00</td>
-                                                    <td>R$35,90</td>
-                                                </tr>
-                                                <tr>
-                                                    <th><input type="radio" name="vendaSelecionada"></th>
-                                                    <td>556</td>
-                                                    <td>Porta Canetas</td>
-                                                    <td>R$35,90</td>
-                                                    <td class="text-center">1</td>
-                                                    <td>R$00,00</td>
-                                                    <td>R$35,90</td>
-                                                </tr>
-                                                <tr>
-                                                    <th><input type="radio" name="vendaSelecionada"></th>
-                                                    <td>556</td>
-                                                    <td>Porta Canetas</td>
-                                                    <td>R$35,90</td>
-                                                    <td class="text-center">1</td>
-                                                    <td>R$00,00</td>
-                                                    <td>R$35,90</td>
-                                                </tr>
+                                                <%codItens.forEach(codIten=>{%>
+                                                    <%var prod=produto.find(p=> p.id == codIten.produtoId)%>
+                                                        <tr>
+                                                            <th><input type="radio" name="vendaSelecionada"></th>
+                                                            <td>
+                                                                <%=prod.id%>
+                                                            </td>
+                                                            <td>
+                                                                <%=prod.nome%>
+                                                            </td>
+                                                            <td>
+                                                                <%=prod.precoUnit%>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <%=prod.quantidade%>
+                                                            </td>
+                                                            <td>
+                                                                <%=prod.desconto%>
+                                                            </td>
+                                                            <td>
+                                                                <%=prod.valotTotalItem%>
+                                                            </td>
+                                                        </tr>
+                                                        <%})%>
                                             </tbody>
                                         </table>
                                     </div>
@@ -159,17 +159,25 @@
                                         <table class="table">
                                             <thead>
                                                 <th>#</th>
-                                                <th class="text-nowrap">Produtos</th>
-                                                <th class="text-nowrap">Quantidade</th>
+                                                <th class="text-nowrap text-center">Produtos</th>
+                                                <th class="text-nowrap text-center">Quantidade</th>
                                                 <th class="text-nowrap">Valor Desconto</th>
                                                 <th class="text-nowrap">Valor Total</th>
                                             </thead>
                                             <tbody>
                                                 <th>#</th>
-                                                <td class="text-nowrap">4</td>
-                                                <td class="text-nowrap">4</td>
-                                                <td class="text-nowrap">R$00,00</td>
-                                                <td class="text-nowrap">R$143,06</td>
+                                                <td class="text-nowrap text-center">
+                                                    <%=valores.totaisProdutos%>
+                                                </td>
+                                                <td class="text-nowrap text-center">
+                                                    <%=valores.quantidadeTotal%>
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <%=valores.descontoTotal%>
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <%=valores.valorTotal%>
+                                                </td>
                                             </tbody>
                                         </table>
                                     </div>
@@ -197,46 +205,46 @@
                             <div class="row">
                                 <div class="col-lg-4 mb-lg-2 col-md-6">
                                     <label for="cep" class="form-label">CEP</label>
-                                    <input class="form-control mascCEP" size="10" maxlength="9" type="text" id="cep"
-                                        name="cep" placeholder="Informe o CEP" autocomplete="off"
-                                        onblur="pesquisacep(this.value);" required>
+                                    <input class="form-control mascCEP" disabled size="10" maxlength="9" type="text"
+                                        id="cep" name="cep" placeholder="Informe o CEP" autocomplete="off"
+                                        onblur="pesquisacep(this.value);" value="<%=dadosEntregas.cep%>" required>
                                 </div>
 
                                 <div class="col-lg-4 mb-lg-2 col-md-6">
                                     <label for="numero" class="form-label">Numero</label>
-                                    <input class="form-control" placeholder="Ex:6259" type="number" id="numero"
-                                        name="numero" autocomplete="off" required>
+                                    <input class="form-control" placeholder="Ex:6259" disabled type="number" id="numero"
+                                        name="numero" autocomplete="off" value="<%=dadosEntregas.numero%>" required>
                                 </div>
 
                                 <div class="col-lg-4 mb-lg-2 col-md-6">
                                     <label for="rua" class="form-label">Rua</label>
-                                    <input class="form-control" type="text" id="rua" name="rua" autocomplete="off"
-                                        size="60" required>
+                                    <input class="form-control" type="text" value="<%=dadosEntregas.rua%>" disabled
+                                        id="rua" name="rua" autocomplete="off" size="60" required>
                                 </div>
 
                                 <div class="col-lg-4 mb-lg-2 col-md-6">
                                     <label for="bairro" class="form-label">Bairro</label>
-                                    <input class="form-control" type="text" id="bairro" name="bairro" size="40"
-                                        autocomplete="off" required>
+                                    <input class="form-control" type="text" value="<%=dadosEntregas.bairro%>" disabled
+                                        id="bairro" name="bairro" size="40" autocomplete="off" required>
                                 </div>
 
                                 <div class="col-lg-4 mb-lg-2 col-md-6">
                                     <label for="cidade" class="form-label">Cidade</label>
-                                    <input class="form-control" size="40" type="text" id="cidade" name="cidade"
-                                        autocomplete="off" required>
+                                    <input class="form-control" size="40" value="<%=dadosEntregas.cidade%>" disabled
+                                        type="text" id="cidade" name="cidade" autocomplete="off" required>
                                 </div>
 
                                 <div class="col-lg-4 mb-lg-2 col-md-6">
                                     <label for="uf" class="form-label">UF</label>
-                                    <input class="form-control" size="2" type="text" id="uf" name="estado"
-                                        autocomplete="off" required>
+                                    <input class="form-control" size="2" value="<%=dadosEntregas.uf%>" disabled
+                                        type="text" id="uf" name="estado" autocomplete="off" required>
                                 </div>
                                 <input type="hidden" id="enderecoValidado" value="false">
 
                                 <div class="col-md-12">
                                     <label for="complemento" class="form-label mt-2">Complemento</label>
-                                    <input class="form-control" size="2" type="text" id="complemento" name="complemento"
-                                        autocomplete="off" required>
+                                    <input class="form-control" size="2" value="<%=dadosEntregas.complemento%>" disabled
+                                        type="text" id="complemento" name="complemento" autocomplete="off" required>
                                 </div>
 
 
@@ -248,18 +256,29 @@
                             <div class="row">
                                 <div class="col-lg-4 col-md-6">
                                     <label for="complemento" class="form-label mt-2">Valor</label>
-                                    <input class="form-control" size="2" value="R$10,00" type="text" id="frete"
-                                        name="frete" autocomplete="off" required>
+                                    <input class="form-control" size="2" disabled value="<%=dadosEntregas.valor%>"
+                                        value="R$10,00" type="text" id="frete" name="frete" autocomplete="off" required>
                                 </div>
                                 <div class="col-lg-4 col-md-6">
                                     <label for="dataFrete" class="form-label mt-2">Data Entrega</label>
-                                    <input class="form-control" value="2021-09-01" type="date" id="dataFrete"
+                                    <input class="form-control" value="2021-09-01" disabled
+                                        value="<%=dadosEntregas.dataPrevista%>" type="date" id="dataFrete"
                                         name="dataFrete" autocomplete="off" required>
                                 </div>
                                 <div class="col-lg-4 col-md-12">
                                     <label for="complemento" class="form-label mt-2">Status</label>
-                                    <select name="" class="form-select" id="">
-                                        <option value="">Entregue</option>
+                                    <select name="" disabled class="form-select" id="">
+                                        <%statusEntrega.forEach(stEntrega=>{%>
+                                            <%if(dadosEntregas.status==stEntrega.statusId){%>
+                                                <option value="dadosEntregas.status" selected>
+                                                    <%=stEntrega.status%>
+                                                </option>
+                                                <%}else{%>
+                                                    <option value="stEntrega.statusId">
+                                                        <%=stEntrega.status%>
+                                                    </option>
+                                                    <%}%>
+                                                        <%})%>
                                     </select>
                                 </div>
                             </div>
@@ -275,20 +294,30 @@
                                     <div class="row">
                                         <div class="col-lg-4 col-sm-6">
                                             <label for="forma" class="form-label">Forma de pagamento</label>
-                                            <select name="" class="form-select" id="">
-                                                <option value="1">Pix</option>
-                                                <option value="2">Mercado Pago</option>
-                                                <option value="3">Pagar na Entrega</option>
+                                            <select name="" disabled class="form-select" id="">
+                                                <%if(dadoVenda.opcaoDePagamento=="Pix"){%>
+                                                    <option value="1" selected>Pix</option>
+                                                    <option value="2">Mercado Pago</option>
+                                                    <option value="3">Pagar na Entrega</option>
+                                                    <%}else if(dadoVenda.opcaoDePagamento=="Mercado Pago"){%>
+                                                        <option value="1">Pix</option>
+                                                        <option value="2" selected>Mercado Pago</option>
+                                                        <option value="3">Pagar na Entrega</option>
+                                                        <%}else if(dadoVenda.opcaoDePagamento=="Pagar na Entrega"){%>
+                                                            <option value="1">Pix</option>
+                                                            <option value="2">Mercado Pago</option>
+                                                            <option value="3" selected>Pagar na Entrega</option>
+                                                            <%}%>
                                             </select>
                                         </div>
                                         <div class="col-lg-4 col-sm-6">
                                             <label for="forma" class="form-label">Ordem Pagamento</label>
-                                            <input type="text" class="form-control" value="351342134">
+                                            <input type="text" disabled class="form-control" value="<%=dadosPagamentos.ordeId%>">
                                         </div>
                                         <div class="col-lg-4 col-sm-6">
                                             <label for="status" class="form-label">Status Pagamento</label>
                                             <select name="" class="form-select" id="">
-                                                <option value="1">Autorizado</option>
+                                                <option value="1"><%=dadosPagamentos.status%></option>
                                             </select>
                                         </div>
                                     </div>
@@ -299,11 +328,11 @@
                             </div>
                         </div>
                         <div class="card-body">
-                                    <a class="btn btn-info form-control text-white" id="forma">Arquivos Anexados</a>
-                            </div>
+                            <a download="Comprovante<%=dadosPagamentos.ordeId%>" href="<%=dadosPagamentos.comprovante%>" class="btn btn-info form-control text-white" id="forma">Arquivos Anexados</a>
                         </div>
                     </div>
             </div>
         </div>
-
+        </div>
+        <script src="/js/pesquisaCepTransicao.js"></script>
         <%- include('../../partials/footer.ejs')%>
