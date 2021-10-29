@@ -145,9 +145,12 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-2 border-start">
-                                    <button class="btn btn-warning form-control text-white  mt-5" data-bs-toggle="modal"
-                                        data-bs-target="#modalCodItem">Editar</button>
-                                    <button class="btn btn-danger form-control text-white mt-3 ">Excluir</button>
+                                    <button id="btnEditarCarrinho"
+                                        class="btn btn-warning form-control text-white disabled mt-5"
+                                        data-bs-toggle="modal" data-bs-target="#modalCodItem"
+                                        onclick="modalEdicao(this.value)">Editar</button>
+                                    <button id="btnExcluirCarrinho"
+                                        class="btn btn-danger form-control disabled text-white mt-3 ">Excluir</button>
                                 </div>
                             </div>
                         </div>
@@ -392,11 +395,28 @@
             </div>
         </div>
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src="/js/pesquisaCepTransicao.js"></script>
         <script src="/js/carrinho.js"></script>
         <script>
             function editCodItem(codItenId) {
-                alert(codItenId)
+                document.getElementById("btnEditarCarrinho").classList.remove("disabled")
+                document.getElementById("btnExcluirCarrinho").classList.remove("disabled")
+                document.getElementById("btnExcluirCarrinho").value = codItenId
+                document.getElementById("btnEditarCarrinho").value = codItenId
+            }
+            function modalEdicao(codItenId) {
+                if (codItenId != undefined) {
+                    axios.get("/consultaCodItem").then(resp =>{
+                        if (resp.data.erro != undefined) {
+                            
+                        } else {
+                            alert(resp.data.erro)
+                        }
+                    })
+                } else {
+
+                }
             }
         </script>
         <%- include('../../partials/footer.ejs')%>

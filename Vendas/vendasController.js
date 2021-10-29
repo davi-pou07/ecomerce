@@ -216,14 +216,14 @@ router.get("/admin/vendas/transicoes/editar/:dadosId", async (req, res) => {
 
             codItens.forEach(codItem => {
                 produtosIds.push(codItem.produtoId)
-                totaisProdutos = totaisProdutos+1
+                totaisProdutos = totaisProdutos + 1
             })
             var produtos = await Produto.findAll({
                 where: {
                     id: { [Op.in]: produtosIds }
                 }
             })
-            
+
             codItens.forEach(codItem => {
                 var nome = produtos.find(p => p.id == codItem.produtoId)
                 descontoTotal = descontoTotal + 0
@@ -243,12 +243,12 @@ router.get("/admin/vendas/transicoes/editar/:dadosId", async (req, res) => {
                 descontoTotal: descontoTotal.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }),
                 valorTotal: valorTotal.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }),
                 quantidadeTotal: quantidadeTotal,
-                totaisProdutos:totaisProdutos
+                totaisProdutos: totaisProdutos
             }
 
             var dadosEntregas = await DadosEntregas.findOne({ where: { carrinhoId: carrinho[0].id, clienteId: cliente[0].id } })
             dadosEntregas.valor = dadosEntregas.valor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
-            var statusEntrega =  await StatusEntregas.findAll()
+            var statusEntrega = await StatusEntregas.findAll()
 
             if (dadoVenda.opcaoDePagamento == 1) {
                 dadoVenda.opcaoDePagamento = 'Pix'
@@ -272,7 +272,7 @@ router.get("/admin/vendas/transicoes/editar/:dadosId", async (req, res) => {
                 dadosTransicoes: dadosTransicoes,
                 produto: produto,
                 valores: valores,
-                statusEntrega:statusEntrega
+                statusEntrega: statusEntrega
             })
         } else {
             console.log("Venda não encontrada")
@@ -284,5 +284,29 @@ router.get("/admin/vendas/transicoes/editar/:dadosId", async (req, res) => {
     }
 })
 //-----------FIM EDIÇÃO DE VENDA ------------//
+
+// ------------------ALETERAR ITEM CARRINHO---------------
+
+router.get("/consultaCodItem", async (req, res) => {
+    var codItemId = req.body.codItemId
+    try {
+        var codItem = await knex("coditens").select().where({ id, codItemId })
+        if (codItem != undefined) {
+            var produto = await Produto.findByPk(codItem.produtoId)
+            if (produto != undefined) {
+                res.json({codItem:codItem[0],produto:produto})
+            } else {
+            res.json({ erro: "Produto inexistente" })
+            }
+        } else {
+            res.json({ erro: "Item inexistente" })
+        }
+    } catch (err) {
+        console.log(err)
+        res.json({ erro: "Erro ao consultar item" })
+    }
+})
+
+//---------------FIM ALETERAR ITEM CARRINHO---------------
 
 module.exports = router
