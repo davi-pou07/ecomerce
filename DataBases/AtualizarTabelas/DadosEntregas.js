@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize')
-const connection = require('./database')
+const connection = require('../database')
 
 const DadosEntregas = connection.define('dadosentregas',{
     cep:{
@@ -52,18 +52,6 @@ const DadosEntregas = connection.define('dadosentregas',{
     },dataPrevista:{
         type:Sequelize.STRING,
         allowNull:true
-    },
-    cpf:{
-        type:Sequelize.STRING,
-        allowNull:false
-    },
-    nome:{
-        type:Sequelize.STRING,
-        allowNull:false
-    },
-    numero:{
-        type:Sequelize.STRING,
-        allowNull:false
     }
 })
 

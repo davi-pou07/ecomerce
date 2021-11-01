@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize')
-const connection = require('./database')
+const connection = require('../database')
 
 const DadosPagamentos = connection.define('dadospagamentos',{
     
@@ -20,6 +20,10 @@ const DadosPagamentos = connection.define('dadospagamentos',{
         type:Sequelize.FLOAT,
         allowNull:true
     },
+    external_reference:{
+        type:Sequelize.STRING,
+        allowNull:false
+    },
     tipoDePagamento:{
         type:Sequelize.STRING,
         allowNull:false
@@ -32,8 +36,16 @@ const DadosPagamentos = connection.define('dadospagamentos',{
         type:Sequelize.STRING,
         allowNull:true
     },
+    dataLancamento:{
+        type:Sequelize.DATE,
+        allowNull:true
+    },
     dataExpiracao:{
         type:Sequelize.DATE,
+        allowNull:true
+    },
+    codigoDeBarras:{
+        type:Sequelize.TEXT,
         allowNull:true
     },
     clienteId:{
@@ -44,8 +56,8 @@ const DadosPagamentos = connection.define('dadospagamentos',{
         type:Sequelize.INTEGER,
         allowNull:false
     },
-    statusId:{
-        type:Sequelize.INTEGER,
+    status:{
+        type:Sequelize.STRING,
         allowNull:true
     },
     descricao:{
@@ -56,17 +68,9 @@ const DadosPagamentos = connection.define('dadospagamentos',{
         type:Sequelize.STRING,
         allowNull:true
     },
-    isValidado:{
-        type:Sequelize.STRING,
-        allowNull:true
-    },
-    comprovante:{
+    boletoUrl:{
         type:Sequelize.TEXT,
-        allowNull:false
-    },
-    dadosEntragaId:{
-        type:Sequelize.STRING,
-        allowNull:false
+        allowNull:true
     }
 })
 // DadosPagamentos.sync({force:true}).then(()=>{

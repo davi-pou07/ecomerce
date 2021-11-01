@@ -5,12 +5,12 @@ const knex = require('../DataBases/dataBaseCL')
 const moment = require('moment')
 const Produto = require("../DataBases/Produto")
 const { Op, ConnectionTimedOutError } = require("sequelize");
-const DadosVendas = require('../DataBases/DadosVendas')
-const DadosPagamentos = require('../DataBases/DadosPagamentos')
-const DadosPagamentosPix = require('../DataBases/DadosPagamentosPix')
-const DadosPagamentosEntrega = require('../DataBases/DadosPagamentosEntrega')
-const DadosTransicoes = require('../DataBases/DadosTransicoes')
-const DadosEntregas = require('../DataBases/DadosEntregas')
+const DadosVendas = require('../DataBases/AtualizarTabelas/DadosVendas')
+const DadosPagamentos = require('../DataBases/AtualizarTabelas/DadosPagamentos')
+//const DadosPagamentosPix = require('../DataBases/AtualizarTabelas/DadosPagamentosPix.)
+//const DadosPagamentosEntrega = require('../DataBases/AtualizarTabelas/DadosPagamentosEntrega')
+//const DadosTransicoes = require('../DataBases/AtualizarTabelas/DadosTransicoes')
+const DadosEntregas = require('../DataBases/AtualizarTabelas/DadosEntregas')
 const StatusEntregas = require("../DataBases/StatusEntrega")
 const { data } = require('jquery')
 //-----------VENDAS EM PROCESSO ------------//
@@ -79,9 +79,9 @@ router.get("/admin/vendas/transicoes", async (req, res) => {
         var data = moment(d).format('DD/MM/YYYY')
         datasPagamento.push({ data: data, dadosId: pagamento.dadosId })
     })
-    var dadosPagamentosPix = await DadosPagamentosPix.findAll()
+    var  DadosPagamentosPix = await DadosPagamentosPix.findAll()
     var datasPagamentoPix = []
-    dadosPagamentosPix.forEach(pagamento => {
+    DadosPagamentosPix.forEach(pagamento => {
         var d = pagamento.updatedAt
         var data = moment(d).format('DD/MM/YYYY')
         datasPagamentoPix.push({ data: data, dadosId: pagamento.dadosId })
@@ -109,7 +109,7 @@ router.get("/admin/vendas/transicoes", async (req, res) => {
         dadosVendas: dadosVendas,
         dadosTransicoes: dadosTransicoes,
         dadosPagamentos: dadosPagamentos,
-        dadosPagamentosPix: dadosPagamentosPix,
+        DadosPagamentosPix: DadosPagamentosPix,
         dadosPagamentosEntrega: dadosPagamentosEntrega,
         datasVendas: datasVendas,
         datasTransicoes: datasTransicoes,

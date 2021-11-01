@@ -102,7 +102,7 @@
                             <%if(dadosTransicao.dadosId==dadoVenda.dadosId){%>
 
                               <%if(dadoVenda.opcaoDePagamento==1){%>
-                                <%var dadosPagamento=dadosPagamentosPix.find(pagamento=> pagamento.dadosId ==
+                                <%var dadosPagamento=DadosPagamentosPix.find(pagamento=> pagamento.dadosId ==
                                   dadoVenda.dadosId)%>
 
                                   <%}else if(dadoVenda.opcaoDePagamento==2){%>
