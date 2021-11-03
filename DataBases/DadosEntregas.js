@@ -55,15 +55,19 @@ const DadosEntregas = connection.define('dadosentregas',{
     },
     cpf:{
         type:Sequelize.STRING,
-        allowNull:false
+        allowNull:true
+    },
+    dataNasc:{
+        type:Sequelize.STRING,
+        allowNull:true
     },
     nome:{
         type:Sequelize.STRING,
-        allowNull:false
+        allowNull:true
     },
     numero:{
         type:Sequelize.STRING,
-        allowNull:false
+        allowNull:true
     }
 })
 

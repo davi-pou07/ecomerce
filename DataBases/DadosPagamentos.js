@@ -5,7 +5,7 @@ const DadosPagamentos = connection.define('dadospagamentos',{
     
     dadosId:{
         type:Sequelize.STRING,
-        allowNull:false,
+        allowNull:true,
         unique: true
     },
     dataAutorizacao:{
@@ -20,14 +20,16 @@ const DadosPagamentos = connection.define('dadospagamentos',{
         type:Sequelize.FLOAT,
         allowNull:true
     },
-    tipoDePagamento:{
+    //Se é cartão, transferencia, debito, dinheiro...
+    tipoDePagamento:{ 
         type:Sequelize.STRING,
         allowNull:false
     },
     ordeId:{
         type:Sequelize.STRING,
-        allowNull:false
+        allowNull:true
     },
+    //Credito ou debito
     detalhePagamento:{
         type:Sequelize.STRING,
         allowNull:true
@@ -52,6 +54,7 @@ const DadosPagamentos = connection.define('dadospagamentos',{
         type:Sequelize.STRING,
         allowNull:true
     },
+    //Master, visa
     metodoPagamento:{
         type:Sequelize.STRING,
         allowNull:true
@@ -62,11 +65,11 @@ const DadosPagamentos = connection.define('dadospagamentos',{
     },
     comprovante:{
         type:Sequelize.TEXT,
-        allowNull:false
+        allowNull:true
     },
     dadosEntragaId:{
         type:Sequelize.STRING,
-        allowNull:false
+        allowNull:true
     }
 })
 // DadosPagamentos.sync({force:true}).then(()=>{
