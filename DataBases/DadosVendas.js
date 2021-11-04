@@ -36,7 +36,11 @@ const DadosVendas = connection.define('dadosvendas',{
         type:Sequelize.INTEGER,
         allowNull:false
     },
-    status:{
+    statusId:{
+        type:Sequelize.STRING,
+        allowNull:true
+    },
+    statusColetado:{
         type:Sequelize.STRING,
         allowNull:true
     },
