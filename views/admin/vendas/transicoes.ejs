@@ -98,21 +98,9 @@
                       </thead>
                       <tbody>
                         <%dadosVendas.forEach(dadoVenda=>{%>
-                          <%dadosTransicoes.forEach(dadosTransicao=>{%>
-                            <%if(dadosTransicao.dadosId==dadoVenda.dadosId){%>
 
-                              <%if(dadoVenda.opcaoDePagamento==1){%>
-                                <%var dadosPagamento=DadosPagamentosPix.find(pagamento=> pagamento.dadosId ==
-                                  dadoVenda.dadosId)%>
-
-                                  <%}else if(dadoVenda.opcaoDePagamento==2){%>
-                                    <%var dadosPagamento=dadosPagamentos.find(pagamento=> pagamento.dadosId ==
-                                      dadoVenda.dadosId)%>
-
-                                      <%}else if(dadoVenda.opcaoDePagamento==3){%>
-                                        <%var dadosPagamento=dadosPagamentosEntrega.find(pagamento=> pagamento.dadosId
+                                        <%var dadosPagamento=dadosPagamentos.find(pagamento=> pagamento.dadosId
                                           == dadoVenda.dadosId)%>
-                                          <%}%>
                                             <tr>
                                               <th scope="row"><input type="radio" name="vendaSelecionada"
                                                   value="<%=dadoVenda.id%>" onchange="produtos(this.value)"
@@ -126,12 +114,12 @@
                                                 <%=dadoVenda.dadosId%>
                                               </td>
 
-                                              <%var cliente=clientes.find(c=> c.id == dadosTransicao.clienteId)%>
+                                              <%var cliente=clientes.find(c=> c.id == dadoVenda.clienteId)%>
                                                 <td class="text-nowrap">
                                                   <%=cliente.nome%>
                                                 </td>
 
-                                                <%var carrinho=carrinhos.find(c=> c.id == dadosTransicao.carrinhoId)%>
+                                                <%var carrinho=carrinhos.find(c=> c.id == dadoVenda.carrinhoId)%>
                                                   <td class="text-nowrap ps-md-5">
                                                     <%=carrinho.id%>
                                                   </td>
@@ -158,17 +146,16 @@
                                                     </td>
 
                                                     <td class="text-nowrap">
-                                                      <%=dadosTransicao.formaPagamento%>
+                                                      xxxxxxxxxxxxxxxxx
                                                     </td>
 
                                                     <td class="text-nowrap">
-                                                      <%=dadosTransicao.statusColetado%>
+                                                      xxxxxxxxxxxxxxxxxx
                                                     </td>
 
-                                                    <%var dataTransicao=datasTransicoes.find(d=> d.dadosId ==
-                                                      dadoVenda.dadosId)%>
+                                                    
                                                       <td class="text-nowrap">
-                                                        <%=dataTransicao.data%>
+                                                        xxxxxxxxxxxxxxxxx
                                                       </td>
 
                                                       <%var entrega=dadosEntregas.find(e=> e.carrinhoId == carrinho.id
@@ -187,9 +174,6 @@
                                                         </td>
 
                                             </tr>
-
-                                            <%}%>
-                                              <%})%>
                                                 <%})%>
                       </tbody>
                     </table>

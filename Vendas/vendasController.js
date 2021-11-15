@@ -5,12 +5,12 @@ const knex = require('../DataBases/dataBaseCL')
 const moment = require('moment')
 const Produto = require("../DataBases/Produto")
 const { Op, ConnectionTimedOutError } = require("sequelize");
-const DadosVendas = require('../DataBases/AtualizarTabelas/DadosVendas')
-const DadosPagamentos = require('../DataBases/AtualizarTabelas/DadosPagamentos')
+const DadosVendas = require('../DataBases/DadosVendas')
+const DadosPagamentos = require('../DataBases/DadosPagamentos')
 //const DadosPagamentosPix = require('../DataBases/AtualizarTabelas/DadosPagamentosPix.)
 //const DadosPagamentosEntrega = require('../DataBases/AtualizarTabelas/DadosPagamentosEntrega')
 //const DadosTransicoes = require('../DataBases/AtualizarTabelas/DadosTransicoes')
-const DadosEntregas = require('../DataBases/AtualizarTabelas/DadosEntregas')
+const DadosEntregas = require('../DataBases/DadosEntregas')
 const StatusEntregas = require("../DataBases/StatusEntrega")
 const { data } = require('jquery')
 //-----------VENDAS EM PROCESSO ------------//
@@ -65,13 +65,6 @@ router.get("/admin/vendas/transicoes", async (req, res) => {
         dadoVenda.unit_price = dadoVenda.unit_price.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
     })
 
-    var dadosTransicoes = await DadosTransicoes.findAll()
-    var datasTransicoes = []
-    dadosTransicoes.forEach(transicoes => {
-        var d = transicoes.updatedAt
-        var data = moment(d).format('DD/MM/YYYY')
-        datasTransicoes.push({ data: data, dadosId: transicoes.dadosId })
-    })
     var dadosPagamentos = await DadosPagamentos.findAll()
     var datasPagamento = []
     dadosPagamentos.forEach(pagamento => {
@@ -79,23 +72,9 @@ router.get("/admin/vendas/transicoes", async (req, res) => {
         var data = moment(d).format('DD/MM/YYYY')
         datasPagamento.push({ data: data, dadosId: pagamento.dadosId })
     })
-    var  DadosPagamentosPix = await DadosPagamentosPix.findAll()
-    var datasPagamentoPix = []
-    DadosPagamentosPix.forEach(pagamento => {
-        var d = pagamento.updatedAt
-        var data = moment(d).format('DD/MM/YYYY')
-        datasPagamentoPix.push({ data: data, dadosId: pagamento.dadosId })
-    })
-
-    var dadosPagamentosEntrega = await DadosPagamentosEntrega.findAll()
-    var datasPagamentoEntrega = []
-    dadosPagamentosEntrega.forEach(pagamento => {
-        var d = pagamento.updatedAt
-        var data = moment(d).format('DD/MM/YYYY')
-        datasPagamentoEntrega.push({ data: data, dadosId: pagamento.dadosId })
-    })
 
     var dadosEntregas = await DadosEntregas.findAll()
+
     for (var x = 0; x < dadosEntregas.length; x++) {
         var statusEntrega = await StatusEntregas.findOne({ where: { statusId: dadosEntregas[x].status } })
         dadosEntregas[x].status = statusEntrega.status
@@ -107,15 +86,9 @@ router.get("/admin/vendas/transicoes", async (req, res) => {
         carrinhos: carrinhos,
         codItens: codItens,
         dadosVendas: dadosVendas,
-        dadosTransicoes: dadosTransicoes,
         dadosPagamentos: dadosPagamentos,
-        DadosPagamentosPix: DadosPagamentosPix,
-        dadosPagamentosEntrega: dadosPagamentosEntrega,
         datasVendas: datasVendas,
-        datasTransicoes: datasTransicoes,
         datasPagamento: datasPagamento,
-        datasPagamentoPix: datasPagamentoPix,
-        datasPagamentoEntrega: datasPagamentoEntrega,
         dadosEntregas: dadosEntregas,
     })
 })
@@ -252,15 +225,12 @@ router.get("/admin/vendas/transicoes/editar/:dadosId", async (req, res) => {
 
             if (dadoVenda.opcaoDePagamento == 1) {
                 dadoVenda.opcaoDePagamento = 'Pix'
-                var dadosPagamentos = await DadosPagamentosPix.findOne({ where: { dadosId: dadoVenda.dadosId } })
             } else if (dadoVenda.opcaoDePagamento == 2) {
                 dadoVenda.opcaoDePagamento = 'Mercado Pago'
-                var dadosPagamentos = await DadosPagamentos.findOne({ where: { dadosId: dadoVenda.dadosId } })
             } else if (dadoVenda.opcaoDePagamento == 3) {
                 dadoVenda.opcaoDePagamento = 'Pagar na Entrega'
-                var dadosPagamentos = await DadosPagamentosEntrega.findOne({ where: { dadosId: dadoVenda.dadosId } })
             }
-            var dadosTransicoes = await DadosTransicoes.findOne({ where: { dadosId: dadoVenda.dadosId } })
+            var dadosPagamentos = await DadosPagamentos.findOne({ where: { dadosId: dadoVenda.dadosId } })
 
             res.render("admin/vendas/edicao", {
                 dadoVenda: dadoVenda,
@@ -269,7 +239,6 @@ router.get("/admin/vendas/transicoes/editar/:dadosId", async (req, res) => {
                 codItens: codItens,
                 dadosEntregas: dadosEntregas,
                 dadosPagamentos: dadosPagamentos,
-                dadosTransicoes: dadosTransicoes,
                 produto: produto,
                 valores: valores,
                 statusEntrega: statusEntrega
@@ -294,9 +263,9 @@ router.get("/consultaCodItem", async (req, res) => {
         if (codItem != undefined) {
             var produto = await Produto.findByPk(codItem.produtoId)
             if (produto != undefined) {
-                res.json({codItem:codItem[0],produto:produto})
+                res.json({ codItem: codItem[0], produto: produto })
             } else {
-            res.json({ erro: "Produto inexistente" })
+                res.json({ erro: "Produto inexistente" })
             }
         } else {
             res.json({ erro: "Item inexistente" })
