@@ -12,7 +12,12 @@ const DadosPagamentos = require('../DataBases/DadosPagamentos')
 //const DadosTransicoes = require('../DataBases/AtualizarTabelas/DadosTransicoes')
 const DadosEntregas = require('../DataBases/DadosEntregas')
 const StatusEntregas = require("../DataBases/StatusEntrega")
+const StatusVenda = require("../DataBases/StatusVendas")
+
 const { data } = require('jquery')
+
+
+
 //-----------VENDAS EM PROCESSO ------------//
 router.get("/admin/vendas/processo", async (req, res) => {
     var carrinhos = await knex("carrinhos").select().where({ status: true }).andWhere('quantidade', '>', 0).orderBy('createdAt', 'asc')
@@ -58,16 +63,19 @@ router.get("/admin/vendas/transicoes", async (req, res) => {
     var dadosVendas = await DadosVendas.findAll()
     var datasVendas = []
     dadosVendas.forEach(dadoVenda => {
-
         var dat = dadoVenda.updatedAt
         var data = moment(dat).format('DD/MM/YYYY')
         datasVendas.push({ data: data, dadosId: dadoVenda.dadosId })
+        console.log(dadoVenda.statusColetado)
         dadoVenda.unit_price = dadoVenda.unit_price.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
+        var status = StatusVenda.find(st => st.id == dadoVenda.statusId)
+        dadoVenda.statusId = status.status
     })
 
     var dadosPagamentos = await DadosPagamentos.findAll()
     var datasPagamento = []
     dadosPagamentos.forEach(pagamento => {
+        console.log(pagamento.statusId)
         var d = pagamento.updatedAt
         var data = moment(d).format('DD/MM/YYYY')
         datasPagamento.push({ data: data, dadosId: pagamento.dadosId })
