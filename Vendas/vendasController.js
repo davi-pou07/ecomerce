@@ -13,6 +13,8 @@ const DadosPagamentos = require('../DataBases/DadosPagamentos')
 const DadosEntregas = require('../DataBases/DadosEntregas')
 const StatusEntregas = require("../DataBases/StatusEntrega")
 const { data } = require('jquery')
+
+
 //-----------VENDAS EM PROCESSO ------------//
 router.get("/admin/vendas/processo", async (req, res) => {
     var carrinhos = await knex("carrinhos").select().where({ status: true }).andWhere('quantidade', '>', 0).orderBy('createdAt', 'asc')
@@ -58,7 +60,6 @@ router.get("/admin/vendas/transicoes", async (req, res) => {
     var dadosVendas = await DadosVendas.findAll()
     var datasVendas = []
     dadosVendas.forEach(dadoVenda => {
-
         var dat = dadoVenda.updatedAt
         var data = moment(dat).format('DD/MM/YYYY')
         datasVendas.push({ data: data, dadosId: dadoVenda.dadosId })
@@ -80,6 +81,9 @@ router.get("/admin/vendas/transicoes", async (req, res) => {
         dadosEntregas[x].status = statusEntrega.status
         dadosEntregas[x].valor = dadosEntregas[x].valor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
     }
+
+    
+    
 
     res.render("admin/vendas/transicoes", {
         clientes: clientes,

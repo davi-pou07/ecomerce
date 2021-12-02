@@ -130,7 +130,7 @@
                                                     </td>
 
                                                     <td class="text-nowrap ps-md-3">
-                                                      <%=dadoVenda.status%>
+                                                      <%=dadoVenda.statusId%>
                                                     </td>
 
                                                     <td class="text-nowrap">
@@ -146,16 +146,17 @@
                                                     </td>
 
                                                     <td class="text-nowrap">
-                                                      xxxxxxxxxxxxxxxxx
+                                                      <%=dadosPagamento.tipoDePagamento%>
                                                     </td>
 
                                                     <td class="text-nowrap">
-                                                      xxxxxxxxxxxxxxxxxx
+                                                      <%=dadosPagamento.statusId%>
                                                     </td>
 
-                                                    
+                                                    <%var dataPagamento = datasPagamento.find(dtpag => dtpag.dadosId == dadosPagamento.dadosId)%>
                                                       <td class="text-nowrap">
-                                                        xxxxxxxxxxxxxxxxx
+                                                        <%=dataPagamento.data%>
+
                                                       </td>
 
                                                       <%var entrega=dadosEntregas.find(e=> e.carrinhoId == carrinho.id
