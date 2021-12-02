@@ -13,6 +13,7 @@ const DadosPagamentos = require('../DataBases/DadosPagamentos')
 const DadosEntregas = require('../DataBases/DadosEntregas')
 const StatusEntregas = require("../DataBases/StatusEntrega")
 const StatusVenda = require("../DataBases/StatusVendas")
+const StatusPagamento = [{ id: 1, status: "Analise" }, { id: 2, status: "Aprovado" }, { id: 3, status: "Rejeitado" }, { id: 4, status: "Cancelado" }, { id: 5, status: "Pendente" }]
 
 const { data } = require('jquery')
 
@@ -66,7 +67,6 @@ router.get("/admin/vendas/transicoes", async (req, res) => {
         var dat = dadoVenda.updatedAt
         var data = moment(dat).format('DD/MM/YYYY')
         datasVendas.push({ data: data, dadosId: dadoVenda.dadosId })
-        console.log(dadoVenda.statusColetado)
         dadoVenda.unit_price = dadoVenda.unit_price.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
         var status = StatusVenda.find(st => st.id == dadoVenda.statusId)
         dadoVenda.statusId = status.status
@@ -74,11 +74,13 @@ router.get("/admin/vendas/transicoes", async (req, res) => {
 
     var dadosPagamentos = await DadosPagamentos.findAll()
     var datasPagamento = []
+    var statusPagamento = []
     dadosPagamentos.forEach(pagamento => {
-        console.log(pagamento.statusId)
         var d = pagamento.updatedAt
         var data = moment(d).format('DD/MM/YYYY')
         datasPagamento.push({ data: data, dadosId: pagamento.dadosId })
+        var sp = StatusPagamento.find(sp => sp.id == pagamento.statusId )
+        statusPagamento.push({status:sp.status,ordeId:pagamento.ordeId})
     })
 
     var dadosEntregas = await DadosEntregas.findAll()
@@ -101,6 +103,7 @@ router.get("/admin/vendas/transicoes", async (req, res) => {
         datasVendas: datasVendas,
         datasPagamento: datasPagamento,
         dadosEntregas: dadosEntregas,
+        statusPagamento:statusPagamento
     })
 })
 //-----------FIM VENDAS ------------//
@@ -175,16 +178,19 @@ router.get("/admin/vendas/transicoes/editar/:dadosId", async (req, res) => {
     try {
         var dadoVenda = await DadosVendas.findOne({ where: { dadosId: dadosId } })
         dadoVenda.unit_price = dadoVenda.unit_price.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
+        console.log("-----dadoVenda-----")
+        console.log(dadoVenda)
+        console.log("-----dadoVenda-----")
 
-        if (dadoVenda.status == 'P') {
-            dadoVenda.status = 'Pendente'
-        } else if (dadoVenda.status == 'A') {
-            dadoVenda.status = 'Autorizado'
-        } else if (dadoVenda.status == 'R') {
-            dadoVenda.status = 'Rejeitado'
-        } else if (dadoVenda.status == 'C') {
-            dadoVenda.status = 'Cancelado'
-        }
+        // if (dadoVenda.status == 'P') {
+        //     dadoVenda.status = 'Pendente'
+        // } else if (dadoVenda.status == 'A') {
+        //     dadoVenda.status = 'Autorizado'
+        // } else if (dadoVenda.status == 'R') {
+        //     dadoVenda.status = 'Rejeitado'
+        // } else if (dadoVenda.status == 'C') {
+        //     dadoVenda.status = 'Cancelado'
+        // }
 
         if (dadoVenda != undefined) {
             var produtosIds = []
@@ -242,6 +248,7 @@ router.get("/admin/vendas/transicoes/editar/:dadosId", async (req, res) => {
                 dadoVenda.opcaoDePagamento = 'Pagar na Entrega'
             }
             var dadosPagamentos = await DadosPagamentos.findOne({ where: { dadosId: dadoVenda.dadosId } })
+            var statusPagamento = StatusPagamento.find(sp => sp.id ==dadosPagamentos.statusId )
 
             res.render("admin/vendas/edicao", {
                 dadoVenda: dadoVenda,
@@ -250,6 +257,7 @@ router.get("/admin/vendas/transicoes/editar/:dadosId", async (req, res) => {
                 codItens: codItens,
                 dadosEntregas: dadosEntregas,
                 dadosPagamentos: dadosPagamentos,
+                statusPagamento:statusPagamento,
                 produto: produto,
                 valores: valores,
                 statusEntrega: statusEntrega

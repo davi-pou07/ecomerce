@@ -98,7 +98,6 @@
                       </thead>
                       <tbody>
                         <%dadosVendas.forEach(dadoVenda=>{%>
-
                                         <%var dadosPagamento=dadosPagamentos.find(pagamento=> pagamento.dadosId
                                           == dadoVenda.dadosId)%>
                                             <tr>
@@ -140,7 +139,7 @@
                                                     <td class="text-nowrap ps-md-4">
                                                       <%=carrinho.quantidade%>
                                                     </td>
-
+                                                    <%if(dadosPagamento != undefined){%>
                                                     <td class="text-nowrap">
                                                       <%=dadosPagamento.ordeId%>
                                                     </td>
@@ -148,16 +147,21 @@
                                                     <td class="text-nowrap">
                                                       <%=dadosPagamento.tipoDePagamento%>
                                                     </td>
-
+                                                    <%var stPagamento = statusPagamento.find(st => st.ordeId == dadosPagamento.ordeId)%>
                                                     <td class="text-nowrap">
-                                                      <%=dadosPagamento.statusId%>
+                                                      <%=stPagamento.status%>
                                                     </td>
-
+                                                    
                                                     <%var dataPagamento = datasPagamento.find(dtpag => dtpag.dadosId == dadosPagamento.dadosId)%>
                                                       <td class="text-nowrap">
                                                         <%=dataPagamento.data%>
-
                                                       </td>
+                                                      <%}else{%>
+                                                      <td>PAG. NÃO IDENTIFICADO</td>
+                                                      <td>PAG. NÃO IDENTIFICADO</td>
+                                                      <td>PAG. NÃO IDENTIFICADO</td>
+                                                      <td>PAG. NÃO IDENTIFICADO</td>
+                                                      <%}%>
 
                                                       <%var entrega=dadosEntregas.find(e=> e.carrinhoId == carrinho.id
                                                         && e.clienteId == cliente.id)%>
