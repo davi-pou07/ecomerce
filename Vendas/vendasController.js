@@ -79,8 +79,8 @@ router.get("/admin/vendas/transicoes", async (req, res) => {
         var d = pagamento.updatedAt
         var data = moment(d).format('DD/MM/YYYY')
         datasPagamento.push({ data: data, dadosId: pagamento.dadosId })
-        var sp = StatusPagamento.find(sp => sp.id == pagamento.statusId )
-        statusPagamento.push({status:sp.status,ordeId:pagamento.ordeId})
+        var sp = StatusPagamento.find(sp => sp.id == pagamento.statusId)
+        statusPagamento.push({ status: sp.status, ordeId: pagamento.ordeId })
     })
 
     var dadosEntregas = await DadosEntregas.findAll()
@@ -91,8 +91,8 @@ router.get("/admin/vendas/transicoes", async (req, res) => {
         dadosEntregas[x].valor = dadosEntregas[x].valor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
     }
 
-    
-    
+
+
 
     res.render("admin/vendas/transicoes", {
         clientes: clientes,
@@ -103,7 +103,7 @@ router.get("/admin/vendas/transicoes", async (req, res) => {
         datasVendas: datasVendas,
         datasPagamento: datasPagamento,
         dadosEntregas: dadosEntregas,
-        statusPagamento:statusPagamento
+        statusPagamento: statusPagamento
     })
 })
 //-----------FIM VENDAS ------------//
@@ -248,7 +248,7 @@ router.get("/admin/vendas/transicoes/editar/:dadosId", async (req, res) => {
                 dadoVenda.opcaoDePagamento = 'Pagar na Entrega'
             }
             var dadosPagamentos = await DadosPagamentos.findOne({ where: { dadosId: dadoVenda.dadosId } })
-            var statusPagamento = StatusPagamento.find(sp => sp.id ==dadosPagamentos.statusId )
+            var statusPagamento = StatusPagamento.find(sp => sp.id == dadosPagamentos.statusId)
 
             res.render("admin/vendas/edicao", {
                 dadoVenda: dadoVenda,
@@ -257,7 +257,7 @@ router.get("/admin/vendas/transicoes/editar/:dadosId", async (req, res) => {
                 codItens: codItens,
                 dadosEntregas: dadosEntregas,
                 dadosPagamentos: dadosPagamentos,
-                statusPagamento:statusPagamento,
+                statusPagamento: statusPagamento,
                 produto: produto,
                 valores: valores,
                 statusEntrega: statusEntrega
@@ -275,12 +275,15 @@ router.get("/admin/vendas/transicoes/editar/:dadosId", async (req, res) => {
 
 // ------------------ALETERAR ITEM CARRINHO---------------
 
-router.get("/consultaCodItem", async (req, res) => {
-    var codItemId = req.body.codItemId
+router.post("/consultaCodItem", async (req, res) => {
+    var codItemId = req.body.codItenId
+
     try {
-        var codItem = await knex("coditens").select().where({ id, codItemId })
+        var codItem = await knex("coditens").select().where({ id: codItemId })
+
         if (codItem != undefined) {
-            var produto = await Produto.findByPk(codItem.produtoId)
+            var produto = await Produto.findByPk(codItem[0].produtoId)
+
             if (produto != undefined) {
                 res.json({ codItem: codItem[0], produto: produto })
             } else {

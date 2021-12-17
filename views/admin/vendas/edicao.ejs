@@ -160,14 +160,14 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="modalCodItemLabel">Modal title</h5>
+                                        <h5 class="modal-title" id="modalCodItemLabel">Produto</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <div class="row mt-3">
                                             <label class="form-label text-center">
-                                                <dt>Quantidade
+                                                <dt>Quantidade</dt>
                                             </label>
                                             <div class="col-12 my-3 text-center">
                                                 <button class="btn btn-danger" data-index="" id="btnMenos"
@@ -200,8 +200,8 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                            data-bs-dismiss="modal">Fechar</button>
+                                        <button type="button" class="btn btn-primary">Salvar Alterações</button>
                                     </div>
                                 </div>
                             </div>
@@ -367,23 +367,23 @@
                                                             <%}%>
                                             </select>
                                         </div>
-                                        <%if(dadosPagamentos != undefined){%>
-                                        <div class="col-lg-4 col-sm-6">
-                                            <label for="forma" class="form-label">Ordem Pagamento</label>
-                                            <input type="text" disabled class="form-control"
-                                                value="<%=dadosPagamentos.ordeId%>">
-                                        </div>
-                                        <div class="col-lg-4 col-sm-6">
-                                            <label for="status" class="form-label">Status Pagamento</label>
-                                            <select name="" disabled class="form-select" id="">
-                                                <option value="<%=dadosPagamentos.statusId%>">
-                                                    <%=statusPagamento.status%>
-                                                </option>
-                                            </select>
-                                        </div>
-                                        <%}else{%>
-                                            <h4>PAGAMENTO NÃO IDENTIFICADO</h4>
-                                        <%}%>
+                                        <%if(dadosPagamentos !=undefined){%>
+                                            <div class="col-lg-4 col-sm-6">
+                                                <label for="forma" class="form-label">Ordem Pagamento</label>
+                                                <input type="text" disabled class="form-control"
+                                                    value="<%=dadosPagamentos.ordeId%>">
+                                            </div>
+                                            <div class="col-lg-4 col-sm-6">
+                                                <label for="status" class="form-label">Status Pagamento</label>
+                                                <select name="" disabled class="form-select" id="">
+                                                    <option value="<%=dadosPagamentos.statusId%>">
+                                                        <%=statusPagamento.status%>
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <%}else{%>
+                                                <h4>PAGAMENTO NÃO IDENTIFICADO</h4>
+                                                <%}%>
                                     </div>
                                 </div>
                                 <div class="col-md-2  border-start">
@@ -392,12 +392,13 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <%if(dadosPagamentos != undefined){%>
-                            <a download="Comprovante<%=dadosPagamentos.ordeId%>" href="<%=dadosPagamentos.comprovante%>"
-                                class="btn btn-info form-control text-white" id="forma">Arquivos Anexados</a>
+                            <%if(dadosPagamentos !=undefined){%>
+                                <a download="Comprovante<%=dadosPagamentos.ordeId%>"
+                                    href="<%=dadosPagamentos.comprovante%>" class="btn btn-info form-control text-white"
+                                    id="forma">Arquivos Anexados</a>
                                 <%}else{%>
                                     <h5>PAGAMENTO NÃO IDENTIFICADO</h5>
-                                <%}%>
+                                    <%}%>
                         </div>
                     </div>
             </div>
@@ -415,9 +416,15 @@
             }
             function modalEdicao(codItenId) {
                 if (codItenId != undefined) {
-                    axios.get("/consultaCodItem").then(resp =>{
-                        if (resp.data.erro != undefined) {
-                            
+                    axios.post("/consultaCodItem", { codItenId: codItenId }).then(resp => {
+                        if (resp.data.erro == undefined) {
+                            var dados = resp.data
+                            var modalTitulo = document.getElementById("modalCodItemLabel")      
+                            modalTitulo.innerHTML = dados.produto.nome
+
+                            var btnValor = document.getElementById("btnValor")
+                            btnValor.value = dados.codItem.quantidade
+                            btnValor.innerHTML = btnValor.value
                         } else {
                             alert(resp.data.erro)
                         }
