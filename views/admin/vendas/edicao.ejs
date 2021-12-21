@@ -147,8 +147,8 @@
                                 <div class="col-lg-2 border-start">
                                     <button id="btnEditarCarrinho"
                                         class="btn btn-warning form-control text-white disabled mt-5"
-                                        data-bs-toggle="modal" data-bs-target="#modalCodItem"
-                                        onclick="modalEdicao(this.value)">Editar</button>
+                                        data-bs-toggle="modal" data-bs-target=""
+                                        onclick="validaStatusPagamento();modalEdicao(this.value)">Editar</button>
                                     <button id="btnExcluirCarrinho"
                                         class="btn btn-danger form-control disabled text-white mt-3 ">Excluir</button>
                                 </div>
@@ -375,10 +375,15 @@
                                             </div>
                                             <div class="col-lg-4 col-sm-6">
                                                 <label for="status" class="form-label">Status Pagamento</label>
-                                                <select name="" disabled class="form-select" id="">
-                                                    <option value="<%=dadosPagamentos.statusId%>">
-                                                        <%=statusPagamento.status%>
-                                                    </option>
+                                                <select name="" onchange="validaStatusPagamento()" disabled class="form-select" id="statusPag">
+                                                <%const StatusPagamento = [{ id: 1, status: "Analise" }, { id: 2, status: "Aprovado" }, { id: 3, status: "Rejeitado" }, { id: 4, status: "Cancelado" }, { id: 5, status: "Pendente" }]%>
+                                                <%StatusPagamento.forEach(statusPagamento =>{%>
+                                                    <%if(dadosPagamentos.statusId == statusPagamento.id){%>
+                                                        <option selected value="<%=dadosPagamentos.statusId%>"><%=statusPagamento.status%></option>
+                                                    <%}else{%>
+                                                        <option value="<%=statusPagamento.id%>"><%=statusPagamento.status%></option>
+                                                    <%}%>
+                                                <%})%>
                                                 </select>
                                             </div>
                                             <%}else{%>
@@ -393,12 +398,19 @@
                         </div>
                         <div class="card-footer">
                             <%if(dadosPagamentos !=undefined){%>
+                                <%if(dadosPagamentos.comprovante != undefined){%>
                                 <a download="Comprovante<%=dadosPagamentos.ordeId%>"
                                     href="<%=dadosPagamentos.comprovante%>" class="btn btn-info form-control text-white"
                                     id="forma">Arquivos Anexados</a>
                                 <%}else{%>
-                                    <h5>PAGAMENTO NÃO IDENTIFICADO</h5>
-                                    <%}%>
+                                    <h5>Comprovante não anexado</h5>
+                                    <hr>
+                                    <label for="form-label">Anexar comprovante</label>
+                                    <input type="file" name="anexarComprovantePag" id="anexarComprovantePag" class="form-control">
+                                <%}%>
+                            <%}else{%>
+                                <h5>PAGAMENTO NÃO IDENTIFICADO</h5>
+                            <%}%>
                         </div>
                     </div>
             </div>
@@ -408,6 +420,17 @@
         <script src="/js/pesquisaCepTransicao.js"></script>
         <script src="/js/carrinho.js"></script>
         <script>
+            function validaStatusPagamento(){
+                var statusPag = document.getElementById("statusPag").value
+                if (statusPag == 1 || statusPag == 2) {
+                    alert("Pagamento em análise ou aprovado. Algumas informações não poderão ser editadas!")
+                    document.getElementById("btnEditarCarrinho").dataset.bsTarget = ''
+                } else {
+                    document.getElementById("btnEditarCarrinho").dataset.bsTarget = '#modalCodItem'
+                }
+            }
+
+
             function editCodItem(codItenId) {
                 document.getElementById("btnEditarCarrinho").classList.remove("disabled")
                 document.getElementById("btnExcluirCarrinho").classList.remove("disabled")
@@ -425,6 +448,10 @@
                             var btnValor = document.getElementById("btnValor")
                             btnValor.value = dados.codItem.quantidade
                             btnValor.innerHTML = btnValor.value
+
+                            var vlTotal = document.getElementById("vlTotal")
+                            vlTotal.innerHTML = dados.codItem.precoTotalItem.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
+                            vlTotal.value = dados.codItem.precoTotalItem
                         } else {
                             alert(resp.data.erro)
                         }
