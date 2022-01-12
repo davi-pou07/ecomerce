@@ -126,6 +126,7 @@
                                                                     <th class="text-nowrap">Valor Total</th>
                                                                     </tr>
                                                                 </thead>
+                                                                
                                                                 <tbody>
                                                                     <%codItens.forEach(codIten=>{%>
                                                                         <%var prod=produto.find(p=> p.id == codIten.produtoId)%>
@@ -162,11 +163,82 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-2 border-start">
-                                                        <button class="btn form-control disabled btn-warning my-3" id="btnEditarCodItem">Editar</button>
+                                                        <button class="btn form-control disabled btn-warning my-3" data-bs-toggle="modal" data-bs-target="#modalEditarCodItem" id="btnEditarCodItem">Editar</button>
                                                         <br>
                                                         <button class="btn form-control disabled btn-danger" id="btnExcluirCodItem">Excluir</button>
                                                     </div>
                                                 </div>
+                                                <script>
+                                                    
+                                                    function calculaTotal(){
+                                                        var qtd = document.getElementById("quantidadeModal").value
+                                                        var precoUnit = document.getElementById("precoUnitModal").dataset.precounit.toString().replace(".","").replace(",",".")
+                                                        var precoDesc = document.getElementById("precoDescModal").dataset.precodesc.toString().replace(".","").replace(",",".")
+                                                        var precoAcre = document.getElementById("precoAcrescimo").dataset.precoacre.toString().replace(".","").replace(",",".")
+
+                                                        var precoTotal = document.getElementById("precoTotal")
+                                                        var calc = ((parseFloat(precoUnit) * qtd) - parseFloat(precoDesc)) + parseFloat(precoAcre)
+                                                        precoTotal.value = parseFloat(calc).toLocaleString('pt-br',{ minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                                                        precoTotal.dataset.precoTot = calc
+                                                    }
+                                                </script>
+
+                                                <div class="modal fade" id="modalEditarCodItem" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalEditarCodItemLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                      <div class="modal-content">
+                                                        <div class="modal-header">
+                                                          <h5 class="modal-title" id="modalEditarCodItemTitulo">Modal title</h5>
+                                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="text-center col-3">
+                                                                <label class="form-label" for="quantidadeModal">Quantidade</label>
+                                                                <input type="number" class="form-control" onchange="calculaTotal()" id="quantidadeModal">
+                                                            </div>
+                                                            <hr>
+                                                          <div class="row">
+                                                              <div class="col-sm-4 my-3 my-sm-0 mt-sm-2">
+                                                                <label class="form-label" for="precoUnitModal">Preço Unitario</label>
+                                                                <div class="input-group mb-3">
+                                                                    <span class="input-group-text" id="basic-addon1">R$</span>
+                                                                    <input type="text" class="form-control" aria-describedby="basic-addon1" data-precounit="0" onchange="this.dataset.precounit = this.value;calculaTotal()" value="R$00,00" id="precoUnitModal">
+                                                                </div>         
+                                                            </div>         
+
+                                                              <div class="col-sm-4 my-3 my-sm-0 mt-sm-2">
+                                                                <label class="form-label" for="precoDescModal">Desconto</label>
+                                                                <div class="input-group mb-3">
+                                                                    <span class="input-group-text" id="basic-addon2">R$</span>
+                                                                    <input type="text" class="form-control" data-precodesc = "0" aria-describedby="basic-addon2" onchange="this.dataset.precodesc = this.value;calculaTotal()" value="R$00,00" id="precoDescModal">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-4 my-3 my-sm-0 mt-sm-2">
+                                                                <label class="form-label" for="precoAcrescimo">Acrescimo</label>
+                                                                <div class="input-group mb-3">
+                                                                    <span class="input-group-text" id="basic-addon3">R$</span>
+                                                                    <input type="text" onfocus="formEdit(this.id)" class="form-control" aria-describedby="basic-addon3" data-precoacre = "0" onchange="this.dataset.precoacre = this.value;calculaTotal()" value="R$00,00" id="precoAcrescimo">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-12 mt-3 border-top">
+                                                                <label class="form-label mt-2" for="precoTotal">Preço Total</label>
+                                                                <div class="input-group mb-3">
+                                                                    <span class="input-group-text" id="basic-addon4">R$</span>
+                                                                    <input type="text" class="form-control col-4" aria-describedby="basic-addon4" disabled data-precoTot = "0" value="R$00,00" id="precoTotal">
+                                                                </div>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                                          <button type="button" class="btn btn-primary">Salvar</button>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+
+
                                                 <div class="card mt-4">
                                                     <div class="card-header text-white bg-info bg-opacity-50">
                                                         <h5>Totais</h5>
@@ -402,5 +474,46 @@
             </div>
             <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
             <script src="/js/pesquisaCepTransicao.js"></script>
+
+            <script>
+                function editCodItem(codProd){
+                    document.getElementById('btnEditarCodItem').classList.remove("disabled")
+                    document.getElementById('btnExcluirCodItem').classList.remove("disabled")
+                    axios.post("/consultaCodItem",{codItenId:codProd}).then(resp =>{
+                        if (resp.data.erro == undefined) {
+                            var codItem = resp.data.codItem
+                            var produto = resp.data.produto
+                            document.getElementById("modalEditarCodItemTitulo").innerHTML =  produto.nome
+                            document.getElementById("quantidadeModal").value = codItem.quantidade
+                            var precoUnitModal = document.getElementById("precoUnitModal")
+                            precoUnitModal.dataset.precounit = codItem.precoUnit
+                            precoUnitModal.value = parseFloat(codItem.precoUnit).toLocaleString('pt-br',{ minimumFractionDigits: 2, maximumFractionDigits: 2 })
+
+                            var precoDescModal = document.getElementById("precoDescModal")
+                            precoDescModal.dataset.precodesc = 0
+                            precoDescModal.value = parseFloat(0).toLocaleString('pt-br',
+            { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+
+                            var precoAcrescimo = document.getElementById("precoAcrescimo")
+                            precoAcrescimo.dataset.precoacre = 0
+                            precoAcrescimo.value = parseFloat(0).toLocaleString('pt-br',
+            { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+
+
+                            var precoTotal = document.getElementById("precoTotal")
+                            precoTotal.dataset.precotot = codItem.precoTotalItem
+                            console.log(codItem)
+                            precoTotal.value = parseFloat(codItem.precoTotalItem).toLocaleString('pt-br',
+            { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+
+                            
+
+                        } else {
+                            alert("Ocorreu um erro ao verificar o produto, gentileza entre em contato com o suporte")
+                            console.log(resp.data.erro)
+                        }
+                    })
+                }
+            </script>
             <!-- <script src="/js/carrinho.js"></script> -->
             <%- include('../../partials/footer.ejs')%>
