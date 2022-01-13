@@ -163,31 +163,19 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-2 border-start">
-                                                        <button class="btn form-control disabled btn-warning my-3" data-bs-toggle="modal" data-bs-target="#modalEditarCodItem" id="btnEditarCodItem">Editar</button>
+                                                        <button class="btn form-control disabled btn-warning my-3" data-bs-toggle="modal" data-bs-target="#" id="btnEditarCodItem" onclick="verificaPagamento()">Editar</button>
                                                         <br>
                                                         <button class="btn form-control disabled btn-danger" id="btnExcluirCodItem">Excluir</button>
                                                     </div>
                                                 </div>
-                                                <script>
-                                                    
-                                                    function calculaTotal(){
-                                                        var qtd = document.getElementById("quantidadeModal").value
-                                                        var precoUnit = document.getElementById("precoUnitModal").dataset.precounit.toString().replace(".","").replace(",",".")
-                                                        var precoDesc = document.getElementById("precoDescModal").dataset.precodesc.toString().replace(".","").replace(",",".")
-                                                        var precoAcre = document.getElementById("precoAcrescimo").dataset.precoacre.toString().replace(".","").replace(",",".")
-
-                                                        var precoTotal = document.getElementById("precoTotal")
-                                                        var calc = ((parseFloat(precoUnit) * qtd) - parseFloat(precoDesc)) + parseFloat(precoAcre)
-                                                        precoTotal.value = parseFloat(calc).toLocaleString('pt-br',{ minimumFractionDigits: 2, maximumFractionDigits: 2 })
-                                                        precoTotal.dataset.precoTot = calc
-                                                    }
-                                                </script>
+                                              
 
                                                 <div class="modal fade" id="modalEditarCodItem" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalEditarCodItemLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                       <div class="modal-content">
                                                         <div class="modal-header">
                                                           <h5 class="modal-title" id="modalEditarCodItemTitulo">Modal title</h5>
+                                                          <input type="hidden" id="codItemId">
                                                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
@@ -232,7 +220,7 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                                                          <button type="button" class="btn btn-primary">Salvar</button>
+                                                          <button type="button" class="btn btn-primary" onclick="salvar()">Salvar</button>
                                                         </div>
                                                       </div>
                                                     </div>
@@ -476,6 +464,43 @@
             <script src="/js/pesquisaCepTransicao.js"></script>
 
             <script>
+                function verificaPagamento(){
+                    
+                    var statusPag = document.getElementById("statusPag").value
+                    console.log(statusPag)
+                    if (statusPag == 2) {
+                        if (confirm("Pagamento esta com status aprovado. Deseja realmente editar?")) {
+                            var btn = document.getElementById("btnEditarCodItem")
+                            btn.dataset.bsTarget = '#modalEditarCodItem'
+                            btn.click()
+                        }
+                    } else {
+                        var btn = document.getElementById("btnEditarCodItem")
+                        btn.dataset.bsTarget = '#modalEditarCodItem'
+                        btn.click()
+                    }
+
+                }
+
+                function salvar(){
+                        if(confirm("Deseja realmente alterar essas infomações?")){
+                            var codItemId = document.getElementById("codItemId").value
+                            var quantidadeModal = document.getElementById("quantidadeModal").value
+                            var precoUnit = document.getElementById("precoUnitModal").dataset.precounit.toString().replace(".","").replace(",",".")
+                            var precoDesc = document.getElementById("precoDescModal").dataset.precodesc.toString().replace(".","").replace(",",".")
+                            var precoAcre = document.getElementById("precoAcrescimo").dataset.precoacre.toString().replace(".","").replace(",",".")
+
+                            axios.post("/alterarCodItem",{codItemId:codItemId,quantidade:quantidadeModal,precoUnitario:precoUnit,desconto:precoDesc,acrescimo:precoAcre}).then(resp =>{
+                                if (resp.data.erro == undefined) {
+                                    alert(resp.data.resp)
+                                } else {
+                                    alert("Ocorreu um erro ao salvar \n",resp.data.erro)
+                                }
+                            })
+                        }
+                }
+
+
                 function editCodItem(codProd){
                     document.getElementById('btnEditarCodItem').classList.remove("disabled")
                     document.getElementById('btnExcluirCodItem').classList.remove("disabled")
@@ -491,28 +516,39 @@
 
                             var precoDescModal = document.getElementById("precoDescModal")
                             precoDescModal.dataset.precodesc = 0
-                            precoDescModal.value = parseFloat(0).toLocaleString('pt-br',
-            { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                            precoDescModal.value = parseFloat(0).toLocaleString('pt-br',{ minimumFractionDigits: 2, maximumFractionDigits: 2 })
 
                             var precoAcrescimo = document.getElementById("precoAcrescimo")
                             precoAcrescimo.dataset.precoacre = 0
-                            precoAcrescimo.value = parseFloat(0).toLocaleString('pt-br',
-            { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                            precoAcrescimo.value = parseFloat(0).toLocaleString('pt-br',{ minimumFractionDigits: 2, maximumFractionDigits: 2 })
 
 
                             var precoTotal = document.getElementById("precoTotal")
                             precoTotal.dataset.precotot = codItem.precoTotalItem
                             console.log(codItem)
-                            precoTotal.value = parseFloat(codItem.precoTotalItem).toLocaleString('pt-br',
-            { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                            precoTotal.value = parseFloat(codItem.precoTotalItem).toLocaleString('pt-br',{ minimumFractionDigits: 2, maximumFractionDigits: 2 })
 
-                            
+                            var codItemId = document.getElementById("codItemId").value = codItem.id
 
                         } else {
                             alert("Ocorreu um erro ao verificar o produto, gentileza entre em contato com o suporte")
                             console.log(resp.data.erro)
                         }
                     })
+                }
+            </script>
+              <script>
+                                                    
+                function calculaTotal(){
+                    var qtd = document.getElementById("quantidadeModal").value
+                    var precoUnit = document.getElementById("precoUnitModal").dataset.precounit.toString().replace(".","").replace(",",".")
+                    var precoDesc = document.getElementById("precoDescModal").dataset.precodesc.toString().replace(".","").replace(",",".")
+                    var precoAcre = document.getElementById("precoAcrescimo").dataset.precoacre.toString().replace(".","").replace(",",".")
+
+                    var precoTotal = document.getElementById("precoTotal")
+                    var calc = ((parseFloat(precoUnit) * qtd) - parseFloat(precoDesc)) + parseFloat(precoAcre)
+                    precoTotal.value = parseFloat(calc).toLocaleString('pt-br',{ minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                    precoTotal.dataset.precoTot = calc
                 }
             </script>
             <!-- <script src="/js/carrinho.js"></script> -->

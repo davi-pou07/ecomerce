@@ -280,6 +280,8 @@ router.post("/consultaCodItem", async (req, res) => {
 
     try {
         var codItem = await knex("coditens").select().where({ id: codItemId })
+        console.log(codItem)
+
 
         if (codItem != undefined) {
             var produto = await Produto.findByPk(codItem[0].produtoId)
@@ -296,6 +298,43 @@ router.post("/consultaCodItem", async (req, res) => {
         console.log(err)
         res.json({ erro: "Erro ao consultar item" })
     }
+})
+
+router.post("/alterarCodItem",async(req,res)=>{
+    var codItemId = req.body.codItemId
+    var quantidade = req.body.quantidade
+    var desconto = parseFloat(req.body.desconto)
+    var acrescimo = parseFloat(req.body.acrescimo)
+    var precoUnitario = parseFloat(req.body.precoUnitario)
+console.log(req.body)
+    var codItem =  await knex("coditens").select().where({id:codItemId})
+    if (codItem != undefined) {
+        console.log(parseFloat(codItem.precoUnit))
+        var valorTotal = ((parseFloat(codItem.precoUnit) * quantidade)+acrescimo) - desconto
+        console.log(valorTotal)
+        if ((codItem.precoUnit + acrescimo) > desconto) {
+
+            knex.update({
+                precoUnit:precoUnitario,
+                acrescimo:acrescimo,
+                desconto:desconto,
+                quantidade:quantidade,
+                valorTotal:valorTotal
+            }).where({id:codItemId}).then(resp =>{
+                res.json({resp:"Alteração realizada com sucesso"})
+            }).catch(err =>{
+                console.log(err)
+                res.json({erro:"Erro ao fazer atualização dos dados"})
+            })
+        } else {
+            console.log("Erro 1")
+            res.json({erro:"Preço de desconto não pode maior que o valor total"})
+        }
+    } else {
+        console.log("Erro 2")
+        res.json({erro:"Erro ao fazer atualização dos dados, item não encontrado"})
+    }
+   
 })
 
 //---------------FIM ALETERAR ITEM CARRINHO---------------
