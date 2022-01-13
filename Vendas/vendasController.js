@@ -306,33 +306,60 @@ router.post("/alterarCodItem",async(req,res)=>{
     var desconto = parseFloat(req.body.desconto)
     var acrescimo = parseFloat(req.body.acrescimo)
     var precoUnitario = parseFloat(req.body.precoUnitario)
-console.log(req.body)
-    var codItem =  await knex("coditens").select().where({id:codItemId})
-    if (codItem != undefined) {
-        console.log(parseFloat(codItem.precoUnit))
-        var valorTotal = ((parseFloat(codItem.precoUnit) * quantidade)+acrescimo) - desconto
-        console.log(valorTotal)
-        if ((codItem.precoUnit + acrescimo) > desconto) {
+    if (!isNaN(quantidade) && !isNaN(desconto) && !isNaN(acrescimo)  && !isNaN(precoUnitario)) { 
+        var codItem =  await knex("coditens").select().where({id:codItemId})
+        var carrinho = await knex('carrinhos').select().where({id:codItem[0].carrinhoId})
+        var dadosVendas = await DadosVendas.findOne({where:{carrinhoId:carrinho[0].id}})
+        if (codItem[0] != undefined) {
+            var valorTotalCodItem = ((precoUnitario * quantidade)+acrescimo) - desconto
+            var precoTotalCarrinho = (carrinho[0].precoTotal - codItem[0].precoTotalItem) + valorTotalCodItem
+            var quantidadeTotalCarrinho = (carrinho[0].quantidade - codItem[0].quantidade) + quantidade
+            var valorTotalVenda = (dadosVendas.unit_price - carrinho[0].precoTotal) + precoTotalCarrinho
 
-            knex.update({
-                precoUnit:precoUnitario,
-                acrescimo:acrescimo,
-                desconto:desconto,
-                quantidade:quantidade,
-                valorTotal:valorTotal
-            }).where({id:codItemId}).then(resp =>{
-                res.json({resp:"Alteração realizada com sucesso"})
-            }).catch(err =>{
-                console.log(err)
-                res.json({erro:"Erro ao fazer atualização dos dados"})
-            })
+            if (((precoUnitario * quantidade) + acrescimo) > desconto) {
+                knex("coditens").update({
+                    precoUnit:precoUnitario,
+                    acrescimo:acrescimo,
+                    desconto:desconto,
+                    quantidade:quantidade,
+                    precoTotalItem:valorTotalCodItem
+                }).where({id:codItem[0].id}).then(resp =>{
+
+                    knex('carrinhos').update({
+                        quantidade:quantidadeTotalCarrinho,
+                        precoTotal:precoTotalCarrinho
+                    }).where({id:carrinho[0].id}).then(resp2 =>{
+                        DadosVendas.update({
+                            unit_price:valorTotalVenda
+                        },{where:{id:dadosVendas.id}}).then(resp3 =>{
+
+                            res.json({resp:"Alteração realizada com sucesso"})
+
+                        }).catch(err =>{
+                            console.log(err)
+                            res.json({erro:"Erro ao fazer atualização dos dados"})
+                        })
+
+                    }).catch(err =>{
+                        console.log(err)
+                        res.json({erro:"Erro ao fazer atualização dos dados"})
+                    })
+
+                }).catch(err =>{
+                    console.log(err)
+                    res.json({erro:"Erro ao fazer atualização dos dados"})
+                })
+            } else {
+                console.log("Erro 1")
+                res.json({erro:"Preço de desconto não pode maior que o valor total"})
+            }
         } else {
-            console.log("Erro 1")
-            res.json({erro:"Preço de desconto não pode maior que o valor total"})
+            console.log("Erro 2")
+            res.json({erro:"Erro ao fazer atualização dos dados, item não encontrado"})
         }
     } else {
-        console.log("Erro 2")
-        res.json({erro:"Erro ao fazer atualização dos dados, item não encontrado"})
+        console.log("Erro 3")
+        res.json({erro:"Erro ao fazer atualização dos dados, campo digitado incorretamente"})
     }
    
 })

@@ -493,6 +493,7 @@
                             axios.post("/alterarCodItem",{codItemId:codItemId,quantidade:quantidadeModal,precoUnitario:precoUnit,desconto:precoDesc,acrescimo:precoAcre}).then(resp =>{
                                 if (resp.data.erro == undefined) {
                                     alert(resp.data.resp)
+                                    document.location.reload()
                                 } else {
                                     alert("Ocorreu um erro ao salvar \n",resp.data.erro)
                                 }
