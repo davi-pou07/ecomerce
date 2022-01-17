@@ -68,7 +68,11 @@ const DadosEntregas = connection.define('dadosentregas',{
     numero:{
         type:Sequelize.STRING,
         allowNull:true
-    }
+    },
+    valRecebido:{
+          type:Sequelize.FLOAT,
+          allowNull:true
+      }
 })
 
 // DadosEntregas.sync({force:true}).then(()=>{

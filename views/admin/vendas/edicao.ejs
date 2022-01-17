@@ -1,10 +1,8 @@
 <%- include('../../partials/head.ejs')%>
-
     <%- include('../../partials/nav.ejs')%>
         <div class="container-fluid">
             <div class="row">
                 <%- include('../../partials/navegador.ejs')%>
-
                     <div class="card my-3">
                         <div class="card-header">
                             <h2>Gerenciamento de venda</h2>
@@ -98,202 +96,193 @@
                                         </div>
 
                                     </div>
+                                </div>
 
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="flush-headingTwo">
-                                            <button class="accordion-button collapsed" type="button"
-                                                data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo"
-                                                aria-expanded="false" aria-controls="flush-collapseTwo">
-                                                Informações do carrinho
-                                            </button>
-                                        </h2>
-                                        <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingTwo">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo"
+                                            aria-expanded="false" aria-controls="flush-collapseTwo">
+                                            Informações do carrinho
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseTwo" class="accordion-collapse collapse"
                                             aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                                            <div class="accordion-body">
-                                                <div class="row">
-                                                    <div class="col-10">
-                                                        <div class="table-responsive my-3">
-                                                            <table class="table">
-                                                                <thead>
-                                                                    <tr>
-                                                                    <th>#</th>
-                                                                    <th class="text-nowrap">Cod.Produto</th>
-                                                                    <th class="text-nowrap">Descrição</th>
-                                                                    <th class="text-nowrap">Valor Unitario</th>
-                                                                    <th class="text-nowrap text-center">Quantidade</th>
-                                                                    <th class="text-nowrap">Valor Desconto</th>
-                                                                    <th class="text-nowrap">Valor Acrescimo</th>
-                                                                    <th class="text-nowrap">Valor Total</th>
-                                                                    </tr>
-                                                                </thead>
+                                        <div class="accordion-body">
+                                            <div class="row">
+                                                <div class="col-sm-10">
+                                                    <div class="table-responsive my-3">
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                <th>#</th>
+                                                                <th class="text-nowrap">Cod.Produto</th>
+                                                                <th class="text-nowrap">Descrição</th>
+                                                                <th class="text-nowrap">Valor Unitario</th>
+                                                                <th class="text-nowrap text-center">Quantidade</th>
+                                                                <th class="text-nowrap">Valor Desconto</th>
+                                                                <th class="text-nowrap">Valor Acrescimo</th>
+                                                                <th class="text-nowrap">Valor Total</th>
+                                                                </tr>
+                                                            </thead>
                                                                 
-                                                                <tbody>
-                                                                    <%codItens.forEach(codIten=>{%>
-                                                                        <%var prod=produto.find(p=> p.id == codIten.produtoId)%>
-                                                                            <tr>
-                                                                            <th><input type="radio" value="<%=codIten.id%>"
-                                                                                onchange="editCodItem(this.value)"
-                                                                                name="vendaSelecionada">
-                                                                            </th>
-                                                                            <td>
-                                                                            <%=prod.id%>
-                                                                            </td>
-                                                                            <td>
-                                                                                <%=prod.nome%>
-                                                                            </td>
-                                                                            <td>
-                                                                                <%=prod.precoUnit%>
-                                                                            </td>
-                                                                            <td class="text-center">
-                                                                                <%=prod.quantidade%>
-                                                                            </td>
-                                                                            <td>
-                                                                                <%=prod.desconto%>
-                                                                            </td>
-                                                                            <td>
-                                                                                R$00,00
-                                                                            </td>
-                                                                            <td>
-                                                                                <%=prod.valotTotalItem%>
-                                                                            </td>
-                                                                        </tr>
-                                                                    <%})%>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-2 border-start">
-                                                        <button class="btn form-control disabled btn-warning my-3" data-bs-toggle="modal" data-bs-target="#" id="btnEditarCodItem" onclick="verificaPagamento()">Editar</button>
-                                                        <br>
-                                                        <button class="btn form-control disabled btn-danger" id="btnExcluirCodItem">Excluir</button>
+                                                            <tbody>
+                                                                <%codItens.forEach(codIten=>{%>
+                                                                    <%var prod=produto.find(p=> p.id == codIten.produtoId)%>
+                                                                        <tr>
+                                                                        <th><input type="radio" value="<%=codIten.id%>"
+                                                                            onchange="editCodItem(this.value)"
+                                                                            name="vendaSelecionada">
+                                                                        </th>
+                                                                        <td>
+                                                                        <%=prod.id%>
+                                                                        </td>
+                                                                        <td>
+                                                                            <%=prod.nome%>
+                                                                        </td>
+                                                                        <td>
+                                                                            <%=prod.precoUnit%>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <%=prod.quantidade%>
+                                                                        </td>
+                                                                        <td>
+                                                                            <%=prod.desconto%>
+                                                                        </td>
+                                                                        <td>
+                                                                            R$00,00
+                                                                        </td>
+                                                                        <td>
+                                                                            <%=prod.valotTotalItem%>
+                                                                        </td>
+                                                                    </tr>
+                                                                <%})%>
+                                                            </tbody>
+                                                        </table>
                                                     </div>
                                                 </div>
-                                              
-
-                                                <div class="modal fade" id="modalEditarCodItem" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalEditarCodItemLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                      <div class="modal-content">
-                                                        <div class="modal-header">
-                                                          <h5 class="modal-title" id="modalEditarCodItemTitulo">Modal title</h5>
-                                                          <input type="hidden" id="codItemId">
-                                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="text-center col-3">
-                                                                <label class="form-label" for="quantidadeModal">Quantidade</label>
-                                                                <input type="number" class="form-control" onchange="calculaTotal()" id="quantidadeModal">
-                                                            </div>
-                                                            <hr>
-                                                          <div class="row">
-                                                              <div class="col-sm-4 my-3 my-sm-0 mt-sm-2">
-                                                                <label class="form-label" for="precoUnitModal">Preço Unitario</label>
-                                                                <div class="input-group mb-3">
-                                                                    <span class="input-group-text" id="basic-addon1">R$</span>
-                                                                    <input type="text" class="form-control" aria-describedby="basic-addon1" data-precounit="0" onchange="this.dataset.precounit = this.value;calculaTotal()" value="R$00,00" id="precoUnitModal">
-                                                                </div>         
-                                                            </div>         
-
-                                                              <div class="col-sm-4 my-3 my-sm-0 mt-sm-2">
-                                                                <label class="form-label" for="precoDescModal">Desconto</label>
-                                                                <div class="input-group mb-3">
-                                                                    <span class="input-group-text" id="basic-addon2">R$</span>
-                                                                    <input type="text" class="form-control" data-precodesc = "0" aria-describedby="basic-addon2" onchange="this.dataset.precodesc = this.value;calculaTotal()" value="R$00,00" id="precoDescModal">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-sm-4 my-3 my-sm-0 mt-sm-2">
-                                                                <label class="form-label" for="precoAcrescimo">Acrescimo</label>
-                                                                <div class="input-group mb-3">
-                                                                    <span class="input-group-text" id="basic-addon3">R$</span>
-                                                                    <input type="text" onfocus="formEdit(this.id)" class="form-control" aria-describedby="basic-addon3" data-precoacre = "0" onchange="this.dataset.precoacre = this.value;calculaTotal()" value="R$00,00" id="precoAcrescimo">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-12 mt-3 border-top">
-                                                                <label class="form-label mt-2" for="precoTotal">Preço Total</label>
-                                                                <div class="input-group mb-3">
-                                                                    <span class="input-group-text" id="basic-addon4">R$</span>
-                                                                    <input type="text" class="form-control col-4" aria-describedby="basic-addon4" disabled data-precoTot = "0" value="R$00,00" id="precoTotal">
-                                                                </div>
-                                                            </div>
-                                                          </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                                                          <button type="button" class="btn btn-primary" onclick="salvar()">Salvar</button>
-                                                        </div>
-                                                      </div>
-                                                    </div>
-                                                  </div>
-
-
-                                                <div class="card mt-4">
-                                                    <div class="card-header text-white bg-info bg-opacity-50">
-                                                        <h5>Totais</h5>
-                                                    </div>
-                                                    <div class="card-body border-info">
-                                                        <div class="row">
-                                                            <div class="col-lg-10">
-                                                                <div class="table-responsive">
-                                                                    <table class="table">
-                                                                        <thead>
-                                                                            <th>#</th>
-                                                                            <th class="text-nowrap text-center">Produtos</th>
-                                                                            <th class="text-nowrap text-center">Quantidade</th>
-                                                                            <th class="text-nowrap">Valor Desconto</th>
-                                                                            <th class="text-nowrap">Valor Acrescimo</th>
-                                                                            <th class="text-nowrap">Valor Total</th>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <th>#</th>
-                                                                            <td class="text-nowrap text-center">
-                                                                                <%=valores.totaisProdutos%>
-                                                                            </td>
-                                                                            <td class="text-nowrap text-center">
-                                                                                <%=valores.quantidadeTotal%>
-                                                                            </td>
-                                                                            <td class="text-nowrap">
-                                                                                <%=valores.descontoTotal%>
-                                                                            </td>
-                                                                            <td class="text-nowrap">
-                                                                                <%=valores.descontoTotal%>
-                                                                            </td>
-                                                                            <td class="text-nowrap">
-                                                                                <%=valores.valorTotal%>
-                                                                            </td>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-2 border-start">
-                                                                    <button class="btn form-control disabled btn-warning my-4" id="btnEditarCodItem">Editar</button>
-                                                            </div>
-                                                        </div>
+                                                <div class="col-sm-2 border-start">
+                                                    <button class="btn form-control disabled btn-warning my-3" data-bs-toggle="modal" data-bs-target="#" id="btnEditarCodItem" onclick="verificaPagamento()">Editar</button>
+                                                    <br>
+                                                    <button class="btn form-control disabled btn-danger" id="btnExcluirCodItem">Excluir</button>
+                                                </div>
+                                            </div>
+                                            <div class="card mt-4">
+                                                <div class="card-header text-white bg-info bg-opacity-50">
+                                                    <h5>Totais</h5>
+                                                </div>
+                                                <div class="card-body border-info">
+                                                    <div class="table-responsive">
+                                                        <table class="table">
+                                                            <thead>
+                                                                <th>#</th>
+                                                                <th class="text-nowrap text-center">Produtos</th>
+                                                                <th class="text-nowrap text-center">Quantidade</th>
+                                                                <th class="text-nowrap">Valor Desconto</th>
+                                                                <th class="text-nowrap">Valor Acrescimo</th>
+                                                                <th class="text-nowrap">Valor Total</th>
+                                                            </thead>
+                                                            <tbody>
+                                                                <th>#</th>
+                                                                <td class="text-nowrap text-center">
+                                                                    <%=valores.totaisProdutos%>
+                                                                </td>
+                                                                <td class="text-nowrap text-center">
+                                                                    <%=valores.quantidadeTotal%>
+                                                                </td>
+                                                                <td class="text-nowrap">
+                                                                    <%=valores.descontoTotal%>
+                                                                </td>
+                                                                <td class="text-nowrap">
+                                                                    <%=valores.descontoTotal%>
+                                                                </td>
+                                                                <td class="text-nowrap">
+                                                                    <%=valores.valorTotal%>
+                                                                </td>
+                                                            </tbody>
+                                                        </table>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="flush-headingThree">
-                                            <button class="accordion-button collapsed" type="button"
-                                                data-bs-toggle="collapse" data-bs-target="#flush-collapseThree"
-                                                aria-expanded="false" aria-controls="flush-collapseThree">
-                                                Informações da Entrega
-                                            </button>
-                                        </h2>
-                                        <div id="flush-collapseThree" class="accordion-collapse collapse"
-                                            aria-labelledby="flush-headingThree"
-                                            data-bs-parent="#accordionFlushExample">
-                                            <div class="accordion-body">
-                                                
+                                </div>
+
+                                <div class="modal fade" id="modalEditarCodItem" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalEditarCodItemLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                              <h5 class="modal-title" id="modalEditarCodItemTitulo">Modal title</h5>
+                                              <input type="hidden" id="codItemId">
+                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="text-center col-3">
+                                                    <label class="form-label" for="quantidadeModal">Quantidade</label>
+                                                    <input type="number" class="form-control" onchange="calculaTotal()" id="quantidadeModal">
+                                                </div>
+                                                <hr>
                                                 <div class="row">
-                                                    <div class="col-md-12 mb-2">
-                                                        <label for="codigoRastreio" class="form-label mt-2">Codigo de Rastreio</label>
-                                                        <input class="form-control" size="2" value="<%=dadosEntregas.codigoRastreioInterno%>" disabled
-                                                            type="text" id="codigoRastreio" name="codigoRastreio" autocomplete="off" required>
+                                                    <div class="col-sm-4 my-3 my-sm-0 mt-sm-2">
+                                                    <label class="form-label" for="precoUnitModal">Preço Unitario</label>
+                                                    <div class="input-group mb-3">
+                                                        <span class="input-group-text" id="basic-addon1">R$</span>
+                                                        <input type="text" class="form-control" aria-describedby="basic-addon1" data-precounit="0" onchange="this.dataset.precounit = this.value;calculaTotal()" value="R$00,00" id="precoUnitModal">
+                                                    </div>         
+                                                </div>         
+
+                                                    <div class="col-sm-4 my-3 my-sm-0 mt-sm-2">
+                                                    <label class="form-label" for="precoDescModal">Desconto</label>
+                                                    <div class="input-group mb-3">
+                                                        <span class="input-group-text" id="basic-addon2">R$</span>
+                                                        <input type="text" class="form-control" data-precodesc = "0" aria-describedby="basic-addon2" onchange="this.dataset.precodesc = this.value;calculaTotal()" value="R$00,00" id="precoDescModal">
                                                     </div>
-                                                    <%if(dadoVenda.opcaoDePagamento=="Pagar na Entrega"){%>
+                                                </div>
+
+                                                <div class="col-sm-4 my-3 my-sm-0 mt-sm-2">
+                                                    <label class="form-label" for="precoAcrescimo">Acrescimo</label>
+                                                    <div class="input-group mb-3">
+                                                        <span class="input-group-text" id="basic-addon3">R$</span>
+                                                        <input type="text" onfocus="formEdit(this.id)" class="form-control" aria-describedby="basic-addon3" data-precoacre = "0" onchange="this.dataset.precoacre = this.value;calculaTotal()" value="R$00,00" id="precoAcrescimo">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 mt-3 border-top">
+                                                    <label class="form-label mt-2" for="precoTotal">Preço Total</label>
+                                                    <div class="input-group mb-3">
+                                                        <span class="input-group-text" id="basic-addon4">R$</span>
+                                                        <input type="text" class="form-control col-4" aria-describedby="basic-addon4" disabled data-precoTot = "0" value="R$00,00" id="precoTotal">
+                                                    </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                              <button type="button" class="btn btn-primary" onclick="salvar()">Salvar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingThree">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#flush-collapseThree"
+                                            aria-expanded="false" aria-controls="flush-collapseThree">
+                                            Informações da Entrega
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseThree" class="accordion-collapse collapse"
+                                        aria-labelledby="flush-headingThree"
+                                        data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">
+                                            <div class="row">
+                                                <div class="col-md-12 mb-2">
+                                                    <label for="codigoRastreio" class="form-label mt-2">Codigo de Rastreio</label>
+                                                    <input class="form-control" size="2" value="<%=dadosEntregas.codigoRastreioInterno%>" disabled
+                                                        type="text" id="codigoRastreio" name="codigoRastreio" autocomplete="off" required>
+                                                </div>
+                                                <%if(dadoVenda.opcaoDePagamento=="Pagar na Entrega"){%>
                                                     <div class="col-md-4 mb-2">
                                                         <label for="nome" class="form-label mt-2">Nome destinatario</label>
                                                         <input class="form-control" size="2" value="<%=dadosEntregas.nome%>" disabled
@@ -310,249 +299,358 @@
                                                         <input class="form-control" size="2" value="<%=dadosEntregas.dataNasc%>" disabled
                                                             type="text" id="dataNasc" name="dataNasc" autocomplete="off" required>
                                                     </div>
-                                                    <%}%>
+                                                <%}%>
 
-                                                    <div class="col-lg-4 mb-lg-2 col-md-6">
-                                                        <label for="cep" class="form-label">CEP</label>
-                                                        <input class="form-control mascCEP" disabled size="10" maxlength="9" type="text"
-                                                            id="cep" name="cep" placeholder="Informe o CEP" autocomplete="off"
-                                                            onblur="pesquisacep(this.value);" value="<%=dadosEntregas.cep%>" required>
-                                                    </div>
+                                                <div class="col-lg-4 mb-lg-2 col-md-6">
+                                                    <label for="cep" class="form-label">CEP</label>
+                                                    <input class="form-control mascCEP" disabled size="10" maxlength="9" type="text"
+                                                        id="cep" name="cep" placeholder="Informe o CEP" autocomplete="off"
+                                                        onblur="pesquisacep(this.value);" value="<%=dadosEntregas.cep%>" required>
+                                                </div>
                     
-                                                    <div class="col-lg-4 mb-lg-2 col-md-6">
-                                                        <label for="numero" class="form-label">Numero</label>
-                                                        <input class="form-control" placeholder="Ex:6259" disabled type="number" id="numero"
-                                                            name="numero" autocomplete="off" value="<%=dadosEntregas.numero%>" required>
-                                                    </div>
+                                                <div class="col-lg-4 mb-lg-2 col-md-6">
+                                                    <label for="numero" class="form-label">Numero</label>
+                                                    <input class="form-control" placeholder="Ex:6259" disabled type="number" id="numero"
+                                                        name="numero" autocomplete="off" value="<%=dadosEntregas.numero%>" required>
+                                                </div>
                     
-                                                    <div class="col-lg-4 mb-lg-2 col-md-6">
-                                                        <label for="rua" class="form-label">Rua</label>
-                                                        <input class="form-control" type="text" value="<%=dadosEntregas.rua%>" disabled
-                                                            id="rua" name="rua" autocomplete="off" size="60" required>
-                                                    </div>
+                                                <div class="col-lg-4 mb-lg-2 col-md-6">
+                                                    <label for="rua" class="form-label">Rua</label>
+                                                    <input class="form-control" type="text" value="<%=dadosEntregas.rua%>" disabled
+                                                        id="rua" name="rua" autocomplete="off" size="60" required>
+                                                </div>
                     
-                                                    <div class="col-lg-4 mb-lg-2 col-md-6">
-                                                        <label for="bairro" class="form-label">Bairro</label>
-                                                        <input class="form-control" type="text" value="<%=dadosEntregas.bairro%>" disabled
-                                                            id="bairro" name="bairro" size="40" autocomplete="off" required>
-                                                    </div>
+                                                <div class="col-lg-4 mb-lg-2 col-md-6">
+                                                    <label for="bairro" class="form-label">Bairro</label>
+                                                    <input class="form-control" type="text" value="<%=dadosEntregas.bairro%>" disabled
+                                                        id="bairro" name="bairro" size="40" autocomplete="off" required>
+                                                </div>
                     
-                                                    <div class="col-lg-4 mb-lg-2 col-md-6">
-                                                        <label for="cidade" class="form-label">Cidade</label>
-                                                        <input class="form-control" size="40" value="<%=dadosEntregas.cidade%>" disabled
-                                                            type="text" id="cidade" name="cidade" autocomplete="off" required>
-                                                    </div>
+                                                <div class="col-lg-4 mb-lg-2 col-md-6">
+                                                    <label for="cidade" class="form-label">Cidade</label>
+                                                    <input class="form-control" size="40" value="<%=dadosEntregas.cidade%>" disabled
+                                                        type="text" id="cidade" name="cidade" autocomplete="off" required>
+                                                </div>
                     
-                                                    <div class="col-lg-4 mb-lg-2 col-md-6">
-                                                        <label for="uf" class="form-label">UF</label>
-                                                        <input class="form-control" size="2" value="<%=dadosEntregas.uf%>" disabled
-                                                            type="text" id="uf" name="estado" autocomplete="off" required>
-                                                    </div>
-                                                    <input type="hidden" id="enderecoValidado" value="false">
+                                                <div class="col-lg-4 mb-lg-2 col-md-6">
+                                                    <label for="uf" class="form-label">UF</label>
+                                                    <input class="form-control" size="2" value="<%=dadosEntregas.uf%>" disabled
+                                                        type="text" id="uf" name="estado" autocomplete="off" required>
+                                                </div>
+                                                <input type="hidden" id="enderecoValidado" value="false">
                     
-                                                    <div class="col-md-12">
-                                                        <label for="complemento" class="form-label mt-2">Complemento</label>
-                                                        <input class="form-control" size="2" value="<%=dadosEntregas.complemento%>" disabled
-                                                            type="text" id="complemento" name="complemento" autocomplete="off" required>
-                                                    </div>
-                    
-                    
+                                                <div class="col-md-12">
+                                                    <label for="complemento" class="form-label mt-2">Complemento</label>
+                                                    <input class="form-control" size="2" value="<%=dadosEntregas.complemento%>" disabled
+                                                        type="text" id="complemento" name="complemento" autocomplete="off" required>
                                                 </div>
 
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-6">
-                                                        <label for="frete" class="form-label mt-2">Valor</label>
-                                                        <input class="form-control" size="2" disabled value="<%=dadosEntregas.valor%>"
-                                                            value="R$10,00" type="text" id="frete" name="frete" autocomplete="off" required>
+                                                <div class="col-lg-3 col-md-6">
+                                                    <label for="frete" class="form-label mt-2">Valor</label>
+                                                    <div class="input-group mb-3">
+                                                        <span class="input-group-text" id="basic-addon3">R$</span>
+                                                    <input class="form-control" size="2" disabled value="<%=dadosEntregas.valor.toLocaleString('pt-br',{ minimumFractionDigits: 2, maximumFractionDigits: 2 })%>"
+                                                        value="R$10,00" type="text" id="frete" name="frete" autocomplete="off" required>
                                                     </div>
-                                                    <div class="col-lg-3 col-md-6">
-                                                        <label for="valRecebido" class="form-label mt-2">Valor recebido</label>
-                                                        <input class="form-control" size="2" disabled value="0" type="text" id="valRecebido" name="valRecebido" autocomplete="off" required>
-                                                    </div>
-                                                    <div class="col-lg-3 col-md-6">
-                                                        <label for="dataFrete" class="form-label mt-2">Data Entrega</label>
-                                                        <input class="form-control" value="2021-09-01" disabled
-                                                            value="<%=dadosEntregas.dataPrevista%>" type="date" id="dataFrete"
-                                                            name="dataFrete" autocomplete="off" required>
-                                                    </div>
-                                                    <div class="col-lg-3 col-md-12">
-                                                        <label for="complemento" class="form-label mt-2">Status</label>
-                                                        <select name="statusEntrega" disabled class="form-select" id="statusEntrega">
-                                                            <%statusEntrega.forEach(stEntrega=>{%>
-                                                                <%if(dadosEntregas.status==stEntrega.statusId){%>
-                                                                    <option value="<%=dadosEntregas.status%>" selected>
+                                                </div>
+                                                <div class="col-lg-3 col-md-6">
+                                                    <label for="valRecebido" class="form-label mt-2">Valor recebido</label>
+                                                    <div class="input-group mb-3">
+                                                        <span class="input-group-text" id="basic-addon3">R$</span>
+                                                    <input class="form-control" size="2" disabled value="<%=dadosEntregas.valRecebido.toLocaleString('pt-br',{ minimumFractionDigits: 2, maximumFractionDigits: 2 })%>" type="text" id="valRecebido" name="valRecebido" autocomplete="off" required>
+                                                    </div>                                                    
+                                                </div>
+                                                <div class="col-lg-3 col-md-6">
+                                                    <label for="dataFrete" class="form-label mt-2">Data Entrega</label>
+                                                    <input class="form-control" value="2021-09-01" disabled
+                                                        value="<%=dadosEntregas.dataPrevista%>" type="date" id="dataFrete"
+                                                        name="dataFrete" autocomplete="off" required>
+                                                </div>
+                                                <div class="col-lg-3 col-md-12">
+                                                    <label for="complemento" class="form-label mt-2">Status</label>
+                                                    <select name="statusEntrega" disabled class="form-select" id="statusEntrega">
+                                                        <%statusEntrega.forEach(stEntrega=>{%>
+                                                            <%if(dadosEntregas.status==stEntrega.statusId){%>
+                                                                <option value="<%=dadosEntregas.status%>" selected>
+                                                                    <%=stEntrega.status%>
+                                                                </option>
+                                                                <%}else{%>
+                                                                    <option value="<%=stEntrega.statusId%>">
                                                                         <%=stEntrega.status%>
                                                                     </option>
-                                                                    <%}else{%>
-                                                                        <option value="<%=stEntrega.statusId%>">
-                                                                            <%=stEntrega.status%>
-                                                                        </option>
-                                                                        <%}%>
-                                                                            <%})%>
-                                                        </select>
-                                                    </div>
+                                                                    <%}%>
+                                                                        <%})%>
+                                                    </select>
                                                 </div>
+                                            </div>
                                                 <button class="btn btn-warning mt-3 form-control"  onclick="editarEntrega()" id="btnEditarEntrega">Alterar</button>
                                                 <button class="btn btn-success mt-3 d-none form-control" disabled  onclick="salvarDadosEntrega()" id="btnSalvarEntrega">Salvar</button>
                                                 <button class="btn btn-danger mt-3 d-none form-control" disabled onclick="document.location.reload()" id="btnCancelarEntrega">Cancelar</button>
-
-                                                <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-                                                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
-                                                <script>
-                                                    function editarEntrega(){
-                                                        document.getElementById('cep').disabled = false
-                                                        document.getElementById('numero').disabled = false
-                                                        document.getElementById('rua').disabled = false
-                                                        document.getElementById('bairro').disabled = false
-                                                        document.getElementById('cidade').disabled = false
-                                                        document.getElementById('uf').disabled = false
-                                                        document.getElementById('complemento').disabled = false
-                                                        document.getElementById('frete').disabled = false
-                                                        document.getElementById('dataFrete').disabled = false
-                                                        document.getElementById('statusEntrega').disabled = false
-                                                        document.getElementById('valRecebido').disabled = false
-                                                        var btnSalvarEntrega = document.getElementById('btnSalvarEntrega')
-                                                        btnSalvarEntrega.disabled = false
-                                                        btnSalvarEntrega.classList.remove('d-none')
-                                                        var btnCancelarEntrega= document.getElementById('btnCancelarEntrega')
-                                                        btnCancelarEntrega.disabled = false
-                                                        btnCancelarEntrega.classList.remove('d-none')
-                                                        var btnEditarEntrega = document.getElementById('btnEditarEntrega')
-                                                        btnEditarEntrega.classList.add("d-none")
-                                                        btnEditarEntrega.innerHTML = 'Salvar'
-                                                    }
-                                                    function salvarDadosEntrega() {
-                                                        if (confirm("Deseja realmente salvar essas alterações?")) {
-                                                                var cep= document.getElementById('cep').value
-                                                                var numero= document.getElementById('numero').value
-                                                                var rua= document.getElementById('rua').value
-                                                                var bairro=document.getElementById('bairro').value
-                                                                var cidade = document.getElementById('cidade').value
-                                                                var uf = document.getElementById('uf').value
-                                                                var complemento = document.getElementById('complemento').value
-                                                                var frete = document.getElementById('frete').value
-                                                                var dataFrete = document.getElementById('dataFrete').value
-                                                                var statusEntrega = document.getElementById('statusEntrega').value
-                                                                var valRecebido = document.getElementById('valRecebido').value
-                                                                var codigoRastreio = document.getElementById('codigoRastreio').value
-                                                                var body = {cep:cep,numero:numero,rua:rua,bairro:bairro,cidade:cidade,uf:uf,complemento:complemento,codRastreio:codRastreio,frete:frete,dataFrete:dataFrete,statusEntrega:statusEntrega,valRecebido:valRecebido}
-                                                                if ((frete == ''|| frete == undefined) || (cep == ''|| cep == undefined) || (numero == '' || numero == undefined) || (rua == '' || rua == undefined) || (bairro == '' || bairro == undefined) || (cidade == '' || cidade == undefined) || (uf == '' || uf == undefined) || (frete == '' || frete == undefined) || (dataFrete == '' || dataFrete == undefined) ||(statusEntrega == '' || statusEntrega == undefined)) {
-                                                                    alert('Campos obrigatorio com o valor nulo ou vazio \nGentileza preencha todos os campos!')
-                                                                }else{
-                                                                    axios.post("/alterarEntrega",body).then(resp=>{
-                                                                        if (resp.data.erro == undefined) {
-                                                                            alert(resp.data.resp)
-                                                                            document.location.reload()
-                                                                        } else {
-                                                                            alert(resp.data.erro)
-                                                                        }
-                                                                    }).catch(err =>{
-                                                                        alert("Erro de conexão")
-                                                                        console.log(err)
-                                                                    })
-                                                                }
-                                                        }else{
-                                                            document.location.reload()
-                                                        }
-                                                    }
-                                                </script>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="flush-headingFor">
-                                            <button class="accordion-button collapsed" type="button"
-                                                data-bs-toggle="collapse" data-bs-target="#flush-collapseFor"
-                                                aria-expanded="false" aria-controls="flush-collapseFor">
-                                                Informações do Pagamento
-                                            </button>
-                                        </h2>
-                                        <div id="flush-collapseFor" class="accordion-collapse collapse"
-                                            aria-labelledby="flush-headingFor"
-                                            data-bs-parent="#accordionFlushExample">
-                                            <div class="accordion-body">
-                                                
-                                                <div class="card mt-3">
-                                                    <div class="card-body">
-                                                        <div class="row">
-                                                            <div class="col-md-10">
-                                                                <div class="row">
-                                                                    <div class="col-lg-4 col-sm-6">
-                                                                        <label for="forma" class="form-label">Forma de pagamento</label>
-                                                                        <select name="" disabled class="form-select" id="">
-                                                                            <%if(dadoVenda.opcaoDePagamento=="Pix"){%>
-                                                                                <option value="1" selected>Pix</option>
-                                                                                <option value="2">Mercado Pago</option>
-                                                                                <option value="3">Pagar na Entrega</option>
-                                                                                <%}else if(dadoVenda.opcaoDePagamento=="Mercado Pago" ){%>
-                                                                                    <option value="1">Pix</option>
-                                                                                    <option value="2" selected>Mercado Pago</option>
-                                                                                    <option value="3">Pagar na Entrega</option>
-                                                                                    <%}else if(dadoVenda.opcaoDePagamento=="Pagar na Entrega" ){%>
-                                                                                        <option value="1">Pix</option>
-                                                                                        <option value="2">Mercado Pago</option>
-                                                                                        <option value="3" selected>Pagar na Entrega</option>
-                                                                                        <%}%>
-                                                                        </select>
-                                                                    </div>
-                                                                    <%if(dadosPagamentos !=undefined){%>
-                                                                        <div class="col-lg-4 col-sm-6">
-                                                                            <label for="forma" class="form-label">Ordem Pagamento</label>
-                                                                            <input type="text" disabled class="form-control"
-                                                                                value="<%=dadosPagamentos.ordeId%>">
-                                                                        </div>
-                                                                        <div class="col-lg-4 col-sm-6">
-                                                                            <label for="status" class="form-label">Status Pagamento</label>
-                                                                            <select name="" class="form-select" id="statusPag">
-                                                                            <%const StatusPagamento = [{ id: 1, status: "Analise" }, { id: 2, status: "Aprovado" }, { id: 3, status: "Rejeitado" }, { id: 4, status: "Cancelado" }, { id: 5, status: "Pendente" }]%>
-                                                                            <%StatusPagamento.forEach(statusPagamento =>{%>
-                                                                                <%if(dadosPagamentos.statusId == statusPagamento.id){%>
-                                                                                    <option selected value="<%=dadosPagamentos.statusId%>"><%=statusPagamento.status%></option>
-                                                                                <%}else{%>
-                                                                                    <option value="<%=statusPagamento.id%>"><%=statusPagamento.status%></option>
-                                                                                <%}%>
-                                                                            <%})%>
-                                                                            </select>
-                                                                        </div>
-                                                                        <%}else{%>
-                                                                            <h4>PAGAMENTO NÃO IDENTIFICADO</h4>
-                                                                            <%}%>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-2  border-start">
-                                                                <button class="btn btn-warning form-control text-white mt-3">Alterar</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-footer">
-                                                        <%if(dadosPagamentos !=undefined){%>
-                                                            <%if(dadosPagamentos.comprovante != undefined){%>
-                                                            <a download="Comprovante<%=dadosPagamentos.ordeId%>"
-                                                                href="<%=dadosPagamentos.comprovante%>" class="btn btn-info form-control text-white"
-                                                                id="forma">Arquivos Anexados</a>
-                                                            <%}else{%>
-                                                                <h5>Comprovante não anexado</h5>
-                                                                <hr>
-                                                                <label for="form-label">Anexar comprovante</label>
-                                                                <input type="file" name="anexarComprovantePag" id="anexarComprovantePag" class="form-control">
-                                                            <%}%>
-                                                        <%}else{%>
-                                                            <h5>PAGAMENTO NÃO IDENTIFICADO</h5>
-                                                        <%}%>
-                                                    </div>
-                                                </div>
-
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
 
-            </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingFor">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#flush-collapseFor"
+                                            aria-expanded="false" aria-controls="flush-collapseFor">
+                                            Informações do Pagamento
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseFor" class="accordion-collapse collapse"
+                                        aria-labelledby="flush-headingFor"
+                                        data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">
+                                            <div class="card mt-3">
+                                                <div class="card-header bg-white">
+                                                    <div class="row">
+                                                        <div class="col-lg-4 col-sm-6">
+                                                            <label for="forma" class="form-label">Tipo de pagamento</label>
+                                                            <select disabled class="form-select" id="formPagamento">
+                                                                <%if(dadoVenda.opcaoDePagamento=="Pix"){%>
+                                                                    <option value="1" selected>Pix</option>
+                                                                    <option value="2">Mercado Pago</option>
+                                                                    <option value="3">Pagar na Entrega</option>
+                                                                    <%}else if(dadoVenda.opcaoDePagamento=="Mercado Pago" ){%>
+                                                                        <option value="1">Pix</option>
+                                                                        <option value="2" selected>Mercado Pago</option>
+                                                                        <option value="3">Pagar na Entrega</option>
+                                                                        <%}else if(dadoVenda.opcaoDePagamento=="Pagar na Entrega" ){%>
+                                                                            <option value="1">Pix</option>
+                                                                            <option value="2">Mercado Pago</option>
+                                                                            <option value="3" selected>Pagar na Entrega</option>
+                                                                            <%}%>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-lg-4 col-sm-6">
+                                                            <label for="forma" class="form-label">Detalhe do pagamento</label>
+                                                            <select disabled class="form-select" id="formPagamento">
+                                                                <%if(dadoVenda.opcaoDePagamento=="Pix"){%>
+                                                                    <option value="1" selected>Pix</option>
+                                                                    <option value="2">Mercado Pago</option>
+                                                                    <option value="3">Pagar na Entrega</option>
+                                                                    <%}else if(dadoVenda.opcaoDePagamento=="Mercado Pago" ){%>
+                                                                        <option value="1">Pix</option>
+                                                                        <option value="2" selected>Mercado Pago</option>
+                                                                        <option value="3">Pagar na Entrega</option>
+                                                                        <%}else if(dadoVenda.opcaoDePagamento=="Pagar na Entrega" ){%>
+                                                                            <option value="1">Pix</option>
+                                                                            <option value="2">Mercado Pago</option>
+                                                                            <option value="3" selected>Pagar na Entrega</option>
+                                                                            <%}%>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-lg-4 col-sm-6">
+                                                            <label for="forma" class="form-label">Metodo de pagamento</label>
+                                                            <select disabled class="form-select" id="formPagamento">
+                                                                <%if(dadoVenda.opcaoDePagamento=="Pix"){%>
+                                                                    <option value="1" selected>Pix</option>
+                                                                    <option value="2">Mercado Pago</option>
+                                                                    <option value="3">Pagar na Entrega</option>
+                                                                    <%}else if(dadoVenda.opcaoDePagamento=="Mercado Pago" ){%>
+                                                                        <option value="1">Pix</option>
+                                                                        <option value="2" selected>Mercado Pago</option>
+                                                                        <option value="3">Pagar na Entrega</option>
+                                                                        <%}else if(dadoVenda.opcaoDePagamento=="Pagar na Entrega" ){%>
+                                                                            <option value="1">Pix</option>
+                                                                            <option value="2">Mercado Pago</option>
+                                                                            <option value="3" selected>Pagar na Entrega</option>
+                                                                            <%}%>
+                                                            </select>
+                                                        </div>
+                                                            <div class="col-md-2  border-start">
+                                                                <button class="btn btn-warning form-control text-white mt-3" id="btnAlterarDadosPag" onclick="alterarDadosPagamentos()">Alterar</button>
+                                                                <button class="btn btn-success form-control d-none text-white mt-3" id="btnSalvarDadosPag" onclick="salvarDadosPagamentos()">Salvar</button>
+                                                                <button class="btn btn-danger form-control d-none text-white mt-3" id="btnCancelarDadosPag" onclick="document.location.reload()">Cancelar</button>
+                                                            </div>
+
+                                                    </div>
+                                                </div>
+                                                    
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <%if(dadosPagamentos !=undefined){%>
+                                                            <div class="col-lg-4 col-sm-6">
+                                                                <label for="forma" class="form-label">Ordem Pagamento</label>
+                                                                <input type="text" id="ordemPag" disabled class="form-control"
+                                                                    value="<%=dadosPagamentos.ordeId%>">
+                                                            </div>
+
+                                                            <div class="col-lg-4 col-sm-6">
+                                                                <label for="status" class="form-label">Status Pagamento</label>
+                                                                <select disabled class="form-select" id="statusPag">
+                                                                <%const StatusPagamento = [{ id: 1, status: "Analise" }, { id: 2, status: "Aprovado" }, { id: 3, status: "Rejeitado" }, { id: 4, status: "Cancelado" }, { id: 5, status: "Pendente" }]%>
+                                                                <%StatusPagamento.forEach(statusPagamento =>{%>
+                                                                    <%if(dadosPagamentos.statusId == statusPagamento.id){%>
+                                                                        <option selected value="<%=dadosPagamentos.statusId%>"><%=statusPagamento.status%></option>
+                                                                    <%}else{%>
+                                                                        <option value="<%=statusPagamento.id%>"><%=statusPagamento.status%></option>
+                                                                    <%}%>
+                                                                <%})%>
+                                                                </select>
+                                                            </div>
+
+                                                        <%}else{%>
+                                                            <h4>PAGAMENTO NÃO IDENTIFICADO</h4>
+                                                        <%}%>
+
+                                                        <div class="col-lg-4 mt-3 col-sm-6">
+                                                            <label for="forma" class="form-label">Valor total</label>
+                                                            <div class="input-group mb-3">
+                                                                <span class="input-group-text" id="basic-addon3">R$</span>
+                                                                <input type="text" id="valTotoPagamento" disabled class="form-control"
+                                                                value="<%=dadosPagamentos.totalPago.toLocaleString('pt-br',{ minimumFractionDigits: 2, maximumFractionDigits: 2 })%>">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-4 mt-3 col-sm-6">
+                                                            <label for="forma" class="form-label">Valor recebido</label>
+                                                            <div class="input-group mb-3">
+                                                                <span class="input-group-text" id="basic-addon3">R$</span>
+                                                            <input type="text" disabled id="valRecebidoPagamento" class="form-control"
+                                                            value="<%=dadosPagamentos.valRecebido.toLocaleString('pt-br',{ minimumFractionDigits: 2, maximumFractionDigits: 2 })%>">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-4 mt-3 col-sm-6">
+                                                            <label for="forma" class="form-label">Data da ultima alteração</label>
+                                                        <input type="text" disabled class="form-control"
+                                                            value="<%=dataPagamento%>">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card-footer">
+                                                    <%if(dadosPagamentos !=undefined){%>
+                                                        <%if(dadosPagamentos.comprovante != undefined){%>
+                                                        <a download="Comprovante<%=dadosPagamentos.ordeId%>"
+                                                            href="<%=dadosPagamentos.comprovante%>" class="btn btn-info form-control text-white"
+                                                            id="forma">Arquivos Anexados</a>
+                                                        <%}else{%>
+                                                            <h5>Comprovante não anexado</h5>
+                                                            <hr>
+                                                            <label for="form-label">Anexar comprovante</label>
+                                                            <input type="file" onchange="encodeImageFileAsURL()" name="novaFoto" disabled id="novaFoto" class="form-control">
+                                                            <input type="hidden" id="foto">
+                                                        <%}%>
+                                                    <%}else{%>
+                                                        <h5>PAGAMENTO NÃO IDENTIFICADO</h5>
+                                                    <%}%>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div><!--ACORDION -->
+                        </div><!--card body-->
+                    </div> <!--card -->
+            </div><!--row -->
+        </div><!--countainer -->
             <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
             <script src="/js/pesquisaCepTransicao.js"></script>
+            <script src="/js/uploadImagens.js"></script>
+
+
+            <script>
+
+                function salvarDadosPagamentos() {
+                    var formPagamento = document.getElementById("formPagamento").value
+                    var statusPag = document.getElementById("statusPag").value
+                    var valRecebidoPagamento = document.getElementById("valRecebidoPagamento").value
+                    var comprovantePag = document.getElementById("foto").value
+                    var ordemPag = document.getElementById("ordemPag").value
+
+                    if ((formPagamento == undefined || formPagamento == '') || (statusPag == undefined || statusPag == '') || (valTotoPagamento == undefined || valTotoPagamento == '') || (valRecebidoPagamento == undefined || valRecebidoPagamento == '') ) {
+                        alert("Alguns dados inportantes não foram devidamente preenchidos em PAGAMENTOS")
+                    } else {
+                        axios.post("/atualizarDadosPagamentos",{formPagamento:formPagamento,statusPag:statusPag,valRecebidoPagamento:valRecebidoPagamento,comprovantePag:comprovantePag,ordemPag:ordemPag}).then(resp =>{
+                            if (resp.data.erro == undefined) {
+                                alert(resp.data.resp)
+                                document.location.reload()
+                            } else {
+                                alert(resp.data.erro)
+                            }
+                        }).cathc(err =>{
+                            alert(`Erro ao atualizar dados\n\n${err}`)
+                        })
+                    }
+                }
+
+
+                function alterarDadosPagamentos() {
+                    document.getElementById("btnAlterarDadosPag").classList.add('d-none')
+                    document.getElementById("btnSalvarDadosPag").classList.remove('d-none')
+                    document.getElementById("btnCancelarDadosPag").classList.remove('d-none')
+
+                    document.getElementById("formPagamento").disabled = false
+                    document.getElementById("statusPag").disabled = false
+                    document.getElementById("valRecebidoPagamento").disabled = false
+                    document.getElementById("novaFoto").disabled = false
+
+                }
+            </script>
+
+            <script>
+                function editarEntrega(){
+                    document.getElementById('cep').disabled = false
+                    document.getElementById('numero').disabled = false
+                    document.getElementById('rua').disabled = false
+                    document.getElementById('bairro').disabled = false
+                    document.getElementById('cidade').disabled = false
+                    document.getElementById('uf').disabled = false
+                    document.getElementById('complemento').disabled = false
+                    document.getElementById('frete').disabled = false
+                    document.getElementById('dataFrete').disabled = false
+                    document.getElementById('statusEntrega').disabled = false
+                    document.getElementById('valRecebido').disabled = false
+                    var btnSalvarEntrega = document.getElementById('btnSalvarEntrega')
+                    btnSalvarEntrega.disabled = false
+                    btnSalvarEntrega.classList.remove('d-none')
+                    var btnCancelarEntrega= document.getElementById('btnCancelarEntrega')
+                    btnCancelarEntrega.disabled = false
+                    btnCancelarEntrega.classList.remove('d-none')
+                    var btnEditarEntrega = document.getElementById('btnEditarEntrega')
+                    btnEditarEntrega.classList.add("d-none")
+                    btnEditarEntrega.innerHTML = 'Salvar'
+                }
+                function salvarDadosEntrega() {
+                    if (confirm("Deseja realmente salvar essas alterações?")) {
+                            var cep= document.getElementById('cep').value
+                            var numero= document.getElementById('numero').value
+                            var rua= document.getElementById('rua').value
+                            var bairro=document.getElementById('bairro').value
+                            var cidade = document.getElementById('cidade').value
+                            var uf = document.getElementById('uf').value
+                            var complemento = document.getElementById('complemento').value
+                            var frete = parseFloat(document.getElementById('frete').value.replace(",","."))
+                            var dataFrete = document.getElementById('dataFrete').value
+                            var statusEntrega = document.getElementById('statusEntrega').value
+                            var valRecebido = parseFloat(document.getElementById('valRecebido').value.replace(",","."))
+                            var codigoRastreio = document.getElementById('codigoRastreio').value
+                            var body = {cep:cep,numero:numero,rua:rua,bairro:bairro,cidade:cidade,uf:uf,complemento:complemento,codigoRastreio:codigoRastreio,frete:frete,dataFrete:dataFrete,statusEntrega:statusEntrega,valRecebido:valRecebido}
+                            if ((frete == ''|| frete == undefined) || (cep == ''|| cep == undefined) || (numero == '' || numero == undefined) || (rua == '' || rua == undefined) || (bairro == '' || bairro == undefined) || (cidade == '' || cidade == undefined) || (uf == '' || uf == undefined) || (frete == '' || frete == undefined) || (dataFrete == '' || dataFrete == undefined) ||(statusEntrega == '' || statusEntrega == undefined)) {
+                                alert('Campos obrigatorio com o valor nulo ou vazio \nGentileza preencha todos os campos!')
+                            }else{
+                                axios.post("/alterarEntrega",body).then(resp=>{
+                                    if (resp.data.erro == undefined) {
+                                        alert(resp.data.resp)
+                                        document.location.reload()
+                                    } else {
+                                        alert(resp.data.erro)
+                                    }
+                                }).catch(err =>{
+                                    alert("Erro de conexão")
+                                    console.log(err)
+                                })
+                            }
+                    }else{
+                        document.location.reload()
+                    }
+                }
+            </script>
 
             <script>
                 function verificaPagamento(){

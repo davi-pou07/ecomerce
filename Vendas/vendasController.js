@@ -237,7 +237,6 @@ router.get("/admin/vendas/transicoes/editar/:dadosId", async (req, res) => {
             }
 
             var dadosEntregas = await DadosEntregas.findOne({ where: { carrinhoId: carrinho[0].id, clienteId: cliente[0].id } })
-            dadosEntregas.valor = dadosEntregas.valor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
             var statusEntrega = await StatusEntregas.findAll()
 
             if (dadoVenda.opcaoDePagamento == 1) {
@@ -248,6 +247,9 @@ router.get("/admin/vendas/transicoes/editar/:dadosId", async (req, res) => {
                 dadoVenda.opcaoDePagamento = 'Pagar na Entrega'
             }
             var dadosPagamentos = await DadosPagamentos.findOne({ where: { dadosId: dadoVenda.dadosId } })
+            var dataPagamento =  moment(dadosPagamentos.updatedAt).format('DD/MM/YYYY')
+
+            console.log(dadosPagamentos)
             var statusPagamento = StatusPagamento.find(sp => sp.id == dadosPagamentos.statusId)
 
             res.render("admin/vendas/edicao", {
@@ -257,6 +259,7 @@ router.get("/admin/vendas/transicoes/editar/:dadosId", async (req, res) => {
                 codItens: codItens,
                 dadosEntregas: dadosEntregas,
                 dadosPagamentos: dadosPagamentos,
+                dataPagamento:dataPagamento,
                 statusPagamento: statusPagamento,
                 produto: produto,
                 valores: valores,
@@ -375,20 +378,20 @@ router.post("/alterarEntrega",async(req,res)=>{
         if ((frete == ''|| frete == undefined)||(cep == ''|| cep == undefined) || (numero == '' || numero == undefined) || (rua == '' || rua == undefined) || (bairro == '' || bairro == undefined) || (cidade == '' || cidade == undefined) || (uf == '' || uf == undefined) || (frete == '' || frete == undefined) || (dataFrete == '' || dataFrete == undefined) ||(statusEntrega == '' || statusEntrega == undefined)) {
             res.json({erro:"Campos obrigatorio com o valor nulo ou vazio \nGentileza preencha todos os campos!"})
         } else {
-           var dadosEntrega = await DadosEntregas.findOne({where:{codigoRastreioInterno:codigoRastreioInterno}})
+           var dadosEntrega = await DadosEntregas.findOne({where:{codigoRastreioInterno:codigoRastreio}})
             if (dadosEntrega != undefined) {
                 DadosEntregas.update({
                     cep:cep,
-                    nome:numero,
+                    numero:numero,
                     rua:rua,
                     bairro:bairro,
                     cidade:cidade,
                     uf:uf,
                     complemento:complemento,
                     dataFrete:dataFrete,
-                    statusEntrega:statusEntrega,
-                    valRecebido:valRecebido,
-                    valor:frete
+                    status:statusEntrega,
+                    valRecebido:parseFloat(valRecebido),
+                    valor:parseFloat(frete)
                 },{where:{id:dadosEntrega.id}}).then(()=>{
                     res.json({resp:'Dados de entrega atualizados com sucesso'})
                 }).catch(err =>{
@@ -407,5 +410,26 @@ router.post("/alterarEntrega",async(req,res)=>{
 })
 
 //---------------FIM ALETERAR INFORMAÇÕES ENTREGA---------------
+
+//---------------ALETERAR INFORMAÇÕES PAGAMENTO---------------
+router.post("/atualizarDadosPagamentos",async(req,res)=>{
+   var {formPagamento,statusPag,valRecebidoPagamento,comprovantePag,ordemPag} =  req.body
+   if ((formPagamento == undefined || formPagamento == '') || (statusPag == undefined || statusPag == '') || (valTotoPagamento == undefined || valTotoPagamento == '') || (valRecebidoPagamento == undefined || valRecebidoPagamento == '') ) {
+        res.json({erro:"Informações inválida"})
+    }else{
+        var dadosPagamento =  await DadosPagamentos.findOne({where:{ordeId:ordemPag}})
+        if (dadosPagamento != undefined) {
+            DadosPagamentos.update({
+                formPagamento:formPagamento,
+                statusPag:statusPag,
+
+            })
+        } else {
+            res.json({erro:"Não foi possivel encontrar os dados do pagamento especificado"})
+        }
+    }
+})
+//---------------FIM ALETERAR INFORMAÇÕES PAGAMENTO---------------
+
 
 module.exports = router

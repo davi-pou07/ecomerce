@@ -3,8 +3,8 @@ const router = express()
 const { Sequelize, DataTypes } = require('sequelize')
 const sequelize = require("../DataBases/database")
 const queryInterface = sequelize.getQueryInterface();
-const Produto = require("../DataBases/Produto")
 const slugfy = require('slugify')
+const DadosPagamentos = require("../DataBases/DadosPagamentos")
 
 
 router.get("/atualizar/produto", async (req, res) => {
@@ -55,7 +55,33 @@ router.get("/atualizar/produto", async (req, res) => {
 
 })
 
+router.get("/atualizaTabelas",async(req,res)=>{
+    // queryInterface.addColumn(
+    //   'dadosentregas',
+    //   'valRecebido',
+    //   {
+    //       type:Sequelize.FLOAT,
+    //       allowNull:true
+    //   }
+    // ).then(()=>{
+    //     console.log("ok")
+    // })
 
+    // queryInterface.addColumn(
+    //     'dadospagamentos',
+    //     'valRecebido',
+    //     {
+    //         type:Sequelize.FLOAT,
+    //         allowNull:true
+    //     }
+    //   ).then(()=>{
+    //       res.send("Finalizado")
+    //   })
+    DadosPagamentos.update({valRecebido:parseFloat(0)},{where:{valRecebido:null}}).then(()=>{
+        res.send("ok")
+    })
+    
+})
 
 
 module.exports = router

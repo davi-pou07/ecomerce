@@ -70,6 +70,10 @@ const DadosPagamentos = connection.define('dadospagamentos',{
     dadosEntragaId:{
         type:Sequelize.STRING,
         allowNull:true
+    },
+    valRecebido:{
+        type:Sequelize.FLOAT,
+        allowNull:true
     }
 })
 // DadosPagamentos.sync({force:true}).then(()=>{
