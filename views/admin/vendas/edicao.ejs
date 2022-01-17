@@ -288,6 +288,30 @@
                                             <div class="accordion-body">
                                                 
                                                 <div class="row">
+                                                    <div class="col-md-12 mb-2">
+                                                        <label for="codigoRastreio" class="form-label mt-2">Codigo de Rastreio</label>
+                                                        <input class="form-control" size="2" value="<%=dadosEntregas.codigoRastreioInterno%>" disabled
+                                                            type="text" id="codigoRastreio" name="codigoRastreio" autocomplete="off" required>
+                                                    </div>
+                                                    <%if(dadoVenda.opcaoDePagamento=="Pagar na Entrega"){%>
+                                                    <div class="col-md-4 mb-2">
+                                                        <label for="nome" class="form-label mt-2">Nome destinatario</label>
+                                                        <input class="form-control" size="2" value="<%=dadosEntregas.nome%>" disabled
+                                                            type="text" id="nome" name="nome" autocomplete="off" required>
+                                                    </div>
+
+                                                    <div class="col-md-4 mb-2">
+                                                        <label for="cpfDestinatario" class="form-label mt-2">CPF do destinatario</label>
+                                                        <input class="form-control" size="2" value="<%=dadosEntregas.cpf%>" disabled
+                                                            type="text" id="cpfDestinatario" name="cpfDestinatario" autocomplete="off" required>
+                                                    </div>
+                                                    <div class="col-md-4 mb-2">
+                                                        <label for="dataNasc" class="form-label mt-2">Data de Nascimento destinatario</label>
+                                                        <input class="form-control" size="2" value="<%=dadosEntregas.dataNasc%>" disabled
+                                                            type="text" id="dataNasc" name="dataNasc" autocomplete="off" required>
+                                                    </div>
+                                                    <%}%>
+
                                                     <div class="col-lg-4 mb-lg-2 col-md-6">
                                                         <label for="cep" class="form-label">CEP</label>
                                                         <input class="form-control mascCEP" disabled size="10" maxlength="9" type="text"
@@ -336,27 +360,31 @@
                                                 </div>
 
                                                 <div class="row">
-                                                    <div class="col-lg-4 col-md-6">
-                                                        <label for="complemento" class="form-label mt-2">Valor</label>
+                                                    <div class="col-lg-3 col-md-6">
+                                                        <label for="frete" class="form-label mt-2">Valor</label>
                                                         <input class="form-control" size="2" disabled value="<%=dadosEntregas.valor%>"
                                                             value="R$10,00" type="text" id="frete" name="frete" autocomplete="off" required>
                                                     </div>
-                                                    <div class="col-lg-4 col-md-6">
+                                                    <div class="col-lg-3 col-md-6">
+                                                        <label for="valRecebido" class="form-label mt-2">Valor recebido</label>
+                                                        <input class="form-control" size="2" disabled value="0" type="text" id="valRecebido" name="valRecebido" autocomplete="off" required>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-6">
                                                         <label for="dataFrete" class="form-label mt-2">Data Entrega</label>
                                                         <input class="form-control" value="2021-09-01" disabled
                                                             value="<%=dadosEntregas.dataPrevista%>" type="date" id="dataFrete"
                                                             name="dataFrete" autocomplete="off" required>
                                                     </div>
-                                                    <div class="col-lg-4 col-md-12">
+                                                    <div class="col-lg-3 col-md-12">
                                                         <label for="complemento" class="form-label mt-2">Status</label>
-                                                        <select name="" disabled class="form-select" id="">
+                                                        <select name="statusEntrega" disabled class="form-select" id="statusEntrega">
                                                             <%statusEntrega.forEach(stEntrega=>{%>
                                                                 <%if(dadosEntregas.status==stEntrega.statusId){%>
-                                                                    <option value="dadosEntregas.status" selected>
+                                                                    <option value="<%=dadosEntregas.status%>" selected>
                                                                         <%=stEntrega.status%>
                                                                     </option>
                                                                     <%}else{%>
-                                                                        <option value="stEntrega.statusId">
+                                                                        <option value="<%=stEntrega.statusId%>">
                                                                             <%=stEntrega.status%>
                                                                         </option>
                                                                         <%}%>
@@ -364,7 +392,70 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <button class="btn btn-warning mt-3 form-control" id="btnEditarEntrega">Alterar</button>
+                                                <button class="btn btn-warning mt-3 form-control"  onclick="editarEntrega()" id="btnEditarEntrega">Alterar</button>
+                                                <button class="btn btn-success mt-3 d-none form-control" disabled  onclick="salvarDadosEntrega()" id="btnSalvarEntrega">Salvar</button>
+                                                <button class="btn btn-danger mt-3 d-none form-control" disabled onclick="document.location.reload()" id="btnCancelarEntrega">Cancelar</button>
+
+                                                <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+                                                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+                                                <script>
+                                                    function editarEntrega(){
+                                                        document.getElementById('cep').disabled = false
+                                                        document.getElementById('numero').disabled = false
+                                                        document.getElementById('rua').disabled = false
+                                                        document.getElementById('bairro').disabled = false
+                                                        document.getElementById('cidade').disabled = false
+                                                        document.getElementById('uf').disabled = false
+                                                        document.getElementById('complemento').disabled = false
+                                                        document.getElementById('frete').disabled = false
+                                                        document.getElementById('dataFrete').disabled = false
+                                                        document.getElementById('statusEntrega').disabled = false
+                                                        document.getElementById('valRecebido').disabled = false
+                                                        var btnSalvarEntrega = document.getElementById('btnSalvarEntrega')
+                                                        btnSalvarEntrega.disabled = false
+                                                        btnSalvarEntrega.classList.remove('d-none')
+                                                        var btnCancelarEntrega= document.getElementById('btnCancelarEntrega')
+                                                        btnCancelarEntrega.disabled = false
+                                                        btnCancelarEntrega.classList.remove('d-none')
+                                                        var btnEditarEntrega = document.getElementById('btnEditarEntrega')
+                                                        btnEditarEntrega.classList.add("d-none")
+                                                        btnEditarEntrega.innerHTML = 'Salvar'
+                                                    }
+                                                    function salvarDadosEntrega() {
+                                                        if (confirm("Deseja realmente salvar essas alterações?")) {
+                                                                var cep= document.getElementById('cep').value
+                                                                var numero= document.getElementById('numero').value
+                                                                var rua= document.getElementById('rua').value
+                                                                var bairro=document.getElementById('bairro').value
+                                                                var cidade = document.getElementById('cidade').value
+                                                                var uf = document.getElementById('uf').value
+                                                                var complemento = document.getElementById('complemento').value
+                                                                var frete = document.getElementById('frete').value
+                                                                var dataFrete = document.getElementById('dataFrete').value
+                                                                var statusEntrega = document.getElementById('statusEntrega').value
+                                                                var valRecebido = document.getElementById('valRecebido').value
+                                                                var codigoRastreio = document.getElementById('codigoRastreio').value
+                                                                var body = {cep:cep,numero:numero,rua:rua,bairro:bairro,cidade:cidade,uf:uf,complemento:complemento,codRastreio:codRastreio,frete:frete,dataFrete:dataFrete,statusEntrega:statusEntrega,valRecebido:valRecebido}
+                                                                if ((frete == ''|| frete == undefined) || (cep == ''|| cep == undefined) || (numero == '' || numero == undefined) || (rua == '' || rua == undefined) || (bairro == '' || bairro == undefined) || (cidade == '' || cidade == undefined) || (uf == '' || uf == undefined) || (frete == '' || frete == undefined) || (dataFrete == '' || dataFrete == undefined) ||(statusEntrega == '' || statusEntrega == undefined)) {
+                                                                    alert('Campos obrigatorio com o valor nulo ou vazio \nGentileza preencha todos os campos!')
+                                                                }else{
+                                                                    axios.post("/alterarEntrega",body).then(resp=>{
+                                                                        if (resp.data.erro == undefined) {
+                                                                            alert(resp.data.resp)
+                                                                            document.location.reload()
+                                                                        } else {
+                                                                            alert(resp.data.erro)
+                                                                        }
+                                                                    }).catch(err =>{
+                                                                        alert("Erro de conexão")
+                                                                        console.log(err)
+                                                                    })
+                                                                }
+                                                        }else{
+                                                            document.location.reload()
+                                                        }
+                                                    }
+                                                </script>
                                             </div>
                                         </div>
                                     </div>

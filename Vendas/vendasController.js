@@ -366,4 +366,46 @@ router.post("/alterarCodItem",async(req,res)=>{
 
 //---------------FIM ALETERAR ITEM CARRINHO---------------
 
+//---------------ALETERAR INFORMAÇÕES ENTREGA---------------
+
+router.post("/alterarEntrega",async(req,res)=>{
+    var {cep,numero,rua,bairro,cidade,uf,complemento,dataFrete,frete,statusEntrega,codigoRastreio,valRecebido} = req.body
+    if (codigoRastreio != undefined) {
+
+        if ((frete == ''|| frete == undefined)||(cep == ''|| cep == undefined) || (numero == '' || numero == undefined) || (rua == '' || rua == undefined) || (bairro == '' || bairro == undefined) || (cidade == '' || cidade == undefined) || (uf == '' || uf == undefined) || (frete == '' || frete == undefined) || (dataFrete == '' || dataFrete == undefined) ||(statusEntrega == '' || statusEntrega == undefined)) {
+            res.json({erro:"Campos obrigatorio com o valor nulo ou vazio \nGentileza preencha todos os campos!"})
+        } else {
+           var dadosEntrega = await DadosEntregas.findOne({where:{codigoRastreioInterno:codigoRastreioInterno}})
+            if (dadosEntrega != undefined) {
+                DadosEntregas.update({
+                    cep:cep,
+                    nome:numero,
+                    rua:rua,
+                    bairro:bairro,
+                    cidade:cidade,
+                    uf:uf,
+                    complemento:complemento,
+                    dataFrete:dataFrete,
+                    statusEntrega:statusEntrega,
+                    valRecebido:valRecebido,
+                    valor:frete
+                },{where:{id:dadosEntrega.id}}).then(()=>{
+                    res.json({resp:'Dados de entrega atualizados com sucesso'})
+                }).catch(err =>{
+                    console.log(err)
+                    res.json({erro:`Ocorreu um erro ao processar dados \n\n${err}`})
+                })
+            } else {
+                res.json({erro:`Ocorreu um erro ao processar dados \nNão foi encontrado nenhuma entrega com codigo de ratreio informado`})
+            }
+        }
+    } else {
+        console.log(codigoRastreio)
+        res.json({erro:`Ocorreu um erro ao processar dados \nNão foi encontrado nenhuma entrega com codigo de ratreio informado`})
+
+    }
+})
+
+//---------------FIM ALETERAR INFORMAÇÕES ENTREGA---------------
+
 module.exports = router
