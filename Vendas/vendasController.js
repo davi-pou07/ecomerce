@@ -14,6 +14,8 @@ const DadosEntregas = require('../DataBases/DadosEntregas')
 const StatusEntregas = require("../DataBases/StatusEntrega")
 const StatusVenda = require("../DataBases/StatusVendas")
 const StatusPagamento = [{ id: 1, status: "Analise" }, { id: 2, status: "Aprovado" }, { id: 3, status: "Rejeitado" }, { id: 4, status: "Cancelado" }, { id: 5, status: "Pendente" }]
+const opcaoDePagamentos = [{ id: 1, opcao: "PIX" }, { id: 2, opcao: "MERCADO PAGO" }, { id: 3, opcao: "PAGAR NA ENTREGA" }]
+
 
 const { data } = require('jquery')
 
@@ -178,9 +180,7 @@ router.get("/admin/vendas/transicoes/editar/:dadosId", async (req, res) => {
     try {
         var dadoVenda = await DadosVendas.findOne({ where: { dadosId: dadosId } })
         dadoVenda.unit_price = dadoVenda.unit_price.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
-        console.log("-----dadoVenda-----")
-        console.log(dadoVenda)
-        console.log("-----dadoVenda-----")
+        
 
         // if (dadoVenda.status == 'P') {
         //     dadoVenda.status = 'Pendente'
@@ -249,7 +249,6 @@ router.get("/admin/vendas/transicoes/editar/:dadosId", async (req, res) => {
             var dadosPagamentos = await DadosPagamentos.findOne({ where: { dadosId: dadoVenda.dadosId } })
             var dataPagamento =  moment(dadosPagamentos.updatedAt).format('DD/MM/YYYY')
 
-            console.log(dadosPagamentos)
             var statusPagamento = StatusPagamento.find(sp => sp.id == dadosPagamentos.statusId)
 
             res.render("admin/vendas/edicao", {
@@ -283,8 +282,6 @@ router.post("/consultaCodItem", async (req, res) => {
 
     try {
         var codItem = await knex("coditens").select().where({ id: codItemId })
-        console.log(codItem)
-
 
         if (codItem != undefined) {
             var produto = await Produto.findByPk(codItem[0].produtoId)
@@ -410,20 +407,83 @@ router.post("/alterarEntrega",async(req,res)=>{
 })
 
 //---------------FIM ALETERAR INFORMAÇÕES ENTREGA---------------
-
+//StatusPagamento = [{ id: 1, status: "Analise" }, { id: 2, status: "Aprovado" }, { id: 3, status: "Rejeitado" }, { id: 4, status: "Cancelado" }, { id: 5, status: "Pendente" }]
+//StatusVendas = [{ id: 1, status: "Pendente" }, { id: 2, status: "Autorizado" }, { id: 3, status: "Cancelado" }]
+//const opcaoDePagamentos = [{ id: 1, opcao: "PIX" }, { id: 2, opcao: "MERCADO PAGO" }, { id: 3, opcao: "PAGAR NA ENTREGA" }]
+//const StatusPagamento = [{ id: 1, status: "Analise" }, { id: 2, status: "Aprovado" }, { id: 3, status: "Rejeitado" }, { id: 4, status: "Cancelado" }, { id: 5, status: "Pendente" }]
 //---------------ALETERAR INFORMAÇÕES PAGAMENTO---------------
 router.post("/atualizarDadosPagamentos",async(req,res)=>{
-   var {formPagamento,statusPag,valRecebidoPagamento,comprovantePag,ordemPag} =  req.body
-   if ((formPagamento == undefined || formPagamento == '') || (statusPag == undefined || statusPag == '') || (valTotoPagamento == undefined || valTotoPagamento == '') || (valRecebidoPagamento == undefined || valRecebidoPagamento == '') ) {
+   var {formPagamento,statusPag,valRecebidoPagamento,comprovantePag,ordemPag,isValidado} =  req.body
+   if ((formPagamento == undefined || formPagamento == '') || (statusPag == undefined || statusPag == '') || (valRecebidoPagamento == undefined || valRecebidoPagamento == '') ) {
         res.json({erro:"Informações inválida"})
     }else{
         var dadosPagamento =  await DadosPagamentos.findOne({where:{ordeId:ordemPag}})
-        if (dadosPagamento != undefined) {
-            DadosPagamentos.update({
-                formPagamento:formPagamento,
-                statusPag:statusPag,
+        var dadosVendas =  await DadosVendas.findOne({where:{dadosId:dadosPagamento.dadosId}})
+        if (dadosPagamento != undefined && dadosVendas != undefined) {
 
-            })
+            if (statusPag == 1 || statusPag == 5 ) {
+                var stVenda = 1
+            } else if (statusPag == 2){
+                var stVenda = 2
+            }else if (statusPag == 3 || statusPag == 4){
+                var stVenda = 3
+            }
+            var statusVenda = StatusVenda.find(sv => sv.id == stVenda)
+
+            if (formPagamento != dadosVendas.opcaoDePagamento) {
+
+                var opcaoEscolhida = opcaoDePagamentos.find(opd => opd.id == formPagamento)
+                
+                if (opcaoEscolhida != undefined && statusVenda != undefined) {
+                DadosVendas.update({
+                    opcaoDePagamento:opcaoEscolhida.id,
+                    statusId:statusVenda.id,
+                    statusColetado:statusVenda.status
+                },{where:{id:dadosVendas.id}}).then(()=>{
+                    if (opcaoEscolhida.id ==1 ) {
+                        var tpDePag = 'bank_transfer'
+                        var dtPag = 'PIX'
+                        var mtPag = 'PIX'
+                    } else if (opcaoEscolhida.id ==2 ){
+                        var tpDePag = 'Cartão'
+                        var dtPag = 'acredditad'
+                        var mtPag = 'master'
+                    } else if (opcaoEscolhida.id ==3 ){
+                        var tpDePag = 'pagar_entrega'
+                        var dtPag = 'ENTREGA'
+                        var mtPag = 'ENTREGA'
+                    }
+
+                    DadosPagamentos.update({
+                        tipoDePagamento:tpDePag,
+                        detalhePagamento:dtPag,
+                        metodoPagamento:mtPag,
+                        statusId:statusPag,
+                        valRecebido:valRecebidoPagamento,
+                        comprovante:comprovantePag,
+                        isValidado:isValidado
+                    },{where:{id:dadosPagamento.id}}).then(()=>{
+                        res.json({resp:"ALTERAÇÃO REALIZADA COM SUCESSO!!"})
+                    })
+                })
+                } else {
+                    res.json({erro:"OPÇÃO DE PAGAMENTO SELECIONADA INVÁLIDA"})
+                }
+            } else {
+                DadosVendas.update({
+                    statusId:statusVenda.id,
+                    statusColetado:statusVenda.status
+                },{where:{id:dadosVendas.id}}).then(()=>{
+                    DadosPagamentos.update({
+                        statusId:statusPag,
+                        valRecebido:valRecebidoPagamento,
+                        comprovante:comprovantePag,
+                        isValidado:isValidado
+                    },{where:{id:dadosPagamento.id}}).then(()=>{
+                        res.json({resp:"ALTERAÇÃO REALIZADA COM SUCESSO!!"})
+                    })
+                })
+            }
         } else {
             res.json({erro:"Não foi possivel encontrar os dados do pagamento especificado"})
         }

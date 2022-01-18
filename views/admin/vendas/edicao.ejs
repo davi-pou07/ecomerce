@@ -407,71 +407,34 @@
                                                     <div class="row">
                                                         <div class="col-sm-10">
                                                    
-                                                        <div class="row">
-                                                            <div class="col-lg-4 col-sm-6">
-                                                                <label for="forma" class="form-label">Tipo de pagamento</label>
-                                                                <select disabled class="form-select" id="formPagamento">
-                                                                    <%if(dadoVenda.opcaoDePagamento=="Pix"){%>
-                                                                        <option value="1" selected>Pix</option>
-                                                                        <option value="2">Mercado Pago</option>
-                                                                        <option value="3">Pagar na Entrega</option>
-                                                                        <%}else if(dadoVenda.opcaoDePagamento=="Mercado Pago" ){%>
-                                                                            <option value="1">Pix</option>
-                                                                            <option value="2" selected>Mercado Pago</option>
+                                                            <div class="row">
+                                                                <div class="col-lg-12 col-sm-6">
+                                                                    <label for="forma" class="form-label">Tipo de pagamento</label>
+                                                                    <select disabled class="form-select" id="formPagamento">
+                                                                        <%if(dadoVenda.opcaoDePagamento=="Pix"){%>
+                                                                            <option value="1" selected>Pix</option>
+                                                                            <option value="2">Mercado Pago</option>
                                                                             <option value="3">Pagar na Entrega</option>
-                                                                            <%}else if(dadoVenda.opcaoDePagamento=="Pagar na Entrega" ){%>
+                                                                            <%}else if(dadoVenda.opcaoDePagamento=="Mercado Pago" ){%>
                                                                                 <option value="1">Pix</option>
-                                                                                <option value="2">Mercado Pago</option>
-                                                                                <option value="3" selected>Pagar na Entrega</option>
-                                                                                <%}%>
-                                                                </select>
-                                                            </div>
-                                                        
-                                                            <div class="col-lg-4 col-sm-6">
-                                                                <label for="forma" class="form-label">Detalhe do pagamento</label>
-                                                                <select disabled class="form-select" id="formPagamento">
-                                                                    <%if(dadoVenda.opcaoDePagamento=="Pix"){%>
-                                                                        <option value="1" selected>Pix</option>
-                                                                        <option value="2">Mercado Pago</option>
-                                                                        <option value="3">Pagar na Entrega</option>
-                                                                        <%}else if(dadoVenda.opcaoDePagamento=="Mercado Pago" ){%>
-                                                                            <option value="1">Pix</option>
-                                                                            <option value="2" selected>Mercado Pago</option>
-                                                                            <option value="3">Pagar na Entrega</option>
-                                                                            <%}else if(dadoVenda.opcaoDePagamento=="Pagar na Entrega" ){%>
-                                                                                <option value="1">Pix</option>
-                                                                                <option value="2">Mercado Pago</option>
-                                                                                <option value="3" selected>Pagar na Entrega</option>
-                                                                                <%}%>
-                                                                </select>
-                                                            </div>
-                                                        
-                                                            <div class="col-lg-4 col-sm-6">
-                                                                <label for="forma" class="form-label">Metodo de pagamento</label>
-                                                                <select disabled class="form-select" id="formPagamento">
-                                                                    <%if(dadoVenda.opcaoDePagamento=="Pix"){%>
-                                                                        <option value="1" selected>Pix</option>
-                                                                        <option value="2">Mercado Pago</option>
-                                                                        <option value="3">Pagar na Entrega</option>
-                                                                        <%}else if(dadoVenda.opcaoDePagamento=="Mercado Pago" ){%>
-                                                                            <option value="1">Pix</option>
-                                                                            <option value="2" selected>Mercado Pago</option>
-                                                                            <option value="3">Pagar na Entrega</option>
-                                                                            <%}else if(dadoVenda.opcaoDePagamento=="Pagar na Entrega" ){%>
-                                                                                <option value="1">Pix</option>
-                                                                                <option value="2">Mercado Pago</option>
-                                                                                <option value="3" selected>Pagar na Entrega</option>
-                                                                                <%}%>
-                                                                </select>
+                                                                                <option value="2" selected>Mercado Pago</option>
+                                                                                <option value="3">Pagar na Entrega</option>
+                                                                                <%}else if(dadoVenda.opcaoDePagamento=="Pagar na Entrega" ){%>
+                                                                                    <option value="1">Pix</option>
+                                                                                    <option value="2">Mercado Pago</option>
+                                                                                    <option value="3" selected>Pagar na Entrega</option>
+                                                                                    <%}%>
+                                                                    </select>
+                                                                </div>
+                                                            
                                                             </div>
                                                         </div>
-                                                    </div>
 
-                                                            <div class="col-md-2  border-start">
-                                                                <button class="btn btn-warning form-control text-white mt-3" id="btnAlterarDadosPag" onclick="alterarDadosPagamentos()">Alterar</button>
-                                                                <button class="btn btn-success form-control d-none text-white mt-3" id="btnSalvarDadosPag" onclick="salvarDadosPagamentos()">Salvar</button>
-                                                                <button class="btn btn-danger form-control d-none text-white mt-3" id="btnCancelarDadosPag" onclick="document.location.reload()">Cancelar</button>
-                                                            </div>
+                                                        <div class="col-md-2  border-start">
+                                                            <button class="btn btn-warning form-control text-white mt-3" id="btnAlterarDadosPag" onclick="alterarDadosPagamentos()">Alterar</button>
+                                                            <button class="btn btn-success form-control d-none text-white mt-3" id="btnSalvarDadosPag" onclick="salvarDadosPagamentos()">Salvar</button>
+                                                            <button class="btn btn-danger form-control d-none text-white mt-3" id="btnCancelarDadosPag" onclick="document.location.reload()">Cancelar</button>
+                                                        </div>
 
                                                 </div>
                                                 </div>
@@ -526,21 +489,33 @@
                                                         <input type="text" disabled class="form-control"
                                                             value="<%=dataPagamento%>">
                                                         </div>
+
+                                                        <div class="col-lg-4 mt-3 col-sm-6">
+                                                            <label for="forma" class="form-label">Validado</label>
+                                                            <select id="isvalidado" disabled class="form-control">
+                                                                <option value=""></option>
+                                                                <option value="true">Sim</option>
+                                                                <option value="false">Não</option>
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="card-footer">
                                                     <%if(dadosPagamentos !=undefined){%>
-                                                        <%if(dadosPagamentos.comprovante != undefined){%>
+                                                        <%if(dadosPagamentos.comprovante != undefined && dadosPagamentos.comprovante != ''){%>
                                                         <a download="Comprovante<%=dadosPagamentos.ordeId%>"
                                                             href="<%=dadosPagamentos.comprovante%>" class="btn btn-info form-control text-white"
                                                             id="forma">Arquivos Anexados</a>
+                                                            <label for="form-label mt-3">Alterar comprovante</label>
+                                                            <input type="file" onchange="encodeImageFileAsURL()" name="novaFoto" disabled id="novaFoto" class="form-control">
+                                                            <input type="hidden" value="" id="foto">
                                                         <%}else{%>
                                                             <h5>Comprovante não anexado</h5>
                                                             <hr>
                                                             <label for="form-label">Anexar comprovante</label>
                                                             <input type="file" onchange="encodeImageFileAsURL()" name="novaFoto" disabled id="novaFoto" class="form-control">
-                                                            <input type="hidden" id="foto">
+                                                            <input type="hidden" value="" id="foto">
                                                         <%}%>
                                                     <%}else{%>
                                                         <h5>PAGAMENTO NÃO IDENTIFICADO</h5>
@@ -565,14 +540,15 @@
                 function salvarDadosPagamentos() {
                     var formPagamento = document.getElementById("formPagamento").value
                     var statusPag = document.getElementById("statusPag").value
-                    var valRecebidoPagamento = document.getElementById("valRecebidoPagamento").value
+                    var valRecebidoPagamento = parseFloat(document.getElementById("valRecebidoPagamento").value.replace(',','.'))
                     var comprovantePag = document.getElementById("foto").value
                     var ordemPag = document.getElementById("ordemPag").value
+                    var isvalidado = document.getElementById("isvalidado").value
 
-                    if ((formPagamento == undefined || formPagamento == '') || (statusPag == undefined || statusPag == '') || (valTotoPagamento == undefined || valTotoPagamento == '') || (valRecebidoPagamento == undefined || valRecebidoPagamento == '') ) {
+                    if ((formPagamento == undefined || formPagamento == '') || (statusPag == undefined || statusPag == '')  || (valRecebidoPagamento == undefined || valRecebidoPagamento == '') ) {
                         alert("Alguns dados inportantes não foram devidamente preenchidos em PAGAMENTOS")
                     } else {
-                        axios.post("/atualizarDadosPagamentos",{formPagamento:formPagamento,statusPag:statusPag,valRecebidoPagamento:valRecebidoPagamento,comprovantePag:comprovantePag,ordemPag:ordemPag}).then(resp =>{
+                        axios.post("/atualizarDadosPagamentos",{isvalidado:isvalidado,formPagamento:formPagamento,statusPag:statusPag,valRecebidoPagamento:valRecebidoPagamento,comprovantePag:comprovantePag,ordemPag:ordemPag}).then(resp =>{
                             if (resp.data.erro == undefined) {
                                 alert(resp.data.resp)
                                 document.location.reload()
@@ -595,7 +571,7 @@
                     document.getElementById("statusPag").disabled = false
                     document.getElementById("valRecebidoPagamento").disabled = false
                     document.getElementById("novaFoto").disabled = false
-
+                    document.getElementById("isvalidado").disabled = false
                 }
             </script>
 
