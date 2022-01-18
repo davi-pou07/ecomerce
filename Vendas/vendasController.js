@@ -142,7 +142,7 @@ router.get("/produtos/vendas/:dadosVendasId", async (req, res) => {
             codItens.forEach(codItem => {
                 var nome = produtos.find(p => p.id == codItem.produtoId)
 
-                descontoTotal = descontoTotal + 0
+                descontoTotal = descontoTotal + codItem.desconto
                 valorTotal = valorTotal + codItem.precoTotalItem
                 quantidadeTotal = quantidadeTotal + codItem.quantidade
                 var desconto = 0

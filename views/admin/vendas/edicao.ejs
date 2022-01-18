@@ -147,10 +147,10 @@
                                                                             <%=prod.quantidade%>
                                                                         </td>
                                                                         <td>
-                                                                            <%=prod.desconto%>
+                                                                            <%=codIten.desconto.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })%>
                                                                         </td>
                                                                         <td>
-                                                                            R$00,00
+                                                                            <%=codIten.acrescimo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })%>
                                                                         </td>
                                                                         <td>
                                                                             <%=prod.valotTotalItem%>
