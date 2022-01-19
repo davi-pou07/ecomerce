@@ -147,10 +147,10 @@
                                                                             <%=prod.quantidade%>
                                                                         </td>
                                                                         <td>
-                                                                            <%=codIten.desconto.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })%>
+                                                                            <%=prod.desconto%>
                                                                         </td>
                                                                         <td>
-                                                                            <%=codIten.acrescimo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })%>
+                                                                            <%=prod.acrescimo%>
                                                                         </td>
                                                                         <td>
                                                                             <%=prod.valotTotalItem%>
@@ -194,7 +194,7 @@
                                                                     <%=valores.descontoTotal%>
                                                                 </td>
                                                                 <td class="text-nowrap">
-                                                                    <%=valores.descontoTotal%>
+                                                                    <%=valores.acrescimoTotal%>
                                                                 </td>
                                                                 <td class="text-nowrap">
                                                                     <%=valores.valorTotal%>
@@ -657,10 +657,10 @@
                         if(confirm("Deseja realmente alterar essas infomações?")){
                             var codItemId = document.getElementById("codItemId").value
                             var quantidadeModal = document.getElementById("quantidadeModal").value
-                            var precoUnit = document.getElementById("precoUnitModal").dataset.precounit.toString().replace(".","").replace(",",".")
-                            var precoDesc = document.getElementById("precoDescModal").dataset.precodesc.toString().replace(".","").replace(",",".")
-                            var precoAcre = document.getElementById("precoAcrescimo").dataset.precoacre.toString().replace(".","").replace(",",".")
-
+                            var precoUnit = document.getElementById("precoUnitModal").dataset.precounit.toString().replace(",",".")
+                            var precoDesc = document.getElementById("precoDescModal").dataset.precodesc.toString().replace(",",".")
+                            var precoAcre = document.getElementById("precoAcrescimo").dataset.precoacre.toString().replace(",",".")
+                            
                             axios.post("/alterarCodItem",{codItemId:codItemId,quantidade:quantidadeModal,precoUnitario:precoUnit,desconto:precoDesc,acrescimo:precoAcre}).then(resp =>{
                                 if (resp.data.erro == undefined) {
                                     alert(resp.data.resp)
@@ -687,12 +687,12 @@
                             precoUnitModal.value = parseFloat(codItem.precoUnit).toLocaleString('pt-br',{ minimumFractionDigits: 2, maximumFractionDigits: 2 })
 
                             var precoDescModal = document.getElementById("precoDescModal")
-                            precoDescModal.dataset.precodesc = 0
-                            precoDescModal.value = parseFloat(0).toLocaleString('pt-br',{ minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                            precoDescModal.dataset.precodesc = codItem.desconto
+                            precoDescModal.value = parseFloat(codItem.desconto).toLocaleString('pt-br',{ minimumFractionDigits: 2, maximumFractionDigits: 2 })
 
                             var precoAcrescimo = document.getElementById("precoAcrescimo")
-                            precoAcrescimo.dataset.precoacre = 0
-                            precoAcrescimo.value = parseFloat(0).toLocaleString('pt-br',{ minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                            precoAcrescimo.dataset.precoacre = codItem.acrescimo
+                            precoAcrescimo.value = parseFloat(codItem.acrescimo).toLocaleString('pt-br',{ minimumFractionDigits: 2, maximumFractionDigits: 2 })
 
 
                             var precoTotal = document.getElementById("precoTotal")

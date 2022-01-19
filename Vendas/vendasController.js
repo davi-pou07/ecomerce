@@ -137,30 +137,38 @@ router.get("/produtos/vendas/:dadosVendasId", async (req, res) => {
             })
 
             var descontoTotal = 0
+            var acrescimoTotal = 0
             var valorTotal = 0
             var quantidadeTotal = 0
             codItens.forEach(codItem => {
                 var nome = produtos.find(p => p.id == codItem.produtoId)
 
                 descontoTotal = descontoTotal + codItem.desconto
+                acrescimoTotal = acrescimoTotal + codItem.acrescimo
                 valorTotal = valorTotal + codItem.precoTotalItem
                 quantidadeTotal = quantidadeTotal + codItem.quantidade
-                var desconto = 0
+                var desconto = codItem.desconto
+                var acrescimo = codItem.acrescimo
                 produto.push({
                     id: codItem.produtoId,
                     nome: nome.nome,
                     precoUnit: codItem.precoUnit.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }),
                     quantidade: codItem.quantidade,
+                    acrescimo: acrescimo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }),
                     desconto: desconto.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }),
                     valotTotalItem: codItem.precoTotalItem.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }),
                 })
             })
             valores = {
                 descontoTotal: descontoTotal.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }),
+                acrescimoTotal: acrescimoTotal.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }),
                 valorTotal: valorTotal.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }),
                 quantidadeTotal: quantidadeTotal
             }
-
+            console.log("Valores")
+            console.log(valores)
+            console.log("produtos")
+            console.log(produto)
             res.json({ produtos: produto, valores: valores, dadosId: dadoVenda.dadosId })
 
         } else {
@@ -180,7 +188,7 @@ router.get("/admin/vendas/transicoes/editar/:dadosId", async (req, res) => {
     try {
         var dadoVenda = await DadosVendas.findOne({ where: { dadosId: dadosId } })
         dadoVenda.unit_price = dadoVenda.unit_price.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
-        
+
 
         // if (dadoVenda.status == 'P') {
         //     dadoVenda.status = 'Pendente'
@@ -196,6 +204,7 @@ router.get("/admin/vendas/transicoes/editar/:dadosId", async (req, res) => {
             var produtosIds = []
             var produto = []
             var descontoTotal = 0
+            var acrescimoTotal = 0
             var valorTotal = 0
             var quantidadeTotal = 0
             var totaisProdutos = 0
@@ -216,20 +225,24 @@ router.get("/admin/vendas/transicoes/editar/:dadosId", async (req, res) => {
 
             codItens.forEach(codItem => {
                 var nome = produtos.find(p => p.id == codItem.produtoId)
-                descontoTotal = descontoTotal + 0
+                descontoTotal = descontoTotal + codItem.desconto
+                acrescimoTotal = acrescimoTotal + codItem.acrescimo
                 valorTotal = valorTotal + codItem.precoTotalItem
                 quantidadeTotal = quantidadeTotal + codItem.quantidade
-                var desconto = 0
+                var desconto = codItem.desconto
+                var acrescimo = codItem.acrescimo
                 produto.push({
                     id: codItem.produtoId,
                     nome: nome.nome,
                     precoUnit: codItem.precoUnit.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }),
                     quantidade: codItem.quantidade,
+                    acrescimo: acrescimo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }),
                     desconto: desconto.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }),
                     valotTotalItem: codItem.precoTotalItem.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }),
                 })
             })
             valores = {
+                acrescimoTotal: acrescimoTotal.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }),
                 descontoTotal: descontoTotal.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }),
                 valorTotal: valorTotal.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }),
                 quantidadeTotal: quantidadeTotal,
@@ -247,7 +260,7 @@ router.get("/admin/vendas/transicoes/editar/:dadosId", async (req, res) => {
                 dadoVenda.opcaoDePagamento = 'Pagar na Entrega'
             }
             var dadosPagamentos = await DadosPagamentos.findOne({ where: { dadosId: dadoVenda.dadosId } })
-            var dataPagamento =  moment(dadosPagamentos.updatedAt).format('DD/MM/YYYY')
+            var dataPagamento = moment(dadosPagamentos.updatedAt).format('DD/MM/YYYY')
 
             var statusPagamento = StatusPagamento.find(sp => sp.id == dadosPagamentos.statusId)
 
@@ -258,7 +271,7 @@ router.get("/admin/vendas/transicoes/editar/:dadosId", async (req, res) => {
                 codItens: codItens,
                 dadosEntregas: dadosEntregas,
                 dadosPagamentos: dadosPagamentos,
-                dataPagamento:dataPagamento,
+                dataPagamento: dataPagamento,
                 statusPagamento: statusPagamento,
                 produto: produto,
                 valores: valores,
@@ -300,108 +313,141 @@ router.post("/consultaCodItem", async (req, res) => {
     }
 })
 
-router.post("/alterarCodItem",async(req,res)=>{
+router.post("/alterarCodItem", async (req, res) => {
+    console.log(req.body)
     var codItemId = req.body.codItemId
     var quantidade = req.body.quantidade
     var desconto = parseFloat(req.body.desconto)
     var acrescimo = parseFloat(req.body.acrescimo)
     var precoUnitario = parseFloat(req.body.precoUnitario)
-    if (!isNaN(quantidade) && !isNaN(desconto) && !isNaN(acrescimo)  && !isNaN(precoUnitario)) { 
-        var codItem =  await knex("coditens").select().where({id:codItemId})
-        var carrinho = await knex('carrinhos').select().where({id:codItem[0].carrinhoId})
-        var dadosVendas = await DadosVendas.findOne({where:{carrinhoId:carrinho[0].id}})
+    if (!isNaN(quantidade) && !isNaN(desconto) && !isNaN(acrescimo) && !isNaN(precoUnitario)) {
+        var codItem = await knex("coditens").select().where({ id: codItemId })
+        var carrinho = await knex('carrinhos').select().where({ id: codItem[0].carrinhoId })
+        var dadosVendas = await DadosVendas.findOne({ where: { carrinhoId: carrinho[0].id } })
+        var dadosEntrega = await DadosEntregas.findOne({ where: { carrinhoId: carrinho[0].id,clienteId:carrinho[0].clienteId } })
         if (codItem[0] != undefined) {
-            var valorTotalCodItem = ((precoUnitario * quantidade)+acrescimo) - desconto
-            var precoTotalCarrinho = (carrinho[0].precoTotal - codItem[0].precoTotalItem) + valorTotalCodItem
-            var quantidadeTotalCarrinho = (carrinho[0].quantidade - codItem[0].quantidade) + quantidade
-            var valorTotalVenda = (dadosVendas.unit_price - carrinho[0].precoTotal) + precoTotalCarrinho
+            var valorTotalCodItem = ((precoUnitario * quantidade) + acrescimo) - desconto
+            console.log(valorTotalCodItem)
+            async function calculaTotalCarrinho(){
+                var valor = 0
+                var codItems = await knex("coditens").select().where({carrinhoId:carrinho[0].id})
+                codItems.forEach(cdi =>{
+                    if (cdi.id != codItem[0].id) {
+                        valor = valor + cdi.precoTotalItem
+                    }
+                })
+                valor = valor + valorTotalCodItem
+                return valor
+            }
+            var precoTotalCarrinho = await calculaTotalCarrinho()
 
+            var quantidadeTotalCarrinho = (carrinho[0].quantidade - codItem[0].quantidade) + quantidade
+            var valorTotalVenda = parseFloat(dadosEntrega.valor) + parseFloat(precoTotalCarrinho)
             if (((precoUnitario * quantidade) + acrescimo) > desconto) {
                 knex("coditens").update({
-                    precoUnit:precoUnitario,
-                    acrescimo:acrescimo,
-                    desconto:desconto,
-                    quantidade:quantidade,
-                    precoTotalItem:valorTotalCodItem
-                }).where({id:codItem[0].id}).then(resp =>{
+                    precoUnit: precoUnitario,
+                    acrescimo: acrescimo,
+                    desconto: desconto,
+                    quantidade: quantidade,
+                    precoTotalItem: valorTotalCodItem
+                }).where({ id: codItem[0].id }).then(resp => {
 
                     knex('carrinhos').update({
-                        quantidade:quantidadeTotalCarrinho,
-                        precoTotal:precoTotalCarrinho
-                    }).where({id:carrinho[0].id}).then(resp2 =>{
+                        quantidade: quantidadeTotalCarrinho,
+                        precoTotal: precoTotalCarrinho
+                    }).where({ id: carrinho[0].id }).then(resp2 => {
                         DadosVendas.update({
-                            unit_price:valorTotalVenda
-                        },{where:{id:dadosVendas.id}}).then(resp3 =>{
+                            unit_price: valorTotalVenda
+                        }, { where: { id: dadosVendas.id } }).then(resp3 => {
+                            DadosPagamentos.update({
+                                totalPago: valorTotalVenda
 
-                            res.json({resp:"Alteração realizada com sucesso"})
-
-                        }).catch(err =>{
+                            }, { where: { carrinhoId: dadosVendas.carrinhoId } }).then(resp4 => {
+                                res.json({ resp: "Alteração realizada com sucesso" })
+                            })
+                        }).catch(err => {
                             console.log(err)
-                            res.json({erro:"Erro ao fazer atualização dos dados"})
+                            res.json({ erro: "Erro ao fazer atualização dos dados" })
                         })
 
-                    }).catch(err =>{
+                    }).catch(err => {
                         console.log(err)
-                        res.json({erro:"Erro ao fazer atualização dos dados"})
+                        res.json({ erro: "Erro ao fazer atualização dos dados" })
                     })
 
-                }).catch(err =>{
+                }).catch(err => {
                     console.log(err)
-                    res.json({erro:"Erro ao fazer atualização dos dados"})
+                    res.json({ erro: "Erro ao fazer atualização dos dados" })
                 })
             } else {
                 console.log("Erro 1")
-                res.json({erro:"Preço de desconto não pode maior que o valor total"})
+                res.json({ erro: "Preço de desconto não pode maior que o valor total" })
             }
         } else {
             console.log("Erro 2")
-            res.json({erro:"Erro ao fazer atualização dos dados, item não encontrado"})
+            res.json({ erro: "Erro ao fazer atualização dos dados, item não encontrado" })
         }
     } else {
         console.log("Erro 3")
-        res.json({erro:"Erro ao fazer atualização dos dados, campo digitado incorretamente"})
+        res.json({ erro: "Erro ao fazer atualização dos dados, campo digitado incorretamente" })
     }
-   
+
 })
 
 //---------------FIM ALETERAR ITEM CARRINHO---------------
 
 //---------------ALETERAR INFORMAÇÕES ENTREGA---------------
 
-router.post("/alterarEntrega",async(req,res)=>{
-    var {cep,numero,rua,bairro,cidade,uf,complemento,dataFrete,frete,statusEntrega,codigoRastreio,valRecebido} = req.body
+router.post("/alterarEntrega", async (req, res) => {
+    var { cep, numero, rua, bairro, cidade, uf, complemento, dataFrete, frete, statusEntrega, codigoRastreio, valRecebido } = req.body
     if (codigoRastreio != undefined) {
 
-        if ((frete == ''|| frete == undefined)||(cep == ''|| cep == undefined) || (numero == '' || numero == undefined) || (rua == '' || rua == undefined) || (bairro == '' || bairro == undefined) || (cidade == '' || cidade == undefined) || (uf == '' || uf == undefined) || (frete == '' || frete == undefined) || (dataFrete == '' || dataFrete == undefined) ||(statusEntrega == '' || statusEntrega == undefined)) {
-            res.json({erro:"Campos obrigatorio com o valor nulo ou vazio \nGentileza preencha todos os campos!"})
+        if ((frete == '' || frete == undefined) || (cep == '' || cep == undefined) || (numero == '' || numero == undefined) || (rua == '' || rua == undefined) || (bairro == '' || bairro == undefined) || (cidade == '' || cidade == undefined) || (uf == '' || uf == undefined) ||  (dataFrete == '' || dataFrete == undefined) || (statusEntrega == '' || statusEntrega == undefined)) {
+            res.json({ erro: "Campos obrigatorio com o valor nulo ou vazio \nGentileza preencha todos os campos!" })
         } else {
-           var dadosEntrega = await DadosEntregas.findOne({where:{codigoRastreioInterno:codigoRastreio}})
+            var dadosEntrega = await DadosEntregas.findOne({ where: { codigoRastreioInterno: codigoRastreio } })
+
             if (dadosEntrega != undefined) {
-                DadosEntregas.update({
-                    cep:cep,
-                    numero:numero,
-                    rua:rua,
-                    bairro:bairro,
-                    cidade:cidade,
-                    uf:uf,
-                    complemento:complemento,
-                    dataFrete:dataFrete,
-                    status:statusEntrega,
-                    valRecebido:parseFloat(valRecebido),
-                    valor:parseFloat(frete)
-                },{where:{id:dadosEntrega.id}}).then(()=>{
-                    res.json({resp:'Dados de entrega atualizados com sucesso'})
-                }).catch(err =>{
-                    console.log(err)
-                    res.json({erro:`Ocorreu um erro ao processar dados \n\n${err}`})
-                })
+                var dadosVendas = await DadosVendas.findOne({ where: { clienteId: dadosEntrega.clienteId, carrinhoId: dadosEntrega.carrinhoId } })
+                var carrinho = await knex('carrinhos').select().where({ id: dadosVendas.carrinhoId,clienteId:dadosVendas.clienteId })
+                if (dadosVendas != undefined) {
+                    var valorTotalVenda = carrinho[0].precoTotal + frete
+                    DadosEntregas.update({
+                        cep: cep,
+                        numero: numero,
+                        rua: rua,
+                        bairro: bairro,
+                        cidade: cidade,
+                        uf: uf,
+                        complemento: complemento,
+                        dataFrete: dataFrete,
+                        status: statusEntrega,
+                        valRecebido: parseFloat(valRecebido),
+                        valor: parseFloat(frete)
+                    }, { where: { id: dadosEntrega.id } }).then(() => {
+                        DadosVendas.update({
+                            unit_price: valorTotalVenda
+                        }, { where: { id: dadosVendas.id } }).then(resp3 => {
+                            DadosPagamentos.update({
+                                totalPago: valorTotalVenda
+                            }, { where: { carrinhoId: dadosVendas.carrinhoId } }).then(resp4=> {
+                                res.json({ resp: "Alteração realizada com sucesso" })
+                            })
+                        })
+                    }).catch(err => {
+                        console.log(err)
+                        res.json({ erro: `Ocorreu um erro ao processar dados \n\n${err}` })
+                    })
+                } else {
+                    res.json({ erro: `Ocorreu um erro ao processar dados \nNão foi encontrado nenhuma venda informada` })
+                }
             } else {
-                res.json({erro:`Ocorreu um erro ao processar dados \nNão foi encontrado nenhuma entrega com codigo de ratreio informado`})
+                res.json({ erro: `Ocorreu um erro ao processar dados \nNão foi encontrado nenhuma entrega com codigo de ratreio informado` })
             }
         }
     } else {
         console.log(codigoRastreio)
-        res.json({erro:`Ocorreu um erro ao processar dados \nNão foi encontrado nenhuma entrega com codigo de ratreio informado`})
+        res.json({ erro: `Ocorreu um erro ao processar dados \nNão foi encontrado nenhuma entrega com codigo de ratreio informado` })
 
     }
 })
@@ -412,20 +458,25 @@ router.post("/alterarEntrega",async(req,res)=>{
 //const opcaoDePagamentos = [{ id: 1, opcao: "PIX" }, { id: 2, opcao: "MERCADO PAGO" }, { id: 3, opcao: "PAGAR NA ENTREGA" }]
 //const StatusPagamento = [{ id: 1, status: "Analise" }, { id: 2, status: "Aprovado" }, { id: 3, status: "Rejeitado" }, { id: 4, status: "Cancelado" }, { id: 5, status: "Pendente" }]
 //---------------ALETERAR INFORMAÇÕES PAGAMENTO---------------
-router.post("/atualizarDadosPagamentos",async(req,res)=>{
-   var {formPagamento,statusPag,valRecebidoPagamento,comprovantePag,ordemPag,isValidado} =  req.body
-   if ((formPagamento == undefined || formPagamento == '') || (statusPag == undefined || statusPag == '') || (valRecebidoPagamento == undefined || valRecebidoPagamento == '') ) {
-        res.json({erro:"Informações inválida"})
-    }else{
-        var dadosPagamento =  await DadosPagamentos.findOne({where:{ordeId:ordemPag}})
-        var dadosVendas =  await DadosVendas.findOne({where:{dadosId:dadosPagamento.dadosId}})
+router.post("/atualizarDadosPagamentos", async (req, res) => {
+    var { formPagamento, statusPag, valRecebidoPagamento, comprovantePag, ordemPag, isValidado } = req.body
+    if ((formPagamento == undefined || formPagamento == '') || (statusPag == undefined || statusPag == '') || (valRecebidoPagamento == undefined || valRecebidoPagamento == '')) {
+        res.json({ erro: "Informações inválida" })
+    } else {
+        var dadosPagamento = await DadosPagamentos.findOne({ where: { ordeId: ordemPag } })
+
+        var dadosVendas = await DadosVendas.findOne({ where: { dadosId: dadosPagamento.dadosId } })
         if (dadosPagamento != undefined && dadosVendas != undefined) {
 
-            if (statusPag == 1 || statusPag == 5 ) {
+            if ((dadosPagamento.comprovante != '' && dadosPagamento.comprovante != undefined) && comprovantePag == '') {
+                comprovantePag = dadosPagamento.comprovante
+            }
+
+            if (statusPag == 1 || statusPag == 5) {
                 var stVenda = 1
-            } else if (statusPag == 2){
+            } else if (statusPag == 2) {
                 var stVenda = 2
-            }else if (statusPag == 3 || statusPag == 4){
+            } else if (statusPag == 3 || statusPag == 4) {
                 var stVenda = 3
             }
             var statusVenda = StatusVenda.find(sv => sv.id == stVenda)
@@ -433,59 +484,59 @@ router.post("/atualizarDadosPagamentos",async(req,res)=>{
             if (formPagamento != dadosVendas.opcaoDePagamento) {
 
                 var opcaoEscolhida = opcaoDePagamentos.find(opd => opd.id == formPagamento)
-                
-                if (opcaoEscolhida != undefined && statusVenda != undefined) {
-                DadosVendas.update({
-                    opcaoDePagamento:opcaoEscolhida.id,
-                    statusId:statusVenda.id,
-                    statusColetado:statusVenda.status
-                },{where:{id:dadosVendas.id}}).then(()=>{
-                    if (opcaoEscolhida.id ==1 ) {
-                        var tpDePag = 'bank_transfer'
-                        var dtPag = 'PIX'
-                        var mtPag = 'PIX'
-                    } else if (opcaoEscolhida.id ==2 ){
-                        var tpDePag = 'Cartão'
-                        var dtPag = 'acredditad'
-                        var mtPag = 'master'
-                    } else if (opcaoEscolhida.id ==3 ){
-                        var tpDePag = 'pagar_entrega'
-                        var dtPag = 'ENTREGA'
-                        var mtPag = 'ENTREGA'
-                    }
 
-                    DadosPagamentos.update({
-                        tipoDePagamento:tpDePag,
-                        detalhePagamento:dtPag,
-                        metodoPagamento:mtPag,
-                        statusId:statusPag,
-                        valRecebido:valRecebidoPagamento,
-                        comprovante:comprovantePag,
-                        isValidado:isValidado
-                    },{where:{id:dadosPagamento.id}}).then(()=>{
-                        res.json({resp:"ALTERAÇÃO REALIZADA COM SUCESSO!!"})
+                if (opcaoEscolhida != undefined && statusVenda != undefined) {
+                    DadosVendas.update({
+                        opcaoDePagamento: opcaoEscolhida.id,
+                        statusId: statusVenda.id,
+                        statusColetado: statusVenda.status
+                    }, { where: { id: dadosVendas.id } }).then(() => {
+                        if (opcaoEscolhida.id == 1) {
+                            var tpDePag = 'bank_transfer'
+                            var dtPag = 'PIX'
+                            var mtPag = 'PIX'
+                        } else if (opcaoEscolhida.id == 2) {
+                            var tpDePag = 'Cartão'
+                            var dtPag = 'acredditad'
+                            var mtPag = 'master'
+                        } else if (opcaoEscolhida.id == 3) {
+                            var tpDePag = 'pagar_entrega'
+                            var dtPag = 'ENTREGA'
+                            var mtPag = 'ENTREGA'
+                        }
+
+                        DadosPagamentos.update({
+                            tipoDePagamento: tpDePag,
+                            detalhePagamento: dtPag,
+                            metodoPagamento: mtPag,
+                            statusId: statusPag,
+                            valRecebido: valRecebidoPagamento,
+                            comprovante: comprovantePag,
+                            isValidado: isValidado
+                        }, { where: { id: dadosPagamento.id } }).then(() => {
+                            res.json({ resp: "ALTERAÇÃO REALIZADA COM SUCESSO!!" })
+                        })
                     })
-                })
                 } else {
-                    res.json({erro:"OPÇÃO DE PAGAMENTO SELECIONADA INVÁLIDA"})
+                    res.json({ erro: "OPÇÃO DE PAGAMENTO SELECIONADA INVÁLIDA" })
                 }
             } else {
                 DadosVendas.update({
-                    statusId:statusVenda.id,
-                    statusColetado:statusVenda.status
-                },{where:{id:dadosVendas.id}}).then(()=>{
+                    statusId: statusVenda.id,
+                    statusColetado: statusVenda.status
+                }, { where: { id: dadosVendas.id } }).then(() => {
                     DadosPagamentos.update({
-                        statusId:statusPag,
-                        valRecebido:valRecebidoPagamento,
-                        comprovante:comprovantePag,
-                        isValidado:isValidado
-                    },{where:{id:dadosPagamento.id}}).then(()=>{
-                        res.json({resp:"ALTERAÇÃO REALIZADA COM SUCESSO!!"})
+                        statusId: statusPag,
+                        valRecebido: valRecebidoPagamento,
+                        comprovante: comprovantePag,
+                        isValidado: isValidado
+                    }, { where: { id: dadosPagamento.id } }).then(() => {
+                        res.json({ resp: "ALTERAÇÃO REALIZADA COM SUCESSO!!" })
                     })
                 })
             }
         } else {
-            res.json({erro:"Não foi possivel encontrar os dados do pagamento especificado"})
+            res.json({ erro: "Não foi possivel encontrar os dados do pagamento especificado" })
         }
     }
 })

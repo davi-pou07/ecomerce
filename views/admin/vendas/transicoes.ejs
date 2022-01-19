@@ -203,6 +203,7 @@
                       <th class="text-nowrap">Valor Unitario</th>
                       <th class="text-nowrap">Quantidade</th>
                       <th class="text-nowrap">Valor Descontro</th>
+                      <th class="text-nowrap">Valor Acrescimo</th>
                       <th class="text-nowrap">Valor Total</th>
                     </tr>
                   </thead>
@@ -215,6 +216,7 @@
                     <th></th>
                     <th></th>
                     <th class="text-nowrap ps-md-5" id="quantidadeTotal"></th>
+                    <th class="text-nowrap" id="acrescimoTotal"></th>
                     <th class="text-nowrap" id="descontoTotal"></th>
                     <th class="text-nowrap" id="valorTotal"></th>
                   </tfoot>
@@ -247,12 +249,15 @@
                     <td class="text-nowrap">${produto.nome}</td>
                     <td class="text-nowrap">${produto.precoUnit}</td>
                     <td class="text-nowrap ps-md-5">${produto.quantidade}</td>
+                    <td class="text-nowrap">${produto.acrescimo}</td>
                     <td class="text-nowrap">${produto.desconto}</td>
                     <td class="text-nowrap">${produto.valotTotalItem}</td>`
                 tbody.insertBefore(tr, null)
 
 
               })
+              
+              document.getElementById('acrescimoTotal').innerHTML = `${valores.acrescimoTotal}`
               document.getElementById('descontoTotal').innerHTML = `${valores.descontoTotal}`
               document.getElementById('valorTotal').innerHTML = `${valores.valorTotal}`
               document.getElementById('quantidadeTotal').innerHTML = `${valores.quantidadeTotal}`
