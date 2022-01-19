@@ -148,6 +148,7 @@ router.get("/produtos/vendas/:dadosVendasId", async (req, res) => {
                 valorTotal = valorTotal + codItem.precoTotalItem
                 quantidadeTotal = quantidadeTotal + codItem.quantidade
                 var desconto = codItem.desconto
+                console.log(codItem)
                 var acrescimo = codItem.acrescimo
                 produto.push({
                     id: codItem.produtoId,
@@ -330,18 +331,22 @@ router.post("/alterarCodItem", async (req, res) => {
             console.log(valorTotalCodItem)
             async function calculaTotalCarrinho(){
                 var valor = 0
+                var qtd = 0
                 var codItems = await knex("coditens").select().where({carrinhoId:carrinho[0].id})
                 codItems.forEach(cdi =>{
                     if (cdi.id != codItem[0].id) {
                         valor = valor + cdi.precoTotalItem
+                        qtd = quantidade + cdi.quantidade
                     }
                 })
+                qtd = qtd + quantidade
                 valor = valor + valorTotalCodItem
-                return valor
+                return {valor:valor,qtd:qtd}
             }
-            var precoTotalCarrinho = await calculaTotalCarrinho()
+            var valores = await calculaTotalCarrinho()
+            var precoTotalCarrinho = valores.valor
 
-            var quantidadeTotalCarrinho = (carrinho[0].quantidade - codItem[0].quantidade) + quantidade
+            var quantidadeTotalCarrinho = valores.qtd
             var valorTotalVenda = parseFloat(dadosEntrega.valor) + parseFloat(precoTotalCarrinho)
             if (((precoUnitario * quantidade) + acrescimo) > desconto) {
                 knex("coditens").update({
