@@ -1,5 +1,5 @@
 <%- include('../../partials/head.ejs')%>
-
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
   <%- include('../../partials/nav.ejs')%>
     <div class="container-fluid">
       <div class="row">
@@ -73,8 +73,8 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-md-10">
-                  <div class="table-responsive">
-                    <table class="table">
+                  <div class="table-responsive border-end">
+                    <table class="table border-end" id="table1">
                       <thead>
                         <tr>
                           <th class="text-nowrap" scope="col">#</th>
@@ -229,6 +229,12 @@
 
 
     <%- include('../../partials/footer.ejs')%>
+<script src="/js/jquery.dataTables.min.js"></script>
+<script src="/js/dataTables.bootstrap5.min.js"></script>
+<script>$(document).ready(function() {
+    $('#table1').DataTable();
+} );</script>
+
       <script>
         function produtos(id) {
           document.getElementById("tabelaProdutos").style.display = 'inline'
