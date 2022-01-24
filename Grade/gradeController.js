@@ -5,13 +5,15 @@ const G_linha = require("../DataBases/G_linha")
 const G_coluna = require("../DataBases/G_coluna")
 const Sequelize = require('sequelize')
 const { where } = require('sequelize')
+const auth = require("../middlewares/adminAuth")
+
 
 //Novo
-router.get("/admin/grade/novo", (req, res) => {
+router.get("/admin/grade/novo",auth, (req, res) => {
     res.render("admin/grade/novo")
 })
 
-router.post("/grade/salvar", (req, res) => {
+router.post("/grade/salvar",auth, (req, res) => {
     var descricao = req.body.descricao
     var linha = req.body.linha
     var coluna = req.body.coluna
@@ -50,7 +52,7 @@ router.post("/grade/salvar", (req, res) => {
 
 //Listar
 
-router.get("/admin/grades", (req, res) => {
+router.get("/admin/grades",auth, (req, res) => {
     Grade.findAll({
         order: [
             ["id", "asc"]
@@ -62,7 +64,7 @@ router.get("/admin/grades", (req, res) => {
 
 //Buscar
 //Maiuscula minuscula
-router.post("/gradeS/find", (req, res) => {
+router.post("/gradeS/find",auth, (req, res) => {
     op = Sequelize.Op
     buscar = `%${req.body.busca}`
     //INICIA COM E MAIUSCUO MINUSCULO
@@ -79,7 +81,7 @@ router.post("/gradeS/find", (req, res) => {
         res.redirect("/admin/grade/busca/" + y)
     })
 })
-router.get("/admin/grade/busca/:busca", (req, res) => {
+router.get("/admin/grade/busca/:busca",auth, (req, res) => {
     busca = req.params.busca
     buscar = busca.split('-')
     Grade.findAll({ where: { id: buscar } }).then(grades => {
@@ -89,7 +91,7 @@ router.get("/admin/grade/busca/:busca", (req, res) => {
 
 
 //Editar
-router.get("/admin/grade/editar/:gradeId", (req, res) => {
+router.get("/admin/grade/editar/:gradeId",auth, (req, res) => {
     var gradeId = req.params.gradeId
     Grade.findByPk(gradeId).then(grade => {
         G_coluna.findAll({ where: { gradeId: grade.id }, raw: true,order: [['id','asc']] }).then(colunas => {
@@ -99,7 +101,7 @@ router.get("/admin/grade/editar/:gradeId", (req, res) => {
         })
     })
 })
-router.post("/grade/editar", (req, res) => {
+router.post("/grade/editar",auth, (req, res) => {
     var gradeId = req.body.gradeId
     var descricao = req.body.descricao
     var linha = req.body.linha

@@ -8,6 +8,7 @@ const fs = require('fs')
 const bcrypt = require("bcryptjs")
 const { Op } = require("sequelize");
 const User = require("../DataBases/User");
+const auth = require("../middlewares/adminAuth")
 
 
 const storage = multer.diskStorage({
@@ -60,14 +61,14 @@ router.post("/user/novo", (req, res) => {
     })
 })
 
-router.get("/admin/usuarios", (req, res) => {
+router.get("/admin/usuarios",auth, (req, res) => {
     User.findAll().then(usuarios => {
         res.render("admin/user/index", { usuarios: usuarios })
     })
 })
 
 
-router.get("/admin/usuario/editar/:user", (req, res) => {
+router.get("/admin/usuario/editar/:user",auth, (req, res) => {
     userId = req.params.user
     if (userId != undefined) {
         if (!isNaN(userId)) {
@@ -80,7 +81,7 @@ router.get("/admin/usuario/editar/:user", (req, res) => {
     }
 })
 
-router.post("/usuario/editar", (req, res) => {
+router.post("/usuario/editar",auth, (req, res) => {
     var login = req.body.login
     var nome = req.body.nome
     var email = req.body.email

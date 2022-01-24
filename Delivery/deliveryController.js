@@ -2,14 +2,15 @@ const express = require("express")
 const router = express.Router()
 const LocaisDelivery = require("../DataBases/LocaisDelivery")
 const cidadesEstados = require("../DataBases/estados-cidades")
+const auth = require("../middlewares/adminAuth")
 
 
-router.get("/admin/delivery/definir-preco", (req, res) => {
+router.get("/admin/delivery/definir-preco",auth, (req, res) => {
     var estados = cidadesEstados.estados
     res.render("admin/delivery/definir", { estados: estados })
 })
 
-router.get("/cidades/filtro/:estado", async (req, res) => {
+router.get("/cidades/filtro/:estado",auth, async (req, res) => {
     var estado = req.params.estado
 
     var locaisDelivery = await LocaisDelivery.findAll({ where: { estado: estado } })
@@ -18,7 +19,7 @@ router.get("/cidades/filtro/:estado", async (req, res) => {
     res.json({ cidades: cidades, locaisDelivery: locaisDelivery })
 })
 
-router.post("/delivery/adicionar", async (req, res) => {
+router.post("/delivery/adicionar",auth, async (req, res) => {
     var { estado, cidade, bairro, preco } = req.body
     var localDelivery = await LocaisDelivery.findOne({ where: { estado: estado, cidade: cidade, bairro: bairro } })
     if (localDelivery == undefined) {
@@ -36,7 +37,7 @@ router.post("/delivery/adicionar", async (req, res) => {
     }
 })
 
-router.post("/delivery/deletar/:id", async (req, res) => {
+router.post("/delivery/deletar/:id",auth, async (req, res) => {
     var id = req.params.id
     var localDelivery = await LocaisDelivery.findByPk(id)
     if (localDelivery != undefined) {
@@ -63,7 +64,7 @@ async function atualizar(id, cidade, bairro, preco) {
     }
 }
 
-router.post("/delivery/atualizar/:id", async (req, res) => {
+router.post("/delivery/atualizar/:id",auth, async (req, res) => {
     var id = req.params.id
     var {cidade,bairro,preco} = req.body
     var localDelivery = await LocaisDelivery.findByPk(id)

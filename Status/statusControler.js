@@ -2,8 +2,9 @@ const express = require("express");
 const router = express.Router();
 const { Op } = require("sequelize");
 const StatusEntrega = require("../DataBases/StatusEntrega");
+const auth = require("../middlewares/adminAuth")
 
-router.get("/admin/criarStatus", async (req, res) => {
+router.get("/admin/criarStatus",auth, async (req, res) => {
     try {
         StatusEntrega.create({
             statusId: 1,

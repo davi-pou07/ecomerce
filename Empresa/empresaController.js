@@ -7,6 +7,7 @@ const multer = require('multer')
 const path = require('path')
 const fs = require('fs');
 const { where } = require('sequelize');
+const auth = require("../middlewares/adminAuth")
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -20,7 +21,7 @@ const upload = multer({ storage })
 
 
 
-router.get("/admin/empresa/novo", (req, res) => {
+router.get("/admin/empresa/novo",auth, (req, res) => {
     Empresa.findOne().then(empresa => {
         if (empresa == undefined) {
             res.render("admin/empresa/novo")
@@ -30,7 +31,7 @@ router.get("/admin/empresa/novo", (req, res) => {
     })
 })
 
-router.post("/empresa/novo", (req, res) => {
+router.post("/empresa/novo",auth, (req, res) => {
     var nome = req.body.nome
     var cnpj = req.body.cnpj
     var inscriEstad = req.body.inscriEstad
@@ -74,7 +75,7 @@ router.post("/empresa/novo", (req, res) => {
     })
 })
 
-router.get("/admin/empresa/editar/:empresaId", (req, res) => {
+router.get("/admin/empresa/editar/:empresaId",auth, (req, res) => {
     var empresaId = req.params.empresaId
     if (empresaId != undefined) {
         if (!isNaN(empresaId)) {
@@ -94,7 +95,7 @@ router.get("/admin/empresa/editar/:empresaId", (req, res) => {
     }
 })
 
-router.post("/empresa/edit",(req, res) => {
+router.post("/empresa/edit",auth,(req, res) => {
     var empresaId = req.body.empresaId
     var nome = req.body.nome
     var cnpj = req.body.cnpj
@@ -151,7 +152,7 @@ router.post("/empresa/edit",(req, res) => {
 
 })
 
-router.get("/empresa", (req, res) => {
+router.get("/empresa",auth, (req, res) => {
     Empresa.findOne().then(empresa => {
         if (empresa != undefined) {
             res.json(empresa)
@@ -161,7 +162,7 @@ router.get("/empresa", (req, res) => {
     })
 })
 
-router.get("/admin/empresa", (req, res) => {
+router.get("/admin/empresa",auth, (req, res) => {
     Empresa.findOne().then(empresa => {
         if (empresa != undefined) {
             res.render("admin/empresa/index", { empresa: empresa })

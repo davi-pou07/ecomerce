@@ -8,8 +8,10 @@ const { Op } = require("sequelize");
 const Estoque = require("../DataBases/Estoque")
 const Produto = require("../DataBases/Produto")
 const { where } = require("sequelize")
+const auth = require("../middlewares/adminAuth")
 
-router.get("/admin/estoque/estgrade/:prod", (req, res) => {
+
+router.get("/admin/estoque/estgrade/:prod",auth, (req, res) => {
     var prod = req.params.prod
     Produto.findAll({ where: { gradeId: { [Op.ne]: 0 },status:true } }).then(produtos => {
         if (prod != 0) {
@@ -42,7 +44,7 @@ router.get("/admin/estoque/estgrade/:prod", (req, res) => {
     })
 })
 
-router.post("/estoque/editar", async (req, res) => {
+router.post("/estoque/editar",auth, async (req, res) => {
     var estoquesIds = req.body.estoquesId
     var erro = []
     if (estoquesIds != undefined) {

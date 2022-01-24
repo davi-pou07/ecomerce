@@ -2,6 +2,8 @@ const express = require('express')
 const multer = require('multer')
 const path = require('path')
 const fs = require('fs')
+const auth = require("../middlewares/adminAuth")
+
 
 const router = express.Router()
 const Grade = require("../DataBases/Grade")
@@ -33,7 +35,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage })
 
 
-router.get("/admin/produto/novo", (req, res) => {
+router.get("/admin/produto/novo",auth, (req, res) => {
     Categoria.findAll().then(categorias => {
         Grade.findAll().then(async grades => {
             var marcas = await Marca.findAll()
@@ -42,7 +44,7 @@ router.get("/admin/produto/novo", (req, res) => {
     })
 })
 
-router.post("/produto/novo", (req, res) => {
+router.post("/produto/novo",auth, (req, res) => {
 
     var count = req.body.count
 
@@ -103,7 +105,7 @@ router.post("/produto/novo", (req, res) => {
 })
 
 //Listar
-router.get("/admin/produtos", (req, res) => {
+router.get("/admin/produtos",auth, (req, res) => {
     Produto.findAll({ order: [['id', 'asc']] }).then(produtos => {
         console.log(produtos)
         Preco.findAll().then(precos => {
@@ -113,7 +115,7 @@ router.get("/admin/produtos", (req, res) => {
 })
 
 //Editar
-router.get("/admin/produto/editar/:produtoId", (req, res) => {
+router.get("/admin/produto/editar/:produtoId",auth, (req, res) => {
     var produtoId = req.params.produtoId
     if (produtoId != undefined) {
         if (!isNaN(produtoId)) {
@@ -148,7 +150,7 @@ router.get("/admin/produto/editar/:produtoId", (req, res) => {
     }
 })
 
-router.post("/produto/editar", async (req, res) => {
+router.post("/produto/editar",auth, async (req, res) => {
     var count = req.body.count
 
     var prodId = req.body.produtoId
@@ -237,7 +239,7 @@ router.post("/produto/editar", async (req, res) => {
 //Axios 
 
 //ALINHAR AXIOS COM BACK
-router.post("/find", (req, res) => {
+router.post("/find",auth, (req, res) => {
     op = Sequelize.Op
     buscar = `%${req.body.busca}`
     console.log(buscar)
@@ -260,7 +262,7 @@ router.post("/find", (req, res) => {
     })
 })
 
-router.post("/produtos/find", (req, res) => {
+router.post("/produtos/find",auth, (req, res) => {
     op = Sequelize.Op
     buscar = `%${req.body.busca}`
     console.log(buscar)
@@ -278,7 +280,7 @@ router.post("/produtos/find", (req, res) => {
     })
 })
 
-router.get("/admin/produto/busca/:busca", (req, res) => {
+router.get("/admin/produto/busca/:busca",auth, (req, res) => {
     busca = req.params.busca
     buscar = busca.split('-')
     Produto.findAll({ where: { id: buscar } }).then(produtos => {

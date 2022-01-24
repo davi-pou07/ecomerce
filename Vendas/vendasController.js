@@ -13,6 +13,8 @@ const DadosPagamentos = require('../DataBases/DadosPagamentos')
 const DadosEntregas = require('../DataBases/DadosEntregas')
 const StatusEntregas = require("../DataBases/StatusEntrega")
 const StatusVenda = require("../DataBases/StatusVendas")
+const auth = require("../middlewares/adminAuth")
+
 const StatusPagamento = [{ id: 1, status: "Analise" }, { id: 2, status: "Aprovado" }, { id: 3, status: "Rejeitado" }, { id: 4, status: "Cancelado" }, { id: 5, status: "Pendente" }]
 const opcaoDePagamentos = [{ id: 1, opcao: "PIX" }, { id: 2, opcao: "MERCADO PAGO" }, { id: 3, opcao: "PAGAR NA ENTREGA" }]
 
@@ -22,7 +24,7 @@ const { data } = require('jquery')
 
 
 //-----------VENDAS EM PROCESSO ------------//
-router.get("/admin/vendas/processo", async (req, res) => {
+router.get("/admin/vendas/processo",auth, async (req, res) => {
     var carrinhos = await knex("carrinhos").select().where({ status: true }).andWhere('quantidade', '>', 0).orderBy('createdAt', 'asc')
     var clienteIds = []
     var carrinhosIds = []
@@ -57,7 +59,7 @@ router.get("/admin/vendas/processo", async (req, res) => {
 //-----------FIM VENDAS EM PROCESSO ------------//
 
 //----------- VENDAS ------------//
-router.get("/admin/vendas/transicoes", async (req, res) => {
+router.get("/admin/vendas/transicoes",auth, async (req, res) => {
 
     var clientes = await knex('clientes').select('id', 'nome').where({ status: true })
     var carrinhos = await knex('carrinhos').select()
@@ -117,7 +119,7 @@ router.get("/admin/vendas/transicoes", async (req, res) => {
 //-----------FILTO VENDAS ------------//
 
 // -----------PRODUTOS VENDAS -----------//
-router.get("/produtos/vendas/:dadosVendasId", async (req, res) => {
+router.get("/produtos/vendas/:dadosVendasId",auth, async (req, res) => {
     var dadosVendasId = req.params.dadosVendasId
     var produto = []
     try {
@@ -184,7 +186,7 @@ router.get("/produtos/vendas/:dadosVendasId", async (req, res) => {
 //-----------FIM PRODUTOS VENDAS ------------//
 
 //-----------EDIÇÃO DE VENDA ------------//
-router.get("/admin/vendas/transicoes/editar/:dadosId", async (req, res) => {
+router.get("/admin/vendas/transicoes/editar/:dadosId",auth, async (req, res) => {
     var dadosId = req.params.dadosId
     try {
         var dadoVenda = await DadosVendas.findOne({ where: { dadosId: dadosId } })
@@ -291,7 +293,7 @@ router.get("/admin/vendas/transicoes/editar/:dadosId", async (req, res) => {
 
 // ------------------ALETERAR ITEM CARRINHO---------------
 
-router.post("/consultaCodItem", async (req, res) => {
+router.post("/consultaCodItem",auth, async (req, res) => {
     var codItemId = req.body.codItenId
 
     try {
@@ -314,7 +316,7 @@ router.post("/consultaCodItem", async (req, res) => {
     }
 })
 
-router.post("/alterarCodItem", async (req, res) => {
+router.post("/alterarCodItem",auth, async (req, res) => {
     console.log(req.body)
     var codItemId = req.body.codItemId
     var quantidade = req.body.quantidade
@@ -403,7 +405,7 @@ router.post("/alterarCodItem", async (req, res) => {
 
 //---------------ALETERAR INFORMAÇÕES ENTREGA---------------
 
-router.post("/alterarEntrega", async (req, res) => {
+router.post("/alterarEntrega",auth, async (req, res) => {
     var { cep, numero, rua, bairro, cidade, uf, complemento, dataFrete, frete, statusEntrega, codigoRastreio, valRecebido } = req.body
     if (codigoRastreio != undefined) {
 
@@ -463,7 +465,7 @@ router.post("/alterarEntrega", async (req, res) => {
 //const opcaoDePagamentos = [{ id: 1, opcao: "PIX" }, { id: 2, opcao: "MERCADO PAGO" }, { id: 3, opcao: "PAGAR NA ENTREGA" }]
 //const StatusPagamento = [{ id: 1, status: "Analise" }, { id: 2, status: "Aprovado" }, { id: 3, status: "Rejeitado" }, { id: 4, status: "Cancelado" }, { id: 5, status: "Pendente" }]
 //---------------ALETERAR INFORMAÇÕES PAGAMENTO---------------
-router.post("/atualizarDadosPagamentos", async (req, res) => {
+router.post("/atualizarDadosPagamentos",auth, async (req, res) => {
     var { formPagamento, statusPag, valRecebidoPagamento, comprovantePag, ordemPag, isValidado } = req.body
     if ((formPagamento == undefined || formPagamento == '') || (statusPag == undefined || statusPag == '') || (valRecebidoPagamento == undefined || valRecebidoPagamento == '')) {
         res.json({ erro: "Informações inválida" })

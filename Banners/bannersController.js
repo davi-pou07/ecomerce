@@ -2,19 +2,20 @@ const express = require('express')
 const router = express()
 const Sequelize = require('sequelize')
 const Banners = require("../DataBases/Banners")
+const auth = require("../middlewares/adminAuth")
 
-router.get("/admin/banners", (req, res) => {
+router.get("/admin/banners",auth, (req, res) => {
     Banners.findAll().then(banners => {
         res.render("admin/banners/index", { banners: banners })
     })
 })
 
-router.get("/admin/banners/adicionar", (req, res) => {
+router.get("/admin/banners/adicionar",auth, (req, res) => {
     var resp = req.query.resp
     res.render("admin/banners/adicionar.ejs", { resp: resp })
 })
 
-router.post("/admin/banners/salvar", (req, res) => {
+router.post("/admin/banners/salvar",auth, (req, res) => {
     var { imagem, titulo, destaque, status } = req.body
     if (imagem != undefined && titulo != undefined && destaque != undefined && status != undefined) {
         Banners.create({
@@ -32,7 +33,7 @@ router.post("/admin/banners/salvar", (req, res) => {
     }
 })
 
-router.get("/admin/banner/editar/:bannerId", (req, res) => {
+router.get("/admin/banner/editar/:bannerId",auth, (req, res) => {
     var resp = req.query
     var bannerId = req.params.bannerId
     if (bannerId != undefined) {
@@ -44,7 +45,7 @@ router.get("/admin/banner/editar/:bannerId", (req, res) => {
     }
 })
 
-router.post("/admin/banners/atualizar", async (req, res) => {
+router.post("/admin/banners/atualizar",auth, async (req, res) => {
     var { imagem, titulo, destaque, status, id } = req.body
 
     if (titulo != undefined && destaque != undefined && status != undefined) {
