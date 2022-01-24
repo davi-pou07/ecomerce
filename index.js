@@ -1,7 +1,5 @@
 require('dotenv').config()
-var DATABASE_URL = process.env.DATABASE_URL
-console.log("-----------------------------------")
-console.log(DATABASE_URL)
+console.log(process.env)
 
 const express = require("express")
 const app = express()
@@ -9,7 +7,6 @@ const cors = require("cors")
 app.use(cors())
 const session = require("express-session")
 const bodyParser = require("body-parser")
-
 
 const Categoria = require("./DataBases/Categoria")
 const Produto = require("./DataBases/Produto")
@@ -53,22 +50,22 @@ const connection = require('./DataBases/database')
 const path = require('path')
 const PORT = process.env.PORT || 8080
 
-connection
-    .authenticate()
-    .then(() => {
-        console.log("Conexão feita com sucesso")
-    })
-    .catch((msgErro) => {
-        console.log(msgErro)
-    })
+// connection
+//     .authenticate()
+//     .then(() => {
+//         console.log("Conexão feita com sucesso")
+//     })
+//     .catch((msgErro) => {
+//         console.log(msgErro)
+//     })
 
-const { Pool } = require('pg');
-const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-        rejectUnauthorized: false
-    }
-});
+// const { Pool } = require('pg');
+// const pool = new Pool({
+//     connectionString: process.env.DATABASE_URL,
+//     ssl: {
+//         rejectUnauthorized: false
+//     }
+// });
 
 app.use(session({
     secret: "sdfsdfsdfgdfgfgh",

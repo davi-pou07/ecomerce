@@ -1,15 +1,14 @@
 const Sequelize = require("sequelize");
 
-// const connection = new Sequelize('postgres://postgres:davi6259@localhost:5432/ecomerce')
-// const connection = new Sequelize('ecomerce','postgres','davi6259',{
-//     host:'localhost',
-//     dialect: 'postgres',
-//     //configurando timezone
-//     timezone: "-03:00",
-//     logging:false
-// })
-const connection = new Sequelize('d9f1ts6ismirrp', 'xzohavpuwebfje', 'cce7fe39b756ba090b9a03883dca985ce43bf137b608cb4cfbc1fcd6ee921e15', {
-    host: 'ec2-34-200-94-86.compute-1.amazonaws.com',
+
+const DB_USER = process.env.DB_USER
+const DB_HOST = process.env.DB_HOST
+const DB_PASSWORD = process.env.DB_PASSWORD
+const DB_NAME = process.env.DB_NAME
+
+
+const connection = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
+    host: DB_HOST,
     dialect: 'postgres',
     timezone: "-03:00",
     logging: true,
@@ -21,9 +20,6 @@ const connection = new Sequelize('d9f1ts6ismirrp', 'xzohavpuwebfje', 'cce7fe39b7
     }
 })
 module.exports = connection;
-//postgres://xzohavpuwebfje:cce7fe39b756ba090b9a03883dca985ce43bf137b608cb4cfbc1fcd6ee921e15@ec2-34-200-94-86.compute-1.amazonaws.com:5432/d9f1ts6ismirrp
-// "dbname=d9f1ts6ismirrp host=ec2-34-200-94-86.compute-1.amazonaws.com port=6212 user=xzohavpuwebfje password=cce7fe39b756ba090b9a03883dca985ce43bf137b608cb4cfbc1fcd6ee921e15 sslmode=require"
-
 
 //https://help.heroku.com/DR0TTWWD/seeing-fatal-no-pg_hba-conf-entry-errors-in-postgres
 //https://devcenter.heroku.com/articles/heroku-postgresql#connecting-in-node-js
