@@ -49,23 +49,6 @@ const connection = require('./DataBases/database')
 const path = require('path')
 const PORT = process.env.PORT || 8080
 
-// connection
-//     .authenticate()
-//     .then(() => {
-//         console.log("Conexão feita com sucesso")
-//     })
-//     .catch((msgErro) => {
-//         console.log(msgErro)
-//     })
-
-// const { Pool } = require('pg');
-// const pool = new Pool({
-//     connectionString: process.env.DATABASE_URL,
-//     ssl: {
-//         rejectUnauthorized: false
-//     }
-// });
-
 app.use(session({
     secret: "sdfsdfsdfgdfgfgh",
     cookie: { maxAge: 3600000 }
@@ -97,10 +80,6 @@ app.use("/", marcaController)
 
 
 app.get("/", (req, res) => {
-    // var log = req.session.usu
-    // if (log == undefined) {
-    //     res.render("admin/user/login")
-    // } else {
     Empresa.findOne().then(empres => {
         if (empres == undefined) {
             res.redirect("/admin/empresa/novo")
@@ -108,7 +87,6 @@ app.get("/", (req, res) => {
             res.render("index", { empres: empres})
         }
     })
-    // }
 })
 
 app.listen(PORT, () => {
