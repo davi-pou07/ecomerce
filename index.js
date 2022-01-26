@@ -6,6 +6,8 @@ const cors = require("cors")
 app.use(cors())
 const session = require("express-session")
 const bodyParser = require("body-parser")
+const moment = require('moment');
+
 
 const Categoria = require("./DataBases/Categoria")
 const Produto = require("./DataBases/Produto")
@@ -87,6 +89,58 @@ app.get("/", (req, res) => {
             res.render("index", { empres: empres})
         }
     })
+})
+app.get("/relatorioVendas/:tipo/:valor",(req,res)=>{
+    var tipo = req.params.tipo
+    var valor = req.params.valor
+    var inicioDo = ''
+    var vendasAutorizadas=[]
+    var vendasRejeitadas=[]
+    var vendasPendentes=[]
+    var dados = {
+        labels:[],
+    }
+
+    if (tipo == 'A') {
+        inicioDo = 'year'
+        for(x=1;x<=12;x++){
+            dados.labels.push(`${x}/${valor}`)
+        }
+
+    } else if (tipo == 'M') {
+        inicioDo = 'month'
+    }else if(tipo == 'S'){
+        inicioDo = 'week'
+    }
+
+    if (inicioDo != '') {
+    
+    var inicio = moment(valor,month).startOf(inicioDo).format("YYYY-MM-DD")
+
+    var fim = moment(valor,inicioDo).endOf(inicioDo).format("YYYY-MM-DD")
+
+    res.json({inicio:inicio,fim:fim,dados:dados})
+    //var vendas = await DadosVendas.findAll()
+
+    /*
+    vendas.forEach(venda => {
+        var dataVenda = moment(venda.createdAt).format("YYYY-MM-DD")
+        if (moment(dataVenda).isSameOrAfter(inicioAno) && moment(dataVenda).isSameOrBefore(fimAno)) {
+            if (venda.statusId == 1) {
+                vendasPendentes.push({id:venda.id,mes:moment(venda.createdAt).format("DD/MM")})
+            } else if (venda.statusId == 2) {
+                vendasAutorizadas.push({id:venda.id,mes:moment(venda.createdAt).format("DD/MM")})
+            }else if (venda.statusId == 3) {
+                vendasRejeitadas.push({id:venda.id,mes:moment(venda.createdAt).format("DD/MM")})
+            }
+        }
+    });
+   
+    res.json({vendasAutorizadas:vendasAutorizadas,vendasPendentes:vendasPendentes,vendasRejeitadas:vendasRejeitadas})
+    */
+    } else {
+        res.json({erro:"Filtro inválido"})
+    }
 })
 
 app.listen(PORT, () => {
