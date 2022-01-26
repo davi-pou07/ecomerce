@@ -227,7 +227,7 @@
                                                     <label class="form-label" for="precoUnitModal">Preço Unitario</label>
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text" id="basic-addon1">R$</span>
-                                                        <input type="text" class="form-control" aria-describedby="basic-addon1" data-precounit="0" onchange="this.dataset.precounit = this.value;calculaTotal()" value="R$00,00" id="precoUnitModal">
+                                                        <input type="text" class="form-control" aria-describedby="basic-addon1" onchange="calculaTotal()" onkeypress="$(this).mask('#.##0,00', {reverse: true});" value="R$00,00" id="precoUnitModal">
                                                     </div>         
                                                 </div>         
 
@@ -235,7 +235,7 @@
                                                     <label class="form-label" for="precoDescModal">Desconto</label>
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text" id="basic-addon2">R$</span>
-                                                        <input type="text" class="form-control" data-precodesc = "0" aria-describedby="basic-addon2" onchange="this.dataset.precodesc = this.value;calculaTotal()" value="R$00,00" id="precoDescModal">
+                                                        <input type="text" class="form-control" data-precodesc = "0" aria-describedby="basic-addon2" onchange="calculaTotal()" onkeypress="$(this).mask('#.##0,00', {reverse: true});" value="R$00,00" id="precoDescModal">
                                                     </div>
                                                 </div>
 
@@ -243,7 +243,7 @@
                                                     <label class="form-label" for="precoAcrescimo">Acrescimo</label>
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text" id="basic-addon3">R$</span>
-                                                        <input type="text" onfocus="formEdit(this.id)" class="form-control" aria-describedby="basic-addon3" data-precoacre = "0" onchange="this.dataset.precoacre = this.value;calculaTotal()" value="R$00,00" id="precoAcrescimo">
+                                                        <input type="text" class="form-control" aria-describedby="basic-addon3" onchange="calculaTotal()" onkeypress="$(this).mask('#.##0,00', {reverse: true});" value="R$00,00" id="precoAcrescimo">
                                                     </div>
                                                 </div>
 
@@ -251,7 +251,7 @@
                                                     <label class="form-label mt-2" for="precoTotal">Preço Total</label>
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text" id="basic-addon4">R$</span>
-                                                        <input type="text" class="form-control col-4" aria-describedby="basic-addon4" disabled data-precoTot = "0" value="R$00,00" id="precoTotal">
+                                                        <input type="text" class="form-control col-4" aria-describedby="basic-addon4" disabled value="R$00,00" id="precoTotal">
                                                     </div>
                                                 </div>
                                               </div>
@@ -350,14 +350,14 @@
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text" id="basic-addon3">R$</span>
                                                     <input class="form-control" size="2" disabled value="<%=dadosEntregas.valor.toLocaleString('pt-br',{ minimumFractionDigits: 2, maximumFractionDigits: 2 })%>"
-                                                        value="R$10,00" type="text" id="frete" name="frete" autocomplete="off" required>
+                                                        type="text" id="frete" name="frete" autocomplete="off" onkeypress="$(this).mask('#.##0,00', {reverse: true});" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-3 col-md-6">
                                                     <label for="valRecebido" class="form-label mt-2">Valor recebido</label>
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text" id="basic-addon3">R$</span>
-                                                    <input class="form-control" size="2" disabled value="<%=dadosEntregas.valRecebido.toLocaleString('pt-br',{ minimumFractionDigits: 2, maximumFractionDigits: 2 })%>" type="text" id="valRecebido" name="valRecebido" autocomplete="off" required>
+                                                        <input class="form-control" size="2" onkeypress="$(this).mask('#.##0,00', {reverse: true});" disabled value="<%=dadosEntregas.valRecebido.toLocaleString('pt-br',{ minimumFractionDigits: 2, maximumFractionDigits: 2 })%>" type="text" id="valRecebido" name="valRecebido" autocomplete="off" required>
                                                     </div>                                                    
                                                 </div>
                                                 <div class="col-lg-3 col-md-6">
@@ -479,7 +479,7 @@
                                                             <label for="forma" class="form-label">Valor recebido</label>
                                                             <div class="input-group mb-3">
                                                                 <span class="input-group-text" id="basic-addon3">R$</span>
-                                                            <input type="text" disabled id="valRecebidoPagamento" class="form-control"
+                                                            <input type="text" onkeypress="$(this).mask('#.##0,00', {reverse: true});" disabled id="valRecebidoPagamento" class="form-control"
                                                             value="<%=dadosPagamentos.valRecebido.toLocaleString('pt-br',{ minimumFractionDigits: 2, maximumFractionDigits: 2 })%>">
                                                             </div>
                                                         </div>
@@ -493,9 +493,13 @@
                                                         <div class="col-lg-4 mt-3 col-sm-6">
                                                             <label for="forma" class="form-label">Validado</label>
                                                             <select id="isvalidado" disabled class="form-control">
-                                                                <option value=""></option>
-                                                                <option value="true">Sim</option>
+                                                                <%if(dadosPagamentos.isValidado == true){%>
+                                                                <option value="true" selected>Sim</option>
                                                                 <option value="false">Não</option>
+                                                                <%}else{%>
+                                                                    <option value="true">Sim</option>
+                                                                    <option value="false"selected>Não</option>
+                                                                <%}%>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -540,12 +544,12 @@
                 function salvarDadosPagamentos() {
                     var formPagamento = document.getElementById("formPagamento").value
                     var statusPag = document.getElementById("statusPag").value
-                    var valRecebidoPagamento = parseFloat(document.getElementById("valRecebidoPagamento").value.replace(',','.'))
+                    var valRecebidoPagamento = parseFloat(document.getElementById("valRecebidoPagamento").value.replace('.','').replace(',','.'))
                     var comprovantePag = document.getElementById("foto").value
                     var ordemPag = document.getElementById("ordemPag").value
                     var isvalidado = document.getElementById("isvalidado").value
 
-                    if ((formPagamento == undefined || formPagamento == '') || (statusPag == undefined || statusPag == '')  || (valRecebidoPagamento == undefined || valRecebidoPagamento == '') ) {
+                    if ((formPagamento == undefined || formPagamento == '') || (statusPag == undefined || statusPag == '')) {
                         alert("Alguns dados inportantes não foram devidamente preenchidos em PAGAMENTOS")
                     } else {
                         axios.post("/atualizarDadosPagamentos",{isvalidado:isvalidado,formPagamento:formPagamento,statusPag:statusPag,valRecebidoPagamento:valRecebidoPagamento,comprovantePag:comprovantePag,ordemPag:ordemPag}).then(resp =>{
@@ -607,13 +611,13 @@
                             var cidade = document.getElementById('cidade').value
                             var uf = document.getElementById('uf').value
                             var complemento = document.getElementById('complemento').value
-                            var frete = parseFloat(document.getElementById('frete').value.replace(",","."))
+                            var frete = parseFloat(document.getElementById('frete').value.replace(".","").replace(",","."))
                             var dataFrete = document.getElementById('dataFrete').value
                             var statusEntrega = document.getElementById('statusEntrega').value
-                            var valRecebido = parseFloat(document.getElementById('valRecebido').value.replace(",","."))
+                            var valRecebido = parseFloat(document.getElementById('valRecebido').value.replace(".","").replace(",","."))
                             var codigoRastreio = document.getElementById('codigoRastreio').value
                             var body = {cep:cep,numero:numero,rua:rua,bairro:bairro,cidade:cidade,uf:uf,complemento:complemento,codigoRastreio:codigoRastreio,frete:frete,dataFrete:dataFrete,statusEntrega:statusEntrega,valRecebido:valRecebido}
-                            if ((frete == ''|| frete == undefined) || (cep == ''|| cep == undefined) || (numero == '' || numero == undefined) || (rua == '' || rua == undefined) || (bairro == '' || bairro == undefined) || (cidade == '' || cidade == undefined) || (uf == '' || uf == undefined) || (frete == '' || frete == undefined) || (dataFrete == '' || dataFrete == undefined) ||(statusEntrega == '' || statusEntrega == undefined)) {
+                            if ((frete == ''|| frete == undefined) || (cep == ''|| cep == undefined) || (numero == '' || numero == undefined) || (rua == '' || rua == undefined) || (bairro == '' || bairro == undefined) || (cidade == '' || cidade == undefined) || (uf == '' || uf == undefined) || (dataFrete == '' || dataFrete == undefined) ||(statusEntrega == '' || statusEntrega == undefined)) {
                                 alert('Campos obrigatorio com o valor nulo ou vazio \nGentileza preencha todos os campos!')
                             }else{
                                 axios.post("/alterarEntrega",body).then(resp=>{
@@ -657,9 +661,9 @@
                         if(confirm("Deseja realmente alterar essas infomações?")){
                             var codItemId = document.getElementById("codItemId").value
                             var quantidadeModal = document.getElementById("quantidadeModal").value
-                            var precoUnit = document.getElementById("precoUnitModal").dataset.precounit.toString().replace(",",".")
-                            var precoDesc = document.getElementById("precoDescModal").dataset.precodesc.toString().replace(",",".")
-                            var precoAcre = document.getElementById("precoAcrescimo").dataset.precoacre.toString().replace(",",".")
+                            var precoUnit = parseFloat(document.getElementById("precoUnitModal").value.replace(".","").replace(",","."))
+                            var precoDesc = parseFloat(document.getElementById("precoDescModal").value.replace(".","").replace(",","."))
+                            var precoAcre = parseFloat(document.getElementById("precoAcrescimo").value.replace(".","").replace(",","."))
                             
                             axios.post("/alterarCodItem",{codItemId:codItemId,quantidade:quantidadeModal,precoUnitario:precoUnit,desconto:precoDesc,acrescimo:precoAcre}).then(resp =>{
                                 if (resp.data.erro == undefined) {
@@ -713,14 +717,13 @@
                                                     
                 function calculaTotal(){
                     var qtd = document.getElementById("quantidadeModal").value
-                    var precoUnit = document.getElementById("precoUnitModal").dataset.precounit.toString().replace(".","").replace(",",".")
-                    var precoDesc = document.getElementById("precoDescModal").dataset.precodesc.toString().replace(".","").replace(",",".")
-                    var precoAcre = document.getElementById("precoAcrescimo").dataset.precoacre.toString().replace(".","").replace(",",".")
+                    var precoUnit = parseFloat(document.getElementById("precoUnitModal").value.replace(".","").replace(",","."))
+                    var precoDesc = parseFloat(document.getElementById("precoDescModal").value.replace(".","").replace(",","."))
+                    var precoAcre = parseFloat(document.getElementById("precoAcrescimo").value.replace(".","").replace(",","."))
 
                     var precoTotal = document.getElementById("precoTotal")
                     var calc = ((parseFloat(precoUnit) * qtd) - parseFloat(precoDesc)) + parseFloat(precoAcre)
                     precoTotal.value = parseFloat(calc).toLocaleString('pt-br',{ minimumFractionDigits: 2, maximumFractionDigits: 2 })
-                    precoTotal.dataset.precoTot = calc
                 }
             </script>
             <!-- <script src="/js/carrinho.js"></script> -->
