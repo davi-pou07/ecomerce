@@ -349,7 +349,7 @@
                                                     <label for="frete" class="form-label mt-2">Valor</label>
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text" id="basic-addon3">R$</span>
-                                                    <input class="form-control" size="2" disabled value="<%=dadosEntregas.valor.toLocaleString('pt-br',{ minimumFractionDigits: 2, maximumFractionDigits: 2 })%>"
+                                                    <input class="form-control" size="2" disabled value="<%=dadosEntregas.valor%>"
                                                         type="text" id="frete" name="frete" autocomplete="off" onkeypress="$(this).mask('#.##0,00', {reverse: true});" required>
                                                     </div>
                                                 </div>
@@ -357,7 +357,7 @@
                                                     <label for="valRecebido" class="form-label mt-2">Valor recebido</label>
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text" id="basic-addon3">R$</span>
-                                                        <input class="form-control" size="2" onkeypress="$(this).mask('#.##0,00', {reverse: true});" disabled value="<%=dadosEntregas.valRecebido.toLocaleString('pt-br',{ minimumFractionDigits: 2, maximumFractionDigits: 2 })%>" type="text" id="valRecebido" name="valRecebido" autocomplete="off" required>
+                                                        <input class="form-control" size="2" onkeypress="$(this).mask('#.##0,00', {reverse: true});" disabled value="<%=dadosEntregas.valRecebido%>" type="text" id="valRecebido" name="valRecebido" autocomplete="off" required>
                                                     </div>                                                    
                                                 </div>
                                                 <div class="col-lg-3 col-md-6">
@@ -559,7 +559,7 @@
                             } else {
                                 alert(resp.data.erro)
                             }
-                        }).cathc(err =>{
+                        }).catch(err =>{
                             alert(`Erro ao atualizar dados\n\n${err}`)
                         })
                     }

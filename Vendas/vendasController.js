@@ -419,6 +419,7 @@ router.post("/alterarEntrega",auth, async (req, res) => {
                 var carrinho = await knex('carrinhos').select().where({ id: dadosVendas.carrinhoId,clienteId:dadosVendas.clienteId })
                 if (dadosVendas != undefined) {
                     var valorTotalVenda = carrinho[0].precoTotal + frete
+                    console.log(dataFrete)
                     DadosEntregas.update({
                         cep: cep,
                         numero: numero,
@@ -427,7 +428,7 @@ router.post("/alterarEntrega",auth, async (req, res) => {
                         cidade: cidade,
                         uf: uf,
                         complemento: complemento,
-                        dataFrete: dataFrete,
+                        dataFrete: moment(dataFrete).format('DD/MM/YYYY'),
                         status: statusEntrega,
                         valRecebido: parseFloat(valRecebido),
                         valor: parseFloat(frete)
@@ -467,7 +468,7 @@ router.post("/alterarEntrega",auth, async (req, res) => {
 //---------------ALETERAR INFORMAÇÕES PAGAMENTO---------------
 router.post("/atualizarDadosPagamentos",auth, async (req, res) => {
     var { formPagamento, statusPag, valRecebidoPagamento, comprovantePag, ordemPag, isValidado } = req.body
-    if ((formPagamento == undefined || formPagamento == '') || (statusPag == undefined || statusPag == '') || (valRecebidoPagamento == undefined || valRecebidoPagamento == '')) {
+    if ((formPagamento == undefined || formPagamento == '') || (statusPag == undefined || statusPag == '')) {
         res.json({ erro: "Informações inválida" })
     } else {
         var dadosPagamento = await DadosPagamentos.findOne({ where: { ordeId: ordemPag } })

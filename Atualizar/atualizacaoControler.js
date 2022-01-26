@@ -4,7 +4,8 @@ const { Sequelize, DataTypes } = require('sequelize')
 const sequelize = require("../DataBases/database")
 const queryInterface = sequelize.getQueryInterface();
 const slugfy = require('slugify')
-const DadosEntregas = require("../DataBases/DadosEntregas")
+const DadosEntregas = require("../DataBases/DadosEntregas");
+const DadosPagamentos = require('../DataBases/DadosPagamentos');
 
 
 router.get("/atualizar/produto", async (req, res) => {
@@ -77,10 +78,12 @@ router.get("/atualizaTabelas",async(req,res)=>{
     //   ).then(()=>{
     //       res.send("Finalizado")
     //   })
-    DadosEntregas.update({valRecebido:parseFloat(0)},{where:{valRecebido:null}}).then(()=>{
-        res.send("ok")
-    })
-    
+    //DadosEntregas.update({valRecebido:parseFloat(0)},{where:{valRecebido:null}}).then(()=>{
+    //    res.send("ok")
+    //})
+    //DadosPagamentos.update({valRecebido:parseFloat(0)},{where:{valRecebido:null}}).then(()=>{
+    //    res.send("ok")
+    //})
 })
 
 
