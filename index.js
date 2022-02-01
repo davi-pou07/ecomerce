@@ -90,52 +90,77 @@ app.get("/", (req, res) => {
         }
     })
 })
-app.get("/relatorioVendas/:tipo/:valor",(req,res)=>{
+app.get("/relatorioVendas/:tipo/:valor",async(req,res)=>{
     var tipo = req.params.tipo
     var valor = req.params.valor
     var inicioDo = ''
+    var stOf= ''
     var vendasAutorizadas=[]
     var vendasRejeitadas=[]
     var vendasPendentes=[]
     var dados = {
         labels:[],
+        autorizados:[],
+        rejeitados:[],
+        pendentes:[],
     }
 
     if (tipo == 'A') {
         inicioDo = 'year'
+        stOf = 'year'
         for(x=1;x<=12;x++){
             dados.labels.push(`${x}/${valor}`)
         }
 
+        var inicio = moment(valor,inicioDo).startOf(stOf).format("YYYY-MM-DD")
+
+        var fim = moment(valor,inicioDo).endOf(stOf).format("YYYY-MM-DD")
+
     } else if (tipo == 'M') {
-        inicioDo = 'month'
+        inicioDo = 'MM-YYYY'
+        stOf = 'month'
+
+        var inicio = moment(valor,inicioDo).startOf(stOf).format("YYYY-MM-DD")
+        var fim = moment(valor,inicioDo).endOf(stOf).format("YYYY-MM-DD")
+        var i = fim.split("-")[2]
+        for(x=1;x<=i;x++){
+            dados.labels.push(`${x}/${valor.split("-")[0]}`)
+        }
     }else if(tipo == 'S'){
-        inicioDo = 'week'
+        inicioDo = 'DD-MM-YYYY'
+        stOf = 'week'
+
+        var inicio = moment(valor,inicioDo).startOf(stOf).format("YYYY-MM-DD")
+        var fim = moment(valor,inicioDo).endOf(stOf).format("YYYY-MM-DD")
+
+        var i = inicio.split("-")[2]
+        var e =  fim.split("-")[2]
+        for(x=i;x<=e;x++){
+             dados.labels.push(`${x}/${valor.split("-")[1]}`)
+        }
     }
 
     if (inicioDo != '') {
     
-    var inicio = moment(valor,month).startOf(inicioDo).format("YYYY-MM-DD")
+    
+    //res.json({inicio:inicio,fim:fim,dados:dados})
+    var vendas = await DadosVendas.findAll()
 
-    var fim = moment(valor,inicioDo).endOf(inicioDo).format("YYYY-MM-DD")
-
-    res.json({inicio:inicio,fim:fim,dados:dados})
-    //var vendas = await DadosVendas.findAll()
-
-    /*
     vendas.forEach(venda => {
         var dataVenda = moment(venda.createdAt).format("YYYY-MM-DD")
-        if (moment(dataVenda).isSameOrAfter(inicioAno) && moment(dataVenda).isSameOrBefore(fimAno)) {
+        if (moment(dataVenda).isSameOrAfter(inicio) && moment(dataVenda).isSameOrBefore(fim)) {
             if (venda.statusId == 1) {
-                vendasPendentes.push({id:venda.id,mes:moment(venda.createdAt).format("DD/MM")})
+                dados.pendentes.push({id:venda.id,data:moment(venda.createdAt).format("DD-MM-YYYY")})
             } else if (venda.statusId == 2) {
-                vendasAutorizadas.push({id:venda.id,mes:moment(venda.createdAt).format("DD/MM")})
+                dados.autorizados.push({id:venda.id,data:moment(venda.createdAt).format("DD-MM-YYYY")})
             }else if (venda.statusId == 3) {
-                vendasRejeitadas.push({id:venda.id,mes:moment(venda.createdAt).format("DD/MM")})
+                dados.rejeitados.push({id:venda.id,data:moment(venda.createdAt).format("DD-MM-YYYY")})
             }
         }
     });
-   
+
+    res.json({inicio:inicio,fim:fim,dados:dados})
+    /*
     res.json({vendasAutorizadas:vendasAutorizadas,vendasPendentes:vendasPendentes,vendasRejeitadas:vendasRejeitadas})
     */
     } else {

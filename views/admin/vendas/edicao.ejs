@@ -283,21 +283,26 @@
                                                         type="text" id="codigoRastreio" name="codigoRastreio" autocomplete="off" required>
                                                 </div>
                                                 <%if(dadoVenda.opcaoDePagamento=="Pagar na Entrega"){%>
-                                                    <div class="col-md-4 mb-2">
+                                                    <div class="col-md-3 mb-2">
                                                         <label for="nome" class="form-label mt-2">Nome destinatario</label>
                                                         <input class="form-control" size="2" value="<%=dadosEntregas.nome%>" disabled
                                                             type="text" id="nome" name="nome" autocomplete="off" required>
                                                     </div>
 
-                                                    <div class="col-md-4 mb-2">
+                                                    <div class="col-md-3 mb-2">
                                                         <label for="cpfDestinatario" class="form-label mt-2">CPF do destinatario</label>
                                                         <input class="form-control" size="2" value="<%=dadosEntregas.cpf%>" disabled
                                                             type="text" id="cpfDestinatario" name="cpfDestinatario" autocomplete="off" required>
                                                     </div>
-                                                    <div class="col-md-4 mb-2">
+                                                    <div class="col-md-3 mb-2">
                                                         <label for="dataNasc" class="form-label mt-2">Data de Nascimento destinatario</label>
                                                         <input class="form-control" size="2" value="<%=dadosEntregas.dataNasc%>" disabled
                                                             type="text" id="dataNasc" name="dataNasc" autocomplete="off" required>
+                                                    </div>
+                                                    <div class="col-md-3 mb-2">
+                                                        <label for="tel" class="form-label mt-2">Numero Celular</label>
+                                                        <input class="form-control" size="2" value="<%=dadosEntregas.tel%>" disabled
+                                                            type="text" id="tel" name="tel" autocomplete="off" required>
                                                     </div>
                                                 <%}%>
 
@@ -310,7 +315,7 @@
                     
                                                 <div class="col-lg-4 mb-lg-2 col-md-6">
                                                     <label for="numero" class="form-label">Numero</label>
-                                                    <input class="form-control" placeholder="Ex:6259" disabled type="number" id="numero"
+                                                    <input class="form-control" placeholder="Ex:6259" disabled type="text" id="numero"
                                                         name="numero" autocomplete="off" value="<%=dadosEntregas.numero%>" required>
                                                 </div>
                     

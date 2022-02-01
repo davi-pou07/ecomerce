@@ -254,7 +254,8 @@ router.get("/admin/vendas/transicoes/editar/:dadosId",auth, async (req, res) => 
 
             var dadosEntregas = await DadosEntregas.findOne({ where: { carrinhoId: carrinho[0].id, clienteId: cliente[0].id } })
             var statusEntrega = await StatusEntregas.findAll()
-
+            console.log("-------------------")
+            console.log(dadosEntregas)
             if (dadoVenda.opcaoDePagamento == 1) {
                 dadoVenda.opcaoDePagamento = 'Pix'
             } else if (dadoVenda.opcaoDePagamento == 2) {

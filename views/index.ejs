@@ -199,7 +199,9 @@
                         if (valor == 1) {
                             axios.get(`/relatorioVendas/${valor}`).then(resp =>{
                                 if (resp.data.erro != undefined) {
+                                    
                                     var dados = resp.dados.data
+                                    console.log(dados)
                                     for(var x= 0;x<dados.labels.length;x++){
                                         data.labels[x] = dados.labels[x]
                                     }

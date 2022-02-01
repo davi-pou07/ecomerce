@@ -65,7 +65,7 @@ const DadosEntregas = connection.define('dadosentregas',{
         type:Sequelize.STRING,
         allowNull:true
     },
-    numero:{
+    tel:{
         type:Sequelize.STRING,
         allowNull:true
     },
