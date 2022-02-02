@@ -7,7 +7,7 @@ app.use(cors())
 const session = require("express-session")
 const bodyParser = require("body-parser")
 const moment = require('moment');
-
+const { Op } = require("sequelize");
 
 const Categoria = require("./DataBases/Categoria")
 const Produto = require("./DataBases/Produto")
@@ -91,6 +91,7 @@ app.get("/", (req, res) => {
     })
 })
 app.get("/relatorioVendas/:tipo/:valor",async(req,res)=>{
+    console.log(new Date())
     var tipo = req.params.tipo
     var valor = req.params.valor
     var inicioDo = ''
@@ -108,61 +109,46 @@ app.get("/relatorioVendas/:tipo/:valor",async(req,res)=>{
     if (tipo == 'A') {
         inicioDo = 'year'
         stOf = 'year'
-        for(x=1;x<=12;x++){
-            dados.labels.push(`${x}/${valor}`)
-        }
-
         var inicio = moment(valor,inicioDo).startOf(stOf).format("YYYY-MM-DD")
-
         var fim = moment(valor,inicioDo).endOf(stOf).format("YYYY-MM-DD")
-
     } else if (tipo == 'M') {
         inicioDo = 'MM-YYYY'
         stOf = 'month'
-
         var inicio = moment(valor,inicioDo).startOf(stOf).format("YYYY-MM-DD")
         var fim = moment(valor,inicioDo).endOf(stOf).format("YYYY-MM-DD")
-        var i = fim.split("-")[2]
-        for(x=1;x<=i;x++){
-            dados.labels.push(`${x}/${valor.split("-")[0]}`)
-        }
     }else if(tipo == 'S'){
         inicioDo = 'DD-MM-YYYY'
         stOf = 'week'
-
         var inicio = moment(valor,inicioDo).startOf(stOf).format("YYYY-MM-DD")
         var fim = moment(valor,inicioDo).endOf(stOf).format("YYYY-MM-DD")
-
-        var i = inicio.split("-")[2]
-        var e =  fim.split("-")[2]
-        for(x=i;x<=e;x++){
-             dados.labels.push(`${x}/${valor.split("-")[1]}`)
-        }
     }
 
     if (inicioDo != '') {
     
-    
-    //res.json({inicio:inicio,fim:fim,dados:dados})
-    var vendas = await DadosVendas.findAll()
+    var vendas = await DadosVendas.findAll({
+        where:{
+            createdAt: {
+                [Op.between]: [inicio, fim]
+            }
+        },
+        order: [['createdAt', 'asc']]
+    })
 
     vendas.forEach(venda => {
-        var dataVenda = moment(venda.createdAt).format("YYYY-MM-DD")
-        if (moment(dataVenda).isSameOrAfter(inicio) && moment(dataVenda).isSameOrBefore(fim)) {
-            if (venda.statusId == 1) {
-                dados.pendentes.push({id:venda.id,data:moment(venda.createdAt).format("DD-MM-YYYY")})
-            } else if (venda.statusId == 2) {
-                dados.autorizados.push({id:venda.id,data:moment(venda.createdAt).format("DD-MM-YYYY")})
-            }else if (venda.statusId == 3) {
-                dados.rejeitados.push({id:venda.id,data:moment(venda.createdAt).format("DD-MM-YYYY")})
-            }
+        if (dados.labels.find(dl => dl == moment(venda.createdAt).format("DD-MM-YYYY")) == undefined) {
+            dados.labels.push(moment(venda.createdAt).format("DD-MM-YYYY"))
+        }
+        if (venda.statusId == 1) {
+            dados.pendentes.push({id:venda.id,status:venda.statusId,data:moment.utc(venda.createdAt).format("DD-MM-YYYY")})
+        } else if (venda.statusId == 2) {
+            dados.autorizados.push({id:venda.id,status:venda.statusId,data:moment.utc(venda.createdAt).format("DD-MM-YYYY")})
+        }else if (venda.statusId == 3) {
+            dados.rejeitados.push({id:venda.id,status:venda.statusId,data:moment.utc(venda.createdAt).format("DD-MM-YYYY")})
         }
     });
 
     res.json({inicio:inicio,fim:fim,dados:dados})
-    /*
-    res.json({vendasAutorizadas:vendasAutorizadas,vendasPendentes:vendasPendentes,vendasRejeitadas:vendasRejeitadas})
-    */
+  
     } else {
         res.json({erro:"Filtro inválido"})
     }

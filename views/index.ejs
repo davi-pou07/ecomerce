@@ -10,22 +10,26 @@
                 class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2">Dashboard</h1>
                 <div class="btn-toolbar mb-2 mb-md-0">
-                    <div class="btn-group me-2">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">Exportar</button>
-                    </div>
                     <div class="btn-group">
                         <div class="input-group-text">
                             <span data-feather="calendar"></span>
                         </div>
-                        <select onchange="alterarDashboard(this.value)"
+                        <select onchange="alteraInput(this.value)"
                             class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                            <option value="2" selected>Essa Semana</option>
-                            <option value="3">Esse Mês</option>
-                            <option value="4">Esse Ano</option>
+                            <option value="S">Semana</option>
+                            <option value="M">Mês</option>
+                            <option value="A"selected>Ano</option>
                         </select>
+                       
                     </div>
+                    <input type="text" class="btn btn-sm" placeholder="Insira o ano, ex: 2022" value="2022" id="l">
                 </div>
             </div>
+            <script>
+                function alteraInput(tipo) {
+                    
+                }
+            </script>
 
             <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
 
@@ -162,65 +166,85 @@
             <%- include('./partials/footer.ejs')%>
             
                 <script>
-                    addEventListener(onload,alterarDashboard(1))
 
-                    var data = {
+
+                        var data = {
                             labels:[],
-                            datasets:[{
-                                data:[],
-                                label: "Autorizadas",
-                                lineTension: 0,
-                                backgroundColor: 'transparent',
-                                borderColor: '#007bff',
-                                borderWidth: 4,
-                                pointBackgroundColor: '#007bff'
-                            },{
-                                data: [],
-                                label: "Pendentes",
-                                lineTension: 0,
-                                backgroundColor: 'transparent',
-                                borderColor: '#ffff40',
-                                borderWidth: 4,
-                                pointBackgroundColor: '#ffff40'
-                            },{
-                                data: [],
-                                label: "Canceladas",
-                                lineTension: 0,
-                                backgroundColor: 'transparent',
-                                borderColor: '#f34336',
-                                borderWidth: 4,
-                                pointBackgroundColor: '#f34336'
-                            }]
+                            datasets:[
+                                {
+                                    data:[],
+                                    label: "Autorizadas",
+                                    lineTension: 0,
+                                    backgroundColor: 'transparent',
+                                    borderColor: '#007bff',
+                                    borderWidth: 4,
+                                    pointBackgroundColor: '#007bff'
+                                },
+                                {
+                                    data: [],
+                                    label: "Pendentes",
+                                    lineTension: 0,
+                                    backgroundColor: 'transparent',
+                                    borderColor: '#ffff40',
+                                    borderWidth: 4,
+                                    pointBackgroundColor: '#ffff40'
+                                },
+                                {
+                                    data: [],
+                                    label: "Canceladas",
+                                    lineTension: 0,
+                                    backgroundColor: 'transparent',
+                                    borderColor: '#f34336',
+                                    borderWidth: 4,
+                                    pointBackgroundColor: '#f34336'
+                                }
+                            ]
                         }
 
-                    function alterarDashboard(valor) {
-                        
-                        /* globals Chart:false, feather:false */
-                        if (valor == 1) {
-                            axios.get(`/relatorioVendas/${valor}`).then(resp =>{
-                                if (resp.data.erro != undefined) {
-                                    
-                                    var dados = resp.dados.data
-                                    console.log(dados)
-                                    for(var x= 0;x<dados.labels.length;x++){
-                                        data.labels[x] = dados.labels[x]
-                                    }
-                                    for(var y = 0; y<dados.autorizados.length;y++){
-                                        data.datasets[0].data[y] = dados.autorizados[y]
-                                    }
-                                    for(var z = 0; z<dados.pendentes.length;z++){
-                                        data.datasets[1].data[z] = dados.pendentes[z]
-                                    }
-                                    for(var k = 0; k<dados.rejeitados.length;k++){
-                                        data.datasets[2].data[k] = dados.rejeitados[k]
-                                    }
-                                } else {
-                                    alert(resp.data.erro)
+                    addEventListener(onload,alterarDashboard('A',2022,data))
+
+
+                    function alterarDashboard(tipo,valor,data) {
+                        axios.get(`/relatorioVendas/${tipo}/${valor}`).then(resp =>{
+                            if (resp.data.erro == undefined) {
+                                var dados = resp.data.dados
+                                for(var x= 0;x<dados.labels.length;x++){
+                                    data.labels[x] = dados.labels[x]
                                 }
-                            })
-                        } else {
-                            
-                        }
+
+                                data.labels.forEach(dataLabel =>{
+                                    var autorizados = []
+                                    var pendentes = []
+                                    var rejeitados = []
+                                    dados.autorizados.forEach(da =>{
+                                        if (da.data == dataLabel) {
+                                            autorizados.push(da)
+                                        }
+                                    })
+                                    dados.pendentes.forEach(dp =>{
+                                        if (dp.data == dataLabel) {
+                                            pendentes.push(dp)
+                                        }
+                                    })
+                                    dados.rejeitados.forEach(dr =>{
+                                        if (dr.data == dataLabel) {
+                                            rejeitados.push(dr)
+                                        }
+                                    })
+                                    data.datasets[0].data.push(autorizados.length)
+                                    data.datasets[1].data.push(pendentes.length)
+                                    data.datasets[2].data.push(rejeitados.length)
+                                })
+                                console.log(data)
+
+                            } else {
+                                alert(resp.data.erro)
+                            }
+                            dashBoard(data)
+                        })
+                           
+                    }
+                    function dashBoard(data) {
                         (function () {
                             'use strict'
                             feather.replace({ 'aria-hidden': 'true' })
@@ -230,79 +254,7 @@
                             // eslint-disable-next-line no-unused-vars
                             var myChart = new Chart(ctx, {
                                 type: 'line',
-                                data: {
-                                    labels: [
-                                        '01/09',
-                                        '02/09',
-                                        '03/09',
-                                        '04/09',
-                                        '05/09',
-                                        '06/09'
-                                    ],
-                                    datasets: [{
-                                        data: [
-                                            15339,
-                                            21345,
-                                            18483,
-                                            24003,
-                                            23489,
-                                            24092,
-                                            12034,
-                                            34534,
-                                            5455,
-                                            676,
-                                            7879,
-                                            809,
-                                        ],
-                                        label: "Autorizadas",
-                                        lineTension: 0,
-                                        backgroundColor: 'transparent',
-                                        borderColor: '#007bff',
-                                        borderWidth: 4,
-                                        pointBackgroundColor: '#007bff'
-                                    }, {
-                                        data: [
-                                            13978,
-                                            2345,
-                                            1483,
-                                            2003,
-                                            2389,
-                                            242,
-                                            12,
-                                            612,
-                                            812,
-                                            192,
-                                            102,
-                                            0
-                                        ],
-                                        label: "Pendentes",
-                                        lineTension: 0,
-                                        backgroundColor: 'transparent',
-                                        borderColor: '#ffff40',
-                                        borderWidth: 4,
-                                        pointBackgroundColor: '#ffff40'
-                                    }, {
-                                        data: [
-                                            13,
-                                            234,
-                                            13,
-                                            203,
-                                            289,
-                                            42,
-                                            12,
-                                            5151,
-                                            554,
-                                            4444,
-                                            0
-                                        ],
-                                        label: "Canceladas",
-                                        lineTension: 0,
-                                        backgroundColor: 'transparent',
-                                        borderColor: '#f34336',
-                                        borderWidth: 4,
-                                        pointBackgroundColor: '#f34336'
-                                    }]
-                                },
+                                data: data,
                                 options: {
                                     scales: {
                                         yAxes: [{
@@ -318,6 +270,6 @@
                             })
 
                         })()
-
                     }
+
                 </script>
