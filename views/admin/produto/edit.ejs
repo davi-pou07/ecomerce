@@ -36,7 +36,7 @@
                                     Tudo ok!
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label for="validationCustom04" class="form-label">Status</label>
                                     <select class="form-select" name="status" id="validationCustom04" required>
                                         <%if(produto.status==true){%>
@@ -52,7 +52,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label for="validationCustom04" class="form-label">Categoria</label>
                                     <select class="form-select" name="categoriaId" id="validationCustom04" required>
                                         <%categorias.forEach(categoria=>{%>
@@ -70,7 +70,7 @@
 
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label for="validationCustom04" class="form-label">Grades</label>
                                     <select class="form-select" name="gradeId" <%if(produto.gradeId != 0){%>disabled<%}%> id="validationCustom04">
                                         <option value="0"></option>
@@ -91,7 +91,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-6">
                                     <label for="marcaId" class="form-label">Marca</label>
                                     <select onchange="marcas(this.value)" class="form-select" name="marcaId"
                                         id="marcaId">
@@ -113,6 +113,30 @@
                                                                     <option value="A">Cadastrar Nova Marca</option>
                                     </select>
                                 </div>
+
+                                <div class="col-md-6">
+                                    <label for="materialId" class="form-label">Material</label>
+                                    <select onchange="materiais(this.value)" class="form-select" name="materialId"
+                                        id="materialId">
+                                        <%if(produto.materialId==0 || produto.materialId==undefined || produto.materialId==''
+                                            ){%>
+                                            <option value="0"></option>
+                                            <%}%>
+                                        <%materiais.forEach(material=>{%>
+                                            <%if(material.id==produto.materialId){%>
+                                                <option value="<%=material.id%>" selected>
+                                                    <%=material.material%>
+                                                </option>
+                                                <%}else{%>
+                                                    <option value="<%=material.id%>">
+                                                        <%=material.material%>
+                                                    </option>
+                                                    <%}%>
+                                            <%})%>
+                                                <option value="A">Cadastrar novo Material</option>
+                                    </select>
+                                </div>
+
 
                                 <div class="modal fade" id="modalMarca" data-bs-backdrop="static"
                                     data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalMarcaLabel"
@@ -137,6 +161,31 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+
+                                <div class="modal fade" id="modalMaterial" data-bs-backdrop="static"
+                                data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalMaterialLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modalMaterialLabel">Cadastro de Material</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <label for="nomeMaterial" class="form-label">Nome da Material</label>
+                                            <input type="text" class="form-control" name="nomeMaterial" id="nomeMaterial"
+                                                placeholder="Informe aqui nome da marca" autocomplete="off">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal" id="modalFechar">Fechar</button>
+                                            <button type="button" class="btn btn-primary"
+                                                onclick="salvarMaterial()">Salvar</button>
+                                        </div>
+                                    </div>
+                                </div>
                                 </div>
                                 <hr>
 

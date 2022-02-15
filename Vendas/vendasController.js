@@ -68,7 +68,7 @@ router.get("/admin/vendas/transicoes",auth, async (req, res) => {
     var dadosVendas = await DadosVendas.findAll()
     var datasVendas = []
     dadosVendas.forEach(dadoVenda => {
-        var dat = dadoVenda.updatedAt
+        var dat = dadoVenda.createdAt
         var data = moment(dat).format('DD/MM/YYYY')
         datasVendas.push({ data: data, dadosId: dadoVenda.dadosId })
         dadoVenda.unit_price = dadoVenda.unit_price.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
@@ -253,9 +253,10 @@ router.get("/admin/vendas/transicoes/editar/:dadosId",auth, async (req, res) => 
             }
 
             var dadosEntregas = await DadosEntregas.findOne({ where: { carrinhoId: carrinho[0].id, clienteId: cliente[0].id } })
+            dadosEntregas.dataNasc = moment(dadosEntregas.dataNasc,'YYYY-MM-DD').format("DD/MM/YYYY")
+            dadosEntregas.dataPrevista = moment(dadosEntregas.dataPrevista,'DD/MM/YYYY').format("YYYY-MM-DD")
             var statusEntrega = await StatusEntregas.findAll()
-            console.log("-------------------")
-            console.log(dadosEntregas)
+            
             if (dadoVenda.opcaoDePagamento == 1) {
                 dadoVenda.opcaoDePagamento = 'Pix'
             } else if (dadoVenda.opcaoDePagamento == 2) {
@@ -429,7 +430,7 @@ router.post("/alterarEntrega",auth, async (req, res) => {
                         cidade: cidade,
                         uf: uf,
                         complemento: complemento,
-                        dataFrete: moment(dataFrete).format('DD/MM/YYYY'),
+                        dataPrevista: moment(dataFrete).format('DD/MM/YYYY'),
                         status: statusEntrega,
                         valRecebido: parseFloat(valRecebido),
                         valor: parseFloat(frete)
@@ -498,7 +499,8 @@ router.post("/atualizarDadosPagamentos",auth, async (req, res) => {
                     DadosVendas.update({
                         opcaoDePagamento: opcaoEscolhida.id,
                         statusId: statusVenda.id,
-                        statusColetado: statusVenda.status
+                        statusColetado: statusVenda.status,
+                        updatedAt:moment().format()
                     }, { where: { id: dadosVendas.id } }).then(() => {
                         if (opcaoEscolhida.id == 1) {
                             var tpDePag = 'bank_transfer'
@@ -521,7 +523,8 @@ router.post("/atualizarDadosPagamentos",auth, async (req, res) => {
                             statusId: statusPag,
                             valRecebido: valRecebidoPagamento,
                             comprovante: comprovantePag,
-                            isValidado: isValidado
+                            isValidado: isValidado,
+                            updatedAt:moment().format
                         }, { where: { id: dadosPagamento.id } }).then(() => {
                             res.json({ resp: "ALTERAÇÃO REALIZADA COM SUCESSO!!" })
                         })

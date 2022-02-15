@@ -28,12 +28,12 @@
 
                                 <label for="descricao" class="form-label">Descrição</label>
                                 <input type="text" class="form-control" name="descricao" id="descricao"
-                                    placeholder="Informe aqui a descrição de sua grade" autocomplete="off">
+                                    placeholder="Informe aqui a descrição de seu produto" autocomplete="off">
                                 <div class="valid-feedback">
                                     Tudo ok!
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label for="validationCustom04" class="form-label">Status</label>
                                     <select class="form-select" name="status" id="validationCustom04" required>
                                         <option value="true">Ativo</option>
@@ -44,7 +44,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label for="validationCustom04" class="form-label">Categoria</label>
                                     <select class="form-select" name="categoriaId" id="validationCustom04" required>
                                         <%categorias.forEach(categoria=>{%>
@@ -56,7 +56,7 @@
 
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label for="validationCustom04" class="form-label">Grades</label>
                                     <select class="form-select" name="gradeId" id="validationCustom04">
                                         <option value="0"></option>
@@ -71,7 +71,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-6">
                                     <label for="marcaId" class="form-label">Marca</label>
                                     <select onchange="marcas(this.value)" class="form-select" name="marcaId"
                                         id="marcaId">
@@ -82,6 +82,20 @@
                                             </option>
                                             <%})%>
                                                 <option value="A">Cadastrar Nova Marca</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="materialId" class="form-label">Material</label>
+                                    <select onchange="materiais(this.value)" class="form-select" name="materialId"
+                                        id="materialId">
+                                        <option value="0"></option>
+                                        <%materiais.forEach(material=>{%>
+                                            <option value="<%=material.id%>">
+                                                <%=material.material%>
+                                            </option>
+                                            <%})%>
+                                                <option value="A">Cadastrar novo Material</option>
                                     </select>
                                 </div>
 
@@ -109,6 +123,31 @@
                                         </div>
                                     </div>
                                 </div>
+
+                            <div class="modal fade" id="modalMaterial" data-bs-backdrop="static"
+                                data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalMaterialLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modalMaterialLabel">Cadastro de Material</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <label for="nomeMaterial" class="form-label">Nome da Material</label>
+                                            <input type="text" class="form-control" name="nomeMaterial" id="nomeMaterial"
+                                                placeholder="Informe aqui nome da marca" autocomplete="off">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal" id="modalFechar">Fechar</button>
+                                            <button type="button" class="btn btn-primary"
+                                                onclick="salvarMaterial()">Salvar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                                 <hr>
 
 
@@ -166,6 +205,7 @@
         </div>
         <%- include('../../partials/footer.ejs')%>
             <script src="/js/marca.js"></script>
+            <script src="/js/material.js"></script>
             <script src="/js/sub.js"></script>
             <script>
                 function readAndShowFiles() {

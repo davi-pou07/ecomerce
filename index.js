@@ -31,6 +31,7 @@ const banners = require("./DataBases/Banners")
 //const DadosPagamentosEntrega = require("./DataBases/DadosPagamentosEntrega")
 const StatusEntrega = require("./DataBases/StatusEntrega")
 const Marca = require("./DataBases/Marca")
+const Material = require("./DataBases/Material")
 
 
 const categoriaController = require("./Categorias/categoriasController")
@@ -44,6 +45,7 @@ const bannerController = require("./Banners/bannersController")
 const vendasController = require("./Vendas/vendasController")
 const statusController = require("./Status/statusControler")
 const marcaController = require("./Marcas/marcaController")
+const materialController = require("./Material/materialController")
 const atualizacaoController = require("./Atualizar/atualizacaoControler")
 
 const connection = require('./DataBases/database')
@@ -79,6 +81,7 @@ app.use("/", vendasController)
 app.use("/", statusController)
 app.use("/", atualizacaoController)
 app.use("/", marcaController)
+app.use("/", materialController)
 
 
 app.get("/", (req, res) => {

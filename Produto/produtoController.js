@@ -16,6 +16,7 @@ const Imagem = require("../DataBases/Imagen")
 const Marca = require("../DataBases/Marca")
 const G_linha = require("../DataBases/G_linha")
 const G_coluna = require("../DataBases/G_coluna")
+const Material = require('../DataBases/Material')
 
 const { count } = require('console')
 const { where } = require('sequelize')
@@ -39,7 +40,8 @@ router.get("/admin/produto/novo",auth, (req, res) => {
     Categoria.findAll().then(categorias => {
         Grade.findAll().then(async grades => {
             var marcas = await Marca.findAll()
-            res.render("admin/produto/novo", { categorias: categorias, grades: grades, marcas: marcas })
+            var materiais = await Material.findAll()
+            res.render("admin/produto/novo", { categorias: categorias, grades: grades, marcas: marcas,materiais:materiais })
         })
     })
 })
@@ -54,6 +56,8 @@ router.post("/produto/novo",auth, (req, res) => {
     var categoriaId = req.body.categoriaId
     var gradeId = req.body.gradeId
     var marcaId = req.body.marcaId
+    var materialId = req.body.materialId
+    
 
     var venda = req.body.venda
     var custo = req.body.custo
@@ -66,7 +70,8 @@ router.post("/produto/novo",auth, (req, res) => {
         status: status,
         categoriaId: categoriaId,
         gradeId: gradeId,
-        marcaId: marcaId
+        marcaId: marcaId,
+        materialId: materialId
     }).then(produto => {
         Preco.create({
             venda: venda,
@@ -126,7 +131,8 @@ router.get("/admin/produto/editar/:produtoId",auth, (req, res) => {
                         Grade.findAll().then(grades => {
                             Imagem.findAll({ where: { produtoId: produtoId } }).then(async imagens => {
                                 var marcas = await Marca.findAll()
-                                res.render("admin/produto/edit", { produto: produto, categorias: categorias, preco: preco, grades: grades, imagens: imagens, marcas: marcas, })
+                                var materiais = await Material.findAll()
+                                res.render("admin/produto/edit", { produto: produto, categorias: categorias, preco: preco, grades: grades, imagens: imagens, marcas: marcas,materiais:materiais })
                             }).catch(err => {
                                 res.send("Sem imagens cadastradas")
                             })
@@ -160,6 +166,7 @@ router.post("/produto/editar",auth, async (req, res) => {
     var categoriaId = req.body.categoriaId
     var gradeId = req.body.gradeId
     var marcaId = req.body.marcaId
+    var materialId = req.body.materialId
 
     var produto = await Produto.findByPk(prodId)
     if (gradeId != 0) {
@@ -181,7 +188,8 @@ router.post("/produto/editar",auth, async (req, res) => {
         status: status,
         categoriaId: categoriaId,
         gradeId: gradeId,
-        marcaId: marcaId
+        marcaId: marcaId,
+        materialId:materialId
     }, { where: { id: produto.id } }).then(prod => {
         Preco.update({
             venda: vendaBr,
