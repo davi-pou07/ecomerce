@@ -128,7 +128,7 @@
                                                                 
                                                             <tbody>
                                                                 <%codItens.forEach(codIten=>{%>
-                                                                    <%var prod=produto.find(p=> p.id == codIten.produtoId)%>
+                                                                    <%var prod=produto.find(p=> p.codItemId == codIten.id && p.id == codIten.produtoId)%>
                                                                         <tr>
                                                                         <th><input type="radio" value="<%=codIten.id%>"
                                                                             onchange="editCodItem(this.value)"

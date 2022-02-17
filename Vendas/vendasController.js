@@ -65,7 +65,9 @@ router.get("/admin/vendas/transicoes",auth, async (req, res) => {
     var carrinhos = await knex('carrinhos').select()
     var codItens = await knex("coditens").select()
 
-    var dadosVendas = await DadosVendas.findAll()
+    var dadosVendas = await DadosVendas.findAll({
+        order:[['createdAt', 'DESC']]
+    })
     var datasVendas = []
     dadosVendas.forEach(dadoVenda => {
         var dat = dadoVenda.createdAt
@@ -227,6 +229,7 @@ router.get("/admin/vendas/transicoes/editar/:dadosId",auth, async (req, res) => 
             })
 
             codItens.forEach(codItem => {
+                
                 var nome = produtos.find(p => p.id == codItem.produtoId)
                 descontoTotal = descontoTotal + codItem.desconto
                 acrescimoTotal = acrescimoTotal + codItem.acrescimo
@@ -235,6 +238,7 @@ router.get("/admin/vendas/transicoes/editar/:dadosId",auth, async (req, res) => 
                 var desconto = codItem.desconto
                 var acrescimo = codItem.acrescimo
                 produto.push({
+                    codItemId:codItem.id,
                     id: codItem.produtoId,
                     nome: nome.nome,
                     precoUnit: codItem.precoUnit.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }),
