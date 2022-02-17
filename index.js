@@ -149,7 +149,7 @@ app.get("/relatorioVendas/:tipo/:valor",async(req,res)=>{
             dados.rejeitados.push({id:venda.id,status:venda.statusId,data:moment.utc(venda.createdAt).format("DD-MM-YYYY")})
         }
     });
-
+    console.log(dados)
     res.json({inicio:inicio,fim:fim,dados:dados})
   
     } else {
