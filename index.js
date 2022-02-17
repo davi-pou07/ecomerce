@@ -142,11 +142,11 @@ app.get("/relatorioVendas/:tipo/:valor",async(req,res)=>{
             dados.labels.push(moment(venda.createdAt).format("DD-MM-YYYY"))
         }
         if (venda.statusId == 1) {
-            dados.pendentes.push({id:venda.id,status:venda.statusId,data:moment.utc(venda.createdAt).format("DD-MM-YYYY")})
+            dados.pendentes.push({id:venda.id,status:venda.statusId,data:moment(venda.createdAt).format("DD-MM-YYYY")})
         } else if (venda.statusId == 2) {
-            dados.autorizados.push({id:venda.id,status:venda.statusId,data:moment.utc(venda.createdAt).format("DD-MM-YYYY")})
+            dados.autorizados.push({id:venda.id,status:venda.statusId,data:moment(venda.createdAt).format("DD-MM-YYYY")})
         }else if (venda.statusId == 3) {
-            dados.rejeitados.push({id:venda.id,status:venda.statusId,data:moment.utc(venda.createdAt).format("DD-MM-YYYY")})
+            dados.rejeitados.push({id:venda.id,status:venda.statusId,data:moment(venda.createdAt).format("DD-MM-YYYY")})
         }
     });
     console.log(dados)
