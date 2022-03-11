@@ -64,6 +64,7 @@ router.get("/admin/grades",auth, (req, res) => {
 
 //Buscar
 //Maiuscula minuscula
+/*
 router.post("/gradeS/find",auth, (req, res) => {
     op = Sequelize.Op
     buscar = `%${req.body.busca}`
@@ -88,7 +89,7 @@ router.get("/admin/grade/busca/:busca",auth, (req, res) => {
         res.render("admin/grade/busca", { grades: grades })
     })
 })
-
+*/
 
 //Editar
 router.get("/admin/grade/editar/:gradeId",auth, (req, res) => {

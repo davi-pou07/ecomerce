@@ -1,0 +1,64 @@
+<%- include('../../partials/head.ejs')%>
+
+    <%- include('../../partials/nav.ejs')%>
+        <div class="container-fluid">
+            <div class="row">
+                <%- include('../../partials/navegador.ejs')%>
+                    <div class="card">
+                        <div class="card-header">
+                            <h1>Listagem de Clientes</h1>
+                            <p>Vizualize seus clientes ja cadastrados na plataforma </p>
+                            <a href="" class="btn btn-primary">Adicionar novo</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                            <table id="table" class="table my-3 text-center">
+                                <thead class="bg-primary text-white">
+                                    <tr class="bg-primary text-white text-center">
+                                        <th>Codigo</th>
+                                        <th>Foto</th>
+                                        <th>Nome</th>
+                                        <th>Numero</th>
+                                        <th>Data Criação</th>
+                                        <th>*</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%clientes.forEach(cliente =>{%>
+                                        <tr>
+                                            <td class="align-middle"><%=cliente.id%></td>
+                                            <td> 
+                                                <div class="personal-image">
+                                                    <label class="label">
+                                                        <figure class="personal-figure">
+                                                            <img src="<%=cliente.foto%>" id="fotoAtual" class="personal-avatar"
+                                                                alt="avatar">
+                                                        </figure>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle"><%=cliente.nome%></td>
+                                            <td class="align-middle"><%=cliente.numero%></td>
+                                            <td class="align-middle"><%=cliente.createdAt%></td>
+                                            <td class="align-middle"><a href="/admin/cliente/editar/<%=cliente.id%>" class="btn btn-outline-warning">Editar</a></td>
+                                        </tr>
+                                    <%})%>
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+        <%- include('../../partials/footer.ejs')%>
+            <script src="/js/sub.js"></script>
+            <script src="/js/jquery.dataTables.min.js"></script>
+            <script src="/js/dataTables.bootstrap5.min.js"></script>
+            <script>$(document).ready(function() {
+                $('#table').DataTable({
+                    "paging":false,
+                    "info":false,
+                    "language": {"lengthMenu":"Mostrar _MENU_ Linhas"}
+                });
+            } );</script>

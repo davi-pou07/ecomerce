@@ -19,8 +19,6 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage })
 
-
-
 router.get("/admin/empresa/novo",auth, (req, res) => {
     Empresa.findOne().then(empresa => {
         if (empresa == undefined) {
@@ -75,24 +73,15 @@ router.post("/empresa/novo",auth, (req, res) => {
     })
 })
 
-router.get("/admin/empresa/editar/:empresaId",auth, (req, res) => {
-    var empresaId = req.params.empresaId
-    if (empresaId != undefined) {
-        if (!isNaN(empresaId)) {
-            Empresa.findByPk(empresaId).then(empresa => {
-                if (empresa != undefined) {
-                    var data = moment(empresa.dataAbert).format("YYYY-MM-DD")
-                    res.render("admin/empresa/editar", { empresa: empresa, data: data })
-                } else {
-                    res.json({ resp: "Erro. Empresa não existe" })
-                }
-            })
+router.get("/admin/empresa/editar",auth, (req, res) => {
+    Empresa.findOne().then(empresa => {
+        if (empresa != undefined) {
+            var data = moment(empresa.dataAbert).format("YYYY-MM-DD")
+            res.render("admin/empresa/editar", { empresa: empresa, data: data })
         } else {
-            res.json({ resp: "Erro. Requisição não é um numero" })
+            res.json({ resp: "Erro. Empresa não existe" })
         }
-    } else {
-        res.json({ resp: "Erro. Requisição não existe" })
-    }
+    })
 })
 
 router.post("/empresa/edit",auth,(req, res) => {
@@ -162,6 +151,7 @@ router.get("/empresa",auth, (req, res) => {
     })
 })
 
+/*
 router.get("/admin/empresa",auth, (req, res) => {
     Empresa.findOne().then(empresa => {
         if (empresa != undefined) {
@@ -171,5 +161,6 @@ router.get("/admin/empresa",auth, (req, res) => {
         }
     })
 })
+*/
 
 module.exports = router

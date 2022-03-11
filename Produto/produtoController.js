@@ -269,7 +269,7 @@ router.post("/find",auth, (req, res) => {
 
     })
 })
-
+/*
 router.post("/produtos/find",auth, (req, res) => {
     op = Sequelize.Op
     buscar = `%${req.body.busca}`
@@ -297,6 +297,6 @@ router.get("/admin/produto/busca/:busca",auth, (req, res) => {
         })
     })
 })
-
+*/
 
 module.exports = router

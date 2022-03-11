@@ -47,6 +47,7 @@ const statusController = require("./Status/statusControler")
 const marcaController = require("./Marcas/marcaController")
 const materialController = require("./Material/materialController")
 const atualizacaoController = require("./Atualizar/atualizacaoControler")
+const clienteController = require("./Clientes/clientesController")
 
 const connection = require('./DataBases/database')
 //databases
@@ -82,7 +83,7 @@ app.use("/", statusController)
 app.use("/", atualizacaoController)
 app.use("/", marcaController)
 app.use("/", materialController)
-
+app.use("/", clienteController)
 
 app.get("/", (req, res) => {
     Empresa.findOne().then(empres => {
@@ -149,7 +150,6 @@ app.get("/relatorioVendas/:tipo/:valor",async(req,res)=>{
             dados.rejeitados.push({id:venda.id,status:venda.statusId,data:moment(venda.createdAt).format("DD-MM-YYYY")})
         }
     });
-    console.log(dados)
     res.json({inicio:inicio,fim:fim,dados:dados})
   
     } else {

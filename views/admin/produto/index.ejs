@@ -10,66 +10,49 @@
                             <p>Vizualize seus produtos </p>
                             <a href="/admin/produto/novo" class="btn btn-primary">Adicionar novo produto</a>
                         </div>
-                        <form class="d-flex" method="POST" action="/produtos/find">
-                            <input class="form-control me-2" type="search" placeholder="Search" name="busca"
-                                aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">Pesquisa</button>
-                        </form>
                         <div class="card-body">
-                            <ul class="list-group list-group-horizontal">
-                                <button type="button" class="list-group-item list-group-item-action active"
-                                    aria-current="true">
-                                    Código:
-                                    <button type="button" class="list-group-item list-group-item-action active"
-                                        aria-current="true">
-                                        Nome:
-                                        <button type="button" class="list-group-item list-group-item-action active"
-                                            aria-current="true">
-                                            Estoque:
-                                            <button type="button" class="list-group-item list-group-item-action active"
-                                                aria-current="true">
-                                                Preço:
-                                                <button type="button"
-                                                    class="list-group-item list-group-item-action active"
-                                                    aria-current="true">
-                                                    Status:
-
-                            </ul>
-                            <%produtos.forEach(produto=>{%>
-                                <ul class="list-group list-group-horizontal"
-                                    onclick="window.location='/admin/produto/editar/<%=produto.id%>'">
-                                    <button type="button" class="list-group-item list-group-item-action">
-                                        <%=produto.id %>
-                                    </button>
-                                    <button type="button" class="list-group-item list-group-item-action">
-                                        <%=produto.nome %>
-                                    </button>
-                                    <%if(produto.totEstoque=='' || produto.totEstoque==undefined){%>
-                                        <button type="button" class="list-group-item list-group-item-action">0
-                                            UND</button>
-                                        <%}else{%>
-                                            <button type="button" class="list-group-item list-group-item-action">
+                            <div class="table-responsive">
+                            <table id="table" class="table">
+                                <thead>
+                                    <tr class="bg-primary text-white text-center">
+                                        <th>Código</th>
+                                        <th>Nome</th>
+                                        <th>Estoque</th>
+                                        <th>Preço</th>
+                                        <th>Status</th>
+                                        <th>*</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <%produtos.forEach(produto=>{%>
+                                    <tr class="text-center">
+                                        <td><%=produto.id %></td>
+                                        <%var nome = (produto.nome.split("").length > 20)? produto.nome.substr(0,20)+'...':produto.nome%>
+                                        <td><%=nome%></td>
+                                        
+                                        <td>
+                                            <%if(produto.totEstoque=='' || produto.totEstoque==undefined){%>
+                                                0 UND
+                                            <%}else{%>
                                                 <%=produto.totEstoque%> UND
-                                            </button>
                                             <%}%>
-                                                <%precos.forEach(preco=>{%>
-                                                    <%if(preco.produtoId==produto.id){%>
-                                                        <button type="button"
-                                                            class="list-group-item list-group-item-action">R$
-                                                            <%=preco.venda%>
-                                                        </button>
-                                                        <%}%>
-                                                            <%})%>
+                                        </td>
 
-                                                                <%if(produto.status==true){%>
-                                                                    <button type="button"
-                                                                        class="list-group-item list-group-item-action">Ativo</button>
-                                                                    <%}else{%>
-                                                                        <button type="button"
-                                                                            class="list-group-item list-group-item-action">Desativado</button>
-                                                                        <%}%>
-                                </ul>
+                                        <td>
+                                            <%var preco = precos.find(prec => prec.produtoId == produto.id)%>
+                                            R$<%=preco.venda%>
+                                        </td>
+                                        <td>
+                                            <%=(produto.status==true)?"Ativo":"Desativado"%>
+                                        </td>
+                                        <td>
+                                            <a href="/admin/produto/editar/<%=produto.id%>" class="btn btn-outline-warning">Editar</a>
+                                        </td>
+                                    </tr>
                                 <%})%>
+                                </tbody>
+                            </table>
+                            </div>
                         </div>
                     </div>
             </div>
@@ -77,3 +60,11 @@
 
         <%- include('../../partials/footer.ejs')%>
             <script src="/js/sub.js"></script>
+            <script src="/js/jquery.dataTables.min.js"></script>
+            <script src="/js/dataTables.bootstrap5.min.js"></script>
+            <script>$(document).ready(function() {
+                $('#table').DataTable({
+                    "info":false,
+                    "language": {"lengthMenu":"Mostrar _MENU_ Linhas"}
+                });
+            } );</script>

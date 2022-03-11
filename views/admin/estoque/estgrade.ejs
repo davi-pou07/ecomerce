@@ -15,109 +15,63 @@
                                         <option value="<%=produto.id%>">
                                             <%=produto.nome%>
                                         </option>
-                                        <%})%>
-                                            <%}else{%>
-                                                <%produtos.forEach(produto=>{%>
-                                                    <%if(produto.id==prod.id){%>
-                                                        <option value="<%=produto.id%>" selected>
-                                                            <%=produto.nome%>
-                                                        </option>
-                                                        <%}else{%>
-                                                            <option value="<%=produto.id%>">
-                                                                <%=produto.nome%>
-                                                            </option>
-                                                            <%}%>
-                                                                <%})%>
-                                                                    <%}%>
+                                    <%})%>
+                                <%}else{%>
+                                    <%produtos.forEach(produto=>{%>
+                                        <%if(produto.id==prod.id){%>
+                                            <option value="<%=produto.id%>" selected>
+                                                <%=produto.nome%>
+                                            </option>
+                                        <%}else{%>
+                                            <option value="<%=produto.id%>">
+                                                <%=produto.nome%>
+                                            </option>
+                                        <%}%>
+                                    <%})%>
+                                <%}%>
                             </select>
                         </div>
                         <div class="card-body">
-                            <%if(grade !=0){%>
-                                <h4>
-                                    <%= grade.descricao%>
-                                </h4>
-
-                                <ul class="list-group list-group-horizontal">
-                                    <button type="button"
-                                        class="list-group-item list-group-item-action text-center active"
-                                        aria-current="true">
-                                        Código
-                                        <button type="button"
-                                            class="list-group-item  text-center list-group-item-action active"
-                                            aria-current="true">
-                                            <%if(grade !=0){%>
-                                                <%=grade.coluna%>
-                                                    <%}else{%>
-                                                        Coluna
-                                                        <%}%>
-                                                            <button type="button"
-                                                                class="list-group-item text-center list-group-item-action active"
-                                                                aria-current="true">
-                                                                <%if(grade !=0){%>
-                                                                    <%=grade.linha%>
-                                                                        <%}else{%>
-                                                                            Linha
-                                                                            <%}%>
-                                                                                <button type="button"
-                                                                                    class="list-group-item text-center list-group-item-action active"
-                                                                                    aria-current="true">
-                                                                                    Status
-
-                                </ul>
-                                <%}%>
-
+                            <h4><%=(grade !=0)?grade.descricao:''%></h4>
+                            <div class="table-responsive">
+                                <table class="table text-center my-2" id="table">
+                                    <%if(grade !=0){%>
+                                        <thead class="bg-primary text-white">
+                                            <th>Código</th>
+                                            <th><%=(grade !=0)?grade.coluna:'Coluna'%></th>
+                                            <th><%=(grade !=0)?grade.linha:"Linha"%></th>
+                                            <th>Status</th>
+                                        </thead>
+                                    <%}%>
                                     <%if(estoques !=0){%>
                                         <%estoques.forEach(estoque=>{%>
-                                            <ul class="list-group list-group-horizontal text-center">
-                                                <button type="button" class="list-group-item list-group-item-action">
-                                                    <%=estoque.id %>
-                                                </button>
-                                                <%colunas.forEach(coluna=>{%>
-                                                    <%if(coluna.id==estoque.refcoluna){%>
-                                                        <button type="button"
-                                                            class="list-group-item list-group-item-action">
-                                                            <%=coluna.coluna %>
-                                                        </button>
+                                            <tr>
+                                                <td><%=estoque.id%></td>
+                                                <%var coluna = colunas.find(col => col.id == estoque.refcoluna)%>
+                                                <td><%=coluna.coluna%></td>
+                                                <%var linha = linhas.find(lin => lin.id == estoque.reflinha)%>
+                                                <td><%=linha.linha %></td>
+                                                <td>
+                                                    <select data-estoque="<%=estoque.id%>"
+                                                        onchange="aleterarStatus(this.dataset.estoque)"
+                                                        class="list-group-item list-group-item-action form-select">
+                                                        <%if(estoque.status==true){%>
+                                                        <option selected value="<%=estoque.status%>">Disponivel</option>
+                                                        <option value="<%=estoque.status%>">Indisponivel</option>
+                                                        <%}else{%>
+                                                            <option value="<%=estoque.status%>">Disponivel</option>
+                                                            <option selected value="<%=estoque.status%>">Indisponivel</option>
                                                         <%}%>
-                                                            <%})%>
-                                                                <%linhas.forEach(linha=>{%>
-                                                                    <%if(linha.id==estoque.reflinha){%>
-                                                                        <button type="button"
-                                                                            class="list-group-item list-group-item-action">
-                                                                            <%=linha.linha %>
-                                                                        </button>
-                                                                        <%}%>
-                                                                            <%})%>
-                                                                                <select data-estoque="<%=estoque.id%>"
-                                                                                    onchange="aleterarStatus(this.dataset.estoque)"
-                                                                                    class="list-group-item list-group-item-action form-select">
-                                                                                    <%if(estoque.status==true){%>
-                                                                                        <option
-                                                                                            value="<%=estoque.status%>"
-                                                                                            selected>Disponivel</option>
-                                                                                        <option
-                                                                                            value="<%=estoque.status%>">
-                                                                                            Indisponivel</option>
-                                                                                        <%}else{%>
-                                                                                            <option
-                                                                                                value="<%=estoque.status%>"
-                                                                                                selected>Indisponivel
-                                                                                            </option>
-                                                                                            <option
-                                                                                                value="<%=estoque.status%>">
-                                                                                                Disponivel</option>
-                                                                                            <%}%>
-                                                                                </select>
-
-                                            </ul>
-                                            <%})%>
-                                                <%}%>
-                                                    <hr>
-                                                    <button type="button" class="btn btn-primary form-control"
-                                                        onclick="atualizarEstoque()">Salvar</button>
-                        </div>
-                        <div class="card-footer">
-
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        <%})%>
+                                    <%}%>
+                                </table>
+                            </div>
+                            <hr>
+                            <button type="button" class="btn btn-primary form-control"
+                            onclick="atualizarEstoque()">Salvar</button>
                         </div>
                     </div>
             </div>
@@ -156,3 +110,14 @@
                     }
                 }
             </script>
+
+<script src="/js/sub.js"></script>
+<script src="/js/jquery.dataTables.min.js"></script>
+<script src="/js/dataTables.bootstrap5.min.js"></script>
+<script>$(document).ready(function() {
+    $('#table').DataTable({
+        "paging":false,
+        "info":false,
+        "language": {"lengthMenu":"Mostrar _MENU_ Linhas"}
+    });
+} );</script>

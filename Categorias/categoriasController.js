@@ -40,6 +40,7 @@ router.get("/admin/categorias",auth, (req, res) => {
 
 //Buscar
 //Maiuscula minuscula
+/*
 router.post("/categoria/find",auth, (req, res) => {
     op = Sequelize.Op
     buscar = `%${req.body.busca}`
@@ -63,6 +64,8 @@ router.get("/admin/categoria/busca/:busca",auth,(req,res)=>{
         res.render("admin/categoria/busca",{categorias:categorias})
     })
 })
+*/
+
 //Editar
 router.get("/admin/categoria/editar/:categoriaId",auth, (req, res) => {
     var categoriaId = req.params.categoriaId

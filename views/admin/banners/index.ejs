@@ -9,56 +9,40 @@
                             <p>Vizualize seus banners cadastrados</p>
                             <a href="/admin/banners/adicionar" class="btn btn-primary">Adicionar novo banner</a>
                         </div>
-                        <form class="d-flex" method="POST" action="/baner/find">
-                            <input class="form-control me-2" type="search" placeholder="Search" name="busca"
-                                aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">Pesquisa</button>
-                        </form>
                         <div class="card-body">
-
-                            <ul class="list-group list-group-horizontal">
-                                <button type="button" class="list-group-item list-group-item-action active"
-                                    aria-current="true">
-                                    Código:
-                                    <button type="button" class="list-group-item list-group-item-action active"
-                                        aria-current="true">
-                                        Titulo:
-                                        <button type="button" class="list-group-item list-group-item-action active"
-                                            aria-current="true">
-                                            Destaque:
-                                            <button type="button" class="list-group-item list-group-item-action active"
-                                                aria-current="true">
-                                                Status:
-
-                            </ul>
-                            <%banners.forEach(banner=>{%>
-                                <ul class="list-group list-group-horizontal"
-                                    onclick="window.location='/admin/banner/editar/<%=banner.id%>'">
-                                    <button type="button" class="list-group-item list-group-item-action">
-                                        <%=banner.id %>
-                                    </button>
-                                    <button type="button" class="list-group-item list-group-item-action">
-                                        <%=banner.titulo %>
-                                    </button>
-                                    <%if(banner.destaque==true){%>
-                                        <button type="button"
-                                            class="list-group-item list-group-item-action">Sim</button>
-                                        <%}else{%>
-                                            <button type="button"
-                                                class="list-group-item list-group-item-action">Não</button>
-                                            <%}%>
-                                                <%if(banner.status==true){%>
-                                                    <button type="button"
-                                                        class="list-group-item list-group-item-action">Ativo</button>
-                                                    <%}else{%>
-                                                        <button type="button"
-                                                            class="list-group-item list-group-item-action">Desativado</button>
-                                                        <%}%>
-                                </ul>
-                                <%})%>
+                            <div class="table-responsive">
+                                <table class="table text-center" id="table">
+                                    <thead class="bg-primary text-white">
+                                        <th>Código</th>
+                                        <th>Titulo</th>
+                                        <th>Destaque</th>
+                                        <th>Status</th>
+                                        <th>*</th>
+                                    </thead>
+                                    <tbody>
+                                        <%banners.forEach(banner=>{%>
+                                            <tr>
+                                                <td><%=banner.id %></td>
+                                                <td><%=banner.titulo %></td>
+                                                <td><%=(banner.destaque==true)?"Sim":"Não"%></td>
+                                                <td><%=(banner.status==true)?"Ativo":"Desativado"%></td>
+                                                <td><a href="/admin/banner/editar/<%=banner.id%>" class="btn btn-outline-warning">Editar</a></td>  
+                                            </tr>
+                                        <%})%>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
             </div>
         </div>
 
         <%- include('../../partials/footer.ejs')%>
+        <script src="/js/jquery.dataTables.min.js"></script>
+            <script src="/js/dataTables.bootstrap5.min.js"></script>
+            <script>$(document).ready(function() {
+                $('#table').DataTable({
+                    "info":false,
+                    "language": {"lengthMenu":"Mostrar _MENU_ Linhas"}
+                });
+            } );</script>

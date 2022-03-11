@@ -10,42 +10,31 @@
                 <p>Vizualize suas grades </p>
                 <a href="/admin/grade/novo" class="btn btn-primary">Adicionar nova grade</a>
             </div>
-            <form class="d-flex" method="POST" action="/grades/find">
-                <input class="form-control me-2" type="search" placeholder="Search" name="busca" aria-label="Search" >
-                <button class="btn btn-outline-success" type="submit">Pesquisa</button>
-              </form>
             <div class="card-body">
-                <ul class="list-group list-group-horizontal">
-                    <button type="button" class="list-group-item list-group-item-action active"
-                        aria-current="true">
-                        Código:
-                    <button type="button" class="list-group-item list-group-item-action active"
-                        aria-current="true" >
-                        Descrição:
-                    <button type="button" class="list-group-item list-group-item-action active"
-                        aria-current="true">
-                        Linha:
-                        <button type="button" class="list-group-item list-group-item-action active"
-                        aria-current="true">
-                        Coluna:
-                    <button type="button" class="list-group-item list-group-item-action active"
-                        aria-current="true">
-                        Status:
-
-            </ul>
-                <%grades.forEach(grade=>{%>
-                    <ul class="list-group list-group-horizontal" onclick="window.location='/admin/grade/editar/<%=grade.id%>'">
-                    <button type="button" class="list-group-item list-group-item-action" > <%=grade.id %> </button>
-                    <button type="button" class="list-group-item list-group-item-action"><%=grade.descricao %></button>
-                    <button type="button" class="list-group-item list-group-item-action"><%=grade.linha%></button>
-                    <button type="button" class="list-group-item list-group-item-action"><%=grade.coluna%></button>
-                    <%if(grade.status == true){%>
-                        <button type="button" class="list-group-item list-group-item-action">Ativo</button>
-                    <%}else{%>
-                        <button type="button" class="list-group-item list-group-item-action">Desativado</button>
-                    <%}%>
-                </ul>
-            <%})%>
+                <div class="table-responsive">
+                    <table class="table text-center my-3">
+                        <thead class="bg-primary text-white">
+                            <tr>
+                                <th>Código</th>
+                                <th>Descrição</th>
+                                <th>Linha</th>
+                                <th>Coluna</th>
+                                <th>Status</th>
+                                <th>*</th>
+                            </tr>
+                        </thead>
+                        <%grades.forEach(grade=>{%>
+                            <tr >
+                                <td><%=grade.id %></td>
+                                <td><%=grade.descricao %></td>
+                                <td><%=grade.linha%></td>
+                                <td><%=grade.coluna%></td>
+                                <td><%=(grade.status == true)?'Ativo':'Desativado'%></td>
+                                <td><a href="/admin/grade/editar/<%=grade.id%>" class="btn btn-outline-warning">Editar</a></td>
+                            </tr>
+                        <%})%>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -53,3 +42,11 @@
 
         <%- include('../../partials/footer.ejs')%>
             <script src="/js/sub.js"></script>
+            <script src="/js/jquery.dataTables.min.js"></script>
+            <script src="/js/dataTables.bootstrap5.min.js"></script>
+            <script>$(document).ready(function() {
+                $('#table').DataTable({
+                    "info":false,
+                    "language": {"lengthMenu":"Mostrar _MENU_ Linhas"}
+                });
+            } );</script>
