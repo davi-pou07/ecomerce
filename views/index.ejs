@@ -14,7 +14,7 @@
                         <div class="input-group-text">
                             <span data-feather="calendar"></span>
                         </div>
-                        <select onchange="alteraInput(this.value)"
+                        <select id="tipoConsulta" onchange="alteraInput()"
                             class="btn btn-sm btn-outline-secondary dropdown-toggle">
                             <option value="S">Semana</option>
                             <option value="M">Mês</option>
@@ -22,22 +22,22 @@
                         </select>
                        
                     </div>
-                    <input type="text" class="btn btn-sm" placeholder="Insira o ano, ex: 2022" value="2022" id="l">
+                    <input type="date" class="btn btn-sm" onchange="alteraInput()" placeholder="Insira o ano, ex: 2022" value="2022-01-01" id="dataConsulta">
                 </div>
             </div>
-            <script>
-                function alteraInput(tipo) {
-                    
-                }
-            </script>
 
-            <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+            <canvas class="my-4 w-100" id="dashboard" width="900" height="380"></canvas>
             
             <%- include('./partials/footer.ejs')%>
             
                 <script>
 
+                       
 
+                    addEventListener(onload,alterarDashboard('A',"2022-01-01"))
+
+
+                    function alterarDashboard(tipo,valor) {
                         var data = {
                             labels:[],
                             datasets:[
@@ -71,10 +71,6 @@
                             ]
                         }
 
-                    addEventListener(onload,alterarDashboard('A',2022,data))
-
-
-                    function alterarDashboard(tipo,valor,data) {
                         axios.get(`/relatorioVendas/${tipo}/${valor}`).then(resp =>{
                             if (resp.data.erro == undefined) {
                                 var dados = resp.data.dados
@@ -105,7 +101,6 @@
                                     data.datasets[1].data.push(pendentes.length)
                                     data.datasets[2].data.push(rejeitados.length)
                                 })
-                                console.log(data)
 
                             } else {
                                 alert(resp.data.erro)
@@ -114,15 +109,13 @@
                         })
                            
                     }
+                    var myChart;
                     function dashBoard(data) {
-                        (function () {
-                            'use strict'
                             feather.replace({ 'aria-hidden': 'true' })
-
                             // Graphs
-                            var ctx = document.getElementById('myChart')
+                            var ctx = document.getElementById('dashboard').getContext('2d')
                             // eslint-disable-next-line no-unused-vars
-                            var myChart = new Chart(ctx, {
+                            myChart = new Chart(ctx, {
                                 type: 'line',
                                 data: data,
                                 options: {
@@ -138,8 +131,14 @@
                                     }
                                 }
                             })
+                    }
 
-                        })()
+                    
+                    function alteraInput() {
+                        var tipo = document.getElementById("tipoConsulta").value
+                        var dataConsulta = document.getElementById("dataConsulta").value
+                        myChart.destroy()
+                        alterarDashboard(tipo,dataConsulta)
                     }
 
                 </script>

@@ -25,11 +25,11 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage })
 
-router.get("/admin/user/novo", (req, res) => {
+router.get("/admin/user/novo",auth, (req, res) => {
     res.render("admin/user/new")
 })
 
-router.post("/user/novo", (req, res) => {
+router.post("/user/novo",auth, (req, res) => {
     var email = req.body.email
     var nome = req.body.nome
     var telefone = req.body.telefone

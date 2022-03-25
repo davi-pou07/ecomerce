@@ -85,14 +85,20 @@ app.use("/", marcaController)
 app.use("/", materialController)
 app.use("/", clienteController)
 
-app.get("/", (req, res) => {
-    Empresa.findOne().then(empres => {
+app.get("/", async(req, res) => {
+    var exitUser = await User.findOne()
+    if (exitUser) {
+       var empres = await Empresa.findOne()
         if (empres == undefined) {
             res.redirect("/admin/empresa/novo")
         } else {
+
             res.render("index", { empres: empres})
         }
-    })
+    }else{
+        req.session.usu = 0
+        res.redirect("/admin/user/novo")
+    }
 })
 app.get("/relatorioVendas/:tipo/:valor",async(req,res)=>{
     console.log(new Date())
@@ -100,9 +106,6 @@ app.get("/relatorioVendas/:tipo/:valor",async(req,res)=>{
     var valor = req.params.valor
     var inicioDo = ''
     var stOf= ''
-    var vendasAutorizadas=[]
-    var vendasRejeitadas=[]
-    var vendasPendentes=[]
     var dados = {
         labels:[],
         autorizados:[],
@@ -113,26 +116,28 @@ app.get("/relatorioVendas/:tipo/:valor",async(req,res)=>{
     if (tipo == 'A') {
         inicioDo = 'year'
         stOf = 'year'
+        valor = valor.split("-")[0]
         var inicio = moment(valor,inicioDo).startOf(stOf).format("YYYY-MM-DD")
         var fim = moment(valor,inicioDo).endOf(stOf).format("YYYY-MM-DD")
     } else if (tipo == 'M') {
         inicioDo = 'MM-YYYY'
         stOf = 'month'
+        valor = moment(valor,"YYYY-MM-DD").format(inicioDo)
         var inicio = moment(valor,inicioDo).startOf(stOf).format("YYYY-MM-DD")
         var fim = moment(valor,inicioDo).endOf(stOf).format("YYYY-MM-DD")
     }else if(tipo == 'S'){
         inicioDo = 'DD-MM-YYYY'
         stOf = 'week'
+        valor = moment(valor,"YYYY-MM-DD").format(inicioDo)
         var inicio = moment(valor,inicioDo).startOf(stOf).format("YYYY-MM-DD")
         var fim = moment(valor,inicioDo).endOf(stOf).format("YYYY-MM-DD")
     }
 
     if (inicioDo != '') {
-    
     var vendas = await DadosVendas.findAll({
         where:{
             createdAt: {
-                [Op.between]: [inicio, fim]
+                [Op.between]: [moment(inicio), moment(fim)]
             }
         },
         order: [['createdAt', 'asc']]
