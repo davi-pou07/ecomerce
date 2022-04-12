@@ -192,8 +192,8 @@
                                 <div class="col-md-3">
                                     <label for="Preco_custo" class="form-label">Preço de Custo</label>
                                     <%if(preco.produtoId==produto.id){%>
-                                        <input type="number" class="form-control" name="custo" id="preco_custo"
-                                            placeholder="00,00" step=0.01 autocomplete="off" value="<%=preco.custo%>">
+                                        <input type="text" class="form-control" name="custo" id="preco_custo"
+                                             onkeypress="$(this).mask('#.##0,00', {reverse: true});"autocomplete="off" value="<%=preco.custo%>">
                                         <%}%>
                                             <div class="valid-feedback">
                                                 Tudo ok!
@@ -206,8 +206,8 @@
                                 <div class="col-md-3">
                                     <label for="Preco_venda" class="form-label">Preço de venda</label>
                                     <%if(preco.produtoId==produto.id){%>
-                                        <input type="number" class="form-control" name="venda" id="preco_venda"
-                                            placeholder="00,00" step=0.01 autocomplete="off" value="<%=preco.venda%>">
+                                        <input type="text" class="form-control" name="venda" id="preco_venda"
+                                             onkeypress="$(this).mask('#.##0,00', {reverse: true});"autocomplete="off" value="<%=preco.venda%>">
                                         <%}%>
                                             <div class="valid-feedback">
                                                 Tudo ok!
@@ -220,8 +220,8 @@
                                 <div class="col-md-3">
                                     <label for="Preco_desc" class="form-label">Preço de Desconto</label>
                                     <%if(preco.produtoId==produto.id){%>
-                                        <input type="number" class="form-control" name="desconto" id="preco_desc"
-                                            placeholder="00,00" step=0.01 autocomplete="off"
+                                        <input type="text" class="form-control" name="desconto" id="preco_desc"
+                                             onkeypress="$(this).mask('#.##0,00', {reverse: true});"autocomplete="off"
                                             value="<%=preco.desconto%>">
                                         <%}%>
                                             <div class="valid-feedback">

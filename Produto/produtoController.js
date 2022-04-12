@@ -64,6 +64,16 @@ router.post("/produto/novo",auth, (req, res) => {
     var desconto = req.body.desconto
 
 
+    if(venda.toString().includes(",")){
+        venda = parseFloat(venda.toString().replace(/\./g,"").replace(",","."))
+    }
+    if(custo.toString().includes(",")){
+        custo = parseFloat(custo.toString().replace(/\./g,"").replace(",","."))
+    }
+    if(desconto.toString().includes(",")){
+        desconto = parseFloat(desconto.toString().replace(/\./g,"").replace(",","."))
+    }
+  
     Produto.create({
         nome: nome,
         descricao: descricao,
@@ -179,9 +189,18 @@ router.post("/produto/editar",auth, async (req, res) => {
     var custo = req.body.custo
     var desconto = req.body.desconto
 
-    var vendaBr = venda.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
-    var custoBr = custo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
-    var descontoBr = desconto.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
+    var prec = await Preco.findOne({where:{ produtoId: prodId}})
+
+    if (prec != undefined) {
+        var vendaBr = (prec.venda == venda)?prec.venda:parseFloat(venda.toString().replace(/\./g,"").replace(",","."))
+        var custoBr = (prec.custo == custo)?prec.custo:parseFloat(custo.toString().replace(/\./g,"").replace(",","."))
+        var descontoBr = (prec.desconto == desconto)?prec.desconto:parseFloat(desconto.toString().replace(/\./g,"").replace(",","."))
+    }else{
+        var vendaBr = venda.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
+        var custoBr = custo.toLocaleString('pt-br', { style: 'currency',    currency: 'BRL' })
+        var descontoBr = desconto.toLocaleString('pt-br', { style: 'currency',  currency: 'BRL' })
+    }
+    
     Produto.update({
         nome: nome,
         descricao: descricao,
