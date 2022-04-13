@@ -63,6 +63,19 @@ router.post("/produto/novo",auth, (req, res) => {
     var custo = req.body.custo
     var desconto = req.body.desconto
 
+    venda = (venda == '' || venda == undefined)?0:venda
+    custo = (custo == '' || custo == undefined)?0:custo
+    desconto = (desconto == '' || desconto == undefined)?0:desconto
+
+    if(venda.toString().includes(",")){
+        venda = parseFloat(venda.toString().replace(/\./g,"").replace(",","."))
+    }
+    if(custo.toString().includes(",")){
+        custo = parseFloat(custo.toString().replace(/\./g,"").replace(",","."))
+    }
+    if(desconto.toString().includes(",")){
+        desconto = parseFloat(desconto.toString().replace(/\./g,"").replace(",","."))
+    }
 
     Produto.create({
         nome: nome,
@@ -175,13 +188,24 @@ router.post("/produto/editar",auth, async (req, res) => {
         }
     }
 
-    var venda = req.body.venda
-    var custo = req.body.custo
-    var desconto = req.body.desconto
+    var vendaBr = req.body.venda
+    var custoBr = req.body.custo
+    var descontoBr = req.body.desconto
 
-    var vendaBr = venda.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
-    var custoBr = custo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
-    var descontoBr = desconto.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
+    vendaBr = (vendaBr == '' || vendaBr == undefined)?0:vendaBr
+    custoBr = (custoBr == '' || custoBr == undefined)?0:custoBr
+    descontoBr = (descontoBr == '' || descontoBr == undefined)?0:descontoBr
+
+    if(vendaBr.toString().includes(",")){
+        vendaBr = parseFloat(vendaBr.toString().replace(/\./g,"").replace(",","."))
+    }
+    if(custoBr.toString().includes(",")){
+        custoBr = parseFloat(custoBr.toString().replace(/\./g,"").replace(",","."))
+    }
+    if(descontoBr.toString().includes(",")){
+        descontoBr = parseFloat(descontoBr.toString().replace(/\./g,"").replace(",","."))
+    }
+
     Produto.update({
         nome: nome,
         descricao: descricao,
