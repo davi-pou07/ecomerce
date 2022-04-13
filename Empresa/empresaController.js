@@ -65,7 +65,7 @@ router.post("/empresa/novo",auth, (req, res) => {
                 descricao: descricao,
                 logo: logo
             }).then(empresao => {
-                res.redirect("/admin/empresa")
+                res.redirect("/")
             })
         } else {
             res.send("Ja existe uma empresa cadastrada:" + " " + empresa.nome)
@@ -123,7 +123,7 @@ router.post("/empresa/edit",auth,(req, res) => {
                     descricao: descricao,
                     logo: logo
                 },{where:{id:empresa.id}}).then(()=>{
-                    res.redirect("/admin/empresa")
+                    res.redirect("/")
                 })
             }).catch(err => {
                 res.json({ resp: err })
@@ -151,16 +151,6 @@ router.get("/empresa",auth, (req, res) => {
     })
 })
 
-/*
-router.get("/admin/empresa",auth, (req, res) => {
-    Empresa.findOne().then(empresa => {
-        if (empresa != undefined) {
-            res.render("admin/empresa/index", { empresa: empresa })
-        } else {
-            res.send("Erro, fale com seu ADMINISTRADOR")
-        }
-    })
-})
-*/
+
 
 module.exports = router
