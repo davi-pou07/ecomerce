@@ -77,6 +77,16 @@ router.post("/produto/novo",auth, (req, res) => {
         desconto = parseFloat(desconto.toString().replace(/\./g,"").replace(",","."))
     }
 
+    if(venda.toString().includes(",")){
+        venda = parseFloat(venda.toString().replace(/\./g,"").replace(",","."))
+    }
+    if(custo.toString().includes(",")){
+        custo = parseFloat(custo.toString().replace(/\./g,"").replace(",","."))
+    }
+    if(desconto.toString().includes(",")){
+        desconto = parseFloat(desconto.toString().replace(/\./g,"").replace(",","."))
+    }
+  
     Produto.create({
         nome: nome,
         descricao: descricao,
